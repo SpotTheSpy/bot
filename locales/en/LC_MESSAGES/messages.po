@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-23 17:37+0200\n"
-"PO-Revision-Date: 2025-09-23 17:41+0200\n"
+"POT-Creation-Date: 2025-09-23 18:20+0200\n"
+"PO-Revision-Date: 2025-09-23 18:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -19,11 +19,31 @@ msgstr ""
 "Generated-By: Babel 2.17.0\n"
 "X-Generator: Poedit 3.7\n"
 
-#: app./assets/inline_keyboard_factory.py:15
+#: app./assets/inline_keyboard_factory.py:13
+msgid "button.back"
+msgstr "◀️ Back"
+
+#: app./assets/inline_keyboard_factory.py:25
 msgid "button.start.play_single_device"
 msgstr "📲 Play from single device"
 
-#: app./scenes/start.py:35
+#: app./assets/inline_keyboard_factory.py:31
+msgid "button.start.play_multi_device"
+msgstr "🌐 Play from multiple devices"
+
+#: app./assets/inline_keyboard_factory.py:51
+msgid "button.play"
+msgstr "🚀 Play"
+
+#: app./scenes/explain.py:17
+msgid "message.explain.single_device"
+msgstr "📝 <b>How to play</b>"
+
+#: app./scenes/explain.py:29
+msgid "message.explain.multi_device"
+msgstr "📝 <b>How to play</b>"
+
+#: app./scenes/start.py:38 app./scenes/start.py:64
 msgid "message.start.main"
 msgstr ""
 "🔍 <b>Welcome to SpotTheSpy!</b>\n"
