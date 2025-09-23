@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-23 15:34+0200\n"
-"PO-Revision-Date: 2025-09-23 15:34+0200\n"
+"POT-Creation-Date: 2025-09-23 17:37+0200\n"
+"PO-Revision-Date: 2025-09-23 17:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -19,6 +19,13 @@ msgstr ""
 "Generated-By: Babel 2.17.0\n"
 "X-Generator: Poedit 3.7\n"
 
-#: app./routes/start.py:11
+#: app./assets/inline_keyboard_factory.py:15
+msgid "button.start.play_single_device"
+msgstr "📲 Play from single device"
+
+#: app./scenes/start.py:35
 msgid "message.start.main"
-msgstr "<b>Welcome, Plummy!</b>"
+msgstr ""
+"🔍 <b>Welcome to SpotTheSpy!</b>\n"
+"\n"
+"Hello, {first_name}."
