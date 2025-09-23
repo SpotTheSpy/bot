@@ -1,4 +1,5 @@
 from aiogram import Dispatcher
+from aiogram.fsm.scene import SceneRegistry
 from aiogram.fsm.storage.base import DefaultKeyBuilder
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.i18n import I18n
@@ -8,6 +9,7 @@ from app.controllers.abstract import APIConfig
 from app.controllers.users import UsersController
 from app.middlewares.i18n import APII18nMiddleware
 from app.routes.start import start_router
+from app.scenes.start import StartScene
 from config import Config
 
 config = Config(_env_file=".env")
@@ -41,6 +43,10 @@ def create_dispatcher() -> Dispatcher:
         ),
         users
     ).setup(new_dispatcher)
+
+    SceneRegistry(new_dispatcher).add(
+        StartScene
+    )
 
     new_dispatcher.include_routers(
         start_router

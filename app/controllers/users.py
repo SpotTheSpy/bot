@@ -6,11 +6,19 @@ from app.models.user import CreateUser, User
 class UsersController(APIController):
     async def create_user(
             self,
-            user: CreateUser
+            telegram_id: int,
+            first_name: str,
+            username: str,
+            locale: str | None = None
     ) -> User:
         response: AttributedDict = await self._post(
             "users",
-            json=user.model_dump(exclude_unset=True)
+            json=CreateUser(
+                telegram_id=telegram_id,
+                first_name=first_name,
+                username=username,
+                locale=locale
+            ).model_dump()
         )
 
         if response.status_code == 409:
