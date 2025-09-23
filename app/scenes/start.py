@@ -1,6 +1,6 @@
 from aiogram import F
 from aiogram.fsm.scene import on
-from aiogram.types import Message, InlineKeyboardMarkup, CallbackQuery
+from aiogram.types import Message, CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.play import PlayAction
@@ -14,7 +14,7 @@ from app.scenes.base import BaseScene
 
 class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_history_on_enter=True):
     @on.message.enter()
-    async def on_enter(
+    async def on_message_enter(
             self,
             message: Message,
             users: UsersController
@@ -38,7 +38,33 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             _("message.start.main").format(
                 first_name=user.first_name
             ),
-            reply_markup=InlineKeyboardFactory.create_start_keyboard()
+            reply_markup=InlineKeyboardFactory.start_keyboard()
+        )
+
+    @on.callback_query.enter()
+    async def on_callback_query_enter(
+            self,
+            callback_query: CallbackQuery,
+            users: UsersController
+    ) -> None:
+        user: User = await users.get_user(callback_query.from_user.id)
+
+        if user is None:
+            try:
+                user = await users.create_user(
+                    callback_query.from_user.id,
+                    callback_query.from_user.first_name,
+                    callback_query.from_user.username,
+                    callback_query.from_user.language_code
+                )
+            except AlreadyExistsError:
+                return
+
+        await callback_query.message.edit_text(
+            _("message.start.main").format(
+                first_name=user.first_name
+            ),
+            reply_markup=InlineKeyboardFactory.start_keyboard()
         )
 
     @on.callback_query(PlayAction.filter(F.style == GameStyle.SINGLE_DEVICE))
@@ -46,7 +72,16 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             self,
             callback_query: CallbackQuery
     ) -> None:
-        pass
+        await callback_query.answer()
+        await self.wizard.goto("explain_single_device")
+
+    @on.callback_query(PlayAction.filter(F.style == GameStyle.MULTI_DEVICE))
+    async def on_play_multi_device(
+            self,
+            callback_query: CallbackQuery
+    ) -> None:
+        await callback_query.answer()
+        await self.wizard.goto("explain_multi_device")
 
     @on.message()
     async def on_message(
