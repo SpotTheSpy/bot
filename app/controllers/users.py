@@ -1,6 +1,5 @@
 from app.controllers.abstract import APIController, AttributedDict
 from app.exceptions.already_exists import AlreadyExistsError
-from app.exceptions.not_found import NotFoundError
 from app.models.user import CreateUser, User
 
 
@@ -50,10 +49,7 @@ class UsersController(APIController):
             telegram_id: int,
             locale: str
     ) -> None:
-        response: AttributedDict = await self._put(
+        await self._put(
             f"users/locales/{telegram_id}",
             json={"locale": locale}
         )
-
-        if response.status_code == 404:
-            raise NotFoundError("User with provided telegram ID was not found")
