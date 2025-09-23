@@ -3,9 +3,9 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.i18n import gettext as _
 
-from app.assets.controllers.users import UsersController
-from app.assets.exceptions.already_exists import AlreadyExistsError
-from app.assets.models.user import CreateUser, User
+from app.controllers.users import UsersController
+from app.exceptions.already_exists import AlreadyExistsError
+from app.models.user import CreateUser, User
 
 start_router = Router(name=__name__)
 

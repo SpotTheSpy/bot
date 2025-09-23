@@ -1,4 +1,4 @@
-from app.assets.exceptions.api import APIError
+from app.exceptions.api import APIError
 
 
 class AlreadyExistsError(APIError):

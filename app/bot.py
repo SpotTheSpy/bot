@@ -4,8 +4,8 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.i18n import I18n
 from redis.asyncio import Redis
 
-from app.assets.controllers.abstract import APIConfig
-from app.assets.controllers.users import UsersController
+from app.controllers.abstract import APIConfig
+from app.controllers.users import UsersController
 from app.middlewares.i18n import APII18nMiddleware
 from app.routes.start import start_router
 from config import Config

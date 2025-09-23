@@ -3,7 +3,7 @@ from typing import Dict, Any
 from aiogram.types import TelegramObject, User
 from aiogram.utils.i18n import I18n, SimpleI18nMiddleware
 
-from app.assets.controllers.users import UsersController
+from app.controllers.users import UsersController
 
 
 class APII18nMiddleware(SimpleI18nMiddleware):

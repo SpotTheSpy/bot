@@ -1,7 +1,7 @@
-from app.assets.controllers.abstract import APIController, AttributedDict
-from app.assets.exceptions.already_exists import AlreadyExistsError
-from app.assets.exceptions.not_found import NotFoundError
-from app.assets.models.user import CreateUser, User
+from app.controllers.abstract import APIController, AttributedDict
+from app.exceptions.already_exists import AlreadyExistsError
+from app.exceptions.not_found import NotFoundError
+from app.models.user import CreateUser, User
 
 
 class UsersController(APIController):
