@@ -43,7 +43,7 @@ class InlineKeyboardFactory:
         callback_data: str = {
             GameStyle.SINGLE_DEVICE: StartSingleDeviceAction(),
             GameStyle.MULTI_DEVICE: StartMultiDeviceAction()
-        }[style].pack()
+        }.get(style).pack()
 
         return InlineKeyboardMarkup(
             inline_keyboard=[
