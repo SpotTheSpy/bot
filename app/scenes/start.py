@@ -4,7 +4,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.play import PlayAction
-from app.assets.inline_keyboard_factory import InlineKeyboardFactory
+from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.controllers.users import UsersController
 from app.enums.game_style import GameStyle
 from app.exceptions.already_exists import AlreadyExistsError

@@ -6,6 +6,7 @@ from aiogram.utils.i18n import I18n
 from redis.asyncio import Redis
 
 from app.controllers.abstract import APIConfig
+from app.controllers.single_device_games import SingleDeviceGamesController
 from app.controllers.users import UsersController
 from app.middlewares.i18n import APII18nMiddleware
 from app.routes.start import start_router
@@ -29,11 +30,13 @@ def create_dispatcher() -> Dispatcher:
     )
 
     users = UsersController(api_config)
+    single_games = SingleDeviceGamesController(api_config)
 
     new_dispatcher = Dispatcher(
         storage=storage,
         config=config,
-        users=users
+        users=users,
+        single_games=single_games
     )
 
     APII18nMiddleware(

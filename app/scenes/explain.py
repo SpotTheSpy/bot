@@ -2,7 +2,7 @@ from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
-from app.assets.inline_keyboard_factory import InlineKeyboardFactory
+from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.enums.game_style import GameStyle
 from app.scenes.base import BaseScene
 

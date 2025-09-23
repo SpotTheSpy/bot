@@ -146,6 +146,26 @@ class APIController(ABC):
             async with request as response:
                 return await self.construct_response(response)
 
+    @apply_resend
+    async def _delete(
+            self,
+            path: str,
+            **kwargs
+    ) -> AttributedDict:
+        headers = self._headers.copy()
+        headers.update(kwargs.get("headers", {}))
+
+        client_session = ClientSession(headers=headers)
+
+        async with client_session as session:
+            request = session.delete(
+                f"{self.base_url}/{path}",
+                **kwargs
+            )
+
+            async with request as response:
+                return await self.construct_response(response)
+
     @staticmethod
     async def construct_response(response: ClientResponse) -> AttributedDict:
         json_response: dict = await response.json() or {}
