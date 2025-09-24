@@ -6,10 +6,10 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
-from app.actions.finish import FinishAction
+from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.menu import MenuAction
-from app.actions.next_player import NextPlayerAction
-from app.actions.view_role import ViewRoleAction
+from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
+from app.actions.single_device_view_role import SingleDeviceViewRoleAction
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.data.secret_words_controller import SecretWordsController
 from app.enums.player_type import PlayerType
@@ -19,7 +19,7 @@ from app.models.user import User
 from app.scenes.base import BaseScene
 
 
-class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
+class SingleDevicePlayScene(BaseScene, state="single_device_play"):
     @on.callback_query.enter()
     async def on_enter(
             self,
@@ -43,14 +43,14 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
 
         await self.edit_message(
             callback_query.message,
-            _("message.play.single_device.prepare").format(
+            _("message.single_device.play.prepare").format(
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
             reply_markup=InlineKeyboardFactory.single_device_view_role_keyboard()
         )
 
-    @on.callback_query(ViewRoleAction.filter())
+    @on.callback_query(SingleDeviceViewRoleAction.filter())
     async def on_view_role(
             self,
             callback_query: CallbackQuery,
@@ -69,8 +69,8 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
         player_type = PlayerType.SPY if player_index == game.spy_index else PlayerType.CITIZEN
 
         message_text: str = {
-            PlayerType.CITIZEN: _("message.play.single_device.view_role.citizen"),
-            PlayerType.SPY: _("message.play.single_device.view_role.spy")
+            PlayerType.CITIZEN: _("message.single_device.play.view_role.citizen"),
+            PlayerType.SPY: _("message.single_device.play.view_role.spy")
         }.get(player_type)
 
         await self.edit_message(
@@ -80,11 +80,11 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
-            reply_markup=InlineKeyboardFactory.single_device_next_player_keyboard()
+            reply_markup=InlineKeyboardFactory.single_device_proceed_keyboard()
         )
 
-    @on.callback_query(NextPlayerAction.filter())
-    async def on_next_player(
+    @on.callback_query(SingleDeviceProceedPlayerAction.filter())
+    async def on_proceed(
             self,
             callback_query: CallbackQuery,
             state: FSMContext
@@ -104,7 +104,7 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
         if player_index >= game.player_amount:
             await self.edit_message(
                 callback_query.message,
-                _("message.play.single_device.discuss"),
+                _("message.single_device.play.discuss"),
                 reply_markup=InlineKeyboardFactory.single_device_finish_keyboard()
             )
             return
@@ -113,19 +113,19 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
 
         await self.edit_message(
             callback_query.message,
-            _("message.play.single_device.prepare").format(
+            _("message.single_device.play.prepare").format(
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
             reply_markup=InlineKeyboardFactory.single_device_view_role_keyboard()
         )
 
-    @on.callback_query(FinishAction.filter())
+    @on.callback_query(SingleDeviceFinishAction.filter())
     async def on_finish(
             self,
             callback_query: CallbackQuery,
             state: FSMContext,
-            single_games: SingleDeviceGamesController
+            single_device_games: SingleDeviceGamesController
     ) -> None:
         game_json: Dict[str, Any] = await state.get_value("game")
 
@@ -134,11 +134,11 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
 
         game: SingleDeviceGame = SingleDeviceGame.from_json(game_json)
 
-        await single_games.remove_game(game.game_id)
+        await single_device_games.remove_game(game.game_id)
 
         await self.edit_message(
             callback_query.message,
-            _("message.play.single_device.finish").format(
+            _("message.single_device.play.finish").format(
                 secret_word=game.secret_word,
                 spy_index=game.spy_index + 1
             ),

@@ -4,15 +4,14 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
-from app.actions.finish import FinishAction
+from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.menu import MenuAction
-from app.actions.next_player import NextPlayerAction
+from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
 from app.actions.page_turn import PageTurnAction
-from app.actions.play import PlayAction
-from app.actions.settings import SettingsAction
-from app.actions.start import StartSingleDeviceAction
-from app.actions.view_role import ViewRoleAction
-from app.enums.game_style import GameStyle
+from app.actions.single_device_configure import SingleDeviceConfigureAction
+from app.actions.single_device_enter import SingleDeviceEnter
+from app.actions.single_device_play import SingleDevicePlayAction
+from app.actions.single_device_view_role import SingleDeviceViewRoleAction
 from app.enums.page_turn import PageTurn
 
 
@@ -62,24 +61,18 @@ class InlineKeyboardFactory:
                 [
                     InlineKeyboardButton(
                         text=_("button.start.play_single_device"),
-                        callback_data=PlayAction(style=GameStyle.SINGLE_DEVICE).pack()
-                    )
-                ],
-                [
-                    InlineKeyboardButton(
-                        text=_("button.start.play_multi_device"),
-                        callback_data=PlayAction(style=GameStyle.MULTI_DEVICE).pack()
+                        callback_data=SingleDeviceEnter().pack()
                     )
                 ]
             ]
         )
 
     @classmethod
-    def single_device_settings_keyboard(cls) -> InlineKeyboardMarkup:
+    def single_device_explain_keyboard(cls) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
-                    InlineKeyboardButton(text=_("button.got_it"), callback_data=SettingsAction().pack())
+                    InlineKeyboardButton(text=_("button.got_it"), callback_data=SingleDeviceConfigureAction().pack())
                 ],
                 [
                     cls.back_button()
@@ -88,7 +81,7 @@ class InlineKeyboardFactory:
         )
 
     @classmethod
-    def single_device_play_keyboard(
+    def single_device_configure_keyboard(
             cls,
             *,
             exclude_turns: Set[PageTurn] | None = None
@@ -99,7 +92,7 @@ class InlineKeyboardFactory:
                 [
                     InlineKeyboardButton(
                         text=_("button.single_device.play"),
-                        callback_data=StartSingleDeviceAction().pack()
+                        callback_data=SingleDevicePlayAction().pack()
                     )
                 ],
                 [
@@ -115,7 +108,7 @@ class InlineKeyboardFactory:
                 [
                     InlineKeyboardButton(
                         text=_("button.single_device.view_role"),
-                        callback_data=ViewRoleAction().pack()
+                        callback_data=SingleDeviceViewRoleAction().pack()
                     )
                 ],
                 [
@@ -125,13 +118,13 @@ class InlineKeyboardFactory:
         )
 
     @classmethod
-    def single_device_next_player_keyboard(cls) -> InlineKeyboardMarkup:
+    def single_device_proceed_keyboard(cls) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.single_device.next_player"),
-                        callback_data=NextPlayerAction().pack()
+                        text=_("button.single_device.proceed"),
+                        callback_data=SingleDeviceProceedPlayerAction().pack()
                     )
                 ],
                 [
@@ -145,7 +138,7 @@ class InlineKeyboardFactory:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
-                    InlineKeyboardButton(text=_("button.single_device.finish"), callback_data=FinishAction().pack())
+                    InlineKeyboardButton(text=_("button.single_device.finish"), callback_data=SingleDeviceFinishAction().pack())
                 ],
                 [
                     cls.back_button()
