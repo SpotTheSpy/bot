@@ -3,6 +3,7 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
 from app.actions.finish import FinishAction
+from app.actions.menu import MenuAction
 from app.actions.next_player import NextPlayerAction
 from app.actions.play import PlayAction
 from app.actions.start import StartSingleDeviceAction, StartMultiDeviceAction
@@ -12,8 +13,16 @@ from app.enums.game_style import GameStyle
 
 class InlineKeyboardFactory:
     @staticmethod
+    def menu_button() -> InlineKeyboardButton:
+        return InlineKeyboardButton(text=_("button.menu"), callback_data=MenuAction().pack())
+
+    @staticmethod
     def back_button() -> InlineKeyboardButton:
         return InlineKeyboardButton(text=_("button.back"), callback_data=BackAction().pack())
+
+    @classmethod
+    def menu_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(inline_keyboard=[[cls.menu_button()]])
 
     @classmethod
     def back_keyboard(cls) -> InlineKeyboardMarkup:

@@ -49,15 +49,15 @@ def create_dispatcher() -> Dispatcher:
     UserMiddleware(users).setup(new_dispatcher)
     APII18nMiddleware(i18n, users).setup(new_dispatcher)
 
+    new_dispatcher.include_routers(
+        start_router
+    )
+
     SceneRegistry(new_dispatcher).add(
         StartScene,
         ExplainSingleDeviceScene,
         ExplainMultiDeviceScene,
         PlaySingleDeviceScene
-    )
-
-    new_dispatcher.include_routers(
-        start_router
     )
 
     return new_dispatcher

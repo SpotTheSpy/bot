@@ -5,6 +5,9 @@ from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
+from app.actions.back import BackAction
+from app.actions.finish import FinishAction
+from app.actions.menu import MenuAction
 from app.actions.next_player import NextPlayerAction
 from app.actions.view_role import ViewRoleAction
 from app.controllers.single_device_games import SingleDeviceGamesController
@@ -122,3 +125,44 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
             ),
             reply_markup=InlineKeyboardFactory.single_device_view_role_keyboard()
         )
+
+    @on.callback_query(FinishAction.filter())
+    async def on_finish(
+            self,
+            callback_query: CallbackQuery,
+            state: FSMContext,
+            single_games: SingleDeviceGamesController
+    ) -> None:
+        game_json: Dict[str, Any] = await state.get_value("game")
+
+        if game_json is None:
+            return
+
+        game: SingleDeviceGame = SingleDeviceGame.from_json(game_json)
+
+        await single_games.remove_game(game.game_id)
+
+        await self.edit_message(
+            callback_query.message,
+            _("message.play.single_device.finish").format(
+                secret_word=game.secret_word
+            ),
+            reply_markup=InlineKeyboardFactory.menu_keyboard()
+        )
+
+    @on.callback_query(MenuAction.filter())
+    async def on_menu(
+            self,
+            callback_query: CallbackQuery,
+            user: User
+    ) -> None:
+        await callback_query.answer()
+        await self.wizard.goto("start", user=user)
+
+    @on.callback_query(BackAction.filter())
+    async def on_back(
+            self,
+            callback_query: CallbackQuery
+    ) -> None:
+        await callback_query.answer()
+        await self.wizard.back()
