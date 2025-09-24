@@ -9,6 +9,7 @@ from app.controllers.abstract import APIConfig
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.controllers.users import UsersController
 from app.middlewares.i18n import APII18nMiddleware
+from app.middlewares.user import UserMiddleware
 from app.routes.start import start_router
 from app.scenes.explain import ExplainSingleDeviceScene, ExplainMultiDeviceScene
 from app.scenes.start import StartScene
@@ -24,6 +25,11 @@ def create_dispatcher() -> Dispatcher:
         redis = Redis.from_url(config.redis_dsn.get_secret_value())
         storage = RedisStorage(redis, key_builder=DefaultKeyBuilder(with_destiny=True))
 
+    i18n = I18n(
+        path="locales",
+        default_locale="en",
+        domain="messages"
+    )
     api_config = APIConfig(
         config.base_url,
         config.api_key.get_secret_value()
@@ -39,14 +45,8 @@ def create_dispatcher() -> Dispatcher:
         single_games=single_games
     )
 
-    APII18nMiddleware(
-        I18n(
-            path="locales",
-            default_locale="en",
-            domain="messages"
-        ),
-        users
-    ).setup(new_dispatcher)
+    UserMiddleware(users).setup(new_dispatcher)
+    APII18nMiddleware(i18n, users).setup(new_dispatcher)
 
     SceneRegistry(new_dispatcher).add(
         StartScene,

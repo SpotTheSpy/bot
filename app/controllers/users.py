@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from app.controllers.abstract import APIController, AttributedDict
 from app.exceptions.already_exists import AlreadyExistsError
 from app.models.user import CreateUser, User
@@ -31,7 +33,7 @@ class UsersController(APIController):
             telegram_id: int
     ) -> User | None:
         response: AttributedDict = await self._get(
-            f"users/{telegram_id}"
+            f"users/telegram/{telegram_id}"
         )
 
         if response.status_code == 404:
@@ -41,10 +43,10 @@ class UsersController(APIController):
 
     async def get_user_locale(
             self,
-            telegram_id: int
+            user_id: UUID
     ) -> str | None:
         response: AttributedDict = await self._get(
-            f"users/locales/{telegram_id}"
+            f"users/locales/{user_id}"
         )
 
         if response.status_code == 404:
@@ -54,10 +56,10 @@ class UsersController(APIController):
 
     async def update_user_locale(
             self,
-            telegram_id: int,
+            user_id: UUID,
             locale: str
     ) -> None:
         await self._put(
-            f"users/locales/{telegram_id}",
+            f"users/locales/{user_id}",
             json={"locale": locale}
         )

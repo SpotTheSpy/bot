@@ -17,21 +17,8 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
     async def on_message_enter(
             self,
             message: Message,
-            users: UsersController
+            user: User
     ) -> None:
-        user: User = await users.get_user(message.from_user.id)
-
-        if user is None:
-            try:
-                user = await users.create_user(
-                    message.from_user.id,
-                    message.from_user.first_name,
-                    message.from_user.username,
-                    message.from_user.language_code
-                )
-            except AlreadyExistsError:
-                return
-
         await message.delete()
 
         await message.answer(
@@ -45,21 +32,8 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
     async def on_callback_query_enter(
             self,
             callback_query: CallbackQuery,
-            users: UsersController
+            user: User
     ) -> None:
-        user: User = await users.get_user(callback_query.from_user.id)
-
-        if user is None:
-            try:
-                user = await users.create_user(
-                    callback_query.from_user.id,
-                    callback_query.from_user.first_name,
-                    callback_query.from_user.username,
-                    callback_query.from_user.language_code
-                )
-            except AlreadyExistsError:
-                return
-
         await callback_query.message.edit_text(
             _("message.start.main").format(
                 first_name=user.first_name

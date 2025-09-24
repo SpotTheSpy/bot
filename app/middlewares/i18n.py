@@ -1,9 +1,10 @@
 from typing import Dict, Any
 
-from aiogram.types import TelegramObject, User
+from aiogram.types import TelegramObject
 from aiogram.utils.i18n import I18n, SimpleI18nMiddleware
 
 from app.controllers.users import UsersController
+from app.models.user import User
 
 
 class APII18nMiddleware(SimpleI18nMiddleware):
@@ -20,7 +21,7 @@ class APII18nMiddleware(SimpleI18nMiddleware):
             event: TelegramObject,
             data: Dict[str, Any]
     ) -> str:
-        user: User | None = data.get("event_from_user", None)
+        user: User | None = data.get("user")
 
         if user is None:
             return self.i18n.default_locale
