@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.scene import on
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
@@ -167,3 +167,10 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
     ) -> None:
         await callback_query.answer()
         await self.wizard.back()
+
+    @on.message()
+    async def on_message(
+            self,
+            message: Message
+    ) -> None:
+        await message.delete()

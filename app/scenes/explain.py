@@ -1,5 +1,5 @@
 from aiogram.fsm.scene import on
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
@@ -48,6 +48,13 @@ class ExplainSingleDeviceScene(BaseScene, state="explain_single_device"):
         await callback_query.answer()
         await self.wizard.back(user=user)
 
+    @on.message()
+    async def on_message(
+            self,
+            message: Message
+    ) -> None:
+        await message.delete()
+
 
 class ExplainMultiDeviceScene(BaseScene, state="explain_multi_device"):
     @on.callback_query.enter()
@@ -64,6 +71,15 @@ class ExplainMultiDeviceScene(BaseScene, state="explain_multi_device"):
     @on.callback_query(BackAction.filter())
     async def on_back(
             self,
-            callback_query: CallbackQuery
+            callback_query: CallbackQuery,
+            user: User
     ) -> None:
-        await self.wizard.back()
+        await callback_query.answer()
+        await self.wizard.back(user=user)
+
+    @on.message()
+    async def on_message(
+            self,
+            message: Message
+    ) -> None:
+        await message.delete()
