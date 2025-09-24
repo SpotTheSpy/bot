@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-25 00:10+0200\n"
+"POT-Creation-Date: 2025-09-25 00:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,83 +17,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app./data/secret_words_controller.py:16
+#: app./data/secret_words_controller.py:9
 msgid "data.secret_words"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:22
+#: app./keyboards/inline_keyboard_factory.py:21
 msgid "button.menu"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:26
+#: app./keyboards/inline_keyboard_factory.py:25
 msgid "button.back"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:33
+#: app./keyboards/inline_keyboard_factory.py:32
 msgid "button.right"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:34
+#: app./keyboards/inline_keyboard_factory.py:33
 msgid "button.left"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:64
+#: app./keyboards/inline_keyboard_factory.py:63
 msgid "button.start.play_single_device"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:70
-msgid "button.start.play_multi_device"
-msgstr ""
-
-#: app./keyboards/inline_keyboard_factory.py:82
+#: app./keyboards/inline_keyboard_factory.py:75
 msgid "button.got_it"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:101
+#: app./keyboards/inline_keyboard_factory.py:94
 msgid "button.single_device.play"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:117
+#: app./keyboards/inline_keyboard_factory.py:110
 msgid "button.single_device.view_role"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:133
-msgid "button.single_device.next_player"
+#: app./keyboards/inline_keyboard_factory.py:126
+msgid "button.single_device.proceed"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:148
+#: app./keyboards/inline_keyboard_factory.py:141
 msgid "button.single_device.finish"
 msgstr ""
 
-#: app./scenes/explain.py:20
-msgid "message.explain.single_device"
+#: app./scenes/single_device_configure.py:43
+#: app./scenes/single_device_configure.py:102
+msgid "message.single_device.configure"
 msgstr ""
 
-#: app./scenes/play.py:46 app./scenes/play.py:116
-msgid "message.play.single_device.prepare"
+#: app./scenes/single_device_explain.py:20
+msgid "message.single_device.explain"
 msgstr ""
 
-#: app./scenes/play.py:72
-msgid "message.play.single_device.view_role.citizen"
+#: app./scenes/single_device_play.py:46 app./scenes/single_device_play.py:116
+msgid "message.single_device.play.prepare"
 msgstr ""
 
-#: app./scenes/play.py:73
-msgid "message.play.single_device.view_role.spy"
+#: app./scenes/single_device_play.py:72
+msgid "message.single_device.play.view_role.citizen"
 msgstr ""
 
-#: app./scenes/play.py:107
-msgid "message.play.single_device.discuss"
+#: app./scenes/single_device_play.py:73
+msgid "message.single_device.play.view_role.spy"
 msgstr ""
 
-#: app./scenes/play.py:141
-msgid "message.play.single_device.finish"
+#: app./scenes/single_device_play.py:107
+msgid "message.single_device.play.discuss"
 msgstr ""
 
-#: app./scenes/settings.py:43 app./scenes/settings.py:102
-msgid "message.play.single_device.configure"
+#: app./scenes/single_device_play.py:141
+msgid "message.single_device.play.finish"
 msgstr ""
 
-#: app./scenes/start.py:23 app./scenes/start.py:37
+#: app./scenes/start.py:21 app./scenes/start.py:35
 msgid "message.start.main"
 msgstr ""
 
