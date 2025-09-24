@@ -1,5 +1,6 @@
 from typing import Dict, Any
 
+from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject
 from aiogram.utils.i18n import I18n, SimpleI18nMiddleware
 
@@ -26,10 +27,17 @@ class APII18nMiddleware(SimpleI18nMiddleware):
         if user is None:
             return self.i18n.default_locale
 
-        locale: str | None = await self._users.get_user_locale(user.id)
+        state: FSMContext = data.get("state")
+
+        locale: str | None = await state.get_value("locale")
 
         if locale is None:
-            locale = await super().get_locale(event, data)
-            await self._users.update_user_locale(user.id, locale)
+            locale = await self._users.get_user_locale(user.id)
+
+            if locale is None:
+                locale: str = await super().get_locale(event, data)
+                await self._users.update_user_locale(user.id, locale)
+
+            await state.update_data(locale=locale)
 
         return locale
