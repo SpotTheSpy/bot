@@ -145,7 +145,8 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
         await self.edit_message(
             callback_query.message,
             _("message.play.single_device.finish").format(
-                secret_word=game.secret_word
+                secret_word=game.secret_word,
+                spy_index=game.spy_index + 1
             ),
             reply_markup=InlineKeyboardFactory.menu_keyboard()
         )

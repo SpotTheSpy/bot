@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-23 18:20+0200\n"
-"PO-Revision-Date: 2025-09-23 18:22+0200\n"
+"POT-Creation-Date: 2025-09-24 17:20+0200\n"
+"PO-Revision-Date: 2025-09-24 17:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -19,31 +19,85 @@ msgstr ""
 "Generated-By: Babel 2.17.0\n"
 "X-Generator: Poedit 3.7\n"
 
-#: app./assets/inline_keyboard_factory.py:13
+#: app./keyboards/inline_keyboard_factory.py:17
+msgid "button.menu"
+msgstr "📋 Menu"
+
+#: app./keyboards/inline_keyboard_factory.py:21
 msgid "button.back"
 msgstr "◀️ Back"
 
-#: app./assets/inline_keyboard_factory.py:25
+#: app./keyboards/inline_keyboard_factory.py:37
 msgid "button.start.play_single_device"
 msgstr "📲 Play from single device"
 
-#: app./assets/inline_keyboard_factory.py:31
+#: app./keyboards/inline_keyboard_factory.py:43
 msgid "button.start.play_multi_device"
 msgstr "🌐 Play from multiple devices"
 
-#: app./assets/inline_keyboard_factory.py:51
-msgid "button.play"
+#: app./keyboards/inline_keyboard_factory.py:63
+msgid "button.single_device.play"
 msgstr "🚀 Play"
 
-#: app./scenes/explain.py:17
+#: app./keyboards/inline_keyboard_factory.py:77
+msgid "button.single_device.view_role"
+msgstr "🔍 View role"
+
+#: app./keyboards/inline_keyboard_factory.py:93
+msgid "button.single_device.next_player"
+msgstr "👉 Proceed"
+
+#: app./keyboards/inline_keyboard_factory.py:108
+msgid "button.single_device.finish"
+msgstr "🔍 View results"
+
+#: app./scenes/explain.py:23
 msgid "message.explain.single_device"
 msgstr "📝 <b>How to play</b>"
 
-#: app./scenes/explain.py:29
+#: app./scenes/explain.py:60
 msgid "message.explain.multi_device"
 msgstr "📝 <b>How to play</b>"
 
-#: app./scenes/start.py:38 app./scenes/start.py:64
+#: app./scenes/play.py:39
+msgid "answer.play.already_in_game"
+msgstr "You are already in game"
+
+#: app./scenes/play.py:52 app./scenes/play.py:122
+msgid "message.play.single_device.prepare"
+msgstr ""
+"🤫 <b>Prepare to view your role</b>\n"
+"\n"
+"<b>{player_index}/{player_amount}</b>"
+
+#: app./scenes/play.py:78
+msgid "message.play.single_device.view_role.citizen"
+msgstr ""
+"👨 <b>You are a Citizen</b>\n"
+"\n"
+"The secret word is {secret_word}\n"
+"\n"
+"<b>{player_index}/{player_amount}</b>"
+
+#: app./scenes/play.py:79
+msgid "message.play.single_device.view_role.spy"
+msgstr ""
+"🕵️‍♂️ <b>You are the Spy</b>\n"
+"\n"
+"<b>{player_index}/{player_amount}</b>"
+
+#: app./scenes/play.py:113
+msgid "message.play.single_device.discuss"
+msgstr "👀 <b>Now it is time to discuss who is the Spy!</b>"
+
+#: app./scenes/play.py:147
+msgid "message.play.single_device.finish"
+msgstr ""
+"🎭 <b>Player {spy_index} was the Spy!</b>\n"
+"\n"
+"The secret word was {secret_word}"
+
+#: app./scenes/start.py:23 app./scenes/start.py:37
 msgid "message.start.main"
 msgstr ""
 "🔍 <b>Welcome to SpotTheSpy!</b>\n"
