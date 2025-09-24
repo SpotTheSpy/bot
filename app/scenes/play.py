@@ -12,7 +12,6 @@ from app.actions.next_player import NextPlayerAction
 from app.actions.view_role import ViewRoleAction
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.enums.player_type import PlayerType
-from app.exceptions.already_in_game import AlreadyInGameError
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User

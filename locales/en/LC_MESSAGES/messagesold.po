@@ -1,95 +1,122 @@
-# Translations template for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2025 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-09-24 19:05+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2025-09-24 19:09+0200\n"
+"Last-Translator: \n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.7\n"
 
 #: app./keyboards/inline_keyboard_factory.py:22
 msgid "button.menu"
-msgstr ""
+msgstr "📋 Menu"
 
 #: app./keyboards/inline_keyboard_factory.py:26
 msgid "button.back"
-msgstr ""
+msgstr "◀️ Back"
 
 #: app./keyboards/inline_keyboard_factory.py:33
 msgid "button.right"
-msgstr ""
+msgstr "»"
 
 #: app./keyboards/inline_keyboard_factory.py:34
 msgid "button.left"
-msgstr ""
+msgstr "«"
 
 #: app./keyboards/inline_keyboard_factory.py:64
 msgid "button.start.play_single_device"
-msgstr ""
+msgstr "📲 Play from single device"
 
 #: app./keyboards/inline_keyboard_factory.py:70
 msgid "button.start.play_multi_device"
-msgstr ""
+msgstr "🌐 Play from multiple devices"
 
 #: app./keyboards/inline_keyboard_factory.py:82
 msgid "button.got_it"
-msgstr ""
+msgstr "👌 Got it"
 
 #: app./keyboards/inline_keyboard_factory.py:101
 msgid "button.single_device.play"
-msgstr ""
+msgstr "🚀 Play"
 
 #: app./keyboards/inline_keyboard_factory.py:117
 msgid "button.single_device.view_role"
-msgstr ""
+msgstr "🔍 View role"
 
 #: app./keyboards/inline_keyboard_factory.py:133
 msgid "button.single_device.next_player"
-msgstr ""
+msgstr "👉 Proceed"
 
 #: app./keyboards/inline_keyboard_factory.py:148
 msgid "button.single_device.finish"
-msgstr ""
+msgstr "🔍 View results"
 
 #: app./scenes/explain.py:20
 msgid "message.explain.single_device"
-msgstr ""
+msgstr "📝 <b>How to play</b>"
 
 #: app./scenes/play.py:46 app./scenes/play.py:116
 msgid "message.play.single_device.prepare"
 msgstr ""
+"🤫 <b>Prepare to view your role</b>\n"
+"\n"
+"<b>{player_index}/{player_amount}.</b>"
 
 #: app./scenes/play.py:72
 msgid "message.play.single_device.view_role.citizen"
 msgstr ""
+"👨 <b>You are a Citizen</b>\n"
+"\n"
+"The secret word is {secret_word}\n"
+"\n"
+"<b>{player_index}/{player_amount}.</b>"
 
 #: app./scenes/play.py:73
 msgid "message.play.single_device.view_role.spy"
 msgstr ""
+"🕵️‍♂️ <b>You are the Spy</b>\n"
+"\n"
+"<b>{player_index}/{player_amount}.</b>"
 
 #: app./scenes/play.py:107
 msgid "message.play.single_device.discuss"
-msgstr ""
+msgstr "👀 <b>Now it is time to discuss who is the Spy!</b>"
 
 #: app./scenes/play.py:141
 msgid "message.play.single_device.finish"
 msgstr ""
+"🎭 <b>Player {spy_index} was the Spy!</b>\n"
+"\n"
+"The secret word was {secret_word}."
 
 #: app./scenes/settings.py:42 app./scenes/settings.py:101
 msgid "message.play.single_device.configure"
 msgstr ""
+"⚙️ <b>Configure player count</b>\n"
+"\n"
+"Player count: <b>{player_amount}.</b>"
 
 #: app./scenes/start.py:23 app./scenes/start.py:37
 msgid "message.start.main"
 msgstr ""
+"🔍 <b>Welcome to SpotTheSpy!</b>\n"
+"\n"
+"Hello, {first_name}."
 
+#~ msgid "message.explain.multi_device"
+#~ msgstr "📝 <b>How to play</b>"
+
+#~ msgid "answer.play.already_in_game"
+#~ msgstr "You are already in game"

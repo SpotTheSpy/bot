@@ -5,6 +5,7 @@ from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
+from app.actions.back import BackAction
 from app.actions.page_turn import PageTurnAction
 from app.actions.start import StartSingleDeviceAction
 from app.controllers.single_device_games import SingleDeviceGamesController
@@ -103,6 +104,14 @@ class SettingsSingleDeviceScene(BaseScene, state="settings_single_device"):
             ),
             reply_markup=InlineKeyboardFactory.single_device_play_keyboard(exclude_turns=exclude_turns)
         )
+
+    @on.callback_query(BackAction.filter())
+    async def on_back(
+            self,
+            callback_query: CallbackQuery
+    ) -> None:
+        await callback_query.answer()
+        await self.wizard.back()
 
     @on.message()
     async def on_message(
