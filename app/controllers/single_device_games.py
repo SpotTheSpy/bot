@@ -1,9 +1,9 @@
 from uuid import UUID
 
-from app.assets.single_device_game import SingleDeviceGame
 from app.controllers.abstract import APIController, AttributedDict
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.models.single_device_game import CreateSingleDeviceGame
+from app.models.single_device_game import SingleDeviceGame
 
 
 class SingleDeviceGamesController(APIController):
@@ -21,13 +21,13 @@ class SingleDeviceGamesController(APIController):
                 telegram_id=telegram_id,
                 secret_word=secret_word,
                 player_amount=player_amount
-            ).model_dump()
+            ).to_json()
         )
 
         if response.status_code == 400:
             raise AlreadyInGameError("You are already in game")
 
-        return SingleDeviceGame.from_dict(response)
+        return SingleDeviceGame.from_json(response)
 
     async def get_game(
             self,
@@ -40,7 +40,7 @@ class SingleDeviceGamesController(APIController):
         if response.status_code == 404:
             return
 
-        return SingleDeviceGame.from_dict(response)
+        return SingleDeviceGame.from_json(response)
 
     async def get_game_by_user_id(
             self,
@@ -53,7 +53,7 @@ class SingleDeviceGamesController(APIController):
         if response.status_code == 404:
             return
 
-        return SingleDeviceGame.from_dict(response)
+        return SingleDeviceGame.from_json(response)
 
     async def remove_game(
             self,

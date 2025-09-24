@@ -20,13 +20,13 @@ class UsersController(APIController):
                 first_name=first_name,
                 username=username,
                 locale=locale
-            ).model_dump()
+            ).to_json()
         )
 
         if response.status_code == 409:
             raise AlreadyExistsError("User with provided username already exists")
 
-        return User.from_dict(response)
+        return User.from_json(response)
 
     async def get_user(
             self,
@@ -39,7 +39,7 @@ class UsersController(APIController):
         if response.status_code == 404:
             return
 
-        return User.from_dict(response)
+        return User.from_json(response)
 
     async def get_user_locale(
             self,

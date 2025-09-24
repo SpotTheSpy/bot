@@ -32,7 +32,7 @@ class UserMiddleware(BaseMiddleware):
         user_json: Dict[str, Any] = await state.get_value("user")
 
         if user_json is not None:
-            data["user"] = User.from_dict(user_json)
+            data["user"] = User.from_json(user_json)
             return await handler(event, data)
 
         user: User | None = await self._users.get_user(from_user.id)
@@ -49,7 +49,7 @@ class UserMiddleware(BaseMiddleware):
                 return await handler(event, data)
 
         data["user"] = user
-        await state.update_data(user=user.model_dump())
+        await state.update_data(user=user.to_json())
         return await handler(event, data)
 
     def setup(

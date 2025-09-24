@@ -52,12 +52,12 @@ class APIController(ABC):
             api_config: APIConfig
     ) -> None:
         self.base_url = api_config.base_url
-        self.api_key = api_config.api_key
+        self._api_key = api_config.api_key
 
-        self._headers: Dict[str, Any] = {"API-Key": self.api_key}
+        self._headers: Dict[str, Any] = {"API-Key": self._api_key}
 
     @staticmethod
-    def apply_resend(func: Callable) -> Callable:
+    def _apply_resend(func: Callable) -> Callable:
         @wraps(func)
         async def wrapper(
                 *args,
@@ -86,7 +86,7 @@ class APIController(ABC):
 
         self._headers.update(kwargs)
 
-    @apply_resend
+    @_apply_resend
     async def _post(
             self,
             path: str,
@@ -104,9 +104,9 @@ class APIController(ABC):
             )
 
             async with request as response:
-                return await self.construct_response(response)
+                return await self._construct_response(response)
 
-    @apply_resend
+    @_apply_resend
     async def _get(
             self,
             path: str,
@@ -124,9 +124,9 @@ class APIController(ABC):
             )
 
             async with request as response:
-                return await self.construct_response(response)
+                return await self._construct_response(response)
 
-    @apply_resend
+    @_apply_resend
     async def _put(
             self,
             path: str,
@@ -144,9 +144,9 @@ class APIController(ABC):
             )
 
             async with request as response:
-                return await self.construct_response(response)
+                return await self._construct_response(response)
 
-    @apply_resend
+    @_apply_resend
     async def _delete(
             self,
             path: str,
@@ -164,10 +164,10 @@ class APIController(ABC):
             )
 
             async with request as response:
-                return await self.construct_response(response)
+                return await self._construct_response(response)
 
     @staticmethod
-    async def construct_response(response: ClientResponse) -> AttributedDict:
+    async def _construct_response(response: ClientResponse) -> AttributedDict:
         json_response: dict = await response.json() or {}
         json_response.update({"status_code": response.status})
 

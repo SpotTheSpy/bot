@@ -1,11 +1,10 @@
 from datetime import datetime
-from typing import Any, Dict
 from uuid import UUID
 
-from pydantic import BaseModel
+from app.models.abstract import AbstractModel
 
 
-class User(BaseModel):
+class User(AbstractModel):
     id: UUID
     telegram_id: int
     first_name: str
@@ -14,15 +13,8 @@ class User(BaseModel):
     created_at: datetime
     updated_at: datetime | None
 
-    @classmethod
-    def from_dict(
-            cls,
-            data: Dict[str, Any]
-    ) -> 'User':
-        return cls.model_validate(data)
 
-
-class CreateUser(BaseModel):
+class CreateUser(AbstractModel):
     telegram_id: int
     first_name: str
     username: str

@@ -12,6 +12,7 @@ from app.middlewares.i18n import APII18nMiddleware
 from app.middlewares.user import UserMiddleware
 from app.routes.start import start_router
 from app.scenes.explain import ExplainSingleDeviceScene, ExplainMultiDeviceScene
+from app.scenes.play import PlaySingleDeviceScene
 from app.scenes.start import StartScene
 from config import Config
 
@@ -51,7 +52,8 @@ def create_dispatcher() -> Dispatcher:
     SceneRegistry(new_dispatcher).add(
         StartScene,
         ExplainSingleDeviceScene,
-        ExplainMultiDeviceScene
+        ExplainMultiDeviceScene,
+        PlaySingleDeviceScene
     )
 
     new_dispatcher.include_routers(
