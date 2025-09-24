@@ -11,6 +11,7 @@ from app.actions.menu import MenuAction
 from app.actions.next_player import NextPlayerAction
 from app.actions.view_role import ViewRoleAction
 from app.controllers.single_device_games import SingleDeviceGamesController
+from app.data.secret_words_controller import SecretWordsController
 from app.enums.player_type import PlayerType
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.single_device_game import SingleDeviceGame
@@ -75,7 +76,7 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
         await self.edit_message(
             callback_query.message,
             message_text.format(
-                secret_word=game.secret_word,
+                secret_word=SecretWordsController.get_secret_word(game.secret_word),
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-24 19:05+0200\n"
+"POT-Creation-Date: 2025-09-25 00:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
+
+#: app./data/secret_words_controller.py:16
+msgid "data.secret_words"
+msgstr ""
 
 #: app./keyboards/inline_keyboard_factory.py:22
 msgid "button.menu"
@@ -85,7 +89,7 @@ msgstr ""
 msgid "message.play.single_device.finish"
 msgstr ""
 
-#: app./scenes/settings.py:42 app./scenes/settings.py:101
+#: app./scenes/settings.py:43 app./scenes/settings.py:102
 msgid "message.play.single_device.configure"
 msgstr ""
 
