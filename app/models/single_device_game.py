@@ -15,5 +15,4 @@ class SingleDeviceGame(AbstractModel):
 class CreateSingleDeviceGame(AbstractModel):
     user_id: UUID
     telegram_id: int
-    secret_word: str
     player_amount: int

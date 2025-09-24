@@ -13,6 +13,7 @@ from app.middlewares.user import UserMiddleware
 from app.routes.start import start_router
 from app.scenes.explain import ExplainSingleDeviceScene, ExplainMultiDeviceScene
 from app.scenes.play import PlaySingleDeviceScene
+from app.scenes.settings import SettingsSingleDeviceScene
 from app.scenes.start import StartScene
 from config import Config
 
@@ -57,6 +58,7 @@ def create_dispatcher() -> Dispatcher:
         StartScene,
         ExplainSingleDeviceScene,
         ExplainMultiDeviceScene,
+        SettingsSingleDeviceScene,
         PlaySingleDeviceScene
     )
 

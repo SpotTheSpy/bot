@@ -11,7 +11,6 @@ class SingleDeviceGamesController(APIController):
             self,
             user_id: UUID,
             telegram_id: int,
-            secret_word: str,
             player_amount: int
     ) -> SingleDeviceGame:
         response: AttributedDict = await self._post(
@@ -19,7 +18,6 @@ class SingleDeviceGamesController(APIController):
             json=CreateSingleDeviceGame(
                 user_id=user_id,
                 telegram_id=telegram_id,
-                secret_word=secret_word,
                 player_amount=player_amount
             ).to_json()
         )

@@ -24,23 +24,17 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
     async def on_enter(
             self,
             callback_query: CallbackQuery,
-            user: User,
-            state: FSMContext,
-            single_games: SingleDeviceGamesController
+            state: FSMContext
     ) -> None:
-        try:
-            game: SingleDeviceGame = await single_games.create_game(
-                user.id,
-                user.telegram_id,
-                "Apple",
-                4
-            )
-        except AlreadyInGameError:
-            await callback_query.answer(_("answer.play.already_in_game"))
-            await self.wizard.back()
+        data: Dict[str, Any] = await state.get_data()
+
+        game_json: Dict[str, Any] = data.get("game")
+        player_index: int = 0
+
+        if game_json is None:
             return
 
-        player_index: int = 0
+        game: SingleDeviceGame = SingleDeviceGame.from_json(game_json)
 
         await state.update_data(
             game=game.to_json(),

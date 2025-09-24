@@ -1,3 +1,4 @@
+import logging
 from abc import ABC
 
 from aiogram.exceptions import AiogramError
@@ -17,5 +18,5 @@ class BaseScene(Scene, ABC, state="base"):
                 text,
                 reply_markup=reply_markup
             )
-        except AiogramError:
-            pass
+        except AiogramError as e:
+            logging.exception(e)
