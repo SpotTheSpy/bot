@@ -11,9 +11,9 @@ from app.controllers.users import UsersController
 from app.middlewares.i18n import APII18nMiddleware
 from app.middlewares.user import UserMiddleware
 from app.routes.start import start_router
-from app.scenes.explain import ExplainSingleDeviceScene, ExplainMultiDeviceScene
-from app.scenes.play import PlaySingleDeviceScene
-from app.scenes.settings import SettingsSingleDeviceScene
+from app.scenes.single_device_configure import SettingsSingleDeviceScene
+from app.scenes.single_device_explain import SingleDeviceExplainScene
+from app.scenes.single_device_play import SingleDevicePlayScene
 from app.scenes.start import StartScene
 from config import Config
 
@@ -38,13 +38,13 @@ def create_dispatcher() -> Dispatcher:
     )
 
     users = UsersController(api_config)
-    single_games = SingleDeviceGamesController(api_config)
+    single_device_games = SingleDeviceGamesController(api_config)
 
     new_dispatcher = Dispatcher(
         storage=storage,
         config=config,
         users=users,
-        single_games=single_games
+        single_device_games=single_device_games
     )
 
     UserMiddleware(users).setup(new_dispatcher)
@@ -56,10 +56,9 @@ def create_dispatcher() -> Dispatcher:
 
     SceneRegistry(new_dispatcher).add(
         StartScene,
-        ExplainSingleDeviceScene,
-        ExplainMultiDeviceScene,
+        SingleDeviceExplainScene,
         SettingsSingleDeviceScene,
-        PlaySingleDeviceScene
+        SingleDevicePlayScene
     )
 
     return new_dispatcher

@@ -3,13 +3,13 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
-from app.actions.settings import SettingsAction
+from app.actions.single_device_configure import SingleDeviceConfigureAction
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.user import User
 from app.scenes.base import BaseScene
 
 
-class ExplainSingleDeviceScene(BaseScene, state="explain_single_device"):
+class SingleDeviceExplainScene(BaseScene, state="single_device_explain"):
     @on.callback_query.enter()
     async def on_enter(
             self,
@@ -17,17 +17,17 @@ class ExplainSingleDeviceScene(BaseScene, state="explain_single_device"):
     ) -> None:
         await self.edit_message(
             callback_query.message,
-            _("message.explain.single_device"),
-            reply_markup=InlineKeyboardFactory.single_device_settings_keyboard()
+            _("message.single_device.explain"),
+            reply_markup=InlineKeyboardFactory.single_device_explain_keyboard()
         )
 
-    @on.callback_query(SettingsAction.filter())
-    async def on_settings(
+    @on.callback_query(SingleDeviceConfigureAction.filter())
+    async def on_configure(
             self,
             callback_query: CallbackQuery
     ) -> None:
         await callback_query.answer()
-        await self.wizard.goto("settings_single_device")
+        await self.wizard.goto("single_device_configure")
 
     @on.callback_query(BackAction.filter())
     async def on_back(
@@ -44,7 +44,3 @@ class ExplainSingleDeviceScene(BaseScene, state="explain_single_device"):
             message: Message
     ) -> None:
         await message.delete()
-
-
-class ExplainMultiDeviceScene(BaseScene, state="explain_multi_device"):
-    pass
