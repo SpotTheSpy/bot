@@ -44,7 +44,8 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
             player_index=player_index
         )
 
-        await callback_query.message.edit_text(
+        await self.edit_message(
+            callback_query.message,
             _("message.play.single_device.prepare").format(
                 player_index=player_index + 1,
                 player_amount=game.player_amount
@@ -67,7 +68,6 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
             return
 
         game: SingleDeviceGame = SingleDeviceGame.from_json(game_json)
-        print(f"{game=}")
 
         player_type = PlayerType.SPY if player_index == game.spy_index else PlayerType.CITIZEN
 
@@ -76,7 +76,8 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
             PlayerType.SPY: _("message.play.single_device.view_role.spy")
         }.get(player_type)
 
-        await callback_query.message.edit_text(
+        await self.edit_message(
+            callback_query.message,
             message_text.format(
                 secret_word=game.secret_word,
                 player_index=player_index + 1,
@@ -104,7 +105,8 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
         player_index += 1
 
         if player_index >= game.player_amount:
-            await callback_query.message.edit_text(
+            await self.edit_message(
+                callback_query.message,
                 _("message.play.single_device.discuss"),
                 reply_markup=InlineKeyboardFactory.single_device_finish_keyboard()
             )
@@ -112,7 +114,8 @@ class PlaySingleDeviceScene(BaseScene, state="play_single_device"):
 
         await state.update_data(player_index=player_index)
 
-        await callback_query.message.edit_text(
+        await self.edit_message(
+            callback_query.message,
             _("message.play.single_device.prepare").format(
                 player_index=player_index + 1,
                 player_amount=game.player_amount

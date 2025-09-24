@@ -32,7 +32,8 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             callback_query: CallbackQuery,
             user: User
     ) -> None:
-        await callback_query.message.edit_text(
+        await self.edit_message(
+            callback_query.message,
             _("message.start.main").format(
                 first_name=user.first_name
             ),
