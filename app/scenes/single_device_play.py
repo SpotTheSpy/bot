@@ -12,7 +12,7 @@ from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
 from app.actions.single_device_view_role import SingleDeviceViewRoleAction
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.data.secret_words_controller import SecretWordsController
-from app.enums.player_type import PlayerType
+from app.enums.player_role import PlayerRole
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User
@@ -66,12 +66,12 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
 
         game: SingleDeviceGame = SingleDeviceGame.from_json(game_json)
 
-        player_type = PlayerType.SPY if player_index == game.spy_index else PlayerType.CITIZEN
+        role = PlayerRole.SPY if player_index == game.spy_index else PlayerRole.CITIZEN
 
         message_text: str = {
-            PlayerType.CITIZEN: _("message.single_device.play.view_role.citizen"),
-            PlayerType.SPY: _("message.single_device.play.view_role.spy")
-        }.get(player_type)
+            PlayerRole.CITIZEN: _("message.single_device.play.view_role.citizen"),
+            PlayerRole.SPY: _("message.single_device.play.view_role.spy")
+        }.get(role)
 
         await self.edit_message(
             callback_query.message,

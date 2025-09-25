@@ -2,6 +2,7 @@ from uuid import UUID
 
 from app.controllers.abstract import APIController, AttributedDict
 from app.exceptions.already_in_game import AlreadyInGameError
+from app.exceptions.not_found import NotFoundError
 from app.models.single_device_game import CreateSingleDeviceGame
 from app.models.single_device_game import SingleDeviceGame
 
@@ -22,7 +23,7 @@ class SingleDeviceGamesController(APIController):
             ).to_json()
         )
 
-        if response.status_code == 400:
+        if response.status_code == AlreadyInGameError.status_code:
             raise AlreadyInGameError("You are already in game")
 
         return SingleDeviceGame.from_json(response)
@@ -35,7 +36,7 @@ class SingleDeviceGamesController(APIController):
             f"single_device_games/{game_id}"
         )
 
-        if response.status_code == 404:
+        if response.status_code == NotFoundError.status_code:
             return
 
         return SingleDeviceGame.from_json(response)
@@ -48,7 +49,7 @@ class SingleDeviceGamesController(APIController):
             f"single_device_games/by_user_id/{user_id}"
         )
 
-        if response.status_code == 404:
+        if response.status_code == NotFoundError.status_code:
             return
 
         return SingleDeviceGame.from_json(response)

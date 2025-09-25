@@ -2,4 +2,4 @@ from aiogram.exceptions import AiogramError
 
 
 class APIError(AiogramError):
-    pass
+    status_code: int = 400
