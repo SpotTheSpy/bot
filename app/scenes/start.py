@@ -3,6 +3,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.choose_device import ChooseDeviceAction
+from app.actions.language import LanguageAction
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.user import User
 from app.scenes.base import BaseScene
@@ -45,6 +46,14 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
     ) -> None:
         await callback_query.answer()
         await self.wizard.goto("choose_device")
+
+    @on.callback_query(LanguageAction.filter())
+    async def on_language(
+            self,
+            callback_query: CallbackQuery
+    ) -> None:
+        await callback_query.answer()
+        await self.wizard.goto("language")
 
     @on.message()
     async def on_message(

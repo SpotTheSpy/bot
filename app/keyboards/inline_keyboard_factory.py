@@ -5,6 +5,8 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
 from app.actions.choose_device import ChooseDeviceAction
+from app.actions.choose_language import ChooseLanguageAction
+from app.actions.language import LanguageAction
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.menu import MenuAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
@@ -13,6 +15,7 @@ from app.actions.single_device_configure import SingleDeviceConfigureAction
 from app.actions.single_device_enter import SingleDeviceEnter
 from app.actions.single_device_play import SingleDevicePlayAction
 from app.actions.single_device_view_role import SingleDeviceViewRoleAction
+from app.enums.language_type import LanguageType
 from app.enums.page_turn import PageTurn
 
 
@@ -64,6 +67,12 @@ class InlineKeyboardFactory:
                         text=_("button.start.play"),
                         callback_data=ChooseDeviceAction().pack()
                     )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text=_("button.start.language"),
+                        callback_data=LanguageAction().pack()
+                    )
                 ]
             ]
         )
@@ -76,6 +85,34 @@ class InlineKeyboardFactory:
                     InlineKeyboardButton(
                         text=_("button.choose_device.single_device"),
                         callback_data=SingleDeviceEnter().pack()
+                    )
+                ],
+                [
+                    cls.back_button()
+                ]
+            ]
+        )
+
+    @classmethod
+    def choose_language_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text=_("button.language.en"),
+                        callback_data=ChooseLanguageAction(language_type=LanguageType.ENGLISH).pack()
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text=_("button.language.uk"),
+                        callback_data=ChooseLanguageAction(language_type=LanguageType.UKRAINIAN).pack()
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text=_("button.language.ru"),
+                        callback_data=ChooseLanguageAction(language_type=LanguageType.RUSSIAN).pack()
                     )
                 ],
                 [
