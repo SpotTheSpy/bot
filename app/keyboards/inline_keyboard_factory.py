@@ -4,6 +4,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
+from app.actions.choose_device import ChooseDeviceAction
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.menu import MenuAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
@@ -60,9 +61,25 @@ class InlineKeyboardFactory:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.start.play_single_device"),
+                        text=_("button.start.play"),
+                        callback_data=ChooseDeviceAction().pack()
+                    )
+                ]
+            ]
+        )
+
+    @classmethod
+    def choose_device_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text=_("button.choose_device.single_device"),
                         callback_data=SingleDeviceEnter().pack()
                     )
+                ],
+                [
+                    cls.back_button()
                 ]
             ]
         )

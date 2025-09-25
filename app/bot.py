@@ -11,6 +11,7 @@ from app.controllers.users import UsersController
 from app.middlewares.i18n import APII18nMiddleware
 from app.middlewares.user import UserMiddleware
 from app.routes.start import start_router
+from app.scenes.choose_device import ChooseDeviceScene
 from app.scenes.single_device_configure import SettingsSingleDeviceScene
 from app.scenes.single_device_explain import SingleDeviceExplainScene
 from app.scenes.single_device_play import SingleDevicePlayScene
@@ -56,6 +57,7 @@ def create_dispatcher() -> Dispatcher:
 
     SceneRegistry(new_dispatcher).add(
         StartScene,
+        ChooseDeviceScene,
         SingleDeviceExplainScene,
         SettingsSingleDeviceScene,
         SingleDevicePlayScene
