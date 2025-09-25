@@ -7,6 +7,9 @@ from app.actions.back import BackAction
 from app.actions.choose_device import ChooseDeviceAction
 from app.actions.choose_language import ChooseLanguageAction
 from app.actions.language import LanguageAction
+from app.actions.multi_device_configure import MultiDeviceConfigureAction
+from app.actions.multi_device_enter import MultiDeviceEnter
+from app.actions.multi_device_play import MultiDevicePlayAction
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.menu import MenuAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
@@ -85,6 +88,12 @@ class InlineKeyboardFactory:
                     InlineKeyboardButton(
                         text=_("button.choose_device.single_device"),
                         callback_data=SingleDeviceEnter().pack()
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text=_("button.choose_device.multi_device"),
+                        callback_data=MultiDeviceEnter().pack()
                     )
                 ],
                 [
@@ -193,6 +202,40 @@ class InlineKeyboardFactory:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(text=_("button.single_device.finish"), callback_data=SingleDeviceFinishAction().pack())
+                ],
+                [
+                    cls.back_button()
+                ]
+            ]
+        )
+
+    @classmethod
+    def multi_device_explain_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(text=_("button.got_it"), callback_data=MultiDeviceConfigureAction().pack())
+                ],
+                [
+                    cls.back_button()
+                ]
+            ]
+        )
+
+    @classmethod
+    def multi_device_configure_keyboard(
+            cls,
+            *,
+            exclude_turns: Set[PageTurn] | None = None
+    ) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(
+            inline_keyboard=[
+                cls.pagination_row(exclude_turns=exclude_turns),
+                [
+                    InlineKeyboardButton(
+                        text=_("button.multi_device.play"),
+                        callback_data=MultiDevicePlayAction().pack()
+                    )
                 ],
                 [
                     cls.back_button()

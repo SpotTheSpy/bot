@@ -6,6 +6,7 @@ from aiogram.utils.i18n import I18n
 from redis.asyncio import Redis
 
 from app.controllers.abstract import APIConfig
+from app.controllers.multi_device_games import MultiDeviceGamesController
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.controllers.users import UsersController
 from app.middlewares.i18n import APII18nMiddleware
@@ -13,7 +14,10 @@ from app.middlewares.user import UserMiddleware
 from app.routes.start import start_router
 from app.scenes.choose_device import ChooseDeviceScene
 from app.scenes.language import LanguageScene
-from app.scenes.single_device_configure import SettingsSingleDeviceScene
+from app.scenes.multi_device_configure import MultiDeviceConfigureScene
+from app.scenes.multi_device_explain import MultiDeviceExplainScene
+from app.scenes.multi_device_recruit import MultiDeviceRecruitScene
+from app.scenes.single_device_configure import SingleDeviceConfigureScene
 from app.scenes.single_device_explain import SingleDeviceExplainScene
 from app.scenes.single_device_play import SingleDevicePlayScene
 from app.scenes.start import StartScene
@@ -41,12 +45,14 @@ def create_dispatcher() -> Dispatcher:
 
     users = UsersController(api_config)
     single_device_games = SingleDeviceGamesController(api_config)
+    multi_device_games = MultiDeviceGamesController(api_config)
 
     new_dispatcher = Dispatcher(
         storage=storage,
         config=config,
         users=users,
-        single_device_games=single_device_games
+        single_device_games=single_device_games,
+        multi_device_games=multi_device_games
     )
 
     UserMiddleware(users).setup(new_dispatcher)
@@ -61,8 +67,11 @@ def create_dispatcher() -> Dispatcher:
         ChooseDeviceScene,
         LanguageScene,
         SingleDeviceExplainScene,
-        SettingsSingleDeviceScene,
-        SingleDevicePlayScene
+        SingleDeviceConfigureScene,
+        SingleDevicePlayScene,
+        MultiDeviceExplainScene,
+        MultiDeviceConfigureScene,
+        MultiDeviceRecruitScene
     )
 
     return new_dispatcher

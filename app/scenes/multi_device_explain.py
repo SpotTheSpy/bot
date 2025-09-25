@@ -3,14 +3,12 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
-from app.actions.multi_device_enter import MultiDeviceEnter
-from app.actions.single_device_enter import SingleDeviceEnter
+from app.actions.multi_device_configure import MultiDeviceConfigureAction
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
-from app.models.user import User
 from app.scenes.base import BaseScene
 
 
-class ChooseDeviceScene(BaseScene, state="choose_device"):
+class MultiDeviceExplainScene(BaseScene, state="multi_device_explain"):
     @on.callback_query.enter()
     async def on_enter(
             self,
@@ -18,34 +16,25 @@ class ChooseDeviceScene(BaseScene, state="choose_device"):
     ) -> None:
         await self.edit_message(
             callback_query.message,
-            _("message.choose_device"),
-            reply_markup=InlineKeyboardFactory.choose_device_keyboard()
+            _("message.multi_device.explain"),
+            reply_markup=InlineKeyboardFactory.multi_device_explain_keyboard()
         )
 
-    @on.callback_query(SingleDeviceEnter.filter())
-    async def on_single_device_enter(
+    @on.callback_query(MultiDeviceConfigureAction.filter())
+    async def on_configure(
             self,
             callback_query: CallbackQuery
     ) -> None:
         await callback_query.answer()
-        await self.wizard.goto("single_device_explain")
-
-    @on.callback_query(MultiDeviceEnter.filter())
-    async def on_multi_device_enter(
-            self,
-            callback_query: CallbackQuery
-    ) -> None:
-        await callback_query.answer()
-        await self.wizard.goto("multi_device_explain")
+        await self.wizard.goto("multi_device_configure")
 
     @on.callback_query(BackAction.filter())
     async def on_back(
             self,
-            callback_query: CallbackQuery,
-            user: User
+            callback_query: CallbackQuery
     ) -> None:
         await callback_query.answer()
-        await self.wizard.back(user=user)
+        await self.wizard.back()
 
     @on.message()
     async def on_message(

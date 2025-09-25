@@ -7,13 +7,9 @@ from app.models.abstract import AbstractModel
 
 class MultiDevicePlayer(AbstractModel):
     user_id: UUID
+    telegram_id: int
     first_name: str
     role: PlayerRole | None = None
-
-
-class CreateMultiDevicePlayer(AbstractModel):
-    user_id: UUID
-    first_name: str
 
 
 class MultiDeviceGame(AbstractModel):
