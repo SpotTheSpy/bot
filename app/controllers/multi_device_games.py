@@ -3,6 +3,7 @@ from uuid import UUID
 from app.controllers.abstract import APIController, AttributedDict
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
+from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
 from app.models.multi_device_game import CreateMultiDeviceGame
 from app.models.multi_device_game import MultiDeviceGame
@@ -76,6 +77,8 @@ class MultiDeviceGamesController(APIController):
             raise GameHasAlreadyStartedError("Game has already started")
         if response.status_code == AlreadyInGameError.status_code:
             raise AlreadyInGameError("You are already in game")
+        if response.status_code == InvalidPlayerAmountError.status_code:
+            raise InvalidPlayerAmountError("Game has too many players")
 
         return MultiDeviceGame.from_json(response)
 
