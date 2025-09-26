@@ -353,36 +353,46 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             open_tag_index: int = text.find(open_tag)
             close_tag_index: int = text.find(close_tag)
 
-            entity: MessageEntity | None = None
-
             match tag:
                 case "b":
-                    entity = MessageEntity(
-                        type=MessageEntityType.BOLD,
-                        offset=open_tag_index,
-                        length=close_tag_index - open_tag_index - len(open_tag)
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.BOLD,
+                            offset=open_tag_index,
+                            length=close_tag_index - open_tag_index - len(open_tag)
+                        )
                     )
                 case "join":
-                    entity = MessageEntity(
-                        type=MessageEntityType.TEXT_LINK,
-                        offset=open_tag_index,
-                        length=close_tag_index - open_tag_index - len(open_tag),
-                        url=join_url
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.TEXT_LINK,
+                            offset=open_tag_index,
+                            length=close_tag_index - open_tag_index - len(open_tag),
+                            url=join_url
+                        )
                     )
                 case "player":
-                    entity = MessageEntity(
-                        type=MessageEntityType.TEXT_MENTION,
-                        offset=open_tag_index,
-                        length=close_tag_index - open_tag_index - len(open_tag),
-                        user=AiogramUser(
-                            id=players[player_index].telegram_id,
-                            first_name=players[player_index].first_name,
-                            is_bot=False
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.TEXT_MENTION,
+                            offset=open_tag_index,
+                            length=close_tag_index - open_tag_index - len(open_tag),
+                            user=AiogramUser(
+                                id=players[player_index].telegram_id,
+                                first_name=players[player_index].first_name,
+                                is_bot=False
+                            )
+                        )
+                    )
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.ITALIC,
+                            offset=open_tag_index,
+                            length=close_tag_index - open_tag_index - len(open_tag)
                         )
                     )
                     player_index += 1
 
-            entities.append(entity)
             text = (
                     text[:open_tag_index]
                     + text[open_tag_index + len(open_tag):close_tag_index]
