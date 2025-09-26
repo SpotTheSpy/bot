@@ -69,7 +69,7 @@ class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
         await state.update_data(game=game.to_json())
 
         await callback_query.answer()
-        await self.wizard.goto("multi_device_recruit")
+        await self.wizard.goto("multi_device_play", user=user)
 
     @on.callback_query(PageTurnAction.filter())
     async def on_page_turn(

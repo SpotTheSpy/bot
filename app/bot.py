@@ -16,7 +16,7 @@ from app.scenes.choose_device import ChooseDeviceScene
 from app.scenes.language import LanguageScene
 from app.scenes.multi_device_configure import MultiDeviceConfigureScene
 from app.scenes.multi_device_explain import MultiDeviceExplainScene
-from app.scenes.multi_device_recruit import MultiDeviceRecruitScene
+from app.scenes.multi_device_play import MultiDevicePlayScene
 from app.scenes.single_device_configure import SingleDeviceConfigureScene
 from app.scenes.single_device_explain import SingleDeviceExplainScene
 from app.scenes.single_device_play import SingleDevicePlayScene
@@ -71,7 +71,7 @@ def create_dispatcher() -> Dispatcher:
         SingleDevicePlayScene,
         MultiDeviceExplainScene,
         MultiDeviceConfigureScene,
-        MultiDeviceRecruitScene
+        MultiDevicePlayScene
     )
 
     return new_dispatcher

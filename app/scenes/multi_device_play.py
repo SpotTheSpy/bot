@@ -14,6 +14,8 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
 from app.actions.menu import MenuAction
+from app.actions.multi_device_leave import MultiDeviceLeaveAction
+from app.actions.multi_device_start import MultiDeviceStartAction
 from app.controllers.multi_device_games import MultiDeviceGamesController
 from app.enums.payload_type import PayloadType
 from app.exceptions.already_in_game import AlreadyInGameError
@@ -27,14 +29,15 @@ from app.parameters import Parameters
 from app.scenes.base import BaseScene
 
 
-class MultiDeviceRecruitScene(BaseScene, state="multi_device_recruit"):
+class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
     _UPDATE_TASKS: Dict[UUID, Task] = {}
-    _RECRUIT_MESSAGES: Dict[UUID, List[Message]] = {}
+    _RECRUIT_MESSAGES: Dict[UUID, Dict[UUID, Message]] = {}
 
     @on.callback_query.enter()
     async def on_callback_query_enter(
             self,
             callback_query: CallbackQuery,
+            user: User,
             state: FSMContext,
             multi_device_games: MultiDeviceGamesController
     ) -> None:
@@ -46,12 +49,13 @@ class MultiDeviceRecruitScene(BaseScene, state="multi_device_recruit"):
         game = MultiDeviceGame.from_json(game_json)
         await state.update_data(game=game.to_json())
 
-        messages: List[Message] = [callback_query.message]
+        messages: Dict[UUID, Message] = {user.id: callback_query.message}
 
         #  noinspection PyUnreachableCode
         task: Task = asyncio.create_task(
             self._always_update_recruitment(
                 messages,
+                callback_query.bot,
                 game.game_id,
                 state,
                 multi_device_games
@@ -67,7 +71,7 @@ class MultiDeviceRecruitScene(BaseScene, state="multi_device_recruit"):
             callback_query.message,
             text,
             entities=entities,
-            reply_markup=InlineKeyboardFactory.back_keyboard()
+            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(is_host=True)
         )
 
     @on.message.enter()
@@ -116,10 +120,73 @@ class MultiDeviceRecruitScene(BaseScene, state="multi_device_recruit"):
         new_message: Message = await message.answer(
             text,
             entities=entities,
-            reply_markup=InlineKeyboardFactory.back_keyboard()
+            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard()
         )
 
-        self._RECRUIT_MESSAGES[game.game_id].append(new_message)
+        self._RECRUIT_MESSAGES[game.game_id][user.id] = new_message
+
+    @on.callback_query(MultiDeviceStartAction.filter())
+    async def on_start(
+            self,
+            callback_query: CallbackQuery,
+            state: FSMContext,
+            multi_device_games: MultiDeviceGamesController
+    ) -> None:
+        game_json: Dict[str, Any] = await state.get_value("game")
+
+        if game_json is None:
+            return
+
+        try:
+            game: MultiDeviceGame = await multi_device_games.start(UUID(game_json.get("game_id")))
+        except InvalidPlayerAmountError:
+            await callback_query.answer(_("answer.multi_device.too_few_players"))
+            return
+        except (ValueError, KeyError, NotFoundError):
+            return
+
+        text, entities = await self._create_recruitment_message(game, callback_query.bot)
+
+        await self.edit_message(
+            callback_query.message,
+            text,
+            entities=entities,
+            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(is_host=True)
+        )
+
+    @on.callback_query(MultiDeviceLeaveAction.filter())
+    async def on_leave(
+            self,
+            callback_query: CallbackQuery,
+            user: User,
+            state: FSMContext,
+            multi_device_games: MultiDeviceGamesController
+    ) -> None:
+        game_json: Dict[str, Any] = await state.get_value("game")
+
+        if game_json is None:
+            return
+
+        try:
+            game_id = UUID(game_json.get("game_id"))
+        except (ValueError, KeyError):
+            return
+
+        await multi_device_games.leave_game(
+            game_id,
+            user.id
+        )
+
+        messages: Dict[UUID, Message] = self._RECRUIT_MESSAGES[game_id]
+        if user.id in messages:
+            messages.pop(user.id)
+
+        await state.clear()
+
+        await self.edit_message(
+            callback_query.message,
+            _("message.multi_device.leave")
+        )
 
     @on.callback_query(MenuAction.filter())
     async def on_menu(
@@ -147,7 +214,8 @@ class MultiDeviceRecruitScene(BaseScene, state="multi_device_recruit"):
 
     async def _always_update_recruitment(
             self,
-            messages: List[Message],
+            messages: Dict[UUID, Message],
+            bot: Bot,
             game_id: UUID,
             state: FSMContext,
             multi_device_games: MultiDeviceGamesController
@@ -160,14 +228,14 @@ class MultiDeviceRecruitScene(BaseScene, state="multi_device_recruit"):
 
             game: MultiDeviceGame = await multi_device_games.get_game(game_id)
             await state.update_data(game=game.to_json())
-            text, entities = await self._create_recruitment_message(game, messages[0].bot)
+            text, entities = await self._create_recruitment_message(game, bot)
 
-            for message in messages:
+            for message in messages.values():
                 await self.edit_message(
                     message,
                     text,
                     entities=entities,
-                    reply_markup=InlineKeyboardFactory.back_keyboard()
+                    reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(message[0] == game.host_id)
                 )
 
     @staticmethod

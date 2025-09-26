@@ -9,7 +9,10 @@ from app.actions.choose_language import ChooseLanguageAction
 from app.actions.language import LanguageAction
 from app.actions.multi_device_configure import MultiDeviceConfigureAction
 from app.actions.multi_device_enter import MultiDeviceEnter
+from app.actions.multi_device_leave import MultiDeviceLeaveAction
+from app.actions.multi_device_finish import MultiDeviceFinishAction
 from app.actions.multi_device_play import MultiDevicePlayAction
+from app.actions.multi_device_start import MultiDeviceStartAction
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.menu import MenuAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
@@ -239,6 +242,50 @@ class InlineKeyboardFactory:
                 ],
                 [
                     cls.back_button()
+                ]
+            ]
+        )
+
+    @classmethod
+    def multi_device_recruit_keyboard(
+            cls,
+            is_host: bool = False
+    ) -> InlineKeyboardMarkup:
+        if is_host:
+            return InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        InlineKeyboardButton(
+                            text=_("button.multi_device.start"),
+                            callback_data=MultiDeviceStartAction().pack()
+                        )
+                    ],
+                    [
+                        cls.back_button()
+                    ]
+                ]
+            )
+        else:
+            return InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        InlineKeyboardButton(
+                            text=_("button.multi_device.leave"),
+                            callback_data=MultiDeviceLeaveAction().pack()
+                        )
+                    ]
+                ]
+            )
+
+    @classmethod
+    def multi_device_view_role_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text=_("button.multi_device.finish"),
+                        callback_data=MultiDeviceFinishAction().pack()
+                    )
                 ]
             ]
         )

@@ -103,5 +103,7 @@ class MultiDeviceGamesController(APIController):
             raise NotFoundError("Game with provided UUID was not found")
         if response.status_code == GameHasAlreadyStartedError.status_code:
             raise GameHasAlreadyStartedError("Game has already started")
+        if response.status_code == InvalidPlayerAmountError.status_code:
+            raise InvalidPlayerAmountError("Game has too few players")
 
         return MultiDeviceGame.from_json(response)
