@@ -249,6 +249,7 @@ class InlineKeyboardFactory:
     @classmethod
     def multi_device_recruit_keyboard(
             cls,
+            *,
             is_host: bool = False
     ) -> InlineKeyboardMarkup:
         if is_host:
@@ -278,7 +279,14 @@ class InlineKeyboardFactory:
             )
 
     @classmethod
-    def multi_device_view_role_keyboard(cls) -> InlineKeyboardMarkup:
+    def multi_device_view_role_keyboard(
+            cls,
+            *,
+            is_host: bool = False
+    ) -> InlineKeyboardMarkup | None:
+        if not is_host:
+            return
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [

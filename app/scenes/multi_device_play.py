@@ -1,6 +1,6 @@
 import asyncio
 from asyncio import Task
-from typing import Dict, Any, Never, List, Tuple
+from typing import Dict, Any, List, Tuple
 from uuid import UUID
 
 from aiogram import Bot
@@ -14,16 +14,19 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
 from app.actions.menu import MenuAction
+from app.actions.multi_device_finish import MultiDeviceFinishAction
 from app.actions.multi_device_leave import MultiDeviceLeaveAction
 from app.actions.multi_device_start import MultiDeviceStartAction
 from app.controllers.multi_device_games import MultiDeviceGamesController
+from app.data.secret_words_controller import SecretWordsController
 from app.enums.payload_type import PayloadType
+from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
-from app.models.multi_device_game import MultiDeviceGame
+from app.models.multi_device_game import MultiDeviceGame, MultiDevicePlayer
 from app.models.user import User
 from app.parameters import Parameters
 from app.scenes.base import BaseScene
@@ -101,16 +104,16 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 user.id
             )
         except NotFoundError:
-            await message.answer(_("message.multi_device.recruit.game_not_found"))
+            await message.answer(_("message.multi_device.play.recruit.game_not_found"))
             return
         except GameHasAlreadyStartedError:
-            await message.answer(_("message.multi_device.recruit.game_has_already_started"))
+            await message.answer(_("message.multi_device.play.recruit.game_has_already_started"))
             return
         except AlreadyInGameError:
-            await message.answer(_("message.multi_device.recruit.already_in_game"))
+            await message.answer(_("message.multi_device.play.recruit.already_in_game"))
             return
         except InvalidPlayerAmountError:
-            await message.answer(_("message.multi_device.recruit.too_many_players"))
+            await message.answer(_("message.multi_device.play.recruit.too_many_players"))
             return
 
         await state.update_data(game=game.to_json())
@@ -129,6 +132,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
     async def on_start(
             self,
             callback_query: CallbackQuery,
+            user: User,
             state: FSMContext,
             multi_device_games: MultiDeviceGamesController
     ) -> None:
@@ -140,19 +144,36 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         try:
             game: MultiDeviceGame = await multi_device_games.start(UUID(game_json.get("game_id")))
         except InvalidPlayerAmountError:
-            await callback_query.answer(_("answer.multi_device.too_few_players"))
+            await callback_query.answer(_("answer.multi_device.play.too_few_players"))
             return
         except (ValueError, KeyError, NotFoundError):
             return
 
-        text, entities = await self._create_recruitment_message(game, callback_query.bot)
+        await state.update_data(game=game.to_json())
 
-        await self.edit_message(
-            callback_query.message,
-            text,
-            entities=entities,
-            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(is_host=True)
-        )
+        self._UPDATE_TASKS[game.game_id].cancel()
+        self._UPDATE_TASKS.pop(game.game_id)
+
+        players: Dict[UUID, MultiDevicePlayer] = {player.user_id: player for player in game.players}
+
+        for user_id, message in self._RECRUIT_MESSAGES[game.game_id].items():
+            role: PlayerRole = players[user_id].role
+
+            if role is None:
+                return
+
+            message_text: str = {
+                PlayerRole.CITIZEN: _("message.multi_device.play.view_role.citizen"),
+                PlayerRole.SPY: _("message.multi_device.play.view_role.spy")
+            }.get(role)
+
+            await self.edit_message(
+                message,
+                message_text,
+                reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
+                    is_host=user_id == game.host_id
+                )
+            )
 
     @on.callback_query(MultiDeviceLeaveAction.filter())
     async def on_leave(
@@ -167,10 +188,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         if game_json is None:
             return
 
-        try:
-            game_id = UUID(game_json.get("game_id"))
-        except (ValueError, KeyError):
-            return
+        game_id = UUID(game_json.get("game_id"))
 
         await multi_device_games.leave_game(
             game_id,
@@ -185,8 +203,37 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
 
         await self.edit_message(
             callback_query.message,
-            _("message.multi_device.leave")
+            _("message.multi_device.play.leave")
         )
+
+        await self.wizard.exit()
+
+    @on.callback_query(MultiDeviceFinishAction.filter())
+    async def on_finish(
+            self,
+            callback_query: CallbackQuery,
+            state: FSMContext
+    ) -> None:
+        game_json: Dict[str, Any] = await state.get_value("game")
+
+        if game_json is None:
+            return
+
+        game = MultiDeviceGame.from_json(game_json)
+
+        try:
+            spy: MultiDevicePlayer = [player for player in game.players if player.role == PlayerRole.SPY][0]
+        except IndexError:
+            return
+
+        for message in self._RECRUIT_MESSAGES[game.game_id].values():
+            await self.edit_message(
+                message,
+                _("message.multi_device.play.finish").format(
+                    secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                    first_name=spy.first_name
+                )
+            )
 
     @on.callback_query(MenuAction.filter())
     async def on_menu(
@@ -219,7 +266,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             game_id: UUID,
             state: FSMContext,
             multi_device_games: MultiDeviceGamesController
-    ) -> Never:
+    ) -> None:
         while True:
             if not messages:
                 return
@@ -228,14 +275,17 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
 
             game: MultiDeviceGame = await multi_device_games.get_game(game_id)
             await state.update_data(game=game.to_json())
+
             text, entities = await self._create_recruitment_message(game, bot)
 
-            for message in messages.values():
+            for user_id, message in messages.items():
                 await self.edit_message(
                     message,
                     text,
                     entities=entities,
-                    reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(message[0] == game.host_id)
+                    reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                        is_host=user_id == game.host_id
+                    )
                 )
 
     @staticmethod
