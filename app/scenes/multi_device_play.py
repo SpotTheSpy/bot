@@ -169,7 +169,9 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
 
             await self.edit_message(
                 message,
-                message_text,
+                message_text.format(
+                    secret_word=SecretWordsController.get_secret_word(game.secret_word)
+                ),
                 reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
                     is_host=user_id == game.host_id
                 )

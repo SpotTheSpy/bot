@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-25 00:53+0200\n"
+"POT-Creation-Date: 2025-09-26 16:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,52 +21,162 @@ msgstr ""
 msgid "data.secret_words"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:21
+#: app./keyboards/inline_keyboard_factory.py:31
 msgid "button.menu"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:25
+#: app./keyboards/inline_keyboard_factory.py:35
 msgid "button.back"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:32
+#: app./keyboards/inline_keyboard_factory.py:42
 msgid "button.right"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:33
+#: app./keyboards/inline_keyboard_factory.py:43
 msgid "button.left"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:63
-msgid "button.start.play_single_device"
+#: app./keyboards/inline_keyboard_factory.py:73
+msgid "button.start.play"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:75
-msgid "button.got_it"
+#: app./keyboards/inline_keyboard_factory.py:79
+msgid "button.start.language"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:94
-msgid "button.single_device.play"
+#: app./keyboards/inline_keyboard_factory.py:92
+msgid "button.choose_device.single_device"
 msgstr ""
 
-#: app./keyboards/inline_keyboard_factory.py:110
-msgid "button.single_device.view_role"
+#: app./keyboards/inline_keyboard_factory.py:98
+msgid "button.choose_device.multi_device"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:114
+msgid "button.language.en"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:120
+msgid "button.language.uk"
 msgstr ""
 
 #: app./keyboards/inline_keyboard_factory.py:126
-msgid "button.single_device.proceed"
+msgid "button.language.ru"
 msgstr ""
 
 #: app./keyboards/inline_keyboard_factory.py:141
+#: app./keyboards/inline_keyboard_factory.py:220
+msgid "button.got_it"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:160
+msgid "button.single_device.play"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:176
+msgid "button.single_device.view_role"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:192
+msgid "button.single_device.proceed"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:207
 msgid "button.single_device.finish"
 msgstr ""
 
-#: app./scenes/single_device_configure.py:43
-#: app./scenes/single_device_configure.py:102
+#: app./keyboards/inline_keyboard_factory.py:239
+msgid "button.multi_device.play"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:260
+msgid "button.multi_device.start"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:274
+msgid "button.multi_device.leave"
+msgstr ""
+
+#: app./keyboards/inline_keyboard_factory.py:294
+msgid "button.multi_device.finish"
+msgstr ""
+
+#: app./scenes/choose_device.py:21
+msgid "message.choose_device"
+msgstr ""
+
+#: app./scenes/language.py:23 app./scenes/language.py:52
+msgid "message.language.choose"
+msgstr ""
+
+#: app./scenes/multi_device_configure.py:40
+#: app./scenes/multi_device_configure.py:98
+msgid "message.multi_device.configure"
+msgstr ""
+
+#: app./scenes/multi_device_configure.py:62
+msgid "answer.multi_device_games.already_in_game"
+msgstr ""
+
+#: app./scenes/multi_device_explain.py:19
+msgid "message.multi_device.explain"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:107
+msgid "message.multi_device.play.recruit.game_not_found"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:110
+msgid "message.multi_device.play.recruit.game_has_already_started"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:113
+msgid "message.multi_device.play.recruit.already_in_game"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:116
+msgid "message.multi_device.play.recruit.too_many_players"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:147
+msgid "answer.multi_device.play.too_few_players"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:166
+msgid "message.multi_device.play.view_role.citizen"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:167
+msgid "message.multi_device.play.view_role.spy"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:206
+msgid "message.multi_device.play.leave"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:232
+msgid "message.multi_device.play.finish"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:303
+msgid "message.multi_device.play.recruit.player.host"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:310
+msgid "message.multi_device.play.recruit.player"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:317
+msgid "message.multi_device.play.recruit"
+msgstr ""
+
+#: app./scenes/single_device_configure.py:40
+#: app./scenes/single_device_configure.py:99
 msgid "message.single_device.configure"
 msgstr ""
 
-#: app./scenes/single_device_explain.py:20
+#: app./scenes/single_device_explain.py:19
 msgid "message.single_device.explain"
 msgstr ""
 
@@ -90,7 +200,7 @@ msgstr ""
 msgid "message.single_device.play.finish"
 msgstr ""
 
-#: app./scenes/start.py:21 app./scenes/start.py:35
-msgid "message.start.main"
+#: app./scenes/start.py:22 app./scenes/start.py:36
+msgid "message.start"
 msgstr ""
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-25 00:53+0200\n"
-"PO-Revision-Date: 2025-09-25 00:55+0200\n"
+"POT-Creation-Date: 2025-09-26 16:19+0200\n"
+"PO-Revision-Date: 2025-09-26 16:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -99,48 +99,196 @@ msgstr ""
 "\"window\": \"Window\", \"wizard\": \"Wizard\", \"wolf\": \"Wolf\", "
 "\"yellow\": \"Yellow\", \"zebra\": \"Zebra\"}"
 
-#: app./keyboards/inline_keyboard_factory.py:21
+#: app./keyboards/inline_keyboard_factory.py:31
 msgid "button.menu"
 msgstr "📋 Menu"
 
-#: app./keyboards/inline_keyboard_factory.py:25
+#: app./keyboards/inline_keyboard_factory.py:35
 msgid "button.back"
 msgstr "◀️ Back"
 
-#: app./keyboards/inline_keyboard_factory.py:32
+#: app./keyboards/inline_keyboard_factory.py:42
 msgid "button.right"
 msgstr "»"
 
-#: app./keyboards/inline_keyboard_factory.py:33
+#: app./keyboards/inline_keyboard_factory.py:43
 msgid "button.left"
 msgstr "«"
 
-#: app./keyboards/inline_keyboard_factory.py:63
-msgid "button.start.play_single_device"
+#: app./keyboards/inline_keyboard_factory.py:73
+msgid "button.start.play"
+msgstr "🔍 Play SpotTheSpy"
+
+#: app./keyboards/inline_keyboard_factory.py:79
+msgid "button.start.language"
+msgstr "🌐 Language"
+
+#: app./keyboards/inline_keyboard_factory.py:92
+msgid "button.choose_device.single_device"
 msgstr "📲 Play from single device"
 
-#: app./keyboards/inline_keyboard_factory.py:75
+#: app./keyboards/inline_keyboard_factory.py:98
+msgid "button.choose_device.multi_device"
+msgstr "🌐 Play from multiple devices"
+
+#: app./keyboards/inline_keyboard_factory.py:114
+msgid "button.language.en"
+msgstr "🇬🇧 English"
+
+#: app./keyboards/inline_keyboard_factory.py:120
+msgid "button.language.uk"
+msgstr "🇺🇦 Ukrainian"
+
+#: app./keyboards/inline_keyboard_factory.py:126
+msgid "button.language.ru"
+msgstr "🇷🇺 Russian"
+
+#: app./keyboards/inline_keyboard_factory.py:141
+#: app./keyboards/inline_keyboard_factory.py:220
 msgid "button.got_it"
 msgstr "👌 Got it"
 
-#: app./keyboards/inline_keyboard_factory.py:94
+#: app./keyboards/inline_keyboard_factory.py:160
 msgid "button.single_device.play"
 msgstr "🚀 Play"
 
-#: app./keyboards/inline_keyboard_factory.py:110
+#: app./keyboards/inline_keyboard_factory.py:176
 msgid "button.single_device.view_role"
 msgstr "🔍 View role"
 
-#: app./keyboards/inline_keyboard_factory.py:126
+#: app./keyboards/inline_keyboard_factory.py:192
 msgid "button.single_device.proceed"
 msgstr "👉 Proceed"
 
-#: app./keyboards/inline_keyboard_factory.py:141
+#: app./keyboards/inline_keyboard_factory.py:207
 msgid "button.single_device.finish"
 msgstr "🔍 View results"
 
-#: app./scenes/single_device_configure.py:43
-#: app./scenes/single_device_configure.py:102
+#: app./keyboards/inline_keyboard_factory.py:239
+msgid "button.multi_device.play"
+msgstr "🚀 Play"
+
+#: app./keyboards/inline_keyboard_factory.py:260
+msgid "button.multi_device.start"
+msgstr "🚀 Start game"
+
+#: app./keyboards/inline_keyboard_factory.py:274
+msgid "button.multi_device.leave"
+msgstr "❌ Leave game"
+
+#: app./keyboards/inline_keyboard_factory.py:294
+msgid "button.multi_device.finish"
+msgstr "🔍 View results"
+
+#: app./scenes/choose_device.py:21
+msgid "message.choose_device"
+msgstr "📱 <b>Choose the game format</b>"
+
+#: app./scenes/language.py:23 app./scenes/language.py:52
+msgid "message.language.choose"
+msgstr "🌐 <b>Choose language</b>"
+
+#: app./scenes/multi_device_configure.py:40
+#: app./scenes/multi_device_configure.py:98
+msgid "message.multi_device.configure"
+msgstr ""
+"⚙️ <b>Configure player count</b>\n"
+"\n"
+"Use the buttons to adjust the number of players participating. Make sure "
+"all participants are present and ready before starting.\n"
+"\n"
+"Current player count: <b>{player_amount}</b>"
+
+#: app./scenes/multi_device_configure.py:62
+msgid "answer.multi_device_games.already_in_game"
+msgstr "You are already in game"
+
+#: app./scenes/multi_device_explain.py:19
+msgid "message.multi_device.explain"
+msgstr "📝 <b>How to play</b>"
+
+#: app./scenes/multi_device_play.py:107
+msgid "message.multi_device.play.recruit.game_not_found"
+msgstr "❌ This game was not found"
+
+#: app./scenes/multi_device_play.py:110
+msgid "message.multi_device.play.recruit.game_has_already_started"
+msgstr "❌ This game has already started"
+
+#: app./scenes/multi_device_play.py:113
+msgid "message.multi_device.play.recruit.already_in_game"
+msgstr "❌ You are already in game"
+
+#: app./scenes/multi_device_play.py:116
+msgid "message.multi_device.play.recruit.too_many_players"
+msgstr "❌ This game has too many players"
+
+#: app./scenes/multi_device_play.py:147
+msgid "answer.multi_device.play.too_few_players"
+msgstr "Please wait for more players to join"
+
+#: app./scenes/multi_device_play.py:166
+msgid "message.multi_device.play.view_role.citizen"
+msgstr ""
+"👨 <b>You are a Citizen</b>\n"
+"\n"
+"Your goal is to detect the Spy without giving away the secret word. Here "
+"is the secret word shared by all Citizens:\n"
+"\n"
+"<b>{secret_word}</b>\n"
+"\n"
+"During the game, answer questions carefully to help identify the Spy, but "
+"avoid revealing too much information."
+
+#: app./scenes/multi_device_play.py:167
+msgid "message.multi_device.play.view_role.spy"
+msgstr ""
+"🕵️‍♂️ <b>You are the Spy</b>\n"
+"\n"
+"You must blend in and try to guess the secret word without revealing your "
+"identity.\n"
+"Pay attention to other players’ answers and ask questions to gather "
+"clues.\n"
+"\n"
+"Remember, do not reveal that you are the Spy! The other players are trying "
+"to find you."
+
+#: app./scenes/multi_device_play.py:206
+msgid "message.multi_device.play.leave"
+msgstr "❌ <b>You left the game</b>"
+
+#: app./scenes/multi_device_play.py:232
+msgid "message.multi_device.play.finish"
+msgstr ""
+"🎭 <b>Game Over!</b>\n"
+"\n"
+"Player <b>{first_name}</b> was the Spy!\n"
+"The secret word that Citizens had was: <b>{secret_word}</b>.\n"
+"\n"
+"Thank you for playing!"
+
+#: app./scenes/multi_device_play.py:303
+msgid "message.multi_device.play.recruit.player.host"
+msgstr "<player>{index}. {first_name} (Host)</player>"
+
+#: app./scenes/multi_device_play.py:310
+msgid "message.multi_device.play.recruit.player"
+msgstr "<player>{index}. {first_name}</player>"
+
+#: app./scenes/multi_device_play.py:317
+msgid "message.multi_device.play.recruit"
+msgstr ""
+"🔍 <b>Recruitment for SpotTheSpy</b>\n"
+"\n"
+"To join, <join>click here</join>.\n"
+"\n"
+"<b>Players:</b>\n"
+"{players}\n"
+"\n"
+"<b>{player_amount}/{max_player_amount}</b>"
+
+#: app./scenes/single_device_configure.py:40
+#: app./scenes/single_device_configure.py:99
 msgid "message.single_device.configure"
 msgstr ""
 "⚙️ <b>Configure player count</b>\n"
@@ -150,7 +298,7 @@ msgstr ""
 "\n"
 "Current player count: <b>{player_amount}</b>"
 
-#: app./scenes/single_device_explain.py:20
+#: app./scenes/single_device_explain.py:19
 msgid "message.single_device.explain"
 msgstr ""
 "📝 <b>How to play</b>\n"
@@ -226,8 +374,8 @@ msgstr ""
 "\n"
 "Thank you for playing!"
 
-#: app./scenes/start.py:21 app./scenes/start.py:35
-msgid "message.start.main"
+#: app./scenes/start.py:22 app./scenes/start.py:36
+msgid "message.start"
 msgstr ""
 "🔍 <b>Welcome to SpotTheSpy!</b>\n"
 "\n"
