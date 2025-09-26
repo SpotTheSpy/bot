@@ -299,97 +299,94 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         for index, player in enumerate(game.players):
             if player.user_id == game.host_id:
                 players.append(
-                    _("message.multi_device.play.recruit.player.host").format(
+                    "<player>{index}. {first_name} (Host)</player>".format(
                         index=index + 1,
                         first_name=player.first_name
                     )
                 )
             else:
                 players.append(
-                    _("message.multi_device.play.recruit.player").format(
+                    "<player>{index}. {first_name}</player>".format(
                         index=index + 1,
                         first_name=player.first_name
                     )
                 )
 
-        message_text: str = _("message.multi_device.play.recruit").format(
-            players="\n".join(players),
-            player_amount=len(game.players),
-            max_player_amount=game.player_amount
+        return cls._get_entities(
+            "<b>Recruiting</b>\n\n<join>Click to Join Game</join>\n\n{players}\n\n<b>{player_amount}/{max_player_amount}</b>".format(
+                players="\n".join(players),
+                player_amount=len(game.players),
+                max_player_amount=game.player_amount
+            ),
+            await create_start_link(bot, f"{PayloadType.JOIN}:{game.game_id}", encode=True),
+            game.players
         )
-
-        entities: List[MessageEntity] = []
-
-        entities.extend(
-            cls._get_entities(
-                message_text,
-                "b",
-                type=MessageEntityType.BOLD
-            )
-        )
-        entities.extend(
-            cls._get_entities(
-                message_text,
-                "join",
-                type=MessageEntityType.TEXT_LINK,
-                url=await create_start_link(bot, f"{PayloadType.JOIN}:{game.game_id}", encode=True)
-            )
-        )
-        for index, player in enumerate(game.players):
-            entities.extend(
-                cls._get_entities(
-                    message_text,
-                    tag="player",
-                    only_index=index,
-                    type=MessageEntityType.TEXT_MENTION,
-                    user=AiogramUser(
-                        id=player.telegram_id,
-                        first_name=player.first_name,
-                        is_bot=False
-                    )
-                )
-            )
-
-        return message_text, entities
 
     @staticmethod
     def _get_entities(
             text: str,
-            tag: str,
-            *,
-            only_index: int | None = None,
-            **kwargs: Any
-    ) -> List[MessageEntity]:
-        is_only_index: bool = only_index is not None
-        only_index: int = 0 if is_only_index else only_index
-
-        if only_index < 0:
-            return []
-
-        open_tag: str = f"<{tag}>"
-        close_tag: str = f"</{tag}>"
-
+            join_url: str,
+            players: List[MultiDevicePlayer]
+    ) -> Tuple[str, List[MessageEntity]]:
         entities: List[MessageEntity] = []
+        tags_to_find: List[str] = ["b", "join", "player"]
+
+        player_index: int = 0
 
         while True:
-            open_tag_index: int = 0
-            close_tag_index: int = 0
+            indices: List[int] = [text.find(f"<{tag}>") for tag in tags_to_find]
 
-            for _ in range(only_index + 1):
-                open_tag_index: int = text.find(open_tag)
-                close_tag_index: int = text.find(close_tag)
+            closest_tag_index: int = -1
+            for index in indices:
+                if index == -1:
+                    continue
+                if closest_tag_index == -1 or index < closest_tag_index:
+                    closest_tag_index = index
 
-                text = text[close_tag_index + len(close_tag):]
-
-            if open_tag_index == -1 or close_tag_index == -1:
+            if closest_tag_index == -1:
                 break
 
-            entities.append(
-                MessageEntity(
-                    offset=open_tag_index,
-                    length=close_tag_index - open_tag_index - len(open_tag),
-                    **kwargs
-                )
+            tag: str = tags_to_find[indices.index(closest_tag_index)]
+            open_tag: str = f"<{tag}>"
+            close_tag: str = f"</{tag}>"
+
+            open_tag_index: int = text.find(open_tag)
+            close_tag_index: int = text.find(close_tag)
+
+            entity: MessageEntity | None = None
+
+            match tag:
+                case "b":
+                    entity = MessageEntity(
+                        type=MessageEntityType.BOLD,
+                        offset=open_tag_index,
+                        length=close_tag_index - open_tag_index - len(open_tag)
+                    )
+                case "join":
+                    entity = MessageEntity(
+                        type=MessageEntityType.TEXT_LINK,
+                        offset=open_tag_index,
+                        length=close_tag_index - open_tag_index - len(open_tag),
+                        url=join_url
+                    )
+                case "player":
+                    entity = MessageEntity(
+                        type=MessageEntityType.TEXT_MENTION,
+                        offset=open_tag_index,
+                        length=close_tag_index - open_tag_index - len(open_tag),
+                        user=AiogramUser(
+                            id=players[player_index].telegram_id,
+                            first_name=players[player_index].first_name,
+                            is_bot=False
+                        )
+                    )
+                    player_index += 1
+
+            entities.append(entity)
+            text = (
+                    text[:open_tag_index]
+                    + text[open_tag_index + len(open_tag):close_tag_index]
+                    + text[close_tag_index + len(close_tag):]
             )
 
-        return entities
+        return text, entities
