@@ -19,7 +19,7 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
         await message.delete()
 
         await message.answer(
-            _("message.start.main").format(
+            _("message.start").format(
                 first_name=user.first_name
             ),
             reply_markup=InlineKeyboardFactory.start_keyboard()
@@ -33,7 +33,7 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
     ) -> None:
         await self.edit_message(
             callback_query.message,
-            _("message.start.main").format(
+            _("message.start").format(
                 first_name=user.first_name
             ),
             reply_markup=InlineKeyboardFactory.start_keyboard()

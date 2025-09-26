@@ -232,7 +232,8 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 _("message.multi_device.play.finish").format(
                     secret_word=SecretWordsController.get_secret_word(game.secret_word),
                     first_name=spy.first_name
-                )
+                ),
+                reply_markup=InlineKeyboardFactory.menu_keyboard()
             )
 
     @on.callback_query(MenuAction.filter())
@@ -299,21 +300,21 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         for index, player in enumerate(game.players):
             if player.user_id == game.host_id:
                 players.append(
-                    "<player>{index}. {first_name} (Host)</player>".format(
+                    _("message.multi_device.play.recruit.player.host").format(
                         index=index + 1,
                         first_name=player.first_name
                     )
                 )
             else:
                 players.append(
-                    "<player>{index}. {first_name}</player>".format(
+                    _("message.multi_device.play.recruit.player").format(
                         index=index + 1,
                         first_name=player.first_name
                     )
                 )
 
         return cls._get_entities(
-            "<b>Recruiting</b>\n\n<join>Click to Join Game</join>\n\n{players}\n\n<b>{player_amount}/{max_player_amount}</b>".format(
+            _("message.multi_device.play.recruit").format(
                 players="\n".join(players),
                 player_amount=len(game.players),
                 max_player_amount=game.player_amount
