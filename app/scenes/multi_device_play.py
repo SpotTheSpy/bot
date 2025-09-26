@@ -229,12 +229,18 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             return
 
         for message in self._RECRUIT_MESSAGES[game.game_id].values():
-            await self.edit_message(
-                message,
+            message_text, entities = self._get_entities(
                 _("message.multi_device.play.finish").format(
                     secret_word=SecretWordsController.get_secret_word(game.secret_word),
                     first_name=spy.first_name
                 ),
+                players=[spy]
+            )
+
+            await self.edit_message(
+                message,
+                message_text,
+                entities=entities,
                 reply_markup=InlineKeyboardFactory.menu_keyboard()
             )
 
@@ -321,15 +327,16 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 player_amount=len(game.players),
                 max_player_amount=game.player_amount
             ),
-            await create_start_link(bot, f"{PayloadType.JOIN}:{game.game_id}", encode=True),
-            game.players
+            join_url=await create_start_link(bot, f"{PayloadType.JOIN}:{game.game_id}", encode=True),
+            players=game.players
         )
 
     @staticmethod
     def _get_entities(
             text: str,
-            join_url: str,
-            players: List[MultiDevicePlayer]
+            *,
+            join_url: str | None = None,
+            players: List[MultiDevicePlayer] | None = None
     ) -> Tuple[str, List[MessageEntity]]:
         entities: List[MessageEntity] = []
         tags_to_find: List[str] = ["b", "join", "player"]
@@ -361,7 +368,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     entities.append(
                         MessageEntity(
                             type=MessageEntityType.BOLD,
-                            offset=open_tag_index,
+                            offset=open_tag_index + 1,
                             length=close_tag_index - open_tag_index - len(open_tag)
                         )
                     )
@@ -369,7 +376,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     entities.append(
                         MessageEntity(
                             type=MessageEntityType.TEXT_LINK,
-                            offset=open_tag_index,
+                            offset=open_tag_index + 1,
                             length=close_tag_index - open_tag_index - len(open_tag),
                             url=join_url
                         )
@@ -378,7 +385,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     entities.append(
                         MessageEntity(
                             type=MessageEntityType.TEXT_MENTION,
-                            offset=open_tag_index,
+                            offset=open_tag_index + 1,
                             length=close_tag_index - open_tag_index - len(open_tag),
                             user=AiogramUser(
                                 id=players[player_index].telegram_id,
@@ -390,7 +397,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     entities.append(
                         MessageEntity(
                             type=MessageEntityType.ITALIC,
-                            offset=open_tag_index,
+                            offset=open_tag_index + 1,
                             length=close_tag_index - open_tag_index - len(open_tag)
                         )
                     )
@@ -401,5 +408,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     + text[open_tag_index + len(open_tag):close_tag_index]
                     + text[close_tag_index + len(close_tag):]
             )
+            print(text)
+            print(entities)
 
         return text, entities
