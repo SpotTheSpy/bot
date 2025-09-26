@@ -1,6 +1,6 @@
 import asyncio
 from asyncio import Task
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Never
 from uuid import UUID
 
 from aiogram import Bot
@@ -266,7 +266,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             game_id: UUID,
             state: FSMContext,
             multi_device_games: MultiDeviceGamesController
-    ) -> None:
+    ) -> Never:
         while True:
             if not messages:
                 return
@@ -288,44 +288,108 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     )
                 )
 
-    @staticmethod
+    @classmethod
     async def _create_recruitment_message(
+            cls,
             game: MultiDeviceGame,
             bot: Bot
     ) -> Tuple[str, List[MessageEntity]]:
-        player_strings: List[str] = []
+        players: List[str] = []
 
         for index, player in enumerate(game.players):
             if player.user_id == game.host_id:
-                player_strings.append(f"{index + 1}. {player.first_name} (Host)")
+                players.append(
+                    _("message.multi_device.play.recruit.player.host").format(
+                        index=index + 1,
+                        first_name=player.first_name
+                    )
+                )
             else:
-                player_strings.append(f"{index + 1}. {player.first_name}")
+                players.append(
+                    _("message.multi_device.play.recruit.player").format(
+                        index=index + 1,
+                        first_name=player.first_name
+                    )
+                )
 
-        text: str = f"""
-        new game\n\njoin\n\n{"\n".join(player_strings)}\n\nPlayers: {len(game.players)}/{game.player_amount}
-        """
+        message_text: str = _("message.multi_device.play.recruit").format(
+            players="\n".join(players),
+            player_amount=len(game.players),
+            max_player_amount=game.player_amount
+        )
 
-        entities: List[MessageEntity] = [
-            MessageEntity(
-                type=MessageEntityType.TEXT_LINK,
-                url=await create_start_link(bot, f"{PayloadType.JOIN}:{game.game_id}", encode=True),
-                offset=text.find("join"),
-                length=4
+        entities: List[MessageEntity] = []
+
+        entities.extend(
+            cls._get_entities(
+                message_text,
+                "b",
+                type=MessageEntityType.BOLD
             )
-        ]
-
-        for player, player_string in zip(game.players, player_strings):
-            entities.append(
-                MessageEntity(
+        )
+        entities.extend(
+            cls._get_entities(
+                message_text,
+                "join",
+                type=MessageEntityType.TEXT_LINK,
+                url=await create_start_link(bot, f"{PayloadType.JOIN}:{game.game_id}", encode=True)
+            )
+        )
+        for index, player in enumerate(game.players):
+            entities.extend(
+                cls._get_entities(
+                    message_text,
+                    tag="player",
+                    only_index=index,
                     type=MessageEntityType.TEXT_MENTION,
                     user=AiogramUser(
                         id=player.telegram_id,
                         first_name=player.first_name,
                         is_bot=False
-                    ),
-                    offset=text.find(player_string),
-                    length=len(player_string)
+                    )
                 )
             )
 
-        return text, entities
+        return message_text, entities
+
+    @staticmethod
+    def _get_entities(
+            text: str,
+            tag: str,
+            *,
+            only_index: int | None = None,
+            **kwargs: Any
+    ) -> List[MessageEntity]:
+        is_only_index: bool = only_index is not None
+        only_index: int = 0 if is_only_index else only_index
+
+        if only_index < 0:
+            return []
+
+        open_tag: str = f"<{tag}>"
+        close_tag: str = f"</{tag}>"
+
+        entities: List[MessageEntity] = []
+
+        while True:
+            open_tag_index: int = 0
+            close_tag_index: int = 0
+
+            for _ in range(only_index + 1):
+                open_tag_index: int = text.find(open_tag)
+                close_tag_index: int = text.find(close_tag)
+
+                text = text[close_tag_index + len(close_tag):]
+
+            if open_tag_index == -1 or close_tag_index == -1:
+                break
+
+            entities.append(
+                MessageEntity(
+                    offset=open_tag_index,
+                    length=close_tag_index - open_tag_index - len(open_tag),
+                    **kwargs
+                )
+            )
+
+        return entities
