@@ -2,6 +2,7 @@ from typing import List, Set
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.actions.back import BackAction
 from app.actions.choose_device import ChooseDeviceAction
@@ -13,8 +14,10 @@ from app.actions.multi_device_leave import MultiDeviceLeaveAction
 from app.actions.multi_device_finish import MultiDeviceFinishAction
 from app.actions.multi_device_play import MultiDevicePlayAction
 from app.actions.multi_device_start import MultiDeviceStartAction
+from app.actions.single_device_choose_player_amount import SingleDeviceChoosePlayerAmountAction
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.menu import MenuAction
+from app.actions.single_device_play_again import SingleDevicePlayAgainAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
 from app.actions.page_turn import PageTurnAction
 from app.actions.single_device_configure import SingleDeviceConfigureAction
@@ -150,22 +153,38 @@ class InlineKeyboardFactory:
     def single_device_configure_keyboard(
             cls,
             *,
-            exclude_turns: Set[PageTurn] | None = None
+            min_player_amount: int,
+            max_player_amount: int,
+            selected_player_amount: int | None = None
     ) -> InlineKeyboardMarkup:
-        return InlineKeyboardMarkup(
-            inline_keyboard=[
-                cls.pagination_row(exclude_turns=exclude_turns),
-                [
-                    InlineKeyboardButton(
-                        text=_("button.single_device.play"),
-                        callback_data=SingleDevicePlayAction().pack()
-                    )
-                ],
-                [
-                    cls.back_button()
-                ]
-            ]
+        builder = InlineKeyboardBuilder()
+
+        for player_amount in range(min_player_amount, max_player_amount + 1):
+            if player_amount == selected_player_amount:
+                button_text: str = _("button.single_device.configure.player_amount.selected").format(
+                    player_amount=player_amount
+                )
+            else:
+                button_text: str = _("button.single_device.configure.player_amount").format(
+                    player_amount=player_amount
+                )
+
+            builder.button(
+                text=button_text,
+                callback_data=SingleDeviceChoosePlayerAmountAction(player_amount=player_amount).pack()
+            )
+
+        builder.adjust(3, repeat=True)
+
+        builder.row(
+            InlineKeyboardButton(
+                text=_("button.single_device.play"),
+                callback_data=SingleDevicePlayAction().pack()
+            )
         )
+        builder.row(cls.back_button())
+
+        return builder.as_markup()
 
     @classmethod
     def single_device_view_role_keyboard(cls) -> InlineKeyboardMarkup:
@@ -208,6 +227,22 @@ class InlineKeyboardFactory:
                 ],
                 [
                     cls.back_button()
+                ]
+            ]
+        )
+
+    @classmethod
+    def single_device_play_again_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text=_("button.single_device.play_again"),
+                        callback_data=SingleDevicePlayAgainAction().pack()
+                    )
+                ],
+                [
+                    cls.menu_button()
                 ]
             ]
         )

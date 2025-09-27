@@ -1,17 +1,12 @@
-from typing import Set
-
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
-from app.actions.page_turn import PageTurnAction
+from app.actions.single_device_choose_player_amount import SingleDeviceChoosePlayerAmountAction
 from app.actions.single_device_play import SingleDevicePlayAction
-from app.controllers.single_device_games import SingleDeviceGamesController
-from app.enums.page_turn import PageTurn
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
-from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User
 from app.parameters import Parameters
 from app.scenes.base import BaseScene
@@ -22,25 +17,22 @@ class SingleDeviceConfigureScene(BaseScene, state="single_device_configure"):
     async def on_enter(
             self,
             callback_query: CallbackQuery,
-            state: FSMContext
+            state: FSMContext,
+            player_amount: int | None = None
     ) -> None:
-        player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
+        if player_amount is None:
+            player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
 
         await state.update_data(player_amount=player_amount)
 
-        exclude_turns: Set[PageTurn] = set()
-
-        if player_amount <= Parameters.MIN_PLAYER_AMOUNT:
-            exclude_turns.add(PageTurn.LEFT)
-        if player_amount >= Parameters.MAX_PLAYER_AMOUNT:
-            exclude_turns.add(PageTurn.RIGHT)
-
         await self.edit_message(
             callback_query.message,
-            _("message.single_device.configure").format(
-                player_amount=player_amount
-            ),
-            reply_markup=InlineKeyboardFactory.single_device_configure_keyboard(exclude_turns=exclude_turns)
+            _("message.single_device.configure"),
+            reply_markup=InlineKeyboardFactory.single_device_configure_keyboard(
+                min_player_amount=Parameters.MIN_PLAYER_AMOUNT,
+                max_player_amount=Parameters.MAX_PLAYER_AMOUNT,
+                selected_player_amount=player_amount
+            )
         )
 
     @on.callback_query(SingleDevicePlayAction.filter())
@@ -48,58 +40,38 @@ class SingleDeviceConfigureScene(BaseScene, state="single_device_configure"):
             self,
             callback_query: CallbackQuery,
             user: User,
-            state: FSMContext,
-            single_device_games: SingleDeviceGamesController
-    ) -> None:
-        player_amount: int | None = await state.get_value("player_amount")
-
-        if player_amount is None:
-            player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
-
-        game: SingleDeviceGame | None = await single_device_games.get_game_by_user_id(user.id)
-
-        if game is not None:
-            await single_device_games.remove_game(game.game_id)
-
-        game: SingleDeviceGame = await single_device_games.create_game(
-            user.id,
-            user.telegram_id,
-            player_amount
-        )
-
-        await state.update_data(game=game.to_json())
-
-        await callback_query.answer()
-        await self.wizard.goto("single_device_play")
-
-    @on.callback_query(PageTurnAction.filter())
-    async def on_page_turn(
-            self,
-            callback_query: CallbackQuery,
-            callback_data: PageTurnAction,
             state: FSMContext
     ) -> None:
-        player_amount: int | None = await state.get_value("player_amount")
+        player_amount: int = await state.get_value("player_amount")
 
         if player_amount is None:
             player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
 
-        player_amount += callback_data.turn
-        await state.update_data(player_amount=player_amount)
+        await callback_query.answer()
 
-        exclude_turns: Set[PageTurn] = set()
+        await self.wizard.goto(
+            "single_device_play",
+            user=user,
+            player_amount=player_amount
+        )
 
-        if player_amount <= Parameters.MIN_PLAYER_AMOUNT:
-            exclude_turns.add(PageTurn.LEFT)
-        if player_amount >= Parameters.MAX_PLAYER_AMOUNT:
-            exclude_turns.add(PageTurn.RIGHT)
+    @on.callback_query(SingleDeviceChoosePlayerAmountAction.filter())
+    async def on_choose_player_amount(
+            self,
+            callback_query: CallbackQuery,
+            callback_data: SingleDeviceChoosePlayerAmountAction,
+            state: FSMContext
+    ) -> None:
+        await state.update_data(player_amount=callback_data.player_amount)
 
         await self.edit_message(
             callback_query.message,
-            _("message.single_device.configure").format(
-                player_amount=player_amount
-            ),
-            reply_markup=InlineKeyboardFactory.single_device_configure_keyboard(exclude_turns=exclude_turns)
+            _("message.single_device.configure"),
+            reply_markup=InlineKeyboardFactory.single_device_configure_keyboard(
+                min_player_amount=Parameters.MIN_PLAYER_AMOUNT,
+                max_player_amount=Parameters.MAX_PLAYER_AMOUNT,
+                selected_player_amount=callback_data.player_amount
+            )
         )
 
     @on.callback_query(BackAction.filter())

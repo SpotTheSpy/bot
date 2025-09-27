@@ -29,4 +29,7 @@ class BaseScene(Scene, ABC, state="base"):
                 **params
             )
         except AiogramError:
-            pass
+            if reply_markup is None:
+                return
+
+            await message.edit_reply_markup(reply_markup=reply_markup)

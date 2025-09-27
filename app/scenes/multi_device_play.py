@@ -408,7 +408,5 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     + text[open_tag_index + len(open_tag):close_tag_index]
                     + text[close_tag_index + len(close_tag):]
             )
-            print(text)
-            print(entities)
 
         return text, entities

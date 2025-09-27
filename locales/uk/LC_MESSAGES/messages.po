@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-26 16:19+0200\n"
+"POT-Creation-Date: 2025-09-27 15:25+0200\n"
 "PO-Revision-Date: 2025-09-25 00:57+0200\n"
 "Last-Translator: \n"
 "Language: uk\n"
@@ -103,94 +103,109 @@ msgstr ""
 "\"Чарівник\", \"wolf\": \"Вовк\", \"yellow\": \"Жовтий\", \"zebra\": "
 "\"Зебра\"}"
 
-#: app./keyboards/inline_keyboard_factory.py:31
+#: app./keyboards/inline_keyboard_factory.py:34
 msgid "button.menu"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:35
+#: app./keyboards/inline_keyboard_factory.py:38
 msgid "button.back"
 msgstr "◀️ Назад"
 
-#: app./keyboards/inline_keyboard_factory.py:42
+#: app./keyboards/inline_keyboard_factory.py:45
 msgid "button.right"
 msgstr "»"
 
-#: app./keyboards/inline_keyboard_factory.py:43
+#: app./keyboards/inline_keyboard_factory.py:46
 msgid "button.left"
 msgstr "«"
 
-#: app./keyboards/inline_keyboard_factory.py:73
+#: app./keyboards/inline_keyboard_factory.py:76
 #, fuzzy
 msgid "button.start.play"
 msgstr "📲 Грати на одному пристрої"
 
-#: app./keyboards/inline_keyboard_factory.py:79
+#: app./keyboards/inline_keyboard_factory.py:82
 #, fuzzy
 msgid "button.start.language"
 msgstr "📲 Грати на одному пристрої"
 
-#: app./keyboards/inline_keyboard_factory.py:92
+#: app./keyboards/inline_keyboard_factory.py:95
 #, fuzzy
 msgid "button.choose_device.single_device"
 msgstr "🚀 Грати"
 
-#: app./keyboards/inline_keyboard_factory.py:98
+#: app./keyboards/inline_keyboard_factory.py:101
 #, fuzzy
 msgid "button.choose_device.multi_device"
 msgstr "🔍 Подивитися роль"
 
-#: app./keyboards/inline_keyboard_factory.py:114
+#: app./keyboards/inline_keyboard_factory.py:117
 #, fuzzy
 msgid "button.language.en"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:120
+#: app./keyboards/inline_keyboard_factory.py:123
 #, fuzzy
 msgid "button.language.uk"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:126
+#: app./keyboards/inline_keyboard_factory.py:129
 #, fuzzy
 msgid "button.language.ru"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:141
-#: app./keyboards/inline_keyboard_factory.py:220
+#: app./keyboards/inline_keyboard_factory.py:144
+#: app./keyboards/inline_keyboard_factory.py:251
 msgid "button.got_it"
 msgstr "👌 Зрозумів"
 
-#: app./keyboards/inline_keyboard_factory.py:160
+#: app./keyboards/inline_keyboard_factory.py:164
+#, fuzzy
+msgid "button.single_device.configure.player_amount.selected"
+msgstr "👉 Далі"
+
+#: app./keyboards/inline_keyboard_factory.py:166
+#, fuzzy
+msgid "button.single_device.configure.player_amount"
+msgstr "🚀 Грати"
+
+#: app./keyboards/inline_keyboard_factory.py:177
 msgid "button.single_device.play"
 msgstr "🚀 Грати"
 
-#: app./keyboards/inline_keyboard_factory.py:176
+#: app./keyboards/inline_keyboard_factory.py:191
 msgid "button.single_device.view_role"
 msgstr "🔍 Подивитися роль"
 
-#: app./keyboards/inline_keyboard_factory.py:192
+#: app./keyboards/inline_keyboard_factory.py:207
 msgid "button.single_device.proceed"
 msgstr "👉 Далі"
 
-#: app./keyboards/inline_keyboard_factory.py:207
+#: app./keyboards/inline_keyboard_factory.py:222
 msgid "button.single_device.finish"
 msgstr "🔍 Переглянути результати"
 
-#: app./keyboards/inline_keyboard_factory.py:239
+#: app./keyboards/inline_keyboard_factory.py:236
+#, fuzzy
+msgid "button.single_device.play_again"
+msgstr "🚀 Грати"
+
+#: app./keyboards/inline_keyboard_factory.py:270
 #, fuzzy
 msgid "button.multi_device.play"
 msgstr "🚀 Грати"
 
-#: app./keyboards/inline_keyboard_factory.py:260
+#: app./keyboards/inline_keyboard_factory.py:291
 #, fuzzy
 msgid "button.multi_device.start"
 msgstr "🚀 Грати"
 
-#: app./keyboards/inline_keyboard_factory.py:274
+#: app./keyboards/inline_keyboard_factory.py:305
 #, fuzzy
 msgid "button.multi_device.leave"
 msgstr "🚀 Грати"
 
-#: app./keyboards/inline_keyboard_factory.py:294
+#: app./keyboards/inline_keyboard_factory.py:325
 #, fuzzy
 msgid "button.multi_device.finish"
 msgstr "🔍 Переглянути результати"
@@ -321,7 +336,7 @@ msgstr ""
 "\n"
 "<b>Гравець {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:206
+#: app./scenes/multi_device_play.py:208
 #, fuzzy
 msgid "message.multi_device.play.leave"
 msgstr ""
@@ -333,7 +348,7 @@ msgstr ""
 "\n"
 "<b>Гравець {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:232
+#: app./scenes/multi_device_play.py:233
 #, fuzzy
 msgid "message.multi_device.play.finish"
 msgstr ""
@@ -344,7 +359,7 @@ msgstr ""
 "\n"
 "Дякуємо за гру!"
 
-#: app./scenes/multi_device_play.py:303
+#: app./scenes/multi_device_play.py:311
 #, fuzzy
 msgid "message.multi_device.play.recruit.player.host"
 msgstr ""
@@ -356,7 +371,7 @@ msgstr ""
 "\n"
 "<b>Гравець {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:310
+#: app./scenes/multi_device_play.py:318
 #, fuzzy
 msgid "message.multi_device.play.recruit.player"
 msgstr ""
@@ -368,7 +383,7 @@ msgstr ""
 "\n"
 "<b>Гравець {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:317
+#: app./scenes/multi_device_play.py:325
 #, fuzzy
 msgid "message.multi_device.play.recruit"
 msgstr ""
@@ -380,8 +395,8 @@ msgstr ""
 "\n"
 "<b>Гравець {player_index}/{player_amount}</b>"
 
-#: app./scenes/single_device_configure.py:40
-#: app./scenes/single_device_configure.py:99
+#: app./scenes/single_device_configure.py:30
+#: app./scenes/single_device_configure.py:69
 msgid "message.single_device.configure"
 msgstr ""
 "⚙️ <b>Налаштуйте кількість гравців</b>\n"
@@ -404,7 +419,7 @@ msgstr ""
 "Звертайте увагу на інструкції на екрані та пам’ятайте: <b>тримайте свою "
 "роль і слово в секреті</b> до кінця гри!"
 
-#: app./scenes/single_device_play.py:46 app./scenes/single_device_play.py:116
+#: app./scenes/single_device_play.py:47 app./scenes/single_device_play.py:115
 msgid "message.single_device.play.prepare"
 msgstr ""
 "🤫 <b>Приготуйтеся побачити свою роль</b>\n"
@@ -447,7 +462,7 @@ msgstr ""
 "\n"
 "<b>Гравець {player_index}/{player_amount}</b>"
 
-#: app./scenes/single_device_play.py:107
+#: app./scenes/single_device_play.py:106
 msgid "message.single_device.play.discuss"
 msgstr ""
 "👀 <b>Час для обговорення!</b>\n"
@@ -460,7 +475,7 @@ msgstr ""
 "Це ваш шанс поділитися думками, ставити запитання та зробити найкращу "
 "здогадку."
 
-#: app./scenes/single_device_play.py:141
+#: app./scenes/single_device_play.py:138
 msgid "message.single_device.play.finish"
 msgstr ""
 "🎭 <b>Гра завершена!</b>\n"
