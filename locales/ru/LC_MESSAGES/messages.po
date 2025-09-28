@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-27 15:25+0200\n"
+"POT-Creation-Date: 2025-09-28 21:51+0200\n"
 "PO-Revision-Date: 2025-09-25 00:56+0200\n"
 "Last-Translator: \n"
 "Language: ru\n"
@@ -103,112 +103,127 @@ msgstr ""
 "\"wizard\": \"Волшебник\", \"wolf\": \"Волк\", \"yellow\": \"Жёлтый\", "
 "\"zebra\": \"Зебра\"}"
 
-#: app./keyboards/inline_keyboard_factory.py:34
+#: app./keyboards/inline_keyboard_factory.py:36
 msgid "button.menu"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:38
+#: app./keyboards/inline_keyboard_factory.py:40
 msgid "button.back"
 msgstr "◀️ Назад"
 
-#: app./keyboards/inline_keyboard_factory.py:45
+#: app./keyboards/inline_keyboard_factory.py:47
 msgid "button.right"
 msgstr "»"
 
-#: app./keyboards/inline_keyboard_factory.py:46
+#: app./keyboards/inline_keyboard_factory.py:48
 msgid "button.left"
 msgstr "«"
 
-#: app./keyboards/inline_keyboard_factory.py:76
+#: app./keyboards/inline_keyboard_factory.py:78
 #, fuzzy
 msgid "button.start.play"
 msgstr "📲 Играть на одном устройстве"
 
-#: app./keyboards/inline_keyboard_factory.py:82
+#: app./keyboards/inline_keyboard_factory.py:84
 #, fuzzy
 msgid "button.start.language"
 msgstr "📲 Играть на одном устройстве"
 
-#: app./keyboards/inline_keyboard_factory.py:95
+#: app./keyboards/inline_keyboard_factory.py:97
 #, fuzzy
 msgid "button.choose_device.single_device"
 msgstr "🚀 Играть"
 
-#: app./keyboards/inline_keyboard_factory.py:101
+#: app./keyboards/inline_keyboard_factory.py:103
 #, fuzzy
 msgid "button.choose_device.multi_device"
 msgstr "🔍 Посмотреть роль"
 
-#: app./keyboards/inline_keyboard_factory.py:117
+#: app./keyboards/inline_keyboard_factory.py:119
 #, fuzzy
 msgid "button.language.en"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:123
+#: app./keyboards/inline_keyboard_factory.py:125
 #, fuzzy
 msgid "button.language.uk"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:129
+#: app./keyboards/inline_keyboard_factory.py:131
 #, fuzzy
 msgid "button.language.ru"
 msgstr "📋 Меню"
 
-#: app./keyboards/inline_keyboard_factory.py:144
-#: app./keyboards/inline_keyboard_factory.py:251
+#: app./keyboards/inline_keyboard_factory.py:146
+#: app./keyboards/inline_keyboard_factory.py:257
 msgid "button.got_it"
 msgstr "👌 Понятно"
 
-#: app./keyboards/inline_keyboard_factory.py:164
+#: app./keyboards/inline_keyboard_factory.py:166
 #, fuzzy
 msgid "button.single_device.configure.player_amount.selected"
 msgstr "👉 Далее"
 
-#: app./keyboards/inline_keyboard_factory.py:166
+#: app./keyboards/inline_keyboard_factory.py:170
 #, fuzzy
 msgid "button.single_device.configure.player_amount"
 msgstr "🚀 Играть"
 
-#: app./keyboards/inline_keyboard_factory.py:177
+#: app./keyboards/inline_keyboard_factory.py:183
 msgid "button.single_device.play"
 msgstr "🚀 Играть"
 
-#: app./keyboards/inline_keyboard_factory.py:191
+#: app./keyboards/inline_keyboard_factory.py:197
 msgid "button.single_device.view_role"
 msgstr "🔍 Посмотреть роль"
 
-#: app./keyboards/inline_keyboard_factory.py:207
+#: app./keyboards/inline_keyboard_factory.py:213
 msgid "button.single_device.proceed"
 msgstr "👉 Далее"
 
-#: app./keyboards/inline_keyboard_factory.py:222
+#: app./keyboards/inline_keyboard_factory.py:228
 msgid "button.single_device.finish"
 msgstr "🔍 Смотреть результаты"
 
-#: app./keyboards/inline_keyboard_factory.py:236
+#: app./keyboards/inline_keyboard_factory.py:242
 #, fuzzy
 msgid "button.single_device.play_again"
 msgstr "🚀 Играть"
 
-#: app./keyboards/inline_keyboard_factory.py:270
+#: app./keyboards/inline_keyboard_factory.py:277
+#, fuzzy
+msgid "button.multi_device.configure.player_amount.selected"
+msgstr "👉 Далее"
+
+#: app./keyboards/inline_keyboard_factory.py:281
+#, fuzzy
+msgid "button.multi_device.configure.player_amount"
+msgstr "🚀 Играть"
+
+#: app./keyboards/inline_keyboard_factory.py:294
 #, fuzzy
 msgid "button.multi_device.play"
 msgstr "🚀 Играть"
 
-#: app./keyboards/inline_keyboard_factory.py:291
+#: app./keyboards/inline_keyboard_factory.py:313
 #, fuzzy
 msgid "button.multi_device.start"
 msgstr "🚀 Играть"
 
-#: app./keyboards/inline_keyboard_factory.py:305
+#: app./keyboards/inline_keyboard_factory.py:327
 #, fuzzy
 msgid "button.multi_device.leave"
 msgstr "🚀 Играть"
 
-#: app./keyboards/inline_keyboard_factory.py:325
+#: app./keyboards/inline_keyboard_factory.py:347
 #, fuzzy
 msgid "button.multi_device.finish"
 msgstr "🔍 Смотреть результаты"
+
+#: app./keyboards/inline_keyboard_factory.py:367
+#, fuzzy
+msgid "button.multi_device.play_again"
+msgstr "🚀 Играть"
 
 #: app./scenes/choose_device.py:21
 #, fuzzy
@@ -227,8 +242,7 @@ msgstr ""
 msgid "message.language.choose"
 msgstr ""
 
-#: app./scenes/multi_device_configure.py:40
-#: app./scenes/multi_device_configure.py:98
+#: app./scenes/multi_device_configure.py:31
 #, fuzzy
 msgid "message.multi_device.configure"
 msgstr ""
@@ -239,9 +253,17 @@ msgstr ""
 "\n"
 "Текущее количество игроков: <b>{player_amount}</b>"
 
-#: app./scenes/multi_device_configure.py:62
-msgid "answer.multi_device_games.already_in_game"
+#: app./scenes/multi_device_configure.py:69
+#: app./scenes/single_device_configure.py:30
+#: app./scenes/single_device_configure.py:69
+msgid "message.single_device.configure"
 msgstr ""
+"⚙️ <b>Настройка количества игроков</b>\n"
+"\n"
+"Используйте кнопки, чтобы изменить количество участников. Убедитесь, что "
+"все игроки присутствуют и готовы к началу.\n"
+"\n"
+"Текущее количество игроков: <b>{player_amount}</b>"
 
 #: app./scenes/multi_device_explain.py:19
 #, fuzzy
@@ -256,51 +278,7 @@ msgstr ""
 "Внимательно следуйте инструкциям на экране и помните: <b>сохраняйте "
 "секрет вашей роли и слова</b> до конца игры!"
 
-#: app./scenes/multi_device_play.py:107
-#, fuzzy
-msgid "message.multi_device.play.recruit.game_not_found"
-msgstr ""
-"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
-"\n"
-"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
-"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
-" экран.\n"
-"\n"
-"<b>Игрок {player_index}/{player_amount}</b>"
-
-#: app./scenes/multi_device_play.py:110
-msgid "message.multi_device.play.recruit.game_has_already_started"
-msgstr ""
-
-#: app./scenes/multi_device_play.py:113
-#, fuzzy
-msgid "message.multi_device.play.recruit.already_in_game"
-msgstr ""
-"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
-"\n"
-"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
-"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
-" экран.\n"
-"\n"
-"<b>Игрок {player_index}/{player_amount}</b>"
-
-#: app./scenes/multi_device_play.py:116
-#, fuzzy
-msgid "message.multi_device.play.recruit.too_many_players"
-msgstr ""
-"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
-"\n"
-"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
-"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
-" экран.\n"
-"\n"
-"<b>Игрок {player_index}/{player_amount}</b>"
-
-#: app./scenes/multi_device_play.py:147
-msgid "answer.multi_device.play.too_few_players"
-msgstr ""
-
-#: app./scenes/multi_device_play.py:166
+#: app./scenes/multi_device_play.py:207
 #, fuzzy
 msgid "message.multi_device.play.view_role.citizen"
 msgstr ""
@@ -318,7 +296,7 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:167
+#: app./scenes/multi_device_play.py:208
 #, fuzzy
 msgid "message.multi_device.play.view_role.spy"
 msgstr ""
@@ -334,19 +312,7 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:208
-#, fuzzy
-msgid "message.multi_device.play.leave"
-msgstr ""
-"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
-"\n"
-"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
-"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
-" экран.\n"
-"\n"
-"<b>Игрок {player_index}/{player_amount}</b>"
-
-#: app./scenes/multi_device_play.py:233
+#: app./scenes/multi_device_play.py:235
 #, fuzzy
 msgid "message.multi_device.play.finish"
 msgstr ""
@@ -357,7 +323,18 @@ msgstr ""
 "\n"
 "Спасибо за игру!"
 
-#: app./scenes/multi_device_play.py:311
+#: app./scenes/multi_device_play.py:264
+#, fuzzy
+msgid "message.multi_device.play.stop"
+msgstr ""
+"🎭 <b>Игра окончена!</b>\n"
+"\n"
+"Игрок <b>{spy_index}</b> был Шпионом!\n"
+"Секретное слово Граждан было: <b>{secret_word}</b>.\n"
+"\n"
+"Спасибо за игру!"
+
+#: app./scenes/multi_device_play.py:339
 #, fuzzy
 msgid "message.multi_device.play.recruit.player.host"
 msgstr ""
@@ -369,7 +346,7 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:318
+#: app./scenes/multi_device_play.py:346
 #, fuzzy
 msgid "message.multi_device.play.recruit.player"
 msgstr ""
@@ -381,7 +358,7 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/multi_device_play.py:325
+#: app./scenes/multi_device_play.py:353
 #, fuzzy
 msgid "message.multi_device.play.recruit"
 msgstr ""
@@ -393,16 +370,61 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/single_device_configure.py:30
-#: app./scenes/single_device_configure.py:69
-msgid "message.single_device.configure"
+#: app./scenes/multi_device_play.py:425
+#, fuzzy
+msgid "message.multi_device.play.recruit.game_not_found"
 msgstr ""
-"⚙️ <b>Настройка количества игроков</b>\n"
+"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
 "\n"
-"Используйте кнопки, чтобы изменить количество участников. Убедитесь, что "
-"все игроки присутствуют и готовы к началу.\n"
+"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
+"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
+" экран.\n"
 "\n"
-"Текущее количество игроков: <b>{player_amount}</b>"
+"<b>Игрок {player_index}/{player_amount}</b>"
+
+#: app./scenes/multi_device_play.py:428
+msgid "message.multi_device.play.recruit.game_has_already_started"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:431
+#, fuzzy
+msgid "message.multi_device.play.recruit.already_in_game"
+msgstr ""
+"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
+"\n"
+"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
+"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
+" экран.\n"
+"\n"
+"<b>Игрок {player_index}/{player_amount}</b>"
+
+#: app./scenes/multi_device_play.py:434
+#, fuzzy
+msgid "message.multi_device.play.recruit.too_many_players"
+msgstr ""
+"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
+"\n"
+"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
+"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
+" экран.\n"
+"\n"
+"<b>Игрок {player_index}/{player_amount}</b>"
+
+#: app./scenes/multi_device_play.py:465
+msgid "answer.multi_device.play.too_few_players"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:585
+#, fuzzy
+msgid "message.multi_device.play.leave"
+msgstr ""
+"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
+"\n"
+"Этот шаг важен: каждый игрок должен увидеть свою роль тайно.\n"
+"Держите телефон только в свой ход и убедитесь, что другие игроки не видят"
+" экран.\n"
+"\n"
+"<b>Игрок {player_index}/{player_amount}</b>"
 
 #: app./scenes/single_device_explain.py:19
 msgid "message.single_device.explain"
@@ -416,7 +438,8 @@ msgstr ""
 "Внимательно следуйте инструкциям на экране и помните: <b>сохраняйте "
 "секрет вашей роли и слова</b> до конца игры!"
 
-#: app./scenes/single_device_play.py:47 app./scenes/single_device_play.py:115
+#: app./scenes/single_device_play.py:46 app./scenes/single_device_play.py:114
+#: app./scenes/single_device_play.py:175
 msgid "message.single_device.play.prepare"
 msgstr ""
 "🤫 <b>Приготовьтесь узнать свою роль</b>\n"
@@ -427,7 +450,7 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/single_device_play.py:72
+#: app./scenes/single_device_play.py:71
 msgid "message.single_device.play.view_role.citizen"
 msgstr ""
 "👨 <b>Вы Гражданин</b>\n"
@@ -444,7 +467,7 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/single_device_play.py:73
+#: app./scenes/single_device_play.py:72
 msgid "message.single_device.play.view_role.spy"
 msgstr ""
 "🕵️‍♂️ <b>Вы Шпион</b>\n"
@@ -459,7 +482,7 @@ msgstr ""
 "\n"
 "<b>Игрок {player_index}/{player_amount}</b>"
 
-#: app./scenes/single_device_play.py:106
+#: app./scenes/single_device_play.py:105
 msgid "message.single_device.play.discuss"
 msgstr ""
 "👀 <b>Время обсуждения!</b>\n"
@@ -471,7 +494,7 @@ msgstr ""
 "Это ваш шанс поделиться соображениями, задать вопросы и сделать своё "
 "лучшее предположение."
 
-#: app./scenes/single_device_play.py:138
+#: app./scenes/single_device_play.py:137
 msgid "message.single_device.play.finish"
 msgstr ""
 "🎭 <b>Игра окончена!</b>\n"
@@ -481,7 +504,7 @@ msgstr ""
 "\n"
 "Спасибо за игру!"
 
-#: app./scenes/start.py:22 app./scenes/start.py:36
+#: app./scenes/start.py:23 app./scenes/start.py:37
 #, fuzzy
 msgid "message.start"
 msgstr ""
@@ -521,4 +544,7 @@ msgstr ""
 #~ "и помните: <b>сохраняйте вашу роль и "
 #~ "секретное слово в тайне</b> до конца "
 #~ "игры!"
+
+#~ msgid "answer.multi_device_games.already_in_game"
+#~ msgstr ""
 
