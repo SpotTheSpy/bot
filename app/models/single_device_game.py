@@ -29,7 +29,7 @@ class SingleDeviceGame(AbstractModel):
         game_json: Dict[str, Any] = await state.get_value("game")
 
         if game_json is not None:
-            return SingleDeviceGame.from_json(game_json)
+            return cls.from_json(game_json)
 
         return await single_device_games.get_game_by_user_id(user_id)
 

@@ -1,7 +1,6 @@
 from abc import ABC
 from typing import List, Dict, Any
 
-from aiogram.enums import ParseMode
 from aiogram.exceptions import AiogramError
 from aiogram.fsm.scene import Scene
 from aiogram.types import Message, InlineKeyboardMarkup, MessageEntity
@@ -29,7 +28,4 @@ class BaseScene(Scene, ABC, state="base"):
                 **params
             )
         except AiogramError:
-            if reply_markup is None:
-                return
-
-            await message.edit_reply_markup(reply_markup=reply_markup)
+            pass

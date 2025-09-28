@@ -180,7 +180,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         )
 
     @on.callback_query.leave()
-    async def on_leave(
+    async def on_scene_leave(
             self,
             callback_query: CallbackQuery,
             user: User,

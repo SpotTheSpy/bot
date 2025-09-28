@@ -4,6 +4,7 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.choose_device import ChooseDeviceAction
 from app.actions.language import LanguageAction
+from app.controllers.single_device_games import SingleDeviceGamesController
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.user import User
 from app.scenes.base import BaseScene
