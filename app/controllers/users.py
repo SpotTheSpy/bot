@@ -10,7 +10,7 @@ class UsersController(APIController):
             self,
             telegram_id: int,
             first_name: str,
-            username: str,
+            username: str | None = None,
             locale: str | None = None
     ) -> User:
         response: AttributedDict = await self._post(

@@ -46,12 +46,7 @@ class LanguageScene(BaseScene, state="language"):
         )
 
         await state.update_data(locale=callback_data.language_type)
-
-        await self.edit_message(
-            callback_query.message,
-            _("message.language.choose"),
-            reply_markup=InlineKeyboardFactory.choose_language_keyboard()
-        )
+        await self.wizard.back(user=user, locale=callback_data.language_type)
 
     @on.callback_query(BackAction.filter())
     async def on_back(

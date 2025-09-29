@@ -40,4 +40,5 @@ class APII18nMiddleware(SimpleI18nMiddleware):
 
             await state.update_data(locale=locale)
 
+        data["locale"] = locale
         return locale

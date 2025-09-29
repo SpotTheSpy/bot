@@ -1,6 +1,6 @@
 from enum import StrEnum
 
 
-class PlayerType(StrEnum):
+class PlayerRole(StrEnum):
     CITIZEN = "citizen"
     SPY = "spy"

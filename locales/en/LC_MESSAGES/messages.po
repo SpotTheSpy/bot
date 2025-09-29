@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-25 00:53+0200\n"
-"PO-Revision-Date: 2025-09-25 00:55+0200\n"
+"POT-Creation-Date: 2025-09-29 16:51+0200\n"
+"PO-Revision-Date: 2025-09-29 18:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -22,249 +22,314 @@ msgstr ""
 #: app./data/secret_words_controller.py:9
 msgid "data.secret_words"
 msgstr ""
-"{\"airport\": \"Airport\", \"anvil\": \"Anvil\", \"apple\": \"Apple\", "
-"\"arena\": \"Arena\", \"armor\": \"Armor\", \"bag\": \"Bag\", \"ball\": "
-"\"Ball\", \"banana\": \"Banana\", \"banner\": \"Banner\", \"bard\": "
-"\"Bard\", \"bazaar\": \"Bazaar\", \"beach\": \"Beach\", \"bear\": "
-"\"Bear\", \"bed\": \"Bed\", \"bird\": \"Bird\", \"black\": \"Black\", "
-"\"blue\": \"Blue\", \"book\": \"Book\", \"bottle\": \"Bottle\", \"box\": "
-"\"Box\", \"bread\": \"Bread\", \"bridge\": \"Bridge\", \"brown\": "
-"\"Brown\", \"bus\": \"Bus\", \"butter\": \"Butter\", \"cake\": \"Cake\", "
-"\"camel\": \"Camel\", \"candle\": \"Candle\", \"canyon\": \"Canyon\", "
-"\"car\": \"Car\", \"card\": \"Card\", \"castle\": \"Castle\", \"cat\": "
-"\"Cat\", \"cave\": \"Cave\", \"chair\": \"Chair\", \"charm\": \"Charm\", "
-"\"cheese\": \"Cheese\", \"cheetah\": \"Cheetah\", \"chest\": \"Chest\", "
-"\"chicken\": \"Chicken\", \"church\": \"Church\", \"city\": \"City\", "
-"\"cliff\": \"Cliff\", \"clock\": \"Clock\", \"cloud\": \"Cloud\", "
-"\"cobra\": \"Cobra\", \"coffee\": \"Coffee\", \"coin\": \"Coin\", "
-"\"compass\": \"Compass\", \"coral\": \"Coral\", \"cow\": \"Cow\", "
-"\"creek\": \"Creek\", \"crown\": \"Crown\", \"crystal\": \"Crystal\", "
-"\"curse\": \"Curse\", \"desert\": \"Desert\", \"diamond\": \"Diamond\", "
-"\"dock\": \"Dock\", \"dog\": \"Dog\", \"dolphin\": \"Dolphin\", \"door\": "
-"\"Door\", \"dragon\": \"Dragon\", \"duck\": \"Duck\", \"dune\": \"Dune\", "
-"\"dungeon\": \"Dungeon\", \"dwarf\": \"Dwarf\", \"eagle\": \"Eagle\", "
-"\"eel\": \"Eel\", \"egg\": \"Egg\", \"elephant\": \"Elephant\", \"elf\": "
-"\"Elf\", \"elixir\": \"Elixir\", \"emerald\": \"Emerald\", \"falcon\": "
-"\"Falcon\", \"farm\": \"Farm\", \"fish\": \"Fish\", \"flower\": "
-"\"Flower\", \"forest\": \"Forest\", \"fork\": \"Fork\", \"fortress\": "
-"\"Fortress\", \"fox\": \"Fox\", \"game\": \"Game\", \"garden\": "
-"\"Garden\", \"geyser\": \"Geyser\", \"giraffe\": \"Giraffe\", \"glacier\": "
-"\"Glacier\", \"glass\": \"Glass\", \"goat\": \"Goat\", \"goblin\": "
-"\"Goblin\", \"gold\": \"Gold\", \"grass\": \"Grass\", \"green\": "
-"\"Green\", \"hall\": \"Hall\", \"hammer\": \"Hammer\", \"harbor\": "
-"\"Harbor\", \"hat\": \"Hat\", \"hawk\": \"Hawk\", \"helmet\": \"Helmet\", "
-"\"hippo\": \"Hippo\", \"horse\": \"Horse\", \"hotel\": \"Hotel\", "
-"\"house\": \"House\", \"inn\": \"Inn\", \"island\": \"Island\", "
-"\"jester\": \"Jester\", \"jewel\": \"Jewel\", \"juice\": \"Juice\", "
-"\"jungle\": \"Jungle\", \"kangaroo\": \"Kangaroo\", \"key\": \"Key\", "
-"\"king\": \"King\", \"knife\": \"Knife\", \"knight\": \"Knight\", "
-"\"ladder\": \"Ladder\", \"lagoon\": \"Lagoon\", \"lake\": \"Lake\", "
-"\"lamp\": \"Lamp\", \"lantern\": \"Lantern\", \"leaf\": \"Leaf\", "
-"\"leopard\": \"Leopard\", \"library\": \"Library\", \"lion\": \"Lion\", "
-"\"lock\": \"Lock\", \"map\": \"Map\", \"market\": \"Market\", \"marsh\": "
-"\"Marsh\", \"meadow\": \"Meadow\", \"meat\": \"Meat\", \"milk\": \"Milk\", "
-"\"mirror\": \"Mirror\", \"money\": \"Money\", \"monk\": \"Monk\", "
-"\"moon\": \"Moon\", \"mountain\": \"Mountain\", \"music\": \"Music\", "
-"\"oasis\": \"Oasis\", \"ocean\": \"Ocean\", \"octopus\": \"Octopus\", "
-"\"orange\": \"Orange\", \"owl\": \"Owl\", \"palace\": \"Palace\", "
-"\"panda\": \"Panda\", \"panther\": \"Panther\", \"pants\": \"Pants\", "
-"\"paper\": \"Paper\", \"park\": \"Park\", \"parrot\": \"Parrot\", "
-"\"pasta\": \"Pasta\", \"peacock\": \"Peacock\", \"pearl\": \"Pearl\", "
-"\"pen\": \"Pen\", \"pencil\": \"Pencil\", \"phone\": \"Phone\", \"pig\": "
-"\"Pig\", \"pink\": \"Pink\", \"pizza\": \"Pizza\", \"plane\": \"Plane\", "
-"\"plate\": \"Plate\", \"pond\": \"Pond\", \"port\": \"Port\", \"potion\": "
-"\"Potion\", \"prairie\": \"Prairie\", \"priest\": \"Priest\", \"prince\": "
-"\"Prince\", \"princess\": \"Princess\", \"purple\": \"Purple\", \"queen\": "
-"\"Queen\", \"quill\": \"Quill\", \"rabbit\": \"Rabbit\", \"rain\": "
-"\"Rain\", \"red\": \"Red\", \"reef\": \"Reef\", \"rhino\": \"Rhino\", "
-"\"rice\": \"Rice\", \"ring\": \"Ring\", \"river\": \"River\", \"road\": "
-"\"Road\", \"rope\": \"Rope\", \"ruby\": \"Ruby\", \"rune\": \"Rune\", "
-"\"saint\": \"Saint\", \"salt\": \"Salt\", \"sand\": \"Sand\", "
-"\"sapphire\": \"Sapphire\", \"school\": \"School\", \"scroll\": "
-"\"Scroll\", \"sea\": \"Sea\", \"servant\": \"Servant\", \"shark\": "
-"\"Shark\", \"sheep\": \"Sheep\", \"shield\": \"Shield\", \"shirt\": "
-"\"Shirt\", \"shoe\": \"Shoe\", \"shop\": \"Shop\", \"shrine\": \"Shrine\", "
-"\"signal\": \"Signal\", \"silver\": \"Silver\", \"sky\": \"Sky\", "
-"\"snow\": \"Snow\", \"song\": \"Song\", \"soup\": \"Soup\", \"spell\": "
-"\"Spell\", \"spoon\": \"Spoon\", \"star\": \"Star\", \"stone\": \"Stone\", "
-"\"street\": \"Street\", \"sugar\": \"Sugar\", \"sun\": \"Sun\", \"swamp\": "
-"\"Swamp\", \"sword\": \"Sword\", \"symbol\": \"Symbol\", \"table\": "
-"\"Table\", \"tavern\": \"Tavern\", \"tea\": \"Tea\", \"temple\": "
-"\"Temple\", \"theater\": \"Theater\", \"tiger\": \"Tiger\", \"torch\": "
-"\"Torch\", \"tower\": \"Tower\", \"town\": \"Town\", \"train\": \"Train\", "
-"\"treasure\": \"Treasure\", \"tree\": \"Tree\", \"troll\": \"Troll\", "
-"\"tunnel\": \"Tunnel\", \"unicorn\": \"Unicorn\", \"valley\": \"Valley\", "
-"\"village\": \"Village\", \"volcano\": \"Volcano\", \"watch\": \"Watch\", "
-"\"whale\": \"Whale\", \"white\": \"White\", \"wind\": \"Wind\", "
-"\"window\": \"Window\", \"wizard\": \"Wizard\", \"wolf\": \"Wolf\", "
-"\"yellow\": \"Yellow\", \"zebra\": \"Zebra\"}"
+"{\"acorn\":\"Acorn\",\"air\":\"Air\",\"ant\":\"Ant\",\"apple\":\"Apple\",\"arm\":\"Arm\",\"aunt\":\"Aunt\",\"axe\":\"Axe\",\"baby\":\"Baby\",\"bag\":\"Bag\",\"ball\":\"Ball\",\"balloon\":"
+"\"Balloon\",\"banana\":\"Banana\",\"bat\":\"Bat\",\"bed\":\"Bed\",\"bee\":\"Bee\",\"bell\":\"Bell\",\"bird\":\"Bird\",\"boat\":\"Boat\",\"book\":\"Book\",\"boot\":\"Boot\",\"box\":\"Box\","
+"\"boy\":\"Boy\",\"bread\":\"Bread\",\"bridge\":\"Bridge\",\"broccoli\":\"Broccoli\",\"brother\":\"Brother\",\"brush\":\"Brush\",\"bucket\":\"Bucket\",\"bus\":\"Bus\",\"butter\":\"Butter\","
+"\"button\":\"Button\",\"cake\":\"Cake\",\"camel\":\"Camel\",\"cap\":\"Cap\",\"car\":\"Car\",\"carrot\":\"Carrot\",\"cat\":\"Cat\",\"chair\":\"Chair\",\"cheek\":\"Cheek\",\"cheese\":\"Cheese\","
+"\"cherry\":\"Cherry\",\"chest\":\"Chest\",\"chicken\":\"Chicken\",\"child\":\"Child\",\"circle\":\"Circle\",\"clock\":\"Clock\",\"cloud\":\"Cloud\",\"coat\":\"Coat\",\"coin\":\"Coin\",\"comb\":"
+"\"Comb\",\"corn\":\"Corn\",\"cow\":\"Cow\",\"crab\":\"Crab\",\"crayon\":\"Crayon\",\"cup\":\"Cup\",\"dad\":\"Dad\",\"day\":\"Day\",\"desk\":\"Desk\",\"dog\":\"Dog\",\"doll\":\"Doll\","
+"\"donkey\":\"Donkey\",\"door\":\"Door\",\"duck\":\"Duck\",\"ear\":\"Ear\",\"egg\":\"Egg\",\"elbow\":\"Elbow\",\"eye\":\"Eye\",\"face\":\"Face\",\"fan\":\"Fan\",\"farm\":\"Farm\",\"father\":"
+"\"Father\",\"feather\":\"Feather\",\"feet\":\"Feet\",\"field\":\"Field\",\"finger\":\"Finger\",\"fire\":\"Fire\",\"fish\":\"Fish\",\"flag\":\"Flag\",\"flower\":\"Flower\",\"fly\":\"Fly\","
+"\"foot\":\"Foot\",\"fork\":\"Fork\",\"fox\":\"Fox\",\"frog\":\"Frog\",\"fruit\":\"Fruit\",\"game\":\"Game\",\"garden\":\"Garden\",\"girl\":\"Girl\",\"glass\":\"Glass\",\"goat\":\"Goat\","
+"\"gold\":\"Gold\",\"goose\":\"Goose\",\"grape\":\"Grape\",\"grass\":\"Grass\",\"guitar\":\"Guitar\",\"hair\":\"Hair\",\"hammer\":\"Hammer\",\"hand\":\"Hand\",\"hat\":\"Hat\",\"head\":\"Head\","
+"\"heart\":\"Heart\",\"hill\":\"Hill\",\"honey\":\"Honey\",\"hook\":\"Hook\",\"horse\":\"Horse\",\"house\":\"House\",\"ice\":\"Ice\",\"ink\":\"Ink\",\"island\":\"Island\",\"jacket\":\"Jacket\","
+"\"jar\":\"Jar\",\"jeans\":\"Jeans\",\"jelly\":\"Jelly\",\"jug\":\"Jug\",\"juice\":\"Juice\",\"key\":\"Key\",\"king\":\"King\",\"kite\":\"Kite\",\"knee\":\"Knee\",\"knife\":\"Knife\",\"ladder\":"
+"\"Ladder\",\"lady\":\"Lady\",\"lamp\":\"Lamp\",\"leaf\":\"Leaf\",\"leg\":\"Leg\",\"lemon\":\"Lemon\",\"letter\":\"Letter\",\"lion\":\"Lion\",\"lock\":\"Lock\",\"man\":\"Man\",\"map\":\"Map\","
+"\"market\":\"Market\",\"mat\":\"Mat\",\"meat\":\"Meat\",\"milk\":\"Milk\",\"mirror\":\"Mirror\",\"monkey\":\"Monkey\",\"moon\":\"Moon\",\"mother\":\"Mother\",\"mountain\":\"Mountain\","
+"\"mouse\":\"Mouse\",\"mouth\":\"Mouth\",\"mug\":\"Mug\",\"mushroom\":\"Mushroom\",\"nail\":\"Nail\",\"name\":\"Name\",\"napkin\":\"Napkin\",\"neck\":\"Neck\",\"nest\":\"Nest\",\"net\":\"Net\","
+"\"nose\":\"Nose\",\"nurse\":\"Nurse\",\"nut\":\"Nut\",\"ocean\":\"Ocean\",\"onion\":\"Onion\",\"orange\":\"Orange\",\"oven\":\"Oven\",\"owl\":\"Owl\",\"ox\":\"Ox\",\"page\":\"Page\",\"pan\":"
+"\"Pan\",\"pants\":\"Pants\",\"paper\":\"Paper\",\"park\":\"Park\",\"parrot\":\"Parrot\",\"peach\":\"Peach\",\"pear\":\"Pear\",\"pen\":\"Pen\",\"pencil\":\"Pencil\",\"pepper\":\"Pepper\","
+"\"pet\":\"Pet\",\"phone\":\"Phone\",\"pig\":\"Pig\",\"pillow\":\"Pillow\",\"pin\":\"Pin\",\"pizza\":\"Pizza\",\"plate\":\"Plate\",\"plum\":\"Plum\",\"pocket\":\"Pocket\",\"pond\":\"Pond\","
+"\"pot\":\"Pot\",\"potato\":\"Potato\",\"puppy\":\"Puppy\",\"queen\":\"Queen\",\"quilt\":\"Quilt\",\"rabbit\":\"Rabbit\",\"raccoon\":\"Raccoon\",\"radish\":\"Radish\",\"rain\":\"Rain\","
+"\"rainbow\":\"Rainbow\",\"rat\":\"Rat\",\"ring\":\"Ring\",\"river\":\"River\",\"road\":\"Road\",\"rock\":\"Rock\",\"roof\":\"Roof\",\"rooster\":\"Rooster\",\"root\":\"Root\",\"rope\":\"Rope\","
+"\"rose\":\"Rose\",\"rug\":\"Rug\",\"salt\":\"Salt\",\"sand\":\"Sand\",\"sandwich\":\"Sandwich\",\"saw\":\"Saw\",\"scarf\":\"Scarf\",\"school\":\"School\",\"scissors\":\"Scissors\",\"seat\":"
+"\"Seat\",\"seed\":\"Seed\",\"shark\":\"Shark\",\"sheep\":\"Sheep\",\"shelf\":\"Shelf\",\"shell\":\"Shell\",\"ship\":\"Ship\",\"shirt\":\"Shirt\",\"shoe\":\"Shoe\",\"shop\":\"Shop\",\"shorts\":"
+"\"Shorts\",\"shovel\":\"Shovel\",\"sister\":\"Sister\",\"skirt\":\"Skirt\",\"sky\":\"Sky\",\"sled\":\"Sled\",\"snake\":\"Snake\",\"snow\":\"Snow\",\"soap\":\"Soap\",\"sock\":\"Sock\",\"son\":"
+"\"Son\",\"song\":\"Song\",\"spider\":\"Spider\",\"spoon\":\"Spoon\",\"squirrel\":\"Squirrel\",\"star\":\"Star\",\"stick\":\"Stick\",\"stone\":\"Stone\",\"store\":\"Store\",\"straw\":\"Straw\","
+"\"street\":\"Street\",\"sun\":\"Sun\",\"swan\":\"Swan\",\"table\":\"Table\",\"tail\":\"Tail\",\"tank\":\"Tank\",\"teacher\":\"Teacher\",\"tent\":\"Tent\",\"thief\":\"Thief\",\"ticket\":"
+"\"Ticket\",\"tie\":\"Tie\",\"tiger\":\"Tiger\",\"tomato\":\"Tomato\",\"tool\":\"Tool\",\"tooth\":\"Tooth\",\"towel\":\"Towel\",\"tower\":\"Tower\",\"town\":\"Town\",\"toy\":\"Toy\",\"train\":"
+"\"Train\",\"tree\":\"Tree\",\"truck\":\"Truck\",\"trunk\":\"Trunk\",\"turnip\":\"Turnip\",\"umbrella\":\"Umbrella\",\"van\":\"Van\",\"vase\":\"Vase\",\"vegetable\":\"Vegetable\",\"village\":"
+"\"Village\",\"wagon\":\"Wagon\",\"wall\":\"Wall\",\"watch\":\"Watch\",\"water\":\"Water\",\"well\":\"Well\",\"wheel\":\"Wheel\",\"whistle\":\"Whistle\",\"window\":\"Window\",\"wing\":\"Wing\","
+"\"wolf\":\"Wolf\",\"woman\":\"Woman\",\"wood\":\"Wood\",\"worm\":\"Worm\",\"yard\":\"Yard\",\"yarn\":\"Yarn\",\"youth\":\"Youth\",\"zebra\":\"Zebra\"}"
 
-#: app./keyboards/inline_keyboard_factory.py:21
+#: app./keyboards/inline_keyboard_factory.py:36
 msgid "button.menu"
 msgstr "📋 Menu"
 
-#: app./keyboards/inline_keyboard_factory.py:25
+#: app./keyboards/inline_keyboard_factory.py:40
 msgid "button.back"
 msgstr "◀️ Back"
 
-#: app./keyboards/inline_keyboard_factory.py:32
+#: app./keyboards/inline_keyboard_factory.py:47
 msgid "button.right"
 msgstr "»"
 
-#: app./keyboards/inline_keyboard_factory.py:33
+#: app./keyboards/inline_keyboard_factory.py:48
 msgid "button.left"
 msgstr "«"
 
-#: app./keyboards/inline_keyboard_factory.py:63
-msgid "button.start.play_single_device"
+#: app./keyboards/inline_keyboard_factory.py:78
+msgid "button.start.play"
+msgstr "🔍 Play SpotTheSpy"
+
+#: app./keyboards/inline_keyboard_factory.py:84
+msgid "button.start.language"
+msgstr "🌐 Language"
+
+#: app./keyboards/inline_keyboard_factory.py:97
+msgid "button.choose_device.single_device"
 msgstr "📲 Play from single device"
 
-#: app./keyboards/inline_keyboard_factory.py:75
+#: app./keyboards/inline_keyboard_factory.py:103
+msgid "button.choose_device.multi_device"
+msgstr "🌐 Play from multiple devices"
+
+#: app./keyboards/inline_keyboard_factory.py:119
+msgid "button.language.en"
+msgstr "🇬🇧 English"
+
+#: app./keyboards/inline_keyboard_factory.py:125
+msgid "button.language.uk"
+msgstr "🇺🇦 Ukrainian"
+
+#: app./keyboards/inline_keyboard_factory.py:131
+msgid "button.language.ru"
+msgstr "🇷🇺 Russian"
+
+#: app./keyboards/inline_keyboard_factory.py:146 app./keyboards/inline_keyboard_factory.py:257
 msgid "button.got_it"
 msgstr "👌 Got it"
 
-#: app./keyboards/inline_keyboard_factory.py:94
+#: app./keyboards/inline_keyboard_factory.py:166
+msgid "button.single_device.configure.player_amount.selected"
+msgstr "✅ {player_amount}"
+
+#: app./keyboards/inline_keyboard_factory.py:170
+msgid "button.single_device.configure.player_amount"
+msgstr "{player_amount}"
+
+#: app./keyboards/inline_keyboard_factory.py:183
 msgid "button.single_device.play"
 msgstr "🚀 Play"
 
-#: app./keyboards/inline_keyboard_factory.py:110
+#: app./keyboards/inline_keyboard_factory.py:197
 msgid "button.single_device.view_role"
 msgstr "🔍 View role"
 
-#: app./keyboards/inline_keyboard_factory.py:126
+#: app./keyboards/inline_keyboard_factory.py:213
 msgid "button.single_device.proceed"
 msgstr "👉 Proceed"
 
-#: app./keyboards/inline_keyboard_factory.py:141
+#: app./keyboards/inline_keyboard_factory.py:228
 msgid "button.single_device.finish"
 msgstr "🔍 View results"
 
-#: app./scenes/single_device_configure.py:43
-#: app./scenes/single_device_configure.py:102
+#: app./keyboards/inline_keyboard_factory.py:242
+msgid "button.single_device.play_again"
+msgstr "🚀 Play again"
+
+#: app./keyboards/inline_keyboard_factory.py:277
+msgid "button.multi_device.configure.player_amount.selected"
+msgstr "✅ {player_amount}"
+
+#: app./keyboards/inline_keyboard_factory.py:281
+msgid "button.multi_device.configure.player_amount"
+msgstr "{player_amount}"
+
+#: app./keyboards/inline_keyboard_factory.py:294
+msgid "button.multi_device.play"
+msgstr "🚀 Play"
+
+#: app./keyboards/inline_keyboard_factory.py:313
+msgid "button.multi_device.start"
+msgstr "🚀 Start game"
+
+#: app./keyboards/inline_keyboard_factory.py:327
+msgid "button.multi_device.leave"
+msgstr "❌ Leave game"
+
+#: app./keyboards/inline_keyboard_factory.py:347
+msgid "button.multi_device.finish"
+msgstr "🔍 View results"
+
+#: app./keyboards/inline_keyboard_factory.py:367
+msgid "button.multi_device.play_again"
+msgstr "🚀 Play again"
+
+#: app./scenes/choose_device.py:21
+msgid "message.choose_device"
+msgstr ""
+"📱 <b>Choose the game format</b>\n"
+"\n"
+"Pick how you want to play: either on a single device passed between players, or across multiple devices where everyone joins from their own phone."
+
+#: app./scenes/language.py:23 app./scenes/language.py:52
+msgid "message.language.choose"
+msgstr ""
+"🌐 <b>Choose your language</b>\n"
+"\n"
+"Select the language for all instructions, roles, and game messages. Everyone should understand it clearly to enjoy the game."
+
+#: app./scenes/multi_device_configure.py:30
+msgid "message.multi_device.configure"
+msgstr ""
+"⚙️ <b>Set player count</b>\n"
+"\n"
+"Use the buttons below to set how many players will join this game. Wait until everyone is present before starting to make sure no one is left out."
+
+#: app./scenes/multi_device_configure.py:68 app./scenes/single_device_configure.py:30 app./scenes/single_device_configure.py:69
 msgid "message.single_device.configure"
 msgstr ""
-"⚙️ <b>Configure player count</b>\n"
+"⚙️ <b>Set player count</b>\n"
 "\n"
-"Use the buttons to adjust the number of players participating. Make sure "
-"all participants are present and ready before starting.\n"
-"\n"
-"Current player count: <b>{player_amount}</b>"
+"Choose how many players will participate on this device. The phone will be passed around so each player can privately check their role before the game begins."
 
-#: app./scenes/single_device_explain.py:20
+#: app./scenes/multi_device_explain.py:19
+msgid "message.multi_device.explain"
+msgstr ""
+"📝 <b>How to play</b>\n"
+"\n"
+"One player is secretly chosen as the Spy, while the rest are Citizens who share a hidden word. Citizens ask and answer questions to spot the Spy, while the Spy must blend in and guess the word."
+
+#: app./scenes/multi_device_play.py:290
+msgid "message.multi_device.play.recruit.player.host"
+msgstr "<player>{index}. {first_name} (Host)</player>"
+
+#: app./scenes/multi_device_play.py:297
+msgid "message.multi_device.play.recruit.player"
+msgstr "<player>{index}. {first_name}</player>"
+
+#: app./scenes/multi_device_play.py:304
+msgid "message.multi_device.play.recruit"
+msgstr ""
+"🔍 <b>Recruiting players for SpotTheSpy</b>\n"
+"\n"
+"To join this game, <join>click here</join> or scan the QR code. Once enough players have joined, the host can start the game.\n"
+"\n"
+"<b>Players:</b>\n"
+"{players}\n"
+"\n"
+"<b>{player_amount}/{max_player_amount}</b>"
+
+#: app./scenes/multi_device_play.py:382
+msgid "message.multi_device.play.recruit.game_not_found"
+msgstr "❌ This game could not be found"
+
+#: app./scenes/multi_device_play.py:385
+msgid "message.multi_device.play.recruit.game_has_already_started"
+msgstr "❌ This game has already started"
+
+#: app./scenes/multi_device_play.py:388
+msgid "message.multi_device.play.recruit.already_in_game"
+msgstr "❌ You are already in game"
+
+#: app./scenes/multi_device_play.py:391
+msgid "message.multi_device.play.recruit.too_many_players"
+msgstr "❌ This game already has the maximum number of players"
+
+#: app./scenes/multi_device_play.py:423
+msgid "answer.multi_device.play.too_few_players"
+msgstr "⏳ Please wait for more players to join"
+
+#: app./scenes/multi_device_play.py:441
+msgid "message.multi_device.play.view_role.citizen"
+msgstr ""
+"👨 <b>You are a Citizen</b>\n"
+"\n"
+"Your mission is to identify the Spy without revealing the secret word. Ask clever questions and pay attention to answers to spot suspicious behavior.\n"
+"\n"
+"Secret word: <b>{secret_word}</b>"
+
+#: app./scenes/multi_device_play.py:442
+msgid "message.multi_device.play.view_role.spy"
+msgstr ""
+"🕵️‍♂️ <b>You are the Spy</b>\n"
+"\n"
+"Blend in with the Citizens and try to guess the secret word. Listen carefully to their answers and ask smart questions to collect clues without raising suspicion.\n"
+"\n"
+"Remember: never reveal you are the Spy."
+
+#: app./scenes/multi_device_play.py:478
+msgid "message.multi_device.play.finish"
+msgstr ""
+"🎭 <b>Game Over!</b>\n"
+"\n"
+"Player <player>{first_name}</player> was the Spy!\n"
+"The secret word known to the Citizens was: <b>{secret_word}</b>.\n"
+"\n"
+"Thanks for playing — want to try another round?"
+
+#: app./scenes/multi_device_play.py:596
+msgid "message.multi_device.play.stop"
+msgstr ""
+"🎭 <b>Host left the game</b>\n"
+"\n"
+"The game has ended because the host is no longer present."
+
+#: app./scenes/multi_device_play.py:609
+msgid "message.multi_device.play.leave"
+msgstr "❌ <b>You left the game</b>"
+
+#: app./scenes/single_device_explain.py:19
 msgid "message.single_device.explain"
 msgstr ""
 "📝 <b>How to play</b>\n"
 "\n"
-"In this game, each player will be assigned a role: either a Citizen or the "
-"Spy. Citizens know the secret word and must figure out who the Spy is by "
-"asking questions, while the Spy tries to blend in and guess the word.\n"
+"Each player secretly receives a role: Citizen or Spy. Citizens know the secret word and must expose the Spy through clever questions. The Spy doesn’t know the word and must blend in while "
+"trying to guess it.\n"
 "\n"
-"Pay attention to the instructions on the screen and remember: <b>keep your "
-"role and a word in secret</b> until the end of the game!"
+"Remember: keep your role and the word hidden until the game ends."
 
-#: app./scenes/single_device_play.py:46 app./scenes/single_device_play.py:116
+#: app./scenes/single_device_play.py:46 app./scenes/single_device_play.py:114 app./scenes/single_device_play.py:175
 msgid "message.single_device.play.prepare"
 msgstr ""
-"🤫 <b>Get Ready to View Your Role</b>\n"
+"🤫 <b>Get ready to view your role</b>\n"
 "\n"
-"This step is important: each player must view their role in secret.\n"
-"Hold the phone only when it's your turn and make sure others can't see the "
-"screen.\n"
+"Each player must check their role privately. Only hold the phone when it’s your turn, and make sure no one else can see the screen.\n"
 "\n"
 "<b>Player {player_index}/{player_amount}</b>"
 
-#: app./scenes/single_device_play.py:72
+#: app./scenes/single_device_play.py:71
 msgid "message.single_device.play.view_role.citizen"
 msgstr ""
 "👨 <b>You are a Citizen</b>\n"
 "\n"
-"Your goal is to detect the Spy without giving away the secret word. Here "
-"is the secret word shared by all Citizens:\n"
+"Your goal is to uncover the Spy while protecting the secret word. Answer carefully, stay observant, and don’t give away too much information.\n"
 "\n"
-"<b>{secret_word}</b>\n"
-"\n"
-"During the game, answer questions carefully to help identify the Spy, but "
-"avoid revealing too much information. After memorizing the word, tap "
-"<b>«👉 Proceed»</b> to pass the phone to the next player.\n"
-"\n"
-"<b>Player {player_index}/{player_amount}</b>"
+"Secret word: <b>{secret_word}</b>"
 
-#: app./scenes/single_device_play.py:73
+#: app./scenes/single_device_play.py:72
 msgid "message.single_device.play.view_role.spy"
 msgstr ""
 "🕵️‍♂️ <b>You are the Spy</b>\n"
 "\n"
-"You must blend in and try to guess the secret word without revealing your "
-"identity.\n"
-"Pay attention to other players’ answers and ask questions to gather "
-"clues.\n"
-"\n"
-"Remember, do not reveal that you are the Spy! The other players are trying "
-"to find you.\n"
-"\n"
-"<b>Player {player_index}/{player_amount}</b>"
+"Your task is to guess the secret word without revealing who you are. Pay close attention to what others say, ask questions to gather clues, and stay unnoticed."
 
-#: app./scenes/single_device_play.py:107
+#: app./scenes/single_device_play.py:105
 msgid "message.single_device.play.discuss"
 msgstr ""
-"👀 <b>Discussion Time!</b>\n"
+"👀 <b>Discussion time!</b>\n"
 "\n"
-"Now, all players can discuss and try to figure out who the Spy is.\n"
-"Citizens, use the answers to guide your suspicion.\n"
-"Spy, try to avoid suspicion while listening carefully.\n"
+"Now, everyone can talk and share suspicions. Citizens should look for slips that reveal the Spy, while the Spy must stay calm, answer carefully, and try to avoid suspicion.\n"
 "\n"
-"This is your chance to share insights, ask questions, and make your best "
-"guess."
+"This is your chance to question, mislead, and decide who you trust."
 
-#: app./scenes/single_device_play.py:141
+#: app./scenes/single_device_play.py:137
 msgid "message.single_device.play.finish"
 msgstr ""
 "🎭 <b>Game Over!</b>\n"
 "\n"
 "Player <b>{spy_index}</b> was the Spy!\n"
-"The secret word that Citizens had was: <b>{secret_word}</b>.\n"
+"The secret word known to the Citizens was: <b>{secret_word}</b>.\n"
 "\n"
-"Thank you for playing!"
+"Thanks for playing! Want to go another round?"
 
-#: app./scenes/start.py:21 app./scenes/start.py:35
-msgid "message.start.main"
+#: app./scenes/start.py:22 app./scenes/start.py:36
+msgid "message.start"
 msgstr ""
 "🔍 <b>Welcome to SpotTheSpy!</b>\n"
 "\n"
-"Step into a world of whispers and suspicion, where every glance and every "
-"word matters. The room is filled with tension, laughter, and the subtle "
-"thrill of secrets lurking just beneath the surface. All around you, "
-"players are trying to hide their true intentions, and the air crackles "
-"with curiosity and doubt.\n"
+"Step into a thrilling game of secrets and suspicion, where one hidden Spy tries to guess the secret word while the Citizens work together to expose them. Every question, every answer, and "
+"every pause could reveal the truth — or hide a lie.\n"
 "\n"
-"Can you sense the hidden agendas? Will you trust your instincts, or will "
-"deception cloud your judgment? Every answer, every question, every pause "
-"could reveal a truth — or betray a lie. Prepare yourself for a game where "
-"minds collide, hearts race, and the fun comes from the delicate balance "
-"between suspicion and revelation.\n"
-"\n"
-"Ready to enter the challenge and test your intuition? The game awaits!"
-
-#~ msgid "message.explain.multi_device"
-#~ msgstr "📝 <b>How to play</b>"
-
-#~ msgid "answer.play.already_in_game"
-#~ msgstr "You are already in game"
-
-#~ msgid "button.start.play_multi_device"
-#~ msgstr "🌐 Play from multiple devices"
-
-#~ msgid "button.single_device.next_player"
-#~ msgstr "👉 Proceed"
-
-#~ msgid "message.explain.single_device"
-#~ msgstr ""
-#~ "📝 <b>How to play</b>\n"
-#~ "\n"
-#~ "In this game, each player will be assigned a role: either a Citizen or "
-#~ "the Spy. Citizens know the secret word and must figure out who the Spy "
-#~ "is by asking questions, while the Spy tries to blend in and guess the "
-#~ "word.\n"
-#~ "\n"
-#~ "Pay attention to the instructions on the screen and remember: <b>keep "
-#~ "your role and a word in secret</b> until the end of the game!"
+"Will you trust your instincts or fall for deception? Gather your group, sharpen your wits, and prepare for a challenge of deduction, bluff, and quick thinking."

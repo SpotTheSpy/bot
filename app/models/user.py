@@ -8,7 +8,7 @@ class User(AbstractModel):
     id: UUID
     telegram_id: int
     first_name: str
-    username: str
+    username: str | None
     locale: str | None
     created_at: datetime
     updated_at: datetime | None
@@ -17,5 +17,5 @@ class User(AbstractModel):
 class CreateUser(AbstractModel):
     telegram_id: int
     first_name: str
-    username: str
+    username: str | None
     locale: str | None = None

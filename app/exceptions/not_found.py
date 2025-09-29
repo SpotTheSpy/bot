@@ -2,4 +2,4 @@ from app.exceptions.api import APIError
 
 
 class NotFoundError(APIError):
-    pass
+    status_code: int = 404
