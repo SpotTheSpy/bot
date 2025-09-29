@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-28 21:51+0200\n"
+"POT-Creation-Date: 2025-09-29 16:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,11 +134,11 @@ msgstr ""
 msgid "message.language.choose"
 msgstr ""
 
-#: app./scenes/multi_device_configure.py:31
+#: app./scenes/multi_device_configure.py:30
 msgid "message.multi_device.configure"
 msgstr ""
 
-#: app./scenes/multi_device_configure.py:69
+#: app./scenes/multi_device_configure.py:68
 #: app./scenes/single_device_configure.py:30
 #: app./scenes/single_device_configure.py:69
 msgid "message.single_device.configure"
@@ -148,55 +148,55 @@ msgstr ""
 msgid "message.multi_device.explain"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:207
-msgid "message.multi_device.play.view_role.citizen"
-msgstr ""
-
-#: app./scenes/multi_device_play.py:208
-msgid "message.multi_device.play.view_role.spy"
-msgstr ""
-
-#: app./scenes/multi_device_play.py:235
-msgid "message.multi_device.play.finish"
-msgstr ""
-
-#: app./scenes/multi_device_play.py:264
-msgid "message.multi_device.play.stop"
-msgstr ""
-
-#: app./scenes/multi_device_play.py:339
+#: app./scenes/multi_device_play.py:290
 msgid "message.multi_device.play.recruit.player.host"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:346
+#: app./scenes/multi_device_play.py:297
 msgid "message.multi_device.play.recruit.player"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:353
+#: app./scenes/multi_device_play.py:304
 msgid "message.multi_device.play.recruit"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:425
+#: app./scenes/multi_device_play.py:382
 msgid "message.multi_device.play.recruit.game_not_found"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:428
+#: app./scenes/multi_device_play.py:385
 msgid "message.multi_device.play.recruit.game_has_already_started"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:431
+#: app./scenes/multi_device_play.py:388
 msgid "message.multi_device.play.recruit.already_in_game"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:434
+#: app./scenes/multi_device_play.py:391
 msgid "message.multi_device.play.recruit.too_many_players"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:465
+#: app./scenes/multi_device_play.py:423
 msgid "answer.multi_device.play.too_few_players"
 msgstr ""
 
-#: app./scenes/multi_device_play.py:585
+#: app./scenes/multi_device_play.py:441
+msgid "message.multi_device.play.view_role.citizen"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:442
+msgid "message.multi_device.play.view_role.spy"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:478
+msgid "message.multi_device.play.finish"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:596
+msgid "message.multi_device.play.stop"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:609
 msgid "message.multi_device.play.leave"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "message.single_device.play.finish"
 msgstr ""
 
-#: app./scenes/start.py:23 app./scenes/start.py:37
+#: app./scenes/start.py:22 app./scenes/start.py:36
 msgid "message.start"
 msgstr ""
 

@@ -70,18 +70,18 @@ class InlineKeyboardFactory:
         ]
 
     @staticmethod
-    def start_keyboard() -> InlineKeyboardMarkup:
+    def start_keyboard(locale: str | None = None) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.start.play"),
+                        text=_("button.start.play", locale=locale),
                         callback_data=ChooseDeviceAction().pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
-                        text=_("button.start.language"),
+                        text=_("button.start.language", locale=locale),
                         callback_data=LanguageAction().pack()
                     )
                 ]
@@ -225,7 +225,10 @@ class InlineKeyboardFactory:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
-                    InlineKeyboardButton(text=_("button.single_device.finish"), callback_data=SingleDeviceFinishAction().pack())
+                    InlineKeyboardButton(
+                        text=_("button.single_device.finish"),
+                        callback_data=SingleDeviceFinishAction().pack()
+                    )
                 ],
                 [
                     cls.back_button()

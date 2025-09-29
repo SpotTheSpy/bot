@@ -65,7 +65,7 @@ class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
 
         await self.edit_message(
             callback_query.message,
-            _("message.single_device.configure"),
+            _("message.multi_device.configure"),
             reply_markup=InlineKeyboardFactory.multi_device_configure_keyboard(
                 min_player_amount=Parameters.MIN_PLAYER_AMOUNT,
                 max_player_amount=Parameters.MAX_PLAYER_AMOUNT,
