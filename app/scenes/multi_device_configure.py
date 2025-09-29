@@ -6,7 +6,6 @@ from aiogram.utils.i18n import gettext as _
 from app.actions.back import BackAction
 from app.actions.multi_device_choose_player_amount import MultiDeviceChoosePlayerAmountAction
 from app.actions.multi_device_play import MultiDevicePlayAction
-from app.controllers.multi_device_games import MultiDeviceGamesController
 from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.user import User
 from app.parameters import Parameters
@@ -67,7 +66,7 @@ class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
         await self.edit_message(
             callback_query.message,
             _("message.single_device.configure"),
-            reply_markup=InlineKeyboardFactory.single_device_configure_keyboard(
+            reply_markup=InlineKeyboardFactory.multi_device_configure_keyboard(
                 min_player_amount=Parameters.MIN_PLAYER_AMOUNT,
                 max_player_amount=Parameters.MAX_PLAYER_AMOUNT,
                 selected_player_amount=callback_data.player_amount

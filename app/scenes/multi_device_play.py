@@ -9,9 +9,10 @@ from aiogram.enums import MessageEntityType
 from aiogram.filters import CommandObject
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.scene import on
-from aiogram.types import CallbackQuery, Message, MessageEntity, User as AiogramUser
+from aiogram.types import CallbackQuery, Message, MessageEntity, User as AiogramUser, BufferedInputFile
 from aiogram.utils.deep_linking import create_start_link
 from aiogram.utils.i18n import gettext as _
+from aiohttp import ClientSession
 
 from app.actions.back import BackAction
 from app.actions.menu import MenuAction
@@ -115,6 +116,23 @@ def _get_entities(
     return text, entities
 
 
+async def _create_join_url(
+        bot: Bot,
+        game_id: UUID
+) -> str:
+    return await create_start_link(bot, f"{PayloadType.JOIN}:{game_id}", encode=True)
+
+
+async def _get_qr_code(qr_code_url: str) -> BufferedInputFile | None:
+    async with ClientSession() as session:
+        async with session.get(qr_code_url) as response:
+            if response.status == 200:
+                return BufferedInputFile(
+                    await response.read(),
+                    "qr.jpg"
+                )
+
+
 class MultiDeviceGameMessages:
     def __init__(self) -> None:
         self._update_tasks: Dict[UUID, Task] = {}
@@ -188,82 +206,6 @@ class MultiDeviceGameMessages:
             self._update_tasks[game_id].cancel()
             self._update_tasks.pop(game_id)
 
-    async def update_view_role_messages(
-            self,
-            game: MultiDeviceGame
-    ) -> None:
-        if game.game_id not in self._messages:
-            return
-
-        players: Dict[UUID, MultiDevicePlayer] = {player.user_id: player for player in game.players}
-
-        for user_id, message in self._messages[game.game_id].items():
-            role: PlayerRole = players[user_id].role
-
-            if role is None:
-                return
-
-            message_text: str = {
-                PlayerRole.CITIZEN: _("message.multi_device.play.view_role.citizen"),
-                PlayerRole.SPY: _("message.multi_device.play.view_role.spy")
-            }.get(role)
-
-            await MultiDevicePlayScene.edit_message(
-                message,
-                message_text.format(
-                    secret_word=SecretWordsController.get_secret_word(game.secret_word)
-                ),
-                reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
-                    is_host=user_id == game.host_id
-                )
-            )
-
-    async def update_finish_messages(
-            self,
-            game: MultiDeviceGame
-    ) -> None:
-        if game.game_id not in self._messages:
-            return
-
-        try:
-            spy: MultiDevicePlayer = [player for player in game.players if player.role == PlayerRole.SPY][0]
-        except IndexError:
-            return
-
-        for user_id, message in self._messages[game.game_id].items():
-            message_text, entities = _get_entities(
-                _("message.multi_device.play.finish").format(
-                    secret_word=SecretWordsController.get_secret_word(game.secret_word),
-                    first_name=spy.first_name
-                ),
-                players=[spy]
-            )
-
-            await MultiDevicePlayScene.edit_message(
-                message,
-                message_text,
-                entities=entities,
-                reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
-                    is_host=user_id == game.host_id
-                )
-            )
-
-    async def update_stop_messages(
-            self,
-            game: MultiDeviceGame
-    ) -> None:
-        if game.game_id not in self._messages:
-            return
-
-        for user_id, message in self._messages[game.game_id].items():
-            if user_id == game.host_id:
-                continue
-
-            await MultiDevicePlayScene.edit_message(
-                message,
-                _("message.multi_device.play.stop")
-            )
-
     async def _update_recruitment_messages(
             self,
             game_id: UUID,
@@ -275,9 +217,13 @@ class MultiDeviceGameMessages:
             while True:
                 if not messages:
                     return
-
                 await asyncio.sleep(Parameters.API_POLLING_TIMEOUT)
-                game: MultiDeviceGame = await multi_device_games.get_game(game_id)
+
+                game: MultiDeviceGame | None = await multi_device_games.get_game(game_id)
+
+                if game is None:
+                    return
+
                 await state.update_data(game=game.to_json())
 
                 await asyncio.gather(
@@ -297,12 +243,14 @@ class MultiDeviceGameMessages:
             self,
             game: MultiDeviceGame,
             user_id: UUID,
-            message: Message
+            message: Message,
+            qr_code: BufferedInputFile
     ) -> Message:
         text, entities = await self._create_recruitment_message(game, message.bot)
 
-        return await message.answer(
-            text,
+        return await message.answer_photo(
+            qr_code,
+            caption=text,
             entities=entities,
             reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
                 is_host=user_id == game.host_id
@@ -313,17 +261,20 @@ class MultiDeviceGameMessages:
             self,
             game: MultiDeviceGame,
             user_id: UUID,
-            message: Message
-    ) -> None:
+            message: Message,
+            qr_code: BufferedInputFile | None = None
+    ) -> Message:
         text, entities = await self._create_recruitment_message(game, message.bot)
 
-        await MultiDevicePlayScene.edit_message(
+        return await MultiDevicePlayScene.edit_message(
             message,
             text,
+            qr_code,
             entities=entities,
             reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
                 is_host=user_id == game.host_id
-            )
+            ),
+            only_edit_caption=qr_code is None
         )
 
     @staticmethod
@@ -355,7 +306,7 @@ class MultiDeviceGameMessages:
                 player_amount=len(game.players),
                 max_player_amount=game.player_amount
             ),
-            join_url=await create_start_link(bot, f"{PayloadType.JOIN}:{game.game_id}", encode=True),
+            join_url=await _create_join_url(bot, game.game_id),
             players=game.players
         )
 
@@ -376,24 +327,30 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             user.id,
             player_amount
         )
+        game = await multi_device_games.set_game_url(
+            game.game_id,
+            await _create_join_url(callback_query.bot, game.game_id)
+        )
 
         await state.update_data(game=game.to_json())
+
+        new_message: Message = await self.messages.update_recruitment_message(
+            game,
+            user.id,
+            callback_query.message,
+            await _get_qr_code(game.qr_code_url)
+        )
 
         self.messages.add_message(
             game.game_id,
             user.id,
-            callback_query.message
+            new_message
         )
+
         self.messages.start_update_recruitment(
             game.game_id,
             state,
             multi_device_games
-        )
-
-        await self.messages.update_recruitment_message(
-            game,
-            user.id,
-            callback_query.message
         )
 
     @on.message.enter()
@@ -437,7 +394,8 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         new_message: Message = await self.messages.new_recruitment_message(
             game,
             user.id,
-            message
+            message,
+            await _get_qr_code(game.qr_code_url)
         )
         self.messages.add_message(
             game.game_id,
@@ -460,7 +418,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         )
 
         try:
-            game = await multi_device_games.start(game.game_id)
+            game = await multi_device_games.start_game(game.game_id)
         except InvalidPlayerAmountError:
             await callback_query.answer(_("answer.multi_device.play.too_few_players"))
             return
@@ -470,7 +428,32 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         await state.update_data(game=game.to_json())
 
         self.messages.stop_update_recruitment(game.game_id)
-        await self.messages.update_view_role_messages(game)
+
+        players: Dict[UUID, MultiDevicePlayer] = {player.user_id: player for player in game.players}
+
+        for user_id, message in self.messages.get_messages(game.game_id).copy().items():
+            role: PlayerRole = players[user_id].role
+
+            if role is None:
+                return
+
+            message_text: str = {
+                PlayerRole.CITIZEN: _("message.multi_device.play.view_role.citizen"),
+                PlayerRole.SPY: _("message.multi_device.play.view_role.spy")
+            }.get(role)
+
+            new_message: Message | None = await MultiDevicePlayScene.edit_message(
+                message,
+                message_text.format(
+                    secret_word=SecretWordsController.get_secret_word(game.secret_word)
+                ),
+                reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
+                    is_host=user_id == game.host_id
+                )
+            )
+
+            if new_message is not None:
+                self.messages.get_messages(game.game_id)[user_id] = new_message
 
     @on.callback_query(MultiDeviceFinishAction.filter())
     async def on_finish(
@@ -486,7 +469,31 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             multi_device_games
         )
 
-        await self.messages.update_finish_messages(game)
+        try:
+            spy: MultiDevicePlayer = [player for player in game.players if player.role == PlayerRole.SPY][0]
+        except IndexError:
+            return
+
+        message_text, entities = _get_entities(
+            _("message.multi_device.play.finish").format(
+                secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                first_name=spy.first_name
+            ),
+            players=[spy]
+        )
+
+        for user_id, message in self.messages.get_messages(game.game_id).copy().items():
+            new_message: Message | None = await MultiDevicePlayScene.edit_message(
+                message,
+                message_text,
+                entities=entities,
+                reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
+                    is_host=user_id == game.host_id
+                )
+            )
+
+            if new_message is not None:
+                self.messages.get_messages(game.game_id)[user_id] = new_message
 
     @on.callback_query(MultiDevicePlayAgainAction.filter())
     async def on_play_again(
@@ -511,6 +518,10 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             user.id,
             game.player_amount
         )
+        game = await multi_device_games.set_game_url(
+            game.game_id,
+            await _create_join_url(callback_query.bot, game.game_id)
+        )
 
         for player in players:
             if player.user_id == user.id:
@@ -526,27 +537,32 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
 
         await state.update_data(game=game.to_json())
 
-        for user_id, message in messages.items():
-            self.messages.add_message(
-                game.game_id,
-                user_id,
-                message
-            )
-        self.messages.start_update_recruitment(
-            game.game_id,
-            state,
-            multi_device_games
-        )
+        qr_code: BufferedInputFile = await _get_qr_code(game.qr_code_url)
 
-        await asyncio.gather(
+        new_messages: Tuple[Message | None] = await asyncio.gather(
             *[
                 self.messages.update_recruitment_message(
                     game,
                     user_id,
+                    message,
+                    qr_code
+                )
+                for user_id, message in messages.items()
+            ]
+        )
+
+        for user_id, message in zip(messages.keys(), new_messages):
+            if message is not None:
+                self.messages.add_message(
+                    game.game_id,
+                    user_id,
                     message
                 )
-                for user_id, message in self.messages.get_messages(game.game_id).items()
-            ]
+
+        self.messages.start_update_recruitment(
+            game.game_id,
+            state,
+            multi_device_games
         )
 
     @on.callback_query(MultiDeviceLeaveAction.filter())
@@ -568,9 +584,17 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         if game is None:
             return
 
-        if user.id != game.host_id:
+        if user.id == game.host_id:
             await multi_device_games.remove_game(game.game_id)
-            await self.messages.update_stop_messages(game)
+
+            for user_id, message in self.messages.get_messages(game.game_id).items():
+                if user_id == game.host_id:
+                    continue
+
+                await MultiDevicePlayScene.edit_message(
+                    message,
+                    _("message.multi_device.play.stop")
+                )
 
             self.messages.stop_update_recruitment(game.game_id)
             self.messages.clear_messages(game.game_id)
@@ -599,10 +623,19 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
     @on.callback_query(BackAction.filter())
     async def on_back(
             self,
-            callback_query: CallbackQuery
+            callback_query: CallbackQuery,
+            user: User,
+            multi_device_games: MultiDeviceGamesController
     ) -> None:
+        game: MultiDeviceGame | None = await multi_device_games.get_game_by_user_id(user.id)
+
+        if game is not None:
+            player_amount: int | None = game.player_amount
+        else:
+            player_amount = None
+
         await callback_query.answer()
-        await self.wizard.back()
+        await self.wizard.back(player_amount=player_amount)
 
     @on.message()
     async def on_message(

@@ -5,7 +5,7 @@ from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
-from app.models.multi_device_game import CreateMultiDeviceGame
+from app.models.multi_device_game import CreateMultiDeviceGame, SetGameURLModel
 from app.models.multi_device_game import MultiDeviceGame
 
 
@@ -91,7 +91,7 @@ class MultiDeviceGamesController(APIController):
             f"multi_device_games/{game_id}/leave/{user_id}"
         )
 
-    async def start(
+    async def start_game(
             self,
             game_id: UUID
     ) -> MultiDeviceGame:
@@ -105,5 +105,20 @@ class MultiDeviceGamesController(APIController):
             raise GameHasAlreadyStartedError("Game has already started")
         if response.status_code == InvalidPlayerAmountError.status_code:
             raise InvalidPlayerAmountError("Game has too few players")
+
+        return MultiDeviceGame.from_json(response)
+
+    async def set_game_url(
+            self,
+            game_id: UUID,
+            url: str
+    ) -> MultiDeviceGame | None:
+        response: AttributedDict = await self._post(
+            f"multi_device_games/{game_id}/url",
+            json=SetGameURLModel(url=url).to_json()
+        )
+
+        if response.status_code == NotFoundError.status_code:
+            return
 
         return MultiDeviceGame.from_json(response)
