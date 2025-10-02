@@ -34,7 +34,6 @@ class BaseScene(Scene, ABC, state="base"):
                     if message.photo is None:
                         return await message.edit_text(text, **params)
                     else:
-
                         new_message: Message = await message.answer(text, **params)
                         await message.delete()
                         return new_message

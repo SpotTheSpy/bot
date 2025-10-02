@@ -8,7 +8,7 @@ from app.actions.choose_language import ChooseLanguageAction
 from app.controllers.users import UsersController
 from app.enums.language_type import LanguageType
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory
-from app.models.user import User
+from app.models.user import User, BotUser
 from app.scenes.base import BaseScene
 
 
@@ -16,12 +16,12 @@ class LanguageScene(BaseScene, state="language"):
     @on.callback_query.enter()
     async def on_enter(
             self,
-            callback_query: CallbackQuery
+            callback_query: CallbackQuery,
+            user: BotUser
     ) -> None:
         await callback_query.answer()
-        await self.edit_message(
-            callback_query.message,
-            _("message.language.choose"),
+        await user.edit_message(
+            text=_("message.language.choose"),
             reply_markup=InlineKeyboardFactory.choose_language_keyboard()
         )
 
@@ -52,9 +52,10 @@ class LanguageScene(BaseScene, state="language"):
     @on.callback_query(BackAction.filter())
     async def on_back(
             self,
-            callback_query: CallbackQuery
+            callback_query: CallbackQuery,
+            user: BotUser
     ) -> None:
-        await self.wizard.back()
+        await self.wizard.back(user=user)
 
     @on.message()
     async def on_message(
