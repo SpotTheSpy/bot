@@ -34,13 +34,16 @@ class BaseScene(Scene, ABC, state="base"):
                     if message.photo is None:
                         return await message.edit_text(text, **params)
                     else:
+
+                        new_message: Message = await message.answer(text, **params)
                         await message.delete()
-                        return await message.answer(text, **params)
+                        return new_message
             else:
                 if message.photo is not None:
                     return await message.edit_media(InputMediaPhoto(media=photo, caption=text, **params), **params)
                 else:
+                    new_message: Message = await message.answer_photo(photo, caption=text, **params)
                     await message.delete()
-                    return await message.answer_photo(photo, caption=text, **params)
+                    return new_message
         except AiogramError:
             return

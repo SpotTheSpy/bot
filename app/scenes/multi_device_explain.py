@@ -4,7 +4,7 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
 from app.actions.multi_device_configure import MultiDeviceConfigureAction
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.scenes.base import BaseScene
 
 
@@ -25,7 +25,6 @@ class MultiDeviceExplainScene(BaseScene, state="multi_device_explain"):
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.goto("multi_device_configure")
 
     @on.callback_query(BackAction.filter())
@@ -33,7 +32,6 @@ class MultiDeviceExplainScene(BaseScene, state="multi_device_explain"):
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.back()
 
     @on.message()

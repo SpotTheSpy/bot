@@ -1,11 +1,14 @@
+from logging import Logger
+
 from aiogram.fsm.scene import on
 from aiogram.types import Message, CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
 from app.actions.choose_device import ChooseDeviceAction
 from app.actions.language import LanguageAction
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
 from app.scenes.base import BaseScene
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.logging import logger
 
 
 class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_history_on_enter=True):
@@ -15,11 +18,15 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             message: Message,
             locale: str | None = None
     ) -> None:
-        await message.delete()
-
         await message.answer(
             _("message.start", locale=locale),
             reply_markup=InlineKeyboardFactory.start_keyboard(locale)
+        )
+        await message.delete()
+
+        logger.info(
+            f"{message.from_user.first_name} (id={message.from_user.id}) "
+            f"opened the start page."
         )
 
     @on.callback_query.enter()
@@ -28,6 +35,7 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             callback_query: CallbackQuery,
             locale: str | None = None
     ) -> None:
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.start", locale=locale),
@@ -39,7 +47,6 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.goto("choose_device")
 
     @on.callback_query(LanguageAction.filter())
@@ -47,7 +54,6 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.goto("language")
 
     @on.message()

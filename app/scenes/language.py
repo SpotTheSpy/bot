@@ -7,7 +7,7 @@ from app.actions.back import BackAction
 from app.actions.choose_language import ChooseLanguageAction
 from app.controllers.users import UsersController
 from app.enums.language_type import LanguageType
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.user import User
 from app.scenes.base import BaseScene
 
@@ -18,6 +18,7 @@ class LanguageScene(BaseScene, state="language"):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.language.choose"),
@@ -37,7 +38,7 @@ class LanguageScene(BaseScene, state="language"):
         previous_language: LanguageType | None = LanguageType(locale) if locale else None
 
         if previous_language == callback_data.language_type:
-            await callback_query.answer()
+            await callback_query.answer(_("answer.language.same"))
             return
 
         await users.update_user_locale(
@@ -46,16 +47,14 @@ class LanguageScene(BaseScene, state="language"):
         )
 
         await state.update_data(locale=callback_data.language_type)
-        await self.wizard.back(user=user, locale=callback_data.language_type)
+        await self.wizard.back(locale=callback_data.language_type)
 
     @on.callback_query(BackAction.filter())
     async def on_back(
             self,
-            callback_query: CallbackQuery,
-            user: User
+            callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
-        await self.wizard.back(user=user)
+        await self.wizard.back()
 
     @on.message()
     async def on_message(

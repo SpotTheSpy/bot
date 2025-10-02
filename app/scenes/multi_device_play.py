@@ -29,7 +29,7 @@ from app.exceptions.api import APIError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.multi_device_game import MultiDeviceGame, MultiDevicePlayer
 from app.models.user import User
 from app.parameters import Parameters
@@ -361,8 +361,6 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             user: User,
             multi_device_games: MultiDeviceGamesController
     ) -> None:
-        await message.delete()
-
         payload: str = command.args
 
         if not payload.startswith(PayloadType.JOIN):
@@ -402,6 +400,8 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             user.id,
             new_message
         )
+
+        await message.delete()
 
     @on.callback_query(MultiDeviceStartAction.filter())
     async def on_start(
@@ -614,11 +614,9 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
     @on.callback_query(MenuAction.filter())
     async def on_menu(
             self,
-            callback_query: CallbackQuery,
-            user: User
+            callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
-        await self.wizard.goto("start", user=user)
+        await self.wizard.goto("start")
 
     @on.callback_query(BackAction.filter())
     async def on_back(
@@ -634,7 +632,6 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         else:
             player_amount = None
 
-        await callback_query.answer()
         await self.wizard.back(player_amount=player_amount)
 
     @on.message()

@@ -6,7 +6,7 @@ from aiogram.utils.i18n import gettext as _
 from app.actions.back import BackAction
 from app.actions.multi_device_choose_player_amount import MultiDeviceChoosePlayerAmountAction
 from app.actions.multi_device_play import MultiDevicePlayAction
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.user import User
 from app.parameters import Parameters
 from app.scenes.base import BaseScene
@@ -47,7 +47,6 @@ class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
         if player_amount is None:
             player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
 
-        await callback_query.answer()
         await self.wizard.goto(
             "multi_device_play",
             user=user,
@@ -78,7 +77,6 @@ class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.back()
 
     @on.message()

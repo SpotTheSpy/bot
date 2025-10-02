@@ -4,7 +4,7 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
 from app.actions.single_device_configure import SingleDeviceConfigureAction
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.scenes.base import BaseScene
 
 
@@ -14,6 +14,7 @@ class SingleDeviceExplainScene(BaseScene, state="single_device_explain"):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.single_device.explain"),
@@ -25,7 +26,6 @@ class SingleDeviceExplainScene(BaseScene, state="single_device_explain"):
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.goto("single_device_configure")
 
     @on.callback_query(BackAction.filter())
@@ -33,7 +33,6 @@ class SingleDeviceExplainScene(BaseScene, state="single_device_explain"):
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.back()
 
     @on.message()

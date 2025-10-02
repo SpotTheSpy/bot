@@ -5,7 +5,7 @@ from aiogram.utils.i18n import gettext as _
 from app.actions.back import BackAction
 from app.actions.multi_device_enter import MultiDeviceEnter
 from app.actions.single_device_enter import SingleDeviceEnter
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.models.user import User
 from app.scenes.base import BaseScene
 
@@ -16,6 +16,7 @@ class ChooseDeviceScene(BaseScene, state="choose_device"):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.choose_device"),
@@ -27,7 +28,6 @@ class ChooseDeviceScene(BaseScene, state="choose_device"):
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.goto("single_device_explain")
 
     @on.callback_query(MultiDeviceEnter.filter())
@@ -35,7 +35,6 @@ class ChooseDeviceScene(BaseScene, state="choose_device"):
             self,
             callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
         await self.wizard.goto("multi_device_explain")
 
     @on.callback_query(BackAction.filter())
@@ -44,8 +43,7 @@ class ChooseDeviceScene(BaseScene, state="choose_device"):
             callback_query: CallbackQuery,
             user: User
     ) -> None:
-        await callback_query.answer()
-        await self.wizard.back(user=user)
+        await self.wizard.back()
 
     @on.message()
     async def on_message(

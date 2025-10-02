@@ -2,6 +2,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
+from babel.support import LazyProxy
 
 from app.actions.back import BackAction
 from app.actions.menu import MenuAction
@@ -12,10 +13,13 @@ from app.actions.single_device_view_role import SingleDeviceViewRoleAction
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.data.secret_words_controller import SecretWordsController
 from app.enums.player_role import PlayerRole
-from app.keyboards.inline_keyboard_factory import InlineKeyboardFactory
+from app.exceptions.already_in_game import AlreadyInGameError
 from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User
 from app.scenes.base import BaseScene
+from app.utils.dict_factory import DictFactory
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.logging import logger
 
 
 class SingleDevicePlayScene(BaseScene, state="single_device_play"):
@@ -28,11 +32,37 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
-        game: SingleDeviceGame = await single_device_games.create_game(
-            user.id,
-            callback_query.from_user.id,
-            player_amount
-        )
+        try:
+            game: SingleDeviceGame | None = await single_device_games.create_game(
+                user.id,
+                callback_query.from_user.id,
+                player_amount
+            )
+        except AlreadyInGameError:
+            game: SingleDeviceGame | None = await single_device_games.get_game_by_user_id(user.id)
+            await single_device_games.remove_game(game.game_id)
+
+            try:
+                game: SingleDeviceGame | None = await single_device_games.create_game(
+                    user.id,
+                    callback_query.from_user.id,
+                    player_amount
+                )
+            except Exception as e:
+                await callback_query.answer()
+                logger.error(
+                    f"(id={callback_query.from_user.id}) "
+                    f"game creation failed. Exception: {e}."
+                )
+                return
+
+        if game is None:
+            await callback_query.answer()
+            logger.error(
+                f"(id={callback_query.from_user.id}) "
+                f"created game but the game is null."
+            )
+            return
 
         player_index: int = 0
 
@@ -41,6 +71,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             player_index=player_index
         )
 
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.single_device.play.prepare").format(
@@ -48,6 +79,11 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
                 player_amount=game.player_amount
             ),
             reply_markup=InlineKeyboardFactory.single_device_view_role_keyboard()
+        )
+
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"started a single-device game."
         )
 
     @on.callback_query(SingleDeviceViewRoleAction.filter())
@@ -58,23 +94,35 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
-        game: SingleDeviceGame | None = await SingleDeviceGame.from_context(
-            user.id,
-            state,
-            single_device_games
+        game: SingleDeviceGame | None = (
+                SingleDeviceGame.from_json(await state.get_value("game"))
+                or await single_device_games.get_game_by_user_id(user.id)
         )
+
+        if game is None:
+            await callback_query.answer()
+            logger.error(
+                f"(id={callback_query.from_user.id}) "
+                f"game is null."
+            )
+            return
+
         player_index: int = await state.get_value("player_index")
+        role: PlayerRole = PlayerRole.SPY if player_index == game.spy_index else PlayerRole.CITIZEN
+        message: LazyProxy = DictFactory.single_device_role_message().get(role)
 
-        role = PlayerRole.SPY if player_index == game.spy_index else PlayerRole.CITIZEN
+        if player_index is None or message is None:
+            await callback_query.answer()
+            logger.error(
+                f"(id={callback_query.from_user.id}) "
+                f"game is null."
+            )
+            return
 
-        message_text: str = {
-            PlayerRole.CITIZEN: _("message.single_device.play.view_role.citizen"),
-            PlayerRole.SPY: _("message.single_device.play.view_role.spy")
-        }.get(role)
-
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
-            message_text.format(
+            message.format(
                 secret_word=SecretWordsController.get_secret_word(game.secret_word),
                 player_index=player_index + 1,
                 player_amount=game.player_amount
@@ -90,16 +138,33 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
-        game: SingleDeviceGame | None = await SingleDeviceGame.from_context(
-            user.id,
-            state,
-            single_device_games
+        game: SingleDeviceGame | None = (
+                SingleDeviceGame.from_json(await state.get_value("game"))
+                or await single_device_games.get_game_by_user_id(user.id)
         )
-        player_index: int = await state.get_value("player_index")
+
+        if game is None:
+            await callback_query.answer()
+            logger.error(
+                f"(id={callback_query.from_user.id}) "
+                f"game is null."
+            )
+            return
+
+        player_index: int | None = await state.get_value("player_index")
+
+        if player_index is None:
+            await callback_query.answer()
+            logger.error(
+                f"(id={callback_query.from_user.id}) "
+                f"game is null."
+            )
+            return
 
         player_index += 1
 
         if player_index >= game.player_amount:
+            await callback_query.answer()
             await self.edit_message(
                 callback_query.message,
                 _("message.single_device.play.discuss"),
@@ -109,6 +174,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
 
         await state.update_data(player_index=player_index)
 
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.single_device.play.prepare").format(
@@ -126,12 +192,20 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
-        game: SingleDeviceGame | None = await SingleDeviceGame.from_context(
-            user.id,
-            state,
-            single_device_games
+        game: SingleDeviceGame | None = (
+                SingleDeviceGame.from_json(await state.get_value("game"))
+                or await single_device_games.get_game_by_user_id(user.id)
         )
 
+        if game is None:
+            await callback_query.answer()
+            logger.error(
+                f"(id={callback_query.from_user.id}) "
+                f"game is null."
+            )
+            return
+
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.single_device.play.finish").format(
@@ -149,19 +223,27 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
-        game: SingleDeviceGame | None = await SingleDeviceGame.from_context(
-            user.id,
-            state,
-            single_device_games
+        game: SingleDeviceGame | None = (
+                SingleDeviceGame.from_json(await state.get_value("game"))
+                or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        await single_device_games.remove_game(game.game_id)
+        if game is not None:
+            await single_device_games.remove_game(game.game_id)
 
-        game: SingleDeviceGame = await single_device_games.create_game(
-            user.id,
-            callback_query.from_user.id,
-            game.player_amount
-        )
+        try:
+            game: SingleDeviceGame | None = await single_device_games.create_game(
+                user.id,
+                callback_query.from_user.id,
+                game.player_amount
+            )
+        except Exception as e:
+            await callback_query.answer()
+            logger.error(
+                f"(id={callback_query.from_user.id}) "
+                f"game creation failed. Exception: {e}."
+            )
+            return
 
         player_index: int = 0
 
@@ -170,6 +252,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             player_index=player_index
         )
 
+        await callback_query.answer()
         await self.edit_message(
             callback_query.message,
             _("message.single_device.play.prepare").format(
@@ -179,30 +262,49 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             reply_markup=InlineKeyboardFactory.single_device_view_role_keyboard()
         )
 
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"started a single-device game."
+        )
+
+    @on.message.leave()
+    async def on_message_leave(
+            self,
+            message: Message,
+            user: User,
+            state: FSMContext,
+            single_device_games: SingleDeviceGamesController
+    ) -> None:
+        game: SingleDeviceGame | None = (
+                SingleDeviceGame.from_json(await state.get_value("game"))
+                or await single_device_games.get_game_by_user_id(user.id)
+        )
+
+        if game is not None:
+            await single_device_games.remove_game(game.game_id)
+
     @on.callback_query.leave()
-    async def on_scene_leave(
+    async def on_callback_query_leave(
             self,
             callback_query: CallbackQuery,
             user: User,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
-        game: SingleDeviceGame | None = await SingleDeviceGame.from_context(
-            user.id,
-            state,
-            single_device_games
+        game: SingleDeviceGame | None = (
+                SingleDeviceGame.from_json(await state.get_value("game"))
+                or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        await single_device_games.remove_game(game.game_id)
+        if game is not None:
+            await single_device_games.remove_game(game.game_id)
 
     @on.callback_query(MenuAction.filter())
     async def on_menu(
             self,
-            callback_query: CallbackQuery,
-            user: User
+            callback_query: CallbackQuery
     ) -> None:
-        await callback_query.answer()
-        await self.wizard.goto("start", user=user)
+        await self.wizard.goto("start")
 
     @on.callback_query(BackAction.filter())
     async def on_back(
@@ -212,14 +314,17 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
-        game: SingleDeviceGame | None = await SingleDeviceGame.from_context(
-            user.id,
-            state,
-            single_device_games
+        game: SingleDeviceGame | None = (
+                SingleDeviceGame.from_json(await state.get_value("game"))
+                or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        await callback_query.answer()
-        await self.wizard.back(player_amount=game.player_amount)
+        if game is not None:
+            player_amount: int | None = game.player_amount
+        else:
+            player_amount: int | None = None
+
+        await self.wizard.back(player_amount=player_amount)
 
     @on.message()
     async def on_message(

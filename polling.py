@@ -5,6 +5,7 @@ import sys
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiogram.loggers import event
 
 from app.bot import create_dispatcher, config
 
@@ -32,5 +33,7 @@ if __name__ == "__main__":
         format="%(levelname)s %(asctime)s - %(message)s",
         datefmt="%d-%m-%y %H:%M:%S"
     )
+
+    event.setLevel(logging.ERROR)
 
     asyncio.run(main())
