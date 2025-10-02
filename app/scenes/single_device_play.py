@@ -267,22 +267,6 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             f"started a single-device game."
         )
 
-    @on.message.leave()
-    async def on_message_leave(
-            self,
-            message: Message,
-            user: User,
-            state: FSMContext,
-            single_device_games: SingleDeviceGamesController
-    ) -> None:
-        game: SingleDeviceGame | None = (
-                SingleDeviceGame.from_json(await state.get_value("game"))
-                or await single_device_games.get_game_by_user_id(user.id)
-        )
-
-        if game is not None:
-            await single_device_games.remove_game(game.game_id)
-
     @on.callback_query.leave()
     async def on_callback_query_leave(
             self,

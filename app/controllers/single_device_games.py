@@ -61,3 +61,20 @@ class SingleDeviceGamesController(APIController):
         await self._delete(
             f"single_device_games/{game_id}"
         )
+
+    async def remove_game_by_user_id(
+            self,
+            user_id: UUID
+    ) -> None:
+        response: AttributedDict = await self._get(
+            f"single_device_games/by_user_id/{user_id}"
+        )
+
+        if response.status_code == NotFoundError.status_code:
+            return
+
+        game = SingleDeviceGame.from_json(response)
+
+        await self._delete(
+            f"single_device_games/{game.game_id}"
+        )

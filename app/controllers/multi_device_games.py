@@ -62,6 +62,23 @@ class MultiDeviceGamesController(APIController):
             f"multi_device_games/{game_id}"
         )
 
+    async def remove_game_by_user_id(
+            self,
+            user_id: UUID
+    ) -> None:
+        response: AttributedDict = await self._get(
+            f"multi_device_games/by_user_id/{user_id}"
+        )
+
+        if response.status_code == NotFoundError.status_code:
+            return
+
+        game = MultiDeviceGame.from_json(response)
+
+        await self._delete(
+            f"multi_device_games/{game.game_id}"
+        )
+
     async def join_game(
             self,
             game_id: UUID,
