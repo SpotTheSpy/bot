@@ -5,13 +5,9 @@ from aiogram.utils.i18n import gettext as _
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.actions.back import BackAction
-from app.actions.choose_device import ChooseDeviceAction
 from app.actions.choose_language import ChooseLanguageAction
-from app.actions.language import LanguageAction
 from app.actions.menu import MenuAction
 from app.actions.multi_device_choose_player_amount import MultiDeviceChoosePlayerAmountAction
-from app.actions.multi_device_configure import MultiDeviceConfigureAction
-from app.actions.multi_device_enter import MultiDeviceEnter
 from app.actions.multi_device_finish import MultiDeviceFinishAction
 from app.actions.multi_device_leave import MultiDeviceLeaveAction
 from app.actions.multi_device_play import MultiDevicePlayAction
@@ -19,13 +15,12 @@ from app.actions.multi_device_play_again import MultiDevicePlayAgainAction
 from app.actions.multi_device_start import MultiDeviceStartAction
 from app.actions.page_turn import PageTurnAction
 from app.actions.single_device_choose_player_amount import SingleDeviceChoosePlayerAmountAction
-from app.actions.single_device_configure import SingleDeviceConfigureAction
-from app.actions.single_device_enter import SingleDeviceEnter
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.single_device_play import SingleDevicePlayAction
 from app.actions.single_device_play_again import SingleDevicePlayAgainAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
 from app.actions.single_device_view_role import SingleDeviceViewRoleAction
+from app.actions.switch_scene import SwitchSceneAction
 from app.enums.language_type import LanguageType
 from app.enums.page_turn import PageTurn
 
@@ -76,13 +71,13 @@ class InlineKeyboardFactory:
                 [
                     InlineKeyboardButton(
                         text=_("button.start.play", locale=locale),
-                        callback_data=ChooseDeviceAction().pack()
+                        callback_data=SwitchSceneAction(scene="choose_device").pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
                         text=_("button.start.language", locale=locale),
-                        callback_data=LanguageAction().pack()
+                        callback_data=SwitchSceneAction(scene="language").pack()
                     )
                 ]
             ]
@@ -95,13 +90,13 @@ class InlineKeyboardFactory:
                 [
                     InlineKeyboardButton(
                         text=_("button.choose_device.single_device"),
-                        callback_data=SingleDeviceEnter().pack()
+                        callback_data=SwitchSceneAction(scene="single_device_explain").pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
                         text=_("button.choose_device.multi_device"),
-                        callback_data=MultiDeviceEnter().pack()
+                        callback_data=SwitchSceneAction(scene="multi_device_explain").pack()
                     )
                 ],
                 [
@@ -143,7 +138,10 @@ class InlineKeyboardFactory:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
-                    InlineKeyboardButton(text=_("button.got_it"), callback_data=SingleDeviceConfigureAction().pack())
+                    InlineKeyboardButton(
+                        text=_("button.got_it"),
+                        callback_data=SwitchSceneAction(scene="single_device_configure").pack()
+                    )
                 ],
                 [
                     cls.back_button()
@@ -257,7 +255,10 @@ class InlineKeyboardFactory:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
-                    InlineKeyboardButton(text=_("button.got_it"), callback_data=MultiDeviceConfigureAction().pack())
+                    InlineKeyboardButton(
+                        text=_("button.got_it"),
+                        callback_data=SwitchSceneAction(scene="multi_device_configure").pack()
+                    )
                 ],
                 [
                     cls.back_button()

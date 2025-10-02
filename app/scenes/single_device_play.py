@@ -4,8 +4,6 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 from babel.support import LazyProxy
 
-from app.actions.back import BackAction
-from app.actions.menu import MenuAction
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.single_device_play_again import SingleDevicePlayAgainAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
@@ -15,7 +13,7 @@ from app.data.secret_words_controller import SecretWordsController
 from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.models.single_device_game import SingleDeviceGame
-from app.models.user import User
+from app.models.user import User, BotUser
 from app.scenes.base import BaseScene
 from app.utils.dict_factory import DictFactory
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory
@@ -27,7 +25,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
     async def on_enter(
             self,
             callback_query: CallbackQuery,
-            user: User,
+            user: BotUser,
             player_amount: int,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
@@ -72,9 +70,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         )
 
         await callback_query.answer()
-        await self.edit_message(
-            callback_query.message,
-            _("message.single_device.play.prepare").format(
+        await user.edit_message(
+            text=_("message.single_device.play.prepare").format(
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
@@ -90,7 +87,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
     async def on_view_role(
             self,
             callback_query: CallbackQuery,
-            user: User,
+            user: BotUser,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
@@ -120,9 +117,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             return
 
         await callback_query.answer()
-        await self.edit_message(
-            callback_query.message,
-            message_text.format(
+        await user.edit_message(
+            text=message_text.format(
                 secret_word=SecretWordsController.get_secret_word(game.secret_word),
                 player_index=player_index + 1,
                 player_amount=game.player_amount
@@ -134,7 +130,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
     async def on_proceed(
             self,
             callback_query: CallbackQuery,
-            user: User,
+            user: BotUser,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
@@ -165,9 +161,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
 
         if player_index >= game.player_amount:
             await callback_query.answer()
-            await self.edit_message(
-                callback_query.message,
-                _("message.single_device.play.discuss"),
+            await user.edit_message(
+                text=_("message.single_device.play.discuss"),
                 reply_markup=InlineKeyboardFactory.single_device_finish_keyboard()
             )
             return
@@ -175,9 +170,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         await state.update_data(player_index=player_index)
 
         await callback_query.answer()
-        await self.edit_message(
-            callback_query.message,
-            _("message.single_device.play.prepare").format(
+        await user.edit_message(
+            text=_("message.single_device.play.prepare").format(
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
@@ -188,7 +182,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
     async def on_finish(
             self,
             callback_query: CallbackQuery,
-            user: User,
+            user: BotUser,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
@@ -206,9 +200,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             return
 
         await callback_query.answer()
-        await self.edit_message(
-            callback_query.message,
-            _("message.single_device.play.finish").format(
+        await user.edit_message(
+            text=_("message.single_device.play.finish").format(
                 secret_word=SecretWordsController.get_secret_word(game.secret_word),
                 spy_index=game.spy_index + 1
             ),
@@ -219,7 +212,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
     async def on_play_again(
             self,
             callback_query: CallbackQuery,
-            user: User,
+            user: BotUser,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
     ) -> None:
@@ -253,9 +246,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         )
 
         await callback_query.answer()
-        await self.edit_message(
-            callback_query.message,
-            _("message.single_device.play.prepare").format(
+        await user.edit_message(
+            text=_("message.single_device.play.prepare").format(
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
@@ -267,10 +259,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             f"started a single-device game"
         )
 
-    @on.callback_query.leave()
-    async def on_callback_query_leave(
+    async def on_scene_leave(
             self,
-            callback_query: CallbackQuery,
             user: User,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
@@ -283,17 +273,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         if game is not None:
             await single_device_games.remove_game(game.game_id)
 
-    @on.callback_query(MenuAction.filter())
-    async def on_menu(
-            self,
-            callback_query: CallbackQuery
-    ) -> None:
-        await self.wizard.goto("start")
-
-    @on.callback_query(BackAction.filter())
     async def on_back(
             self,
-            callback_query: CallbackQuery,
             user: User,
             state: FSMContext,
             single_device_games: SingleDeviceGamesController
@@ -308,7 +289,10 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         else:
             player_amount: int | None = None
 
-        await self.wizard.back(player_amount=player_amount)
+        await self.wizard.back(
+            user=user,
+            player_amount=player_amount
+        )
 
     @on.message()
     async def on_message(

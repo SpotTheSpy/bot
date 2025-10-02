@@ -7,9 +7,10 @@ from app.actions.back import BackAction
 from app.actions.choose_language import ChooseLanguageAction
 from app.controllers.users import UsersController
 from app.enums.language_type import LanguageType
-from app.utils.inline_keyboard_factory import InlineKeyboardFactory
-from app.models.user import User, BotUser
+from app.models.user import BotUser
 from app.scenes.base import BaseScene
+from app.utils.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.logging import logger
 
 
 class LanguageScene(BaseScene, state="language"):
@@ -31,7 +32,7 @@ class LanguageScene(BaseScene, state="language"):
             callback_query: CallbackQuery,
             callback_data: ChooseLanguageAction,
             state: FSMContext,
-            user: User,
+            user: BotUser,
             users: UsersController
     ) -> None:
         locale: str | None = await state.get_value("locale")
@@ -47,7 +48,17 @@ class LanguageScene(BaseScene, state="language"):
         )
 
         await state.update_data(locale=callback_data.language_type)
-        await self.wizard.back(locale=callback_data.language_type)
+
+        await callback_query.answer()
+        await self.wizard.back(
+            user=user,
+            locale=callback_data.language_type
+        )
+
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"set language to \'{callback_data.language_type}\'"
+        )
 
     @on.callback_query(BackAction.filter())
     async def on_back(
