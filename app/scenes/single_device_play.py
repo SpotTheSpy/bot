@@ -51,16 +51,16 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             except Exception as e:
                 await callback_query.answer()
                 logger.error(
-                    f"(id={callback_query.from_user.id}) "
-                    f"game creation failed. Exception: {e}."
+                    f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                    f"Failed to create single-device game. Exception: {e}"
                 )
                 return
 
         if game is None:
             await callback_query.answer()
             logger.error(
-                f"(id={callback_query.from_user.id}) "
-                f"created game but the game is null."
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"failed to create single-device game"
             )
             return
 
@@ -83,7 +83,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
 
         logger.info(
             f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-            f"started a single-device game."
+            f"started a single-device game"
         )
 
     @on.callback_query(SingleDeviceViewRoleAction.filter())
@@ -102,27 +102,27 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         if game is None:
             await callback_query.answer()
             logger.error(
-                f"(id={callback_query.from_user.id}) "
-                f"game is null."
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"failed to view role in a single-device game because the game was not found"
             )
             return
 
         player_index: int = await state.get_value("player_index")
         role: PlayerRole = PlayerRole.SPY if player_index == game.spy_index else PlayerRole.CITIZEN
-        message: LazyProxy = DictFactory.single_device_role_message().get(role)
+        message_text: LazyProxy = DictFactory.single_device_role_message().get(role)
 
-        if player_index is None or message is None:
+        if player_index is None or message_text is None:
             await callback_query.answer()
             logger.error(
-                f"(id={callback_query.from_user.id}) "
-                f"game is null."
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"failed to view role in a single-device game because of an internal server error"
             )
             return
 
         await callback_query.answer()
         await self.edit_message(
             callback_query.message,
-            message.format(
+            message_text.format(
                 secret_word=SecretWordsController.get_secret_word(game.secret_word),
                 player_index=player_index + 1,
                 player_amount=game.player_amount
@@ -146,8 +146,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         if game is None:
             await callback_query.answer()
             logger.error(
-                f"(id={callback_query.from_user.id}) "
-                f"game is null."
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"failed to proceed a single-device game because the game was not found"
             )
             return
 
@@ -156,8 +156,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         if player_index is None:
             await callback_query.answer()
             logger.error(
-                f"(id={callback_query.from_user.id}) "
-                f"game is null."
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"failed to proceed a single-device game because of an internal server error"
             )
             return
 
@@ -200,8 +200,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         if game is None:
             await callback_query.answer()
             logger.error(
-                f"(id={callback_query.from_user.id}) "
-                f"game is null."
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"failed to finish a single-device game because the game was not found"
             )
             return
 
@@ -240,8 +240,8 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
         except Exception as e:
             await callback_query.answer()
             logger.error(
-                f"(id={callback_query.from_user.id}) "
-                f"game creation failed. Exception: {e}."
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"Failed to create single-device game. Exception: {e}"
             )
             return
 
@@ -264,7 +264,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
 
         logger.info(
             f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-            f"started a single-device game."
+            f"started a single-device game"
         )
 
     @on.callback_query.leave()

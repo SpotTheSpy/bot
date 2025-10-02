@@ -33,7 +33,7 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
 
         logger.info(
             f"{message.from_user.first_name} (id={message.from_user.id}) "
-            f"opened the start page."
+            f"opened the start page"
         )
 
     @on.callback_query.enter()
