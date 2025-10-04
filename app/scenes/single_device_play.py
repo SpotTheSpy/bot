@@ -208,6 +208,11 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
             reply_markup=InlineKeyboardFactory.single_device_play_again_keyboard()
         )
 
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"finished a single-device game (game_id={game.game_id})"
+        )
+
     @on.callback_query(SingleDevicePlayAgainAction.filter())
     async def on_play_again(
             self,
@@ -256,7 +261,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
 
         logger.info(
             f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-            f"started a single-device game"
+            f"started a single-device game (game_id={game.game_id})"
         )
 
     async def on_scene_leave(

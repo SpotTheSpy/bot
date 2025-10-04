@@ -221,7 +221,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
 
         logger.info(
             f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-            f"started recruitment for a multi-device game"
+            f"started recruitment for a multi-device game (game_id={game.game_id})"
         )
 
     @on.message.enter()
@@ -346,6 +346,11 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 )
             )
 
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"started a multi-device game (game_id={game.game_id})"
+        )
+
     @on.callback_query(MultiDeviceFinishAction.filter())
     async def on_finish(
             self,
@@ -396,6 +401,11 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     locale=player_bot_user.locale
                 )
             )
+
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"finished a multi-device game (game_id={game.game_id})"
+        )
 
     @on.callback_query(MultiDevicePlayAgainAction.filter())
     async def on_play_again(
@@ -461,6 +471,11 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 )
             )
 
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"started recruitment for a multi-device game (game_id={game.game_id})"
+        )
+
     @on.callback_query(MultiDeviceLeaveAction.filter())
     async def on_leave(
             self,
@@ -494,6 +509,11 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 await player_bot_user.edit_message(
                     text=_("message.multi_device.play.stop", locale=player_bot_user.locale)
                 )
+
+            logger.info(
+                f"{user.first_name} (id={user.telegram_id}) "
+                f"finished a multi-device game (game_id={game.game_id})"
+            )
         else:
             await multi_device_games.leave_game(
                 game.game_id,
@@ -529,6 +549,11 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     ),
                     only_edit_caption=True
                 )
+
+            logger.info(
+                f"{user.first_name} (id={user.telegram_id}) "
+                f"left a multi-device game (game_id={game.game_id})"
+            )
 
     async def on_back(
             self,
