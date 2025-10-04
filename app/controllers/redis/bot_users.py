@@ -1,8 +1,10 @@
 from typing import Dict, Any
 from uuid import UUID
 
+from aiogram import Bot
+
 from app.controllers.redis.abstract import RedisController
-from app.models.user import BotUser
+from app.models.user import BotUser, User
 
 
 class BotUsersController(RedisController):
@@ -12,7 +14,7 @@ class BotUsersController(RedisController):
     ) -> str:
         return f"bot_user:{user_id}"
 
-    async def create_bot_user(
+    async def set_bot_user(
             self,
             bot_user: BotUser
     ) -> None:
@@ -20,14 +22,22 @@ class BotUsersController(RedisController):
 
     async def get_bot_user(
             self,
-            user_id: UUID
-    ) -> str | None:
+            user_id: UUID,
+            bot: Bot
+    ) -> BotUser | None:
         user_json: Dict[str, Any] = await self.get(self.key(user_id))
 
         if user_json is None:
             return
 
-        return BotUser.from_json(user_json)
+        return BotUser.from_user(
+            User.from_json(user_json),
+            chat_id=user_json.get("chat_id"),
+            message_id=user_json.get("message_id"),
+            has_photo=user_json.get("has_photo"),
+            bot=bot,
+            controller=self
+        )
 
     async def exists_bot_user(
             self,

@@ -1,4 +1,5 @@
 from typing import Callable, Dict, Any, Awaitable, Set
+from uuid import UUID
 
 from aiogram import BaseMiddleware, Router
 from aiogram.fsm.context import FSMContext
@@ -31,19 +32,19 @@ class UserMiddleware(BaseMiddleware):
             data["user"] = None
             return await handler(event, data)
 
-        state: FSMContext | None = data.get("state")
-        user_json: Dict[str, Any] = await state.get_value("user")
+        state: FSMContext = data.get("state")
 
-        if user_json is not None:
-            bot_user = BotUser.from_user(
-                User.from_json(user_json),
-                chat_id=user_json.get("chat_id"),
-                message_id=user_json.get("message_id"),
-                has_photo=user_json.get("has_photo"),
-                bot=data.get("bot"),
-                state=state
+        try:
+            user_id = UUID(await state.get_value("user_id"))
+
+            bot_user: BotUser | None = await self._bot_users.get_bot_user(
+                user_id,
+                data.get("bot")
             )
-        else:
+        except (TypeError, ValueError):
+            bot_user = None
+
+        if bot_user is None:
             user: User | None = await self._users.get_user(from_user.id)
 
             if user is None:
@@ -61,19 +62,25 @@ class UserMiddleware(BaseMiddleware):
             bot_user = BotUser.from_user(
                 user,
                 bot=data.get("bot"),
-                state=state
+                controller=self._bot_users
             )
+
+            await state.update_data(user_id=str(bot_user.id))
+
+        update_bot_user: bool = False
 
         if isinstance(event, CallbackQuery):
             if bot_user.chat_id is None:
+                update_bot_user: bool = True
                 bot_user.chat_id = event.message.chat.id
             if bot_user.message_id is None:
+                update_bot_user: bool = True
                 bot_user.message_id = event.message.message_id
 
-        data["user"] = bot_user
+        if update_bot_user:
+            await bot_user.save()
 
-        await state.update_data(user=bot_user.to_json())
-        await self._bot_users.create_bot_user(bot_user)
+        data["user"] = bot_user
         return await handler(event, data)
 
     def setup(

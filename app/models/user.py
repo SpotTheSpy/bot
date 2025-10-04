@@ -1,5 +1,6 @@
+import logging
 from datetime import datetime
-from typing import Dict, Any, List
+from typing import Dict, Any, List, TYPE_CHECKING
 from uuid import UUID
 
 from aiogram import Bot
@@ -9,6 +10,11 @@ from aiogram.types import Message, InputFile, MessageEntity, InlineKeyboardMarku
 from pydantic import ValidationError
 
 from app.models.abstract import AbstractModel
+
+if TYPE_CHECKING:
+    from app.controllers.redis.bot_users import BotUsersController
+else:
+    BotUsersController = Any
 
 
 class User(AbstractModel):
@@ -27,7 +33,7 @@ class BotUser(User, arbitrary_types_allowed=True):
     has_photo: bool | None = None
 
     bot: Bot | None = None
-    state: FSMContext | None = None
+    controller: BotUsersController | None = None
 
     @classmethod
     def from_user(
@@ -37,7 +43,7 @@ class BotUser(User, arbitrary_types_allowed=True):
             message_id: int | None = None,
             has_photo: bool | None = None,
             bot: Bot | None = None,
-            state: FSMContext | None = None
+            controller: BotUsersController | None = None
     ) -> 'BotUser':
         return cls(
             **user.model_dump(),
@@ -45,19 +51,18 @@ class BotUser(User, arbitrary_types_allowed=True):
             message_id=message_id,
             has_photo=has_photo,
             bot=bot,
-            state=state
+            controller=controller
         )
 
     def to_json(self) -> Dict[str, Any] | None:
         try:
-            return self.model_dump(mode="json", exclude={"bot", "state"})
+            return self.model_dump(mode="json", exclude={"bot", "controller"})
         except ValidationError:
             pass
 
     async def new_message(
             self,
             chat_id: int,
-            message_id: int | None = None,
             text: str | None = None,
             photo: str | InputFile | None = None,
             entities: List[MessageEntity] | None = None,
@@ -65,8 +70,6 @@ class BotUser(User, arbitrary_types_allowed=True):
     ) -> Message | None:
         if chat_id is not None:
             self.chat_id = chat_id
-        if message_id is not None:
-            self.message_id = message_id
 
         params: Dict[str, Any] = {
             "entities": entities,
@@ -107,8 +110,9 @@ class BotUser(User, arbitrary_types_allowed=True):
         else:
             self.chat_id = new_message.chat.id
             self.message_id = new_message.message_id
+            self.has_photo = new_message.photo is not None
 
-            await self._save()
+            await self.save()
 
     async def edit_message(
             self,
@@ -198,16 +202,18 @@ class BotUser(User, arbitrary_types_allowed=True):
                         self.chat_id,
                         self.message_id
                     )
-        except AiogramError:
+        except AiogramError as e:
+            logging.exception(e)
             return
 
         self.chat_id = new_message.chat.id
         self.message_id = new_message.message_id
+        self.has_photo = new_message.photo is not None
 
-        await self._save()
+        await self.save()
 
-    async def _save(self) -> None:
-        await self.state.update_data(user=self.to_json())
+    async def save(self) -> None:
+        await self.controller.set_bot_user(self)
 
 
 class CreateUser(AbstractModel):

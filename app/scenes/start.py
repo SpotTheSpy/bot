@@ -22,10 +22,10 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
     ) -> None:
         await user.new_message(
             message.chat.id,
-            message.message_id,
             text=_("message.start", locale=locale),
             reply_markup=InlineKeyboardFactory.start_keyboard(locale)
         )
+        await message.delete()
 
         await single_device_games.remove_game_by_user_id(user.id)
         await multi_device_games.remove_game_by_user_id(user.id)

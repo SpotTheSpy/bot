@@ -1,4 +1,3 @@
-from aiogram.fsm.context import FSMContext
 from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
@@ -31,11 +30,10 @@ class LanguageScene(BaseScene, state="language"):
             self,
             callback_query: CallbackQuery,
             callback_data: ChooseLanguageAction,
-            state: FSMContext,
             user: BotUser,
             users: UsersController
     ) -> None:
-        locale: str | None = await state.get_value("locale")
+        locale: str | None = user.locale
         previous_language: LanguageType | None = LanguageType(locale) if locale else None
 
         if previous_language == callback_data.language_type:
@@ -47,7 +45,8 @@ class LanguageScene(BaseScene, state="language"):
             callback_data.language_type
         )
 
-        await state.update_data(locale=callback_data.language_type)
+        user.locale = callback_data.language_type
+        await user.save()
 
         await callback_query.answer()
         await self.wizard.back(
