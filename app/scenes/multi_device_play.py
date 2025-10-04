@@ -115,28 +115,30 @@ def _get_entities(
 
 async def _create_recruitment_message(
         game: MultiDeviceGame,
-        bot: Bot
+        bot: Bot,
+        *,
+        locale: str | None = None
 ) -> Tuple[str, List[MessageEntity]]:
     players: List[str] = []
 
     for index, player in enumerate(game.players):
         if player.user_id == game.host_id:
             players.append(
-                _("message.multi_device.play.recruit.player.host").format(
+                _("message.multi_device.play.recruit.player.host", locale=locale).format(
                     index=index + 1,
                     first_name=player.first_name
                 )
             )
         else:
             players.append(
-                _("message.multi_device.play.recruit.player").format(
+                _("message.multi_device.play.recruit.player", locale=locale).format(
                     index=index + 1,
                     first_name=player.first_name
                 )
             )
 
     return _get_entities(
-        _("message.multi_device.play.recruit").format(
+        _("message.multi_device.play.recruit", locale=locale).format(
             players="\n".join(players),
             player_amount=len(game.players),
             max_player_amount=game.player_amount
@@ -278,16 +280,19 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             if user.id == player.user_id:
                 continue
 
-            player_bot_user: BotUser = await bot_users.get_bot_user(player.user_id, user.bot)\
+            player_bot_user: BotUser = await bot_users.get_bot_user(player.user_id, user.bot)
 
             if player_bot_user is None:
                 continue
+
+            text, entities = await _create_recruitment_message(game, message.bot, locale=player_bot_user.locale)
 
             await player_bot_user.edit_message(
                 text=text,
                 entities=entities,
                 reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
-                    is_host=player.user_id == game.host_id
+                    is_host=player.user_id == game.host_id,
+                    locale=player_bot_user.locale
                 ),
                 only_edit_caption=True
             )
@@ -327,14 +332,17 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             if player_bot_user is None:
                 continue
 
-            message_text: LazyProxy = DictFactory.multi_device_role_message().get(player.role)
+            message_text: LazyProxy = DictFactory.multi_device_role_message(
+                locale=player_bot_user.locale
+            ).get(player.role)
 
             await player_bot_user.edit_message(
                 text=message_text.format(
                     secret_word=SecretWordsController.get_secret_word(game.secret_word)
                 ),
                 reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
-                    is_host=player.user_id == game.host_id
+                    is_host=player.user_id == game.host_id,
+                    locale=player_bot_user.locale
                 )
             )
 
@@ -366,25 +374,26 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             )
             return
 
-        message_text, entities = _get_entities(
-            _("message.multi_device.play.finish").format(
-                secret_word=SecretWordsController.get_secret_word(game.secret_word),
-                first_name=spy.first_name
-            ),
-            players=[spy]
-        )
-
         for player in game.players:
             player_bot_user: BotUser = await bot_users.get_bot_user(player.user_id, user.bot)
 
             if player_bot_user is None:
                 continue
 
+            message_text, entities = _get_entities(
+                _("message.multi_device.play.finish", locale=player_bot_user.locale).format(
+                    secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                    first_name=spy.first_name
+                ),
+                players=[spy]
+            )
+
             await player_bot_user.edit_message(
                 text=message_text,
                 entities=entities,
                 reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
-                    is_host=player.user_id == game.host_id
+                    is_host=player.user_id == game.host_id,
+                    locale=player_bot_user.locale
                 )
             )
 
@@ -432,7 +441,6 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             except APIError:
                 continue
 
-        text, entities = await _create_recruitment_message(game, callback_query.bot)
         qr_code: BufferedInputFile = await _get_qr_code(game.qr_code_url)
 
         for player in game.players:
@@ -441,12 +449,15 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             if player_bot_user is None:
                 continue
 
+            text, entities = await _create_recruitment_message(game, user.bot, locale=player_bot_user.locale)
+
             await player_bot_user.edit_message(
                 text=text,
                 photo=qr_code,
                 entities=entities,
                 reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
-                    is_host=player.user_id == game.host_id
+                    is_host=player.user_id == game.host_id,
+                    locale=player_bot_user.locale
                 )
             )
 
@@ -481,7 +492,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                     continue
 
                 await player_bot_user.edit_message(
-                    text=_("message.multi_device.play.stop")
+                    text=_("message.multi_device.play.stop", locale=player_bot_user.locale)
                 )
         else:
             await multi_device_games.leave_game(
@@ -498,8 +509,6 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             if game.has_started:
                 return
 
-            text, entities = await _create_recruitment_message(game, user.bot)
-
             for player in game.players:
                 if player.user_id == user.id:
                     continue
@@ -509,11 +518,14 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 if player_bot_user is None:
                     continue
 
+                text, entities = await _create_recruitment_message(game, user.bot, locale=player_bot_user.locale)
+
                 await player_bot_user.edit_message(
                     text=text,
                     entities=entities,
                     reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
-                        is_host=player.user_id == game.host_id
+                        is_host=player.user_id == game.host_id,
+                        locale=player_bot_user.locale
                     ),
                     only_edit_caption=True
                 )

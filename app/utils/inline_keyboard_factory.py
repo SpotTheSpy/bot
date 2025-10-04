@@ -27,12 +27,18 @@ from app.enums.page_turn import PageTurn
 
 class InlineKeyboardFactory:
     @staticmethod
-    def menu_button() -> InlineKeyboardButton:
-        return InlineKeyboardButton(text=_("button.menu"), callback_data=MenuAction().pack())
+    def menu_button(
+            *,
+            locale: str | None = None
+    ) -> InlineKeyboardButton:
+        return InlineKeyboardButton(text=_("button.menu", locale=locale), callback_data=MenuAction().pack())
 
     @staticmethod
-    def back_button() -> InlineKeyboardButton:
-        return InlineKeyboardButton(text=_("button.back"), callback_data=BackAction().pack())
+    def back_button(
+            *,
+            locale: str | None = None
+    ) -> InlineKeyboardButton:
+        return InlineKeyboardButton(text=_("button.back", locale=locale), callback_data=BackAction().pack())
 
     @staticmethod
     def pagination_button(
@@ -46,12 +52,20 @@ class InlineKeyboardFactory:
         return InlineKeyboardButton(text=button_text, callback_data=PageTurnAction(turn=page_turn).pack())
 
     @classmethod
-    def menu_keyboard(cls) -> InlineKeyboardMarkup:
-        return InlineKeyboardMarkup(inline_keyboard=[[cls.menu_button()]])
+    def menu_keyboard(
+            cls,
+            *,
+            locale: str | None = None
+    ) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(inline_keyboard=[[cls.menu_button(locale=locale)]])
 
     @classmethod
-    def back_keyboard(cls) -> InlineKeyboardMarkup:
-        return InlineKeyboardMarkup(inline_keyboard=[[cls.back_button()]])
+    def back_keyboard(
+            cls,
+            *,
+            locale: str | None = None
+    ) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(inline_keyboard=[[cls.back_button(locale=locale)]])
 
     @classmethod
     def pagination_row(
@@ -307,19 +321,20 @@ class InlineKeyboardFactory:
     def multi_device_recruit_keyboard(
             cls,
             *,
-            is_host: bool = False
+            is_host: bool = False,
+            locale: str | None = None
     ) -> InlineKeyboardMarkup:
         if is_host:
             return InlineKeyboardMarkup(
                 inline_keyboard=[
                     [
                         InlineKeyboardButton(
-                            text=_("button.multi_device.start"),
+                            text=_("button.multi_device.start", locale=locale),
                             callback_data=MultiDeviceStartAction().pack()
                         )
                     ],
                     [
-                        cls.back_button()
+                        cls.back_button(locale=locale)
                     ]
                 ]
             )
@@ -328,7 +343,7 @@ class InlineKeyboardFactory:
                 inline_keyboard=[
                     [
                         InlineKeyboardButton(
-                            text=_("button.multi_device.leave"),
+                            text=_("button.multi_device.leave", locale=locale),
                             callback_data=MultiDeviceLeaveAction().pack()
                         )
                     ]
@@ -339,7 +354,8 @@ class InlineKeyboardFactory:
     def multi_device_view_role_keyboard(
             cls,
             *,
-            is_host: bool = False
+            is_host: bool = False,
+            locale: str | None = None
     ) -> InlineKeyboardMarkup | None:
         if not is_host:
             return
@@ -348,7 +364,7 @@ class InlineKeyboardFactory:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.multi_device.finish"),
+                        text=_("button.multi_device.finish", locale=locale),
                         callback_data=MultiDeviceFinishAction().pack()
                     )
                 ]
@@ -359,7 +375,8 @@ class InlineKeyboardFactory:
     def multi_device_play_again_keyboard(
             cls,
             *,
-            is_host: bool = False
+            is_host: bool = False,
+            locale: str | None = None
     ) -> InlineKeyboardMarkup:
         if not is_host:
             return cls.menu_keyboard()
@@ -368,12 +385,12 @@ class InlineKeyboardFactory:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.multi_device.play_again"),
+                        text=_("button.multi_device.play_again", locale=locale),
                         callback_data=MultiDevicePlayAgainAction().pack()
                     )
                 ],
                 [
-                    cls.menu_button()
+                    cls.menu_button(locale=locale)
                 ]
             ]
         )
