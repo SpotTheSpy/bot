@@ -14,3 +14,9 @@ class DictFactory:
             PlayerRole.SPY: __("message.single_device.play.view_role.spy")
         }
 
+    @staticmethod
+    def multi_device_role_message() -> Dict[PlayerRole, LazyProxy]:
+        return {
+            PlayerRole.CITIZEN: __("message.multi_device.play.view_role.citizen"),
+            PlayerRole.SPY: __("message.multi_device.play.view_role.spy")
+        }

@@ -9,6 +9,7 @@ from aiogram.types import CallbackQuery, Message, MessageEntity, User as Aiogram
 from aiogram.utils.deep_linking import create_start_link
 from aiogram.utils.i18n import gettext as _
 from aiohttp import ClientSession
+from babel.support import LazyProxy
 
 from app.actions.multi_device_finish import MultiDeviceFinishAction
 from app.actions.multi_device_leave import MultiDeviceLeaveAction
@@ -27,6 +28,7 @@ from app.exceptions.not_found import NotFoundError
 from app.models.multi_device_game import MultiDeviceGame, MultiDevicePlayer
 from app.models.user import User, BotUser
 from app.scenes.base import BaseScene
+from app.utils.dict_factory import DictFactory
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.utils.logging import logger
 
@@ -325,10 +327,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             if player_bot_user is None:
                 continue
 
-            message_text: str = {
-                PlayerRole.CITIZEN: _("message.multi_device.play.view_role.citizen"),
-                PlayerRole.SPY: _("message.multi_device.play.view_role.spy")
-            }.get(player.role)
+            message_text: LazyProxy = DictFactory.multi_device_role_message().get(player.role)
 
             await player_bot_user.edit_message(
                 text=message_text.format(
