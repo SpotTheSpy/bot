@@ -20,7 +20,7 @@ from app.actions.multi_device_finish import MultiDeviceFinishAction
 from app.actions.multi_device_leave import MultiDeviceLeaveAction
 from app.actions.multi_device_play_again import MultiDevicePlayAgainAction
 from app.actions.multi_device_start import MultiDeviceStartAction
-from app.controllers.multi_device_games import MultiDeviceGamesController
+from app.controllers.api.multi_device_games import MultiDeviceGamesController
 from app.data.secret_words_controller import SecretWordsController
 from app.enums.payload_type import PayloadType
 from app.enums.player_role import PlayerRole
@@ -312,8 +312,6 @@ class MultiDeviceGameMessages:
 
 
 class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
-    messages = MultiDeviceGameMessages()
-
     @on.callback_query.enter()
     async def on_callback_query_enter(
             self,

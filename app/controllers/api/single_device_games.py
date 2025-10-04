@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from app.controllers.abstract import APIController, AttributedDict
+from app.controllers.api.abstract import APIController, AttributedDict
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.not_found import NotFoundError
 from app.models.single_device_game import CreateSingleDeviceGame

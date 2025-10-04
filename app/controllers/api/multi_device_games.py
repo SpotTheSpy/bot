@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from app.controllers.abstract import APIController, AttributedDict
+from app.controllers.api.abstract import APIController, AttributedDict
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError

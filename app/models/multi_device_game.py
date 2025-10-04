@@ -7,7 +7,7 @@ from app.enums.player_role import PlayerRole
 from app.models.abstract import AbstractModel
 
 if TYPE_CHECKING:
-    from app.controllers.multi_device_games import MultiDeviceGamesController
+    from app.controllers.api.multi_device_games import MultiDeviceGamesController
 else:
     MultiDeviceGamesController = Any
 

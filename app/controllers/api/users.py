@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from app.controllers.abstract import APIController, AttributedDict
+from app.controllers.api.abstract import APIController, AttributedDict
 from app.exceptions.already_exists import AlreadyExistsError
 from app.models.user import CreateUser, User
 
