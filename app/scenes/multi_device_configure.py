@@ -25,6 +25,7 @@ class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
 
         await state.update_data(player_amount=player_amount)
 
+        await callback_query.answer()
         await user.edit_message(
             text=_("message.multi_device.configure"),
             reply_markup=InlineKeyboardFactory.multi_device_configure_keyboard(
@@ -44,6 +45,7 @@ class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
     ) -> None:
         await state.update_data(player_amount=callback_data.player_amount)
 
+        await callback_query.answer()
         await user.edit_message(
             text=_("message.multi_device.configure"),
             reply_markup=InlineKeyboardFactory.multi_device_configure_keyboard(

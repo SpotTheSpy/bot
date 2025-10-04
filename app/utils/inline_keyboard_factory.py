@@ -379,7 +379,7 @@ class InlineKeyboardFactory:
             locale: str | None = None
     ) -> InlineKeyboardMarkup:
         if not is_host:
-            return cls.menu_keyboard()
+            return cls.menu_keyboard(locale=locale)
 
         return InlineKeyboardMarkup(
             inline_keyboard=[
