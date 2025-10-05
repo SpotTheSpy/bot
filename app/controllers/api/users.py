@@ -1,8 +1,9 @@
+from typing import Any
 from uuid import UUID
 
 from app.controllers.api.abstract import APIController, AttributedDict
 from app.exceptions.already_exists import AlreadyExistsError
-from app.models.user import CreateUser, User
+from app.models.user import CreateUser, User, UpdateUser
 
 
 class UsersController(APIController):
@@ -41,25 +42,12 @@ class UsersController(APIController):
 
         return User.from_json(response)
 
-    async def get_user_locale(
-            self,
-            user_id: UUID
-    ) -> str | None:
-        response: AttributedDict = await self._get(
-            f"users/locales/{user_id}"
-        )
-
-        if response.status_code == 404:
-            return
-
-        return response.locale
-
-    async def update_user_locale(
+    async def update_user(
             self,
             user_id: UUID,
-            locale: str
+            **values: Any
     ) -> None:
         await self._put(
-            f"users/locales/{user_id}",
-            json={"locale": locale}
+            f"users/{user_id}",
+            json=UpdateUser(**values).to_json()
         )

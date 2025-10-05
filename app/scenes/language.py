@@ -40,9 +40,9 @@ class LanguageScene(BaseScene, state="language"):
             await callback_query.answer(_("answer.language.same"))
             return
 
-        await users.update_user_locale(
+        await users.update_user(
             user.id,
-            callback_data.language_type
+            locale=callback_data.language_type
         )
 
         user.locale = callback_data.language_type

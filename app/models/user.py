@@ -221,3 +221,10 @@ class CreateUser(AbstractModel):
     first_name: str
     username: str | None
     locale: str | None = None
+
+
+class UpdateUser(AbstractModel):
+    telegram_id: int | None = None
+    first_name: str | None = None
+    username: str | None = None
+    locale: str | None = None
