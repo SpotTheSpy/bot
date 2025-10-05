@@ -15,8 +15,12 @@ class AbstractModel(BaseModel, ABC):
         except ValidationError:
             pass
 
-    def to_json(self) -> Dict[str, Any] | None:
+    def to_json(
+            self,
+            *,
+            exclude_unset: bool = False
+    ) -> Dict[str, Any] | None:
         try:
-            return self.model_dump(mode="json")
+            return self.model_dump(mode="json", exclude_unset=exclude_unset)
         except ValidationError:
             pass

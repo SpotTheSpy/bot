@@ -25,7 +25,7 @@ class MultiDeviceGame(AbstractModel):
     has_started: bool
     player_amount: int
     secret_word: str
-    qr_code_url: str | None = None
+    qr_code_url: str
     players: List[MultiDevicePlayer]
 
     @classmethod

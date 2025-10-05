@@ -49,5 +49,5 @@ class UsersController(APIController):
     ) -> None:
         await self._put(
             f"users/{user_id}",
-            json=UpdateUser(**values).to_json()
+            json=UpdateUser(**values).to_json(exclude_unset=True)
         )

@@ -206,11 +206,6 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             )
             return
 
-        game: MultiDeviceGame = await multi_device_games.set_game_url(
-            game.game_id,
-            await _create_join_url(callback_query.bot, game.game_id)
-        )
-
         text, entities = await _create_recruitment_message(game, user.bot)
         qr_code: BufferedInputFile = await _get_qr_code(game.qr_code_url)
 
@@ -224,6 +219,28 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         logger.info(
             f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
             f"started recruitment for a multi-device game (game_id={game.game_id})"
+        )
+
+        game: MultiDeviceGame | None = await multi_device_games.set_game_url(
+            game.game_id,
+            await _create_join_url(callback_query.bot, game.game_id)
+        )
+
+        if game is None:
+            await callback_query.answer()
+            logger.error(
+                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+                f"failed to create qr-code for a multi-device game because of an internal server error"
+            )
+            return
+
+        qr_code: BufferedInputFile = await _get_qr_code(game.qr_code_url)
+
+        await user.edit_message(
+            text=text,
+            photo=qr_code,
+            entities=entities,
+            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(is_host=True)
         )
 
     @on.message.enter()
