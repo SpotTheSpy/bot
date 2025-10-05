@@ -562,12 +562,13 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 f"finished a multi-device game (game_id={game.game_id})"
             )
         else:
-            await multi_device_games.leave_game(
-                game.game_id,
-                user.id
-            )
-
-            game: MultiDeviceGame = await multi_device_games.get_game(game.game_id)
+            try:
+                game: MultiDeviceGame | None = await multi_device_games.leave_game(
+                    game.game_id,
+                    user.id
+                )
+            except APIError:
+                return
 
             await user.edit_message(
                 text=_("message.multi_device.play.leave")

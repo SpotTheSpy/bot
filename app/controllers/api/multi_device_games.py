@@ -5,6 +5,7 @@ from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
+from app.exceptions.not_in_game import NotInGameError
 from app.models.multi_device_game import CreateMultiDeviceGame, SetGameURLModel
 from app.models.multi_device_game import MultiDeviceGame
 
@@ -103,10 +104,19 @@ class MultiDeviceGamesController(APIController):
             self,
             game_id: UUID,
             user_id: UUID
-    ) -> None:
-        await self._post(
+    ) -> MultiDeviceGame | None:
+        response: AttributedDict = await self._post(
             f"multi_device_games/{game_id}/leave/{user_id}"
         )
+
+        if response.status_code == NotFoundError.status_code:
+            raise NotFoundError("Game with provided UUID was not found")
+        if response.status_code == GameHasAlreadyStartedError.status_code:
+            raise GameHasAlreadyStartedError("Game has already started")
+        if response.status_code == NotInGameError.status_code:
+            raise NotInGameError("You are not in game")
+
+        return MultiDeviceGame.from_json(response)
 
     async def start_game(
             self,
