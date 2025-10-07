@@ -2,8 +2,8 @@ from aiogram.fsm.scene import on
 from aiogram.types import Message, CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
-from app.controllers.api.multi_device_games import MultiDeviceGamesController
-from app.controllers.api.single_device_games import SingleDeviceGamesController
+from app.controllers.multi_device_games import MultiDeviceGamesController
+from app.controllers.single_device_games import SingleDeviceGamesController
 from app.models.user import BotUser
 from app.scenes.base import BaseScene
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory

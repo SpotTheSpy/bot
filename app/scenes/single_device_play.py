@@ -8,10 +8,11 @@ from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.single_device_play_again import SingleDevicePlayAgainAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
 from app.actions.single_device_view_role import SingleDeviceViewRoleAction
-from app.controllers.api.single_device_games import SingleDeviceGamesController
+from app.controllers.single_device_games import SingleDeviceGamesController
 from app.data.secret_words_controller import SecretWordsController
 from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
+from app.exceptions.not_found import NotFoundError
 from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User, BotUser
 from app.scenes.base import BaseScene
@@ -37,29 +38,12 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
                 player_amount
             )
         except AlreadyInGameError:
-            game: SingleDeviceGame | None = await single_device_games.get_game_by_user_id(user.id)
-            await single_device_games.remove_game(game.game_id)
-
-            try:
-                game: SingleDeviceGame | None = await single_device_games.create_game(
-                    user.id,
-                    callback_query.from_user.id,
-                    player_amount
-                )
-            except Exception as e:
-                await callback_query.answer()
-                logger.error(
-                    f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-                    f"Failed to create single-device game. Exception: {e}"
-                )
-                return
-
-        if game is None:
             await callback_query.answer()
             logger.error(
                 f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-                f"failed to create single-device game"
+                f"Failed to create single-device game because player is already in game"
             )
+            await self.wizard.leave()
             return
 
         player_index: int = 0
@@ -96,25 +80,9 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
                 or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        if game is None:
-            await callback_query.answer()
-            logger.error(
-                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-                f"failed to view role in a single-device game because the game was not found"
-            )
-            return
-
         player_index: int = await state.get_value("player_index")
         role: PlayerRole = PlayerRole.SPY if player_index == game.spy_index else PlayerRole.CITIZEN
         message_text: LazyProxy = DictFactory.single_device_role_message().get(role)
-
-        if player_index is None or message_text is None:
-            await callback_query.answer()
-            logger.error(
-                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-                f"failed to view role in a single-device game because of an internal server error"
-            )
-            return
 
         await callback_query.answer()
         await user.edit_message(
@@ -139,25 +107,7 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
                 or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        if game is None:
-            await callback_query.answer()
-            logger.error(
-                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-                f"failed to proceed a single-device game because the game was not found"
-            )
-            return
-
-        player_index: int | None = await state.get_value("player_index")
-
-        if player_index is None:
-            await callback_query.answer()
-            logger.error(
-                f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-                f"failed to proceed a single-device game because of an internal server error"
-            )
-            return
-
-        player_index += 1
+        player_index: int | None = await state.get_value("player_index") + 1
 
         if player_index >= game.player_amount:
             await callback_query.answer()
@@ -226,21 +176,15 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
                 or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        if game is not None:
-            await single_device_games.remove_game(game.game_id)
-
         try:
-            game: SingleDeviceGame | None = await single_device_games.create_game(
-                user.id,
-                callback_query.from_user.id,
-                game.player_amount
-            )
-        except Exception as e:
+            game: SingleDeviceGame | None = await single_device_games.restart_game(game.game_id)
+        except NotFoundError:
             await callback_query.answer()
             logger.error(
                 f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-                f"Failed to create single-device game. Exception: {e}"
+                f"Failed to restart single-device game because the game was not found"
             )
+            await self.wizard.leave()
             return
 
         player_index: int = 0
@@ -275,8 +219,10 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
                 or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        if game is not None:
-            await single_device_games.remove_game(game.game_id)
+        if game is None:
+            return
+
+        await single_device_games.remove_game(game.game_id)
 
     async def on_back(
             self,
@@ -289,14 +235,9 @@ class SingleDevicePlayScene(BaseScene, state="single_device_play"):
                 or await single_device_games.get_game_by_user_id(user.id)
         )
 
-        if game is not None:
-            player_amount: int | None = game.player_amount
-        else:
-            player_amount: int | None = None
-
         await self.wizard.back(
             user=user,
-            player_amount=player_amount
+            player_amount=game.player_amount if game is not None else None
         )
 
     @on.message()

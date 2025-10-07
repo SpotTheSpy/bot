@@ -1,7 +1,7 @@
 from typing import Any
 from uuid import UUID
 
-from app.controllers.api.abstract import APIController, AttributedDict
+from app.controllers.api import APIController, AttributedDict
 from app.exceptions.already_exists import AlreadyExistsError
 from app.models.user import CreateUser, User, UpdateUser
 

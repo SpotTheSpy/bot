@@ -1,17 +1,25 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
 
 from pydantic import BaseModel, ValidationError
 
 
-class AbstractModel(BaseModel, ABC):
+class AbstractModel(BaseModel, ABC, arbitrary_types_allowed=True):
+    @property
+    @abstractmethod
+    def primary_key(self) -> Any:
+        pass
+
     @classmethod
     def from_json(
             cls,
-            json: Dict[str, Any]
+            data: Dict[str, Any],
+            **kwargs: Any
     ) -> Optional['AbstractModel']:
+        data.update(kwargs)
+
         try:
-            return cls.model_validate(json)
+            return cls.model_validate(data)
         except ValidationError:
             pass
 

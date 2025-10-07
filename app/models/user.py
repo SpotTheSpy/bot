@@ -1,20 +1,16 @@
 import logging
 from datetime import datetime
-from typing import Dict, Any, List, TYPE_CHECKING
+from typing import Dict, Any, List, Self
 from uuid import UUID
 
 from aiogram import Bot
 from aiogram.exceptions import AiogramError
-from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, InputFile, MessageEntity, InlineKeyboardMarkup, InputMediaPhoto
-from pydantic import ValidationError
+from pydantic import ValidationError, BaseModel
 
+from app.controllers.redis import RedisController
 from app.models.abstract import AbstractModel
-
-if TYPE_CHECKING:
-    from app.controllers.redis.bot_users import BotUsersController
-else:
-    BotUsersController = Any
+from app.models.redis import AbstractRedisModel
 
 
 class User(AbstractModel):
@@ -26,14 +22,18 @@ class User(AbstractModel):
     created_at: datetime
     updated_at: datetime | None
 
+    @property
+    def primary_key(self) -> Any:
+        return self.id
 
-class BotUser(User, arbitrary_types_allowed=True):
+
+class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
     chat_id: int | None = None
     message_id: int | None = None
     has_photo: bool | None = None
 
     bot: Bot | None = None
-    controller: BotUsersController | None = None
+    controller: RedisController[Self] | None = None
 
     @classmethod
     def from_user(
@@ -43,7 +43,7 @@ class BotUser(User, arbitrary_types_allowed=True):
             message_id: int | None = None,
             has_photo: bool | None = None,
             bot: Bot | None = None,
-            controller: BotUsersController | None = None
+            controller: RedisController | None = None
     ) -> 'BotUser':
         return cls(
             **user.model_dump(),
@@ -54,9 +54,13 @@ class BotUser(User, arbitrary_types_allowed=True):
             controller=controller
         )
 
-    def to_json(self) -> Dict[str, Any] | None:
+    def to_json(
+            self,
+            *,
+            exclude_unset: bool = False
+    ) -> Dict[str, Any] | None:
         try:
-            return self.model_dump(mode="json", exclude={"bot", "controller"})
+            return self.model_dump(mode="json", exclude={"bot", "controller"}, exclude_unset=exclude_unset)
         except ValidationError:
             pass
 
@@ -213,17 +217,17 @@ class BotUser(User, arbitrary_types_allowed=True):
         await self.save()
 
     async def save(self) -> None:
-        await self.controller.set_bot_user(self)
+        await self.controller.set(self)
 
 
-class CreateUser(AbstractModel):
+class CreateUser(BaseModel):
     telegram_id: int
     first_name: str
     username: str | None
     locale: str | None = None
 
 
-class UpdateUser(AbstractModel):
+class UpdateUser(BaseModel):
     telegram_id: int | None = None
     first_name: str | None = None
     username: str | None = None

@@ -5,11 +5,11 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.i18n import I18n
 from redis.asyncio import Redis
 
-from app.controllers.api.abstract import APIConfig
-from app.controllers.api.multi_device_games import MultiDeviceGamesController
-from app.controllers.api.single_device_games import SingleDeviceGamesController
-from app.controllers.api.users import UsersController
-from app.controllers.redis.bot_users import BotUsersController
+from app.controllers.api import APIConfig
+from app.controllers.multi_device_games import MultiDeviceGamesController
+from app.controllers.single_device_games import SingleDeviceGamesController
+from app.controllers.users import UsersController
+from app.controllers.redis import BotUsersController
 from app.middlewares.i18n import UserI18nMiddleware
 from app.middlewares.user import UserMiddleware
 from app.routes.start import start_router

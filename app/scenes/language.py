@@ -4,7 +4,7 @@ from aiogram.utils.i18n import gettext as _
 
 from app.actions.back import BackAction
 from app.actions.choose_language import ChooseLanguageAction
-from app.controllers.api.users import UsersController
+from app.controllers.users import UsersController
 from app.enums.language_type import LanguageType
 from app.models.user import BotUser
 from app.scenes.base import BaseScene

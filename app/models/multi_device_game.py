@@ -2,12 +2,13 @@ from typing import List, TYPE_CHECKING, Any, Optional, Dict
 from uuid import UUID
 
 from aiogram.fsm.context import FSMContext
+from pydantic import BaseModel
 
 from app.enums.player_role import PlayerRole
 from app.models.abstract import AbstractModel
 
 if TYPE_CHECKING:
-    from app.controllers.api.multi_device_games import MultiDeviceGamesController
+    from app.controllers.multi_device_games import MultiDeviceGamesController
 else:
     MultiDeviceGamesController = Any
 
@@ -18,6 +19,10 @@ class MultiDevicePlayer(AbstractModel):
     first_name: str
     role: PlayerRole | None = None
 
+    @property
+    def primary_key(self) -> UUID:
+        return self.user_id
+
 
 class MultiDeviceGame(AbstractModel):
     game_id: UUID
@@ -25,8 +30,12 @@ class MultiDeviceGame(AbstractModel):
     has_started: bool
     player_amount: int
     secret_word: str
-    qr_code_url: str
+    qr_code_url: str | None
     players: List[MultiDevicePlayer]
+
+    @property
+    def primary_key(self) -> UUID:
+        return self.game_id
 
     @classmethod
     async def from_context(
@@ -43,10 +52,6 @@ class MultiDeviceGame(AbstractModel):
         return await multi_device_games.get_game_by_user_id(user_id)
 
 
-class CreateMultiDeviceGame(AbstractModel):
+class CreateMultiDeviceGame(BaseModel):
     host_id: UUID
     player_amount: int
-
-
-class SetGameURLModel(AbstractModel):
-    url: str

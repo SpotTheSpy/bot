@@ -5,8 +5,8 @@ from aiogram import BaseMiddleware, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject, User as AiogramUser, CallbackQuery
 
-from app.controllers.api.users import UsersController
-from app.controllers.redis.bot_users import BotUsersController
+from app.controllers.users import UsersController
+from app.controllers.redis import RedisController
 from app.exceptions.already_exists import AlreadyExistsError
 from app.models.user import User, BotUser
 
@@ -15,7 +15,7 @@ class UserMiddleware(BaseMiddleware):
     def __init__(
             self,
             users: UsersController,
-            bot_users: BotUsersController
+            bot_users: RedisController[BotUser]
     ) -> None:
         self._users = users
         self._bot_users = bot_users
@@ -37,7 +37,7 @@ class UserMiddleware(BaseMiddleware):
         try:
             user_id = UUID(await state.get_value("user_id"))
 
-            bot_user: BotUser | None = await self._bot_users.get_bot_user(
+            bot_user: BotUser | None = await self._bot_users.get(
                 user_id,
                 data.get("bot")
             )
