@@ -1,12 +1,12 @@
 import logging
 from datetime import datetime
-from typing import Dict, Any, List, Self
+from typing import Dict, Any, List, Self, ClassVar
 from uuid import UUID
 
 from aiogram import Bot
 from aiogram.exceptions import AiogramError
 from aiogram.types import Message, InputFile, MessageEntity, InlineKeyboardMarkup, InputMediaPhoto
-from pydantic import ValidationError, BaseModel
+from pydantic import BaseModel
 
 from app.controllers.redis import RedisController
 from app.models.abstract import AbstractModel
@@ -28,41 +28,36 @@ class User(AbstractModel):
 
 
 class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
+    key: ClassVar[str] = "bot_user"
+
     chat_id: int | None = None
     message_id: int | None = None
     has_photo: bool | None = None
 
-    bot: Bot | None = None
-    controller: RedisController[Self] | None = None
+    _bot: Bot | None = None
+
+    @property
+    def bot(self) -> Bot:
+        if self._bot is None:
+            raise ValueError("Bot is not set")
+        return self._bot
 
     @classmethod
-    def from_user(
+    def from_json_and_controller_and_bot(
             cls,
-            user: User,
-            chat_id: int | None = None,
-            message_id: int | None = None,
-            has_photo: bool | None = None,
-            bot: Bot | None = None,
-            controller: RedisController | None = None
-    ) -> 'BotUser':
-        return cls(
-            **user.model_dump(),
-            chat_id=chat_id,
-            message_id=message_id,
-            has_photo=has_photo,
-            bot=bot,
-            controller=controller
-        )
-
-    def to_json(
-            self,
+            data: Dict[str, Any],
             *,
-            exclude_unset: bool = False
-    ) -> Dict[str, Any] | None:
-        try:
-            return self.model_dump(mode="json", exclude={"bot", "controller"}, exclude_unset=exclude_unset)
-        except ValidationError:
-            pass
+            bot: Bot | None = None,
+            controller: RedisController[Self] | None = None,
+            **kwargs: Any
+    ) -> Self | None:
+        user = cls.from_json(data, **kwargs)
+
+        if user is not None:
+            user._controller = controller
+            user._bot = bot
+
+        return user
 
     async def new_message(
             self,

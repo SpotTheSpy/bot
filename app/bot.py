@@ -9,9 +9,10 @@ from app.controllers.api import APIConfig
 from app.controllers.multi_device_games import MultiDeviceGamesController
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.controllers.users import UsersController
-from app.controllers.redis import BotUsersController
+from app.controllers.redis import RedisController
 from app.middlewares.i18n import UserI18nMiddleware
 from app.middlewares.user import UserMiddleware
+from app.models.user import BotUser
 from app.routes.start import start_router
 from app.scenes.choose_device import ChooseDeviceScene
 from app.scenes.language import LanguageScene
@@ -38,7 +39,7 @@ def create_dispatcher() -> Dispatcher:
     single_device_games = SingleDeviceGamesController(api_config)
     multi_device_games = MultiDeviceGamesController(api_config)
 
-    bot_users = BotUsersController(redis)
+    bot_users = RedisController[BotUser](redis)
 
     new_dispatcher = Dispatcher(
         storage=RedisStorage(

@@ -62,10 +62,6 @@ class SingleDeviceGamesController(APIController):
             f"single_device_games/{game_id}"
         )
 
-        await self._delete(
-            f"single_device_games/{game.game_id}"
-        )
-
     async def restart_game(
             self,
             game_id: UUID

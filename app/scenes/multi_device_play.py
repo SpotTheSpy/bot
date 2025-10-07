@@ -18,7 +18,6 @@ from app.actions.multi_device_leave import MultiDeviceLeaveAction
 from app.actions.multi_device_play_again import MultiDevicePlayAgainAction
 from app.actions.multi_device_start import MultiDeviceStartAction
 from app.controllers.multi_device_games import MultiDeviceGamesController
-from app.controllers.redis import BotUsersController
 from app.data.secret_words_controller import SecretWordsController
 from app.enums.payload_type import PayloadType
 from app.enums.player_role import PlayerRole
@@ -33,6 +32,8 @@ from app.scenes.base import BaseScene
 from app.utils.dict_factory import DictFactory
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.utils.logging import logger
+
+BotUsersController = None
 
 
 def _get_entities(

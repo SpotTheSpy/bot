@@ -10,7 +10,7 @@ from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.utils.logging import logger
 
 
-class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_history_on_enter=True):
+class StartScene(BaseScene, state="start", reset_history_on_enter=True):
     @on.message.enter()
     async def on_message_enter(
             self,
@@ -26,9 +26,6 @@ class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_histo
             reply_markup=InlineKeyboardFactory.start_keyboard(locale)
         )
         await message.delete()
-
-        await single_device_games.remove_game_by_user_id(user.id)
-        await multi_device_games.remove_game_by_user_id(user.id)
 
         logger.info(
             f"{message.from_user.first_name} (id={message.from_user.id}) "

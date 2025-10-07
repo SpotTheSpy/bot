@@ -33,6 +33,7 @@ class UsersController(APIController):
             self,
             telegram_id: int
     ) -> User | None:
+        print("executing")
         response: AttributedDict = await self._get(
             f"users/telegram/{telegram_id}"
         )
