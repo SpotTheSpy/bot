@@ -40,7 +40,8 @@ class UserMiddleware(BaseMiddleware):
             bot_user: BotUser | None = await self._bot_users.get(
                 user_id,
                 bot=data.get("bot"),
-                from_json_method=BotUser.from_json_and_controller_and_bot
+                i18n=data.get("i18n"),
+                from_json_method=BotUser.from_data
             )
         except (TypeError, ValueError):
             bot_user = None
@@ -60,9 +61,10 @@ class UserMiddleware(BaseMiddleware):
                     data["user"] = None
                     return await handler(event, data)
 
-            bot_user = BotUser.from_json_and_controller_and_bot(
+            bot_user = BotUser.from_data(
                 user.to_json(),
                 bot=data.get("bot"),
+                i18n=data.get("i18n"),
                 controller=self._bot_users
             )
 

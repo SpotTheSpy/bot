@@ -9,7 +9,7 @@ from app.actions.single_device_play_again import SingleDevicePlayAgainAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
 from app.actions.single_device_view_role import SingleDeviceViewRoleAction
 from app.controllers.single_device_games import SingleDeviceGamesController
-from app.data.secret_words_controller import SecretWordsController
+from app.utils.secret_words import SecretWordsController
 from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.not_found import NotFoundError

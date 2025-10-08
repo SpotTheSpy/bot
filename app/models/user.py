@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime
 from typing import Dict, Any, List, Self, ClassVar
 from uuid import UUID
@@ -6,6 +5,8 @@ from uuid import UUID
 from aiogram import Bot
 from aiogram.exceptions import AiogramError
 from aiogram.types import Message, InputFile, MessageEntity, InlineKeyboardMarkup, InputMediaPhoto
+from aiogram.utils.i18n import I18n
+from babel.support import LazyProxy
 from pydantic import BaseModel
 
 from app.controllers.redis import RedisController
@@ -35,6 +36,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
     has_photo: bool | None = None
 
     _bot: Bot | None = None
+    _i18n: I18n | None = None
 
     @property
     def bot(self) -> Bot:
@@ -42,13 +44,20 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             raise ValueError("Bot is not set")
         return self._bot
 
+    @property
+    def i18n(self) -> I18n:
+        if self._i18n is None:
+            raise ValueError("I18n is not set")
+        return self._i18n
+
     @classmethod
-    def from_json_and_controller_and_bot(
+    def from_data(
             cls,
             data: Dict[str, Any],
             *,
-            bot: Bot | None = None,
             controller: RedisController[Self] | None = None,
+            bot: Bot | None = None,
+            i18n: I18n | None = None,
             **kwargs: Any
     ) -> Self | None:
         user = cls.from_json(data, **kwargs)
@@ -56,13 +65,14 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         if user is not None:
             user._controller = controller
             user._bot = bot
+            user._i18n = i18n
 
         return user
 
     async def new_message(
             self,
             chat_id: int,
-            text: str | None = None,
+            text: str | LazyProxy | None = None,
             photo: str | InputFile | None = None,
             entities: List[MessageEntity] | None = None,
             reply_markup: InlineKeyboardMarkup | None = None
@@ -75,50 +85,51 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             "reply_markup": reply_markup
         }
 
-        if entities is not None:
+        if entities:
             params["parse_mode"] = None
 
         try:
-            if photo is None:
-                new_message: Message = await self.bot.send_message(
-                    chat_id=self.chat_id,
-                    text=text,
-                    **params
-                )
-                if self.message_id is not None:
-                    await self.bot.delete_message(
-                        self.chat_id,
-                        self.message_id
+            with self.i18n.use_locale(self.locale):
+                if photo is None:
+                    new_message: Message = await self.bot.send_message(
+                        chat_id=self.chat_id,
+                        text=text,
+                        **params
                     )
-            else:
-                params["caption_entities"] = params.pop("entities")
+                    if self.message_id is not None:
+                        await self.bot.delete_message(
+                            self.chat_id,
+                            self.message_id
+                        )
+                else:
+                    params["caption_entities"] = params.pop("entities")
 
-                new_message: Message = await self.bot.send_photo(
-                    chat_id=self.chat_id,
-                    photo=photo,
-                    caption=text,
-                    **params
-                )
-                if self.message_id is not None:
-                    await self.bot.delete_message(
-                        self.chat_id,
-                        self.message_id
+                    new_message: Message = await self.bot.send_photo(
+                        chat_id=self.chat_id,
+                        photo=photo,
+                        caption=text,
+                        **params
                     )
+                    if self.message_id is not None:
+                        await self.bot.delete_message(
+                            self.chat_id,
+                            self.message_id
+                        )
         except AiogramError:
             return
-        else:
-            self.chat_id = new_message.chat.id
-            self.message_id = new_message.message_id
-            self.has_photo = new_message.photo is not None
 
-            await self.save()
-            return new_message
+        self.chat_id = new_message.chat.id
+        self.message_id = new_message.message_id
+        self.has_photo = new_message.photo is not None
+
+        await self.save()
+        return new_message
 
     async def edit_message(
             self,
             chat_id: int | None = None,
             message_id: int | None = None,
-            text: str | None = None,
+            text: str | LazyProxy | None = None,
             photo: str | InputFile | None = None,
             entities: List[MessageEntity] | None = None,
             reply_markup: InlineKeyboardMarkup | None = None,
@@ -139,71 +150,71 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             "reply_markup": reply_markup
         }
 
-        if entities is not None:
+        if entities:
             params["parse_mode"] = None
 
         try:
-            if photo is None:
-                if only_edit_caption:
+            with self.i18n.use_locale(self.locale):
+                if photo is None:
+                    if only_edit_caption:
+                        if self.has_photo:
+                            params["caption_entities"] = params.pop("entities")
+
+                            new_message: Message = await self.bot.edit_message_caption(
+                                chat_id=self.chat_id,
+                                message_id=self.message_id,
+                                caption=text,
+                                **params
+                            )
+                        else:
+                            return
+                    else:
+                        if not self.has_photo:
+                            new_message: Message = await self.bot.edit_message_text(
+                                chat_id=self.chat_id,
+                                message_id=self.message_id,
+                                text=text,
+                                **params
+                            )
+                        else:
+                            new_message: Message = await self.bot.send_message(
+                                chat_id=self.chat_id,
+                                text=text,
+                                **params
+                            )
+                            await self.bot.delete_message(
+                                self.chat_id,
+                                self.message_id
+                            )
+                else:
                     if self.has_photo:
                         params["caption_entities"] = params.pop("entities")
+                        params.pop("reply_markup")
 
-                        new_message: Message = await self.bot.edit_message_caption(
+                        new_message: Message = await self.bot.edit_message_media(
                             chat_id=self.chat_id,
                             message_id=self.message_id,
+                            media=InputMediaPhoto(
+                                media=photo,
+                                caption=text,
+                                **params
+                            ),
+                            reply_markup=reply_markup
+                        )
+                    else:
+                        params["caption_entities"] = params.pop("entities")
+
+                        new_message: Message = await self.bot.send_photo(
+                            chat_id=self.chat_id,
+                            photo=photo,
                             caption=text,
-                            **params
-                        )
-                    else:
-                        return
-                else:
-                    if not self.has_photo:
-                        new_message: Message = await self.bot.edit_message_text(
-                            chat_id=self.chat_id,
-                            message_id=self.message_id,
-                            text=text,
-                            **params
-                        )
-                    else:
-                        new_message: Message = await self.bot.send_message(
-                            chat_id=self.chat_id,
-                            text=text,
                             **params
                         )
                         await self.bot.delete_message(
                             self.chat_id,
                             self.message_id
                         )
-            else:
-                if self.has_photo:
-                    params["caption_entities"] = params.pop("entities")
-                    params.pop("reply_markup")
-
-                    new_message: Message = await self.bot.edit_message_media(
-                        chat_id=self.chat_id,
-                        message_id=self.message_id,
-                        media=InputMediaPhoto(
-                            media=photo,
-                            caption=text,
-                            **params
-                        ),
-                        reply_markup=reply_markup
-                    )
-                else:
-                    params["caption_entities"] = params.pop("entities")
-
-                    new_message: Message = await self.bot.send_photo(
-                        chat_id=self.chat_id,
-                        photo=photo,
-                        caption=text,
-                        **params
-                    )
-                    await self.bot.delete_message(
-                        self.chat_id,
-                        self.message_id
-                    )
-        except AiogramError as e:
-            logging.exception(e)
+        except AiogramError:
             return
 
         self.chat_id = new_message.chat.id

@@ -30,16 +30,14 @@ config = Config(_env_file=".env")
 
 
 def create_dispatcher() -> Dispatcher:
-    redis = Redis.from_url(config.redis_dsn.get_secret_value())
-    api_config = APIConfig(
-        config.base_url,
-        config.api_key.get_secret_value()
-    )
+    i18n = I18n(path="locales", default_locale="en", domain="messages")
 
+    api_config = APIConfig(config.base_url, config.api_key.get_secret_value())
     users = UsersController(api_config)
     single_device_games = SingleDeviceGamesController(api_config)
     multi_device_games = MultiDeviceGamesController(api_config)
 
+    redis = Redis.from_url(config.redis_dsn.get_secret_value())
     bot_users = RedisController[BotUser](redis)
     qr_codes = RedisController[QRCode](redis)
 
@@ -49,6 +47,7 @@ def create_dispatcher() -> Dispatcher:
             key_builder=DefaultKeyBuilder(with_destiny=True)
         ),
         config=config,
+        i18n=i18n,
         users=users,
         single_device_games=single_device_games,
         multi_device_games=multi_device_games,
@@ -56,22 +55,10 @@ def create_dispatcher() -> Dispatcher:
         qr_codes=qr_codes
     )
 
-    UserMiddleware(
-        users,
-        bot_users
-    ).setup(new_dispatcher)
+    UserMiddleware(users, bot_users).setup(new_dispatcher)
+    UserI18nMiddleware(i18n).setup(new_dispatcher)
 
-    UserI18nMiddleware(
-        I18n(
-            path="locales",
-            default_locale="en",
-            domain="messages"
-        )
-    ).setup(new_dispatcher)
-
-    new_dispatcher.include_routers(
-        start_router
-    )
+    new_dispatcher.include_routers(start_router)
 
     SceneRegistry(new_dispatcher).add(
         StartScene,

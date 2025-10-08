@@ -16,7 +16,6 @@ from app.actions.multi_device_play_again import MultiDevicePlayAgainAction
 from app.actions.multi_device_start import MultiDeviceStartAction
 from app.controllers.multi_device_games import MultiDeviceGamesController
 from app.controllers.redis import RedisController
-from app.data.secret_words_controller import SecretWordsController
 from app.enums.payload_type import PayloadType
 from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
@@ -31,6 +30,7 @@ from app.scenes.base import BaseScene
 from app.utils.dict_factory import DictFactory
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 from app.utils.logging import logger
+from app.utils.secret_words import SecretWordsController
 
 
 class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
@@ -50,6 +50,10 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             )
         except AlreadyInGameError:
             await callback_query.answer()
+            await user.edit_message(
+                text=_("message.error"),
+                reply_markup=InlineKeyboardFactory.menu_keyboard()
+            )
             logger.error(
                 f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
                 f"Failed to create multi-device game because player is already in game"
@@ -57,7 +61,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             await self.wizard.leave()
             return
 
-        text, entities = await self._create_recruitment_message(game)
+        text, entities = self._create_recruitment_message(game)
         qr_code: InputFile | str | None = await game.get_qr_code(qr_codes)
 
         message: Message | None = await user.edit_message(
@@ -115,20 +119,28 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 game_id,
                 user.id
             )
-        except NotFoundError:
-            await message.answer(_("message.multi_device.play.recruit.game_not_found"))
-            return
-        except GameHasAlreadyStartedError:
-            await message.answer(_("message.multi_device.play.recruit.game_has_already_started"))
-            return
-        except AlreadyInGameError:
-            await message.answer(_("message.multi_device.play.recruit.already_in_game"))
-            return
-        except InvalidPlayerAmountError:
-            await message.answer(_("message.multi_device.play.recruit.too_many_players"))
+        except APIError as error:
+            if isinstance(error, NotFoundError):
+                message_text: str = _("message.multi_device.play.recruit.game_not_found")
+            elif isinstance(error, GameHasAlreadyStartedError):
+                message_text: str = _("message.multi_device.play.recruit.game_has_already_started")
+            elif isinstance(error, AlreadyInGameError):
+                message_text: str = _("message.multi_device.play.recruit.already_in_game")
+            elif isinstance(error, InvalidPlayerAmountError):
+                message_text: str = _("message.multi_device.play.recruit.too_many_players")
+            else:
+                message_text: str = _("message.error")
+
+            await user.new_message(
+                chat_id=message.chat.id,
+                text=message_text,
+                reply_markup=InlineKeyboardFactory.menu_keyboard()
+            )
+            await message.delete()
+            await self.wizard.leave()
             return
 
-        text, entities = await self._create_recruitment_message(game)
+        text, entities = self._create_recruitment_message(game)
         qr_code: InputFile | str | None = await game.get_qr_code(qr_codes)
 
         await user.new_message(
@@ -150,27 +162,28 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             player_bot_user: BotUser = await bot_users.get(
                 player.user_id,
                 bot=user.bot,
-                from_json_method=BotUser.from_json_and_controller_and_bot
+                i18n=user.i18n,
+                from_json_method=BotUser.from_data
             )
 
             if player_bot_user is None:
                 continue
 
-            text, entities = await self._create_recruitment_message(game, locale=player_bot_user.locale)
+            with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                text, entities = self._create_recruitment_message(game)
 
-            tasks.append(
-                create_task(
-                    player_bot_user.edit_message(
-                        text=text,
-                        entities=entities,
-                        reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
-                            is_host=player.user_id == game.host_id,
-                            locale=player_bot_user.locale
-                        ),
-                        only_edit_caption=True
+                tasks.append(
+                    create_task(
+                        player_bot_user.edit_message(
+                            text=text,
+                            entities=entities,
+                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                                is_host=player.user_id == game.host_id
+                            ),
+                            only_edit_caption=True
+                        )
                     )
                 )
-            )
 
         await asyncio.gather(*tasks)
 
@@ -201,32 +214,28 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             player_bot_user: BotUser = await bot_users.get(
                 player.user_id,
                 bot=user.bot,
-                from_json_method=BotUser.from_json_and_controller_and_bot
+                i18n=user.i18n,
+                from_json_method=BotUser.from_data
             )
 
             if player_bot_user is None:
                 continue
 
-            message_text: LazyProxy = DictFactory.multi_device_role_message(
-                locale=player_bot_user.locale
-            ).get(player.role)
+            with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                message_text: LazyProxy = DictFactory.multi_device_role_message().get(player.role)
 
-            tasks.append(
-                create_task(
-                    player_bot_user.edit_message(
-                        text=message_text.format(
-                            secret_word=SecretWordsController.get_secret_word(
-                                game.secret_word,
-                                locale=player_bot_user.locale
+                tasks.append(
+                    create_task(
+                        player_bot_user.edit_message(
+                            text=message_text.format(
+                                secret_word=SecretWordsController.get_secret_word(game.secret_word)
+                            ),
+                            reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
+                                is_host=player.user_id == game.host_id
                             )
-                        ),
-                        reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
-                            is_host=player.user_id == game.host_id,
-                            locale=player_bot_user.locale
                         )
                     )
                 )
-            )
 
         await asyncio.gather(*tasks)
 
@@ -252,35 +261,33 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             player_bot_user: BotUser = await bot_users.get(
                 player.user_id,
                 bot=user.bot,
-                from_json_method=BotUser.from_json_and_controller_and_bot
+                i18n=user.i18n,
+                from_json_method=BotUser.from_data
             )
 
             if player_bot_user is None:
                 continue
 
-            message_text, entities = self._get_entities(
-                _("message.multi_device.play.finish", locale=player_bot_user.locale).format(
-                    secret_word=SecretWordsController.get_secret_word(
-                        game.secret_word,
-                        locale=player_bot_user.locale
+            with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                message_text, entities = self._get_entities(
+                    _("message.multi_device.play.finish").format(
+                        secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                        first_name=spy.first_name
                     ),
-                    first_name=spy.first_name
-                ),
-                players=[spy]
-            )
+                    players=[spy]
+                )
 
-            tasks.append(
-                create_task(
-                    player_bot_user.edit_message(
-                        text=message_text,
-                        entities=entities,
-                        reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
-                            is_host=player.user_id == game.host_id,
-                            locale=player_bot_user.locale
+                tasks.append(
+                    create_task(
+                        player_bot_user.edit_message(
+                            text=message_text,
+                            entities=entities,
+                            reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
+                                is_host=player.user_id == game.host_id
+                            )
                         )
                     )
                 )
-            )
 
         await asyncio.gather(*tasks)
 
@@ -309,25 +316,26 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
             player_bot_user: BotUser = await bot_users.get(
                 player.user_id,
                 bot=user.bot,
-                from_json_method=BotUser.from_json_and_controller_and_bot
+                i18n=user.i18n,
+                from_json_method=BotUser.from_data
             )
 
             if player_bot_user is None:
                 continue
 
-            text, entities = await self._create_recruitment_message(game, locale=player_bot_user.locale)
+            with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                text, entities = self._create_recruitment_message(game)
 
-            tasks_data.append(
-                {
-                    "bot_user": player_bot_user,
-                    "text": text,
-                    "entities": entities,
-                    "reply_markup": InlineKeyboardFactory.multi_device_recruit_keyboard(
-                        is_host=player.user_id == game.host_id,
-                        locale=player_bot_user.locale
-                    )
-                }
-            )
+                tasks_data.append(
+                    {
+                        "bot_user": player_bot_user,
+                        "text": text,
+                        "entities": entities,
+                        "reply_markup": InlineKeyboardFactory.multi_device_recruit_keyboard(
+                            is_host=player.user_id == game.host_id
+                        )
+                    }
+                )
 
         tasks: List[Task] = [
             create_task(
@@ -366,7 +374,7 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         results: Tuple[Message | None] = await asyncio.gather(*tasks)
 
         if results[0] is not None:
-            await qr_codes.set(QRCode(game_id=game.game_id, file_id=results[0].message.photo[0].file_id))
+            await qr_codes.set(QRCode(game_id=game.game_id, file_id=results[0].photo[0].file_id))
 
     @on.callback_query(MultiDeviceLeaveAction.filter())
     async def on_leave(
@@ -398,19 +406,21 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 player_bot_user: BotUser = await bot_users.get(
                     player.user_id,
                     bot=user.bot,
-                    from_json_method=BotUser.from_json_and_controller_and_bot
+                    i18n=user.i18n,
+                    from_json_method=BotUser.from_data
                 )
 
                 if player_bot_user is None:
                     continue
 
-                tasks.append(
-                    create_task(
-                        player_bot_user.edit_message(
-                            text=_("message.multi_device.play.stop", locale=player_bot_user.locale)
+                with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                    tasks.append(
+                        create_task(
+                            player_bot_user.edit_message(
+                                text=_("message.multi_device.play.stop")
+                            )
                         )
                     )
-                )
 
             await asyncio.gather(*tasks)
 
@@ -443,27 +453,28 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
                 player_bot_user: BotUser = await bot_users.get(
                     player.user_id,
                     bot=user.bot,
-                    from_json_method=BotUser.from_json_and_controller_and_bot
+                    i18n=user.i18n,
+                    from_json_method=BotUser.from_data
                 )
 
                 if player_bot_user is None:
                     continue
 
-                text, entities = await self._create_recruitment_message(game, locale=player_bot_user.locale)
+                with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                    text, entities = self._create_recruitment_message(game)
 
-                tasks.append(
-                    create_task(
-                        player_bot_user.edit_message(
-                            text=text,
-                            entities=entities,
-                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
-                                is_host=player.user_id == game.host_id,
-                                locale=player_bot_user.locale
-                            ),
-                            only_edit_caption=True
+                    tasks.append(
+                        create_task(
+                            player_bot_user.edit_message(
+                                text=text,
+                                entities=entities,
+                                reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                                    is_host=player.user_id == game.host_id
+                                ),
+                                only_edit_caption=True
+                            )
                         )
                     )
-                )
 
             await asyncio.gather(*tasks)
 
@@ -492,32 +503,30 @@ class MultiDevicePlayScene(BaseScene, state="multi_device_play"):
         await message.delete()
 
     @classmethod
-    async def _create_recruitment_message(
+    def _create_recruitment_message(
             cls,
-            game: MultiDeviceGame,
-            *,
-            locale: str | None = None
+            game: MultiDeviceGame
     ) -> Tuple[str, List[MessageEntity]]:
         players: List[str] = []
 
         for index, player in enumerate(game.players):
             if player.user_id == game.host_id:
                 players.append(
-                    _("message.multi_device.play.recruit.player.host", locale=locale).format(
+                    _("message.multi_device.play.recruit.player.host").format(
                         index=index + 1,
                         first_name=player.first_name
                     )
                 )
             else:
                 players.append(
-                    _("message.multi_device.play.recruit.player", locale=locale).format(
+                    _("message.multi_device.play.recruit.player").format(
                         index=index + 1,
                         first_name=player.first_name
                     )
                 )
 
         return cls._get_entities(
-            _("message.multi_device.play.recruit", locale=locale).format(
+            _("message.multi_device.play.recruit").format(
                 players="\n".join(players),
                 player_amount=len(game.players),
                 max_player_amount=game.player_amount

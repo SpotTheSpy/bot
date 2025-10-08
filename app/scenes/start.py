@@ -17,13 +17,12 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             message: Message,
             user: BotUser,
             single_device_games: SingleDeviceGamesController,
-            multi_device_games: MultiDeviceGamesController,
-            locale: str | None = None
+            multi_device_games: MultiDeviceGamesController
     ) -> None:
         await user.new_message(
             message.chat.id,
-            text=_("message.start", locale=locale),
-            reply_markup=InlineKeyboardFactory.start_keyboard(locale)
+            text=_("message.start"),
+            reply_markup=InlineKeyboardFactory.start_keyboard()
         )
         await message.delete()
 
@@ -36,13 +35,12 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
     async def on_callback_query_enter(
             self,
             callback_query: CallbackQuery,
-            user: BotUser,
-            locale: str | None = None
+            user: BotUser
     ) -> None:
         await callback_query.answer()
         await user.edit_message(
-            text=_("message.start", locale=locale),
-            reply_markup=InlineKeyboardFactory.start_keyboard(locale)
+            text=_("message.start"),
+            reply_markup=InlineKeyboardFactory.start_keyboard()
         )
 
     @on.message()
