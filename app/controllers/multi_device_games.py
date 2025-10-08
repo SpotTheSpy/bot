@@ -94,8 +94,6 @@ class MultiDeviceGamesController(APIController):
 
         if response.status_code == NotFoundError.status_code:
             raise NotFoundError("Game with provided UUID was not found")
-        if response.status_code == GameHasAlreadyStartedError.status_code:
-            raise GameHasAlreadyStartedError("Game has already started")
         if response.status_code == NotInGameError.status_code:
             raise NotInGameError("You are not in game")
 

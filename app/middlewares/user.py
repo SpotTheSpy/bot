@@ -42,8 +42,11 @@ class UserMiddleware(BaseMiddleware):
                 workflow_data=data,
                 from_json_method=BotUser.from_workflow_data
             )
+
+            update_bot_user: bool = False
         except (TypeError, ValueError):
             bot_user = None
+            update_bot_user: bool = True
 
         if bot_user is None:
             user: User | None = await self._users.get_user(from_user.id)
@@ -68,8 +71,6 @@ class UserMiddleware(BaseMiddleware):
             )
 
             await state.update_data(user_id=str(bot_user.id))
-
-        update_bot_user: bool = False
 
         if isinstance(event, CallbackQuery):
             if bot_user.chat_id is None:

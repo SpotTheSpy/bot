@@ -1,13 +1,16 @@
+from asyncio import Task, create_task, gather
 from functools import wraps
 from inspect import FullArgSpec, getfullargspec
-from typing import Dict, Any, List, Self, ClassVar, Optional, TYPE_CHECKING, Callable
+from typing import Dict, Any, List, Self, ClassVar, Optional, TYPE_CHECKING, Callable, Tuple, Awaitable
 from uuid import UUID
 
 from aiogram import Bot
+from aiogram.enums import MessageEntityType
 from aiogram.exceptions import AiogramError
 from aiogram.fsm.context import FSMContext
 from aiogram.types import (
     Message,
+    User as AiogramUser,
     InputFile,
     MessageEntity,
     InlineKeyboardMarkup,
@@ -23,7 +26,12 @@ from app.controllers.redis import RedisController
 from app.enums.language_type import LanguageType
 from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
-from app.models.qr_code import QRCode
+from app.exceptions.api import APIError
+from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
+from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
+from app.exceptions.not_found import NotFoundError
+from app.models.multi_device_game import MultiDeviceGame, MultiDevicePlayer
+from app.models.qr_code import QRCode, BlurredQRCode
 from app.models.redis import AbstractRedisModel
 from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User
@@ -320,18 +328,32 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         await self.controller.set(self)
 
     @_with_workflow_data
+    async def get_bot_user(
+            self,
+            user_id: UUID
+    ) -> Self | None:
+        if user_id == self.id:
+            return self
+
+        return await self.controller.get(
+            user_id,
+            workflow_data=self._workflow_data,
+            from_json_method=self.from_workflow_data
+        )
+
+    @_with_workflow_data
     async def new_start_message(
             self,
-            start_command_message: Message,
+            message: Message,
             *,
             locale: str | None = None
     ) -> None:
         await self.new_message(
-            start_command_message.chat.id,
+            message.chat.id,
             text=_("message.start", locale=locale),
             reply_markup=InlineKeyboardFactory.start_keyboard(locale=locale)
         )
-        await start_command_message.delete()
+        await message.delete()
 
     @_with_workflow_data
     async def start_message(
@@ -461,10 +483,12 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             game_id: UUID | None = None
     ) -> None:
         if game_id is None:
-            game_id: UUID = (await single_device_games.get_game_by_user_id(self.id)).game_id
+            game: SingleDeviceGame = await self.get_single_device_game()
 
-        if game_id is None:
-            return
+            if game is None:
+                return
+
+            game_id = game.game_id
 
         await single_device_games.remove_game(game_id)
 
@@ -591,3 +615,547 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             text=_("message.single_device.play.discuss"),
             reply_markup=InlineKeyboardFactory.single_device_finish_keyboard()
         )
+
+    @_with_workflow_data
+    async def explain_multi_device(
+            self,
+            callback_query: CallbackQuery
+    ) -> None:
+        await self.edit_message(
+            text=_("message.multi_device.explain"),
+            reply_markup=InlineKeyboardFactory.multi_device_explain_keyboard()
+        )
+        await callback_query.answer()
+
+    @_with_workflow_data
+    async def configure_multi_device(
+            self,
+            callback_query: CallbackQuery,
+            *,
+            state: FSMContext,
+            player_amount: int | None = None
+    ) -> None:
+        if player_amount is None:
+            player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
+
+        await state.update_data(player_amount=player_amount)
+
+        await callback_query.answer()
+        await self.edit_message(
+            text=_("message.multi_device.configure"),
+            reply_markup=InlineKeyboardFactory.multi_device_configure_keyboard(
+                min_amount=Parameters.MIN_PLAYER_AMOUNT,
+                max_amount=Parameters.MAX_PLAYER_AMOUNT,
+                selected_amount=player_amount
+            )
+        )
+        await callback_query.answer()
+
+    @_with_workflow_data
+    async def create_multi_device_game(
+            self,
+            *,
+            multi_device_games: 'MultiDeviceGamesController',
+            player_amount: int
+    ) -> MultiDeviceGame | None:
+        try:
+            game: MultiDeviceGame = await multi_device_games.create_game(
+                self.id,
+                player_amount=player_amount
+            )
+        except AlreadyInGameError:
+            return
+
+        return game
+
+    @_with_workflow_data
+    async def get_multi_device_game(
+            self,
+            *,
+            multi_device_games: 'MultiDeviceGamesController'
+    ) -> None:
+        return await multi_device_games.get_game_by_user_id(self.id)
+
+    @_with_workflow_data
+    async def end_multi_device_game(
+            self,
+            *,
+            multi_device_games: 'MultiDeviceGamesController',
+            qr_codes: RedisController[QRCode],
+            game_id: UUID | None = None
+    ) -> None:
+        if game_id is None:
+            game: MultiDeviceGame = await self.get_multi_device_game()
+
+            if game is None:
+                return
+
+            game_id = game.game_id
+
+        await multi_device_games.remove_game(game_id)
+        await qr_codes.remove(game_id)
+
+    @_with_workflow_data
+    async def recruit_multi_device_game(
+            self,
+            callback_query: CallbackQuery,
+            *,
+            multi_device_games: 'MultiDeviceGamesController',
+            qr_codes: RedisController[QRCode],
+            player_amount: int
+    ) -> None:
+        game: MultiDeviceGame | None = await self.create_multi_device_game(player_amount=player_amount)
+
+        if game is None:
+            return  # TODO: Error message
+
+        message: Message | None = await self._update_multi_device_game_recruitment_messages(game=game)
+
+        if message is not None:
+            await qr_codes.set(BlurredQRCode(file_id=message.photo[0].file_id))
+
+        await callback_query.answer()
+
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"started recruitment for a multi-device game (game_id={game.game_id})"
+        )
+
+        game: MultiDeviceGame | None = await multi_device_games.generate_qr_code(game.game_id)
+        message: Message | None = await self._update_multi_device_game_recruitment_messages(game=game)
+
+        if message is not None:
+            await qr_codes.set(QRCode(game_id=game.game_id, file_id=message.photo[0].file_id))
+
+    @_with_workflow_data
+    async def join_multi_device_game(
+            self,
+            message: Message,
+            *,
+            multi_device_games: 'MultiDeviceGamesController',
+            game_id: UUID
+    ) -> MultiDeviceGame | None:
+        self.chat_id = message.chat.id
+
+        try:
+            game: MultiDeviceGame = await multi_device_games.join_game(
+                game_id,
+                self.id
+            )
+        except APIError as error:
+            if isinstance(error, NotFoundError):
+                message_text: str = _("message.multi_device.play.recruit.game_not_found")
+            elif isinstance(error, GameHasAlreadyStartedError):
+                message_text: str = _("message.multi_device.play.recruit.game_has_already_started")
+            elif isinstance(error, AlreadyInGameError):
+                message_text: str = _("message.multi_device.play.recruit.already_in_game")
+            elif isinstance(error, InvalidPlayerAmountError):
+                message_text: str = _("message.multi_device.play.recruit.too_many_players")
+            else:
+                message_text: str = _("message.error")
+
+            await self.new_message(
+                chat_id=self.chat_id,
+                text=message_text,
+                reply_markup=InlineKeyboardFactory.menu_keyboard()
+            )
+            return
+
+        await self._update_multi_device_game_recruitment_messages(game=game, joined_player_id=self.id)
+
+        logger.info(
+            f"{message.from_user.first_name} (id={message.from_user.id}) "
+            f"joined a multi-device game (game_id={game.game_id})"
+        )
+
+    @_with_workflow_data
+    async def leave_multi_device_game(
+            self,
+            *,
+            multi_device_games: 'MultiDeviceGamesController',
+            update_message: bool = True
+    ) -> None:
+        game: MultiDeviceGame | None = await self.get_multi_device_game()
+
+        if game is None:
+            return  # TODO: Error message
+
+        if self.id == game.host_id:
+            await self.end_multi_device_game(game_id=game.game_id)
+
+            tasks: List[Task] = []
+
+            for player in game.players:
+                if player.user_id == self.id:
+                    continue
+
+                player_bot_user: BotUser = await self.get_bot_user(player.user_id)
+
+                if player_bot_user is None:
+                    continue
+
+                with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                    tasks.append(
+                        create_task(
+                            player_bot_user.edit_message(
+                                text=_("message.multi_device.play.stop")
+                            )
+                        )
+                    )
+
+            await gather(*tasks)
+
+            logger.info(
+                f"{self.first_name} (id={self.telegram_id}) "
+                f"finished a multi-device game (game_id={game.game_id})"
+            )
+        else:
+            game: MultiDeviceGame | None = await multi_device_games.leave_game(
+                game.game_id,
+                self.id
+            )
+
+            if update_message:
+                await self.edit_message(
+                    text=_("message.multi_device.play.leave")
+                )
+
+            if game.has_started:
+                return
+
+            tasks: List[Task] = []
+
+            for player in game.players:
+                if player.user_id == self.id:
+                    continue
+
+                player_bot_user: BotUser = await self.get_bot_user(player.user_id)
+
+                if player_bot_user is None:
+                    continue
+
+                with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                    text, entities = self._create_recruitment_message(game)
+
+                    tasks.append(
+                        create_task(
+                            player_bot_user.edit_message(
+                                text=text,
+                                entities=entities,
+                                reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                                    is_host=player.user_id == game.host_id
+                                ),
+                                only_edit_caption=True
+                            )
+                        )
+                    )
+
+            await gather(*tasks)
+
+            logger.info(
+                f"{self.first_name} (id={self.telegram_id}) "
+                f"left a multi-device game (game_id={game.game_id})"
+            )
+
+    @_with_workflow_data
+    async def start_multi_device_game(
+            self,
+            callback_query: CallbackQuery,
+            *,
+            multi_device_games: 'MultiDeviceGamesController',
+            qr_codes: RedisController[QRCode]
+    ) -> None:
+        game: MultiDeviceGame = await self.get_multi_device_game()
+
+        if game is None:
+            return  # TODO: Error message
+
+        try:
+            game = await multi_device_games.start_game(game.game_id)
+        except InvalidPlayerAmountError:
+            await callback_query.answer(_("answer.multi_device.play.too_few_players"))
+            return
+
+        tasks: List[Task] = []
+
+        for player in game.players:
+            player_bot_user: BotUser | None = await self.get_bot_user(player.user_id)
+
+            if player_bot_user is None:
+                continue
+
+            with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                message_text: LazyProxy = DictFactory.multi_device_role_message().get(player.role)
+
+                tasks.append(
+                    create_task(
+                        player_bot_user.edit_message(
+                            text=message_text.format(
+                                secret_word=SecretWordsController.get_secret_word(game.secret_word)
+                            ),
+                            reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
+                                is_host=player.user_id == game.host_id
+                            )
+                        )
+                    )
+                )
+
+        await gather(*tasks)
+        await callback_query.answer()
+
+        await qr_codes.remove(game.game_id)
+
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"started a multi-device game (game_id={game.game_id})"
+        )
+
+    @_with_workflow_data
+    async def finish_multi_device_game(
+            self,
+            callback_query: CallbackQuery
+    ) -> None:
+        game: MultiDeviceGame | None = await self.get_multi_device_game()
+
+        if game is None:
+            return  # TODO: Error message
+
+        spy: MultiDevicePlayer = [player for player in game.players if player.role == PlayerRole.SPY][0]
+
+        tasks: List[Task] = []
+
+        for player in game.players:
+            player_bot_user: BotUser = await self.get_bot_user(player.user_id)
+
+            if player_bot_user is None:
+                continue
+
+            with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                message_text, entities = self._get_entities(
+                    _("message.multi_device.play.finish").format(
+                        secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                        first_name=spy.first_name
+                    ),
+                    players=[spy]
+                )
+
+                tasks.append(
+                    create_task(
+                        player_bot_user.edit_message(
+                            text=message_text,
+                            entities=entities,
+                            reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
+                                is_host=player.user_id == game.host_id
+                            )
+                        )
+                    )
+                )
+
+        await gather(*tasks)
+
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"finished a multi-device game (game_id={game.game_id})"
+        )
+
+    @_with_workflow_data
+    async def restart_multi_device_game(
+            self,
+            callback_query: CallbackQuery,
+            *,
+            multi_device_games: 'MultiDeviceGamesController',
+            qr_codes: RedisController[QRCode]
+    ) -> None:
+        game: MultiDeviceGame = await self.get_multi_device_game()
+
+        if game is None:
+            return  # TODO: Error message
+
+        await qr_codes.remove(game.game_id)
+        game: MultiDeviceGame = await multi_device_games.restart_game(game.game_id)
+
+        await self._update_multi_device_game_recruitment_messages(game=game)
+        await callback_query.answer()
+
+        logger.info(
+            f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
+            f"restarted recruitment for a multi-device game (game_id={game.game_id})"
+        )
+
+        game: MultiDeviceGame | None = await multi_device_games.generate_qr_code(game.game_id)
+        message: Message | None = await self._update_multi_device_game_recruitment_messages(game=game)
+
+        if message is not None:
+            await qr_codes.set(QRCode(game_id=game.game_id, file_id=message.photo[0].file_id))
+
+    @_with_workflow_data
+    async def _update_multi_device_game_recruitment_messages(
+            self,
+            *,
+            qr_codes: RedisController[QRCode],
+            game: MultiDeviceGame,
+            joined_player_id: UUID | None = None
+    ) -> Message | None:
+        tasks: List[Task] = []
+
+        qr_code: InputFile | str | None = await game.get_qr_code(qr_codes)
+
+        for player in game.players:
+            player_bot_user: BotUser = await self.get_bot_user(player.user_id)
+
+            if player_bot_user is None:
+                continue
+
+            with player_bot_user.i18n.use_locale(player_bot_user.locale):
+                text, entities = self._create_recruitment_message(game)
+
+                if joined_player_id is None:
+                    coro: Awaitable = player_bot_user.edit_message(
+                        text=text,
+                        photo=qr_code,
+                        entities=entities,
+                        reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                            is_host=game.host_id == player.user_id
+                        )
+                    )
+                else:
+                    if joined_player_id == player.user_id:
+                        coro: Awaitable = player_bot_user.new_message(
+                            chat_id=player_bot_user.chat_id,
+                            text=text,
+                            photo=qr_code,
+                            entities=entities,
+                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                                is_host=game.host_id == player.user_id
+                            )
+                        )
+                    else:
+                        coro: Awaitable = player_bot_user.edit_message(
+                            text=text,
+                            photo=qr_code,
+                            entities=entities,
+                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                                is_host=game.host_id == player.user_id
+                            ),
+                            only_edit_caption=True
+                        )
+
+                tasks.append(create_task(coro))
+
+        results: Tuple[Message | None] = await gather(*tasks)
+
+        if results:
+            return results[0]
+
+    @classmethod
+    def _create_recruitment_message(
+            cls,
+            game: MultiDeviceGame
+    ) -> Tuple[str, List[MessageEntity]]:
+        players: List[str] = []
+
+        for index, player in enumerate(game.players):
+            if player.user_id == game.host_id:
+                players.append(
+                    _("message.multi_device.play.recruit.player.host").format(
+                        index=index + 1,
+                        first_name=player.first_name
+                    )
+                )
+            else:
+                players.append(
+                    _("message.multi_device.play.recruit.player").format(
+                        index=index + 1,
+                        first_name=player.first_name
+                    )
+                )
+
+        return cls._get_entities(
+            _("message.multi_device.play.recruit").format(
+                players="\n".join(players),
+                player_amount=len(game.players),
+                max_player_amount=game.player_amount
+            ),
+            join_url=game.join_url,
+            players=game.players
+        )
+
+    @staticmethod
+    def _get_entities(
+            text: str,
+            *,
+            join_url: str | None = None,
+            players: List[MultiDevicePlayer] | None = None
+    ) -> Tuple[str, List[MessageEntity]]:
+        entities: List[MessageEntity] = []
+        tags_to_find: List[str] = ["b", "join", "player"]
+
+        player_index: int = 0
+
+        while True:
+            indices: List[int] = [text.find(f"<{tag}>") for tag in tags_to_find]
+
+            closest_tag_index: int = -1
+            for index in indices:
+                if index == -1:
+                    continue
+                if closest_tag_index == -1 or index < closest_tag_index:
+                    closest_tag_index = index
+
+            if closest_tag_index == -1:
+                break
+
+            tag: str = tags_to_find[indices.index(closest_tag_index)]
+            open_tag: str = f"<{tag}>"
+            close_tag: str = f"</{tag}>"
+
+            open_tag_index: int = text.find(open_tag)
+            close_tag_index: int = text.find(close_tag)
+
+            match tag:
+                case "b":
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.BOLD,
+                            offset=open_tag_index + 1,
+                            length=close_tag_index - open_tag_index - len(open_tag)
+                        )
+                    )
+                case "join":
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.TEXT_LINK,
+                            offset=open_tag_index + 1,
+                            length=close_tag_index - open_tag_index - len(open_tag),
+                            url=join_url
+                        )
+                    )
+                case "player":
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.TEXT_MENTION,
+                            offset=open_tag_index + 1,
+                            length=close_tag_index - open_tag_index - len(open_tag),
+                            user=AiogramUser(
+                                id=players[player_index].telegram_id,
+                                first_name=players[player_index].first_name,
+                                is_bot=False
+                            )
+                        )
+                    )
+                    entities.append(
+                        MessageEntity(
+                            type=MessageEntityType.ITALIC,
+                            offset=open_tag_index + 1,
+                            length=close_tag_index - open_tag_index - len(open_tag)
+                        )
+                    )
+                    player_index += 1
+
+            text = (
+                    text[:open_tag_index]
+                    + text[open_tag_index + len(open_tag):close_tag_index]
+                    + text[close_tag_index + len(close_tag):]
+            )
+
+        return text, entities

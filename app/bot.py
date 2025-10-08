@@ -14,6 +14,7 @@ from app.middlewares.i18n import UserI18nMiddleware
 from app.middlewares.user import UserMiddleware
 from app.models.bot_user import BotUser
 from app.models.qr_code import QRCode
+from app.routes.menu import menu_router
 from app.routes.start import start_router
 from app.scenes.choose_device import ChooseDeviceScene
 from app.scenes.language import LanguageScene
@@ -58,7 +59,7 @@ def create_dispatcher() -> Dispatcher:
     UserMiddleware(users, bot_users).setup(new_dispatcher)
     UserI18nMiddleware(i18n).setup(new_dispatcher)
 
-    new_dispatcher.include_routers(start_router)
+    new_dispatcher.include_routers(start_router, menu_router)
 
     SceneRegistry(new_dispatcher).add(
         StartScene,

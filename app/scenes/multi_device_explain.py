@@ -14,11 +14,8 @@ class MultiDeviceExplainScene(BaseScene, state="multi_device_explain"):
             callback_query: CallbackQuery,
             user: BotUser
     ) -> None:
+        await user.explain_multi_device()
         await callback_query.answer()
-        await user.edit_message(
-            text=_("message.multi_device.explain"),
-            reply_markup=InlineKeyboardFactory.multi_device_explain_keyboard()
-        )
 
     @on.message()
     async def on_message(
