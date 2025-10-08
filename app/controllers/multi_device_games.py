@@ -1,12 +1,12 @@
 from uuid import UUID
 
-from app.controllers.api.abstract import APIController, AttributedDict
+from app.controllers.api import APIController, AttributedDict
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
 from app.exceptions.not_in_game import NotInGameError
-from app.models.multi_device_game import CreateMultiDeviceGame, SetGameURLModel
+from app.models.multi_device_game import CreateMultiDeviceGame
 from app.models.multi_device_game import MultiDeviceGame
 
 
@@ -21,7 +21,7 @@ class MultiDeviceGamesController(APIController):
             json=CreateMultiDeviceGame(
                 host_id=host_id,
                 player_amount=player_amount
-            ).to_json()
+            ).model_dump(mode="json")
         )
 
         if response.status_code == AlreadyInGameError.status_code:
@@ -63,23 +63,6 @@ class MultiDeviceGamesController(APIController):
             f"multi_device_games/{game_id}"
         )
 
-    async def remove_game_by_user_id(
-            self,
-            user_id: UUID
-    ) -> None:
-        response: AttributedDict = await self._get(
-            f"multi_device_games/by_user_id/{user_id}"
-        )
-
-        if response.status_code == NotFoundError.status_code:
-            return
-
-        game = MultiDeviceGame.from_json(response)
-
-        await self._delete(
-            f"multi_device_games/{game.game_id}"
-        )
-
     async def join_game(
             self,
             game_id: UUID,
@@ -111,8 +94,6 @@ class MultiDeviceGamesController(APIController):
 
         if response.status_code == NotFoundError.status_code:
             raise NotFoundError("Game with provided UUID was not found")
-        if response.status_code == GameHasAlreadyStartedError.status_code:
-            raise GameHasAlreadyStartedError("Game has already started")
         if response.status_code == NotInGameError.status_code:
             raise NotInGameError("You are not in game")
 
@@ -135,14 +116,25 @@ class MultiDeviceGamesController(APIController):
 
         return MultiDeviceGame.from_json(response)
 
-    async def set_game_url(
+    async def restart_game(
             self,
-            game_id: UUID,
-            url: str
+            game_id: UUID
     ) -> MultiDeviceGame | None:
         response: AttributedDict = await self._post(
-            f"multi_device_games/{game_id}/url",
-            json=SetGameURLModel(url=url).to_json()
+            f"multi_device_games/{game_id}/restart"
+        )
+
+        if response.status_code == NotFoundError.status_code:
+            return
+
+        return MultiDeviceGame.from_json(response)
+
+    async def generate_qr_code(
+            self,
+            game_id: UUID
+    ) -> MultiDeviceGame | None:
+        response: AttributedDict = await self._post(
+            f"multi_device_games/{game_id}/qr_code"
         )
 
         if response.status_code == NotFoundError.status_code:

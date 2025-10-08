@@ -1,7 +1,7 @@
 from typing import Any
 from uuid import UUID
 
-from app.controllers.api.abstract import APIController, AttributedDict
+from app.controllers.api import APIController, AttributedDict
 from app.exceptions.already_exists import AlreadyExistsError
 from app.models.user import CreateUser, User, UpdateUser
 
@@ -21,7 +21,7 @@ class UsersController(APIController):
                 first_name=first_name,
                 username=username,
                 locale=locale
-            ).to_json()
+            ).model_dump(mode="json")
         )
 
         if response.status_code == 409:
@@ -49,5 +49,5 @@ class UsersController(APIController):
     ) -> None:
         await self._put(
             f"users/{user_id}",
-            json=UpdateUser(**values).to_json(exclude_unset=True)
+            json=UpdateUser(**values).model_dump(mode="json", exclude_unset=True)
         )

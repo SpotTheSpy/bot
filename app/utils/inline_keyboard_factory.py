@@ -27,18 +27,12 @@ from app.enums.page_turn import PageTurn
 
 class InlineKeyboardFactory:
     @staticmethod
-    def menu_button(
-            *,
-            locale: str | None = None
-    ) -> InlineKeyboardButton:
-        return InlineKeyboardButton(text=_("button.menu", locale=locale), callback_data=MenuAction().pack())
+    def menu_button() -> InlineKeyboardButton:
+        return InlineKeyboardButton(text=_("button.menu"), callback_data=MenuAction().pack())
 
     @staticmethod
-    def back_button(
-            *,
-            locale: str | None = None
-    ) -> InlineKeyboardButton:
-        return InlineKeyboardButton(text=_("button.back", locale=locale), callback_data=BackAction().pack())
+    def back_button() -> InlineKeyboardButton:
+        return InlineKeyboardButton(text=_("button.back"), callback_data=BackAction().pack())
 
     @staticmethod
     def pagination_button(
@@ -52,20 +46,12 @@ class InlineKeyboardFactory:
         return InlineKeyboardButton(text=button_text, callback_data=PageTurnAction(turn=page_turn).pack())
 
     @classmethod
-    def menu_keyboard(
-            cls,
-            *,
-            locale: str | None = None
-    ) -> InlineKeyboardMarkup:
-        return InlineKeyboardMarkup(inline_keyboard=[[cls.menu_button(locale=locale)]])
+    def menu_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(inline_keyboard=[[cls.menu_button()]])
 
     @classmethod
-    def back_keyboard(
-            cls,
-            *,
-            locale: str | None = None
-    ) -> InlineKeyboardMarkup:
-        return InlineKeyboardMarkup(inline_keyboard=[[cls.back_button(locale=locale)]])
+    def back_keyboard(cls) -> InlineKeyboardMarkup:
+        return InlineKeyboardMarkup(inline_keyboard=[[cls.back_button()]])
 
     @classmethod
     def pagination_row(
@@ -167,14 +153,14 @@ class InlineKeyboardFactory:
     def single_device_configure_keyboard(
             cls,
             *,
-            min_player_amount: int,
-            max_player_amount: int,
-            selected_player_amount: int | None = None
+            min_amount: int,
+            max_amount: int,
+            selected_amount: int | None = None
     ) -> InlineKeyboardMarkup:
         builder = InlineKeyboardBuilder()
 
-        for player_amount in range(min_player_amount, max_player_amount + 1):
-            if player_amount == selected_player_amount:
+        for player_amount in range(min_amount, max_amount + 1):
+            if player_amount == selected_amount:
                 button_text: str = _("button.single_device.configure.player_amount.selected").format(
                     player_amount=player_amount
                 )
@@ -284,14 +270,14 @@ class InlineKeyboardFactory:
     def multi_device_configure_keyboard(
             cls,
             *,
-            min_player_amount: int,
-            max_player_amount: int,
-            selected_player_amount: int | None = None
+            min_amount: int,
+            max_amount: int,
+            selected_amount: int | None = None
     ) -> InlineKeyboardMarkup:
         builder = InlineKeyboardBuilder()
 
-        for player_amount in range(min_player_amount, max_player_amount + 1):
-            if player_amount == selected_player_amount:
+        for player_amount in range(min_amount, max_amount + 1):
+            if player_amount == selected_amount:
                 button_text: str = _("button.multi_device.configure.player_amount.selected").format(
                     player_amount=player_amount
                 )
@@ -321,20 +307,19 @@ class InlineKeyboardFactory:
     def multi_device_recruit_keyboard(
             cls,
             *,
-            is_host: bool = False,
-            locale: str | None = None
+            is_host: bool = False
     ) -> InlineKeyboardMarkup:
         if is_host:
             return InlineKeyboardMarkup(
                 inline_keyboard=[
                     [
                         InlineKeyboardButton(
-                            text=_("button.multi_device.start", locale=locale),
+                            text=_("button.multi_device.start"),
                             callback_data=MultiDeviceStartAction().pack()
                         )
                     ],
                     [
-                        cls.back_button(locale=locale)
+                        cls.back_button()
                     ]
                 ]
             )
@@ -343,7 +328,7 @@ class InlineKeyboardFactory:
                 inline_keyboard=[
                     [
                         InlineKeyboardButton(
-                            text=_("button.multi_device.leave", locale=locale),
+                            text=_("button.multi_device.leave"),
                             callback_data=MultiDeviceLeaveAction().pack()
                         )
                     ]
@@ -354,8 +339,7 @@ class InlineKeyboardFactory:
     def multi_device_view_role_keyboard(
             cls,
             *,
-            is_host: bool = False,
-            locale: str | None = None
+            is_host: bool = False
     ) -> InlineKeyboardMarkup | None:
         if not is_host:
             return
@@ -364,7 +348,7 @@ class InlineKeyboardFactory:
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.multi_device.finish", locale=locale),
+                        text=_("button.multi_device.finish"),
                         callback_data=MultiDeviceFinishAction().pack()
                     )
                 ]
@@ -375,22 +359,21 @@ class InlineKeyboardFactory:
     def multi_device_play_again_keyboard(
             cls,
             *,
-            is_host: bool = False,
-            locale: str | None = None
+            is_host: bool = False
     ) -> InlineKeyboardMarkup:
         if not is_host:
-            return cls.menu_keyboard(locale=locale)
+            return cls.menu_keyboard()
 
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.multi_device.play_again", locale=locale),
+                        text=_("button.multi_device.play_again"),
                         callback_data=MultiDevicePlayAgainAction().pack()
                     )
                 ],
                 [
-                    cls.menu_button(locale=locale)
+                    cls.menu_button()
                 ]
             ]
         )

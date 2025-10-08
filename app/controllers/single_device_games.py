@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from app.controllers.api.abstract import APIController, AttributedDict
+from app.controllers.api import APIController, AttributedDict
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.not_found import NotFoundError
 from app.models.single_device_game import CreateSingleDeviceGame
@@ -20,7 +20,7 @@ class SingleDeviceGamesController(APIController):
                 user_id=user_id,
                 telegram_id=telegram_id,
                 player_amount=player_amount
-            ).to_json()
+            ).model_dump(mode="json")
         )
 
         if response.status_code == AlreadyInGameError.status_code:
@@ -62,19 +62,15 @@ class SingleDeviceGamesController(APIController):
             f"single_device_games/{game_id}"
         )
 
-    async def remove_game_by_user_id(
+    async def restart_game(
             self,
-            user_id: UUID
-    ) -> None:
-        response: AttributedDict = await self._get(
-            f"single_device_games/by_user_id/{user_id}"
+            game_id: UUID
+    ) -> SingleDeviceGame | None:
+        response: AttributedDict = await self._post(
+            f"single_device_games/{game_id}/restart"
         )
 
         if response.status_code == NotFoundError.status_code:
             return
 
-        game = SingleDeviceGame.from_json(response)
-
-        await self._delete(
-            f"single_device_games/{game.game_id}"
-        )
+        return SingleDeviceGame.from_json(response)

@@ -5,17 +5,18 @@ from aiogram import BaseMiddleware, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject, User as AiogramUser, CallbackQuery
 
-from app.controllers.api.users import UsersController
-from app.controllers.redis.bot_users import BotUsersController
+from app.controllers.redis import RedisController
+from app.controllers.users import UsersController
 from app.exceptions.already_exists import AlreadyExistsError
-from app.models.user import User, BotUser
+from app.models.bot_user import BotUser
+from app.models.user import User
 
 
 class UserMiddleware(BaseMiddleware):
     def __init__(
             self,
             users: UsersController,
-            bot_users: BotUsersController
+            bot_users: RedisController[BotUser]
     ) -> None:
         self._users = users
         self._bot_users = bot_users
@@ -27,9 +28,7 @@ class UserMiddleware(BaseMiddleware):
             data: Dict[str, Any]
     ) -> Any:
         from_user: AiogramUser | None = data.get("event_from_user")
-
         if from_user is None:
-            data["user"] = None
             return await handler(event, data)
 
         state: FSMContext = data.get("state")
@@ -37,12 +36,17 @@ class UserMiddleware(BaseMiddleware):
         try:
             user_id = UUID(await state.get_value("user_id"))
 
-            bot_user: BotUser | None = await self._bot_users.get_bot_user(
+            bot_user: BotUser | None = await self._bot_users.get(
                 user_id,
-                data.get("bot")
+                event=event,
+                workflow_data=data,
+                from_json_method=BotUser.from_workflow_data
             )
+
+            update_bot_user: bool = False
         except (TypeError, ValueError):
             bot_user = None
+            update_bot_user: bool = True
 
         if bot_user is None:
             user: User | None = await self._users.get_user(from_user.id)
@@ -59,15 +63,14 @@ class UserMiddleware(BaseMiddleware):
                     data["user"] = None
                     return await handler(event, data)
 
-            bot_user = BotUser.from_user(
-                user,
-                bot=data.get("bot"),
-                controller=self._bot_users
+            bot_user: BotUser | None = BotUser.from_workflow_data(
+                user.to_json(),
+                controller=self._bot_users,
+                event=event,
+                workflow_data=data
             )
 
             await state.update_data(user_id=str(bot_user.id))
-
-        update_bot_user: bool = False
 
         if isinstance(event, CallbackQuery):
             if bot_user.chat_id is None:
