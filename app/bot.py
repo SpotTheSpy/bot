@@ -7,13 +7,13 @@ from redis.asyncio import Redis
 
 from app.controllers.api import APIConfig
 from app.controllers.multi_device_games import MultiDeviceGamesController
+from app.controllers.redis import RedisController
 from app.controllers.single_device_games import SingleDeviceGamesController
 from app.controllers.users import UsersController
-from app.controllers.redis import RedisController
 from app.middlewares.i18n import UserI18nMiddleware
 from app.middlewares.user import UserMiddleware
+from app.models.bot_user import BotUser
 from app.models.qr_code import QRCode
-from app.models.user import BotUser
 from app.routes.start import start_router
 from app.scenes.choose_device import ChooseDeviceScene
 from app.scenes.language import LanguageScene

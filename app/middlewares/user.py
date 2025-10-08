@@ -5,10 +5,11 @@ from aiogram import BaseMiddleware, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject, User as AiogramUser, CallbackQuery
 
-from app.controllers.users import UsersController
 from app.controllers.redis import RedisController
+from app.controllers.users import UsersController
 from app.exceptions.already_exists import AlreadyExistsError
-from app.models.user import User, BotUser
+from app.models.bot_user import BotUser
+from app.models.user import User
 
 
 class UserMiddleware(BaseMiddleware):
@@ -27,9 +28,7 @@ class UserMiddleware(BaseMiddleware):
             data: Dict[str, Any]
     ) -> Any:
         from_user: AiogramUser | None = data.get("event_from_user")
-
         if from_user is None:
-            data["user"] = None
             return await handler(event, data)
 
         state: FSMContext = data.get("state")
@@ -39,9 +38,9 @@ class UserMiddleware(BaseMiddleware):
 
             bot_user: BotUser | None = await self._bot_users.get(
                 user_id,
-                bot=data.get("bot"),
-                i18n=data.get("i18n"),
-                from_json_method=BotUser.from_data
+                event=event,
+                workflow_data=data,
+                from_json_method=BotUser.from_workflow_data
             )
         except (TypeError, ValueError):
             bot_user = None
@@ -61,11 +60,11 @@ class UserMiddleware(BaseMiddleware):
                     data["user"] = None
                     return await handler(event, data)
 
-            bot_user = BotUser.from_data(
+            bot_user: BotUser | None = BotUser.from_workflow_data(
                 user.to_json(),
-                bot=data.get("bot"),
-                i18n=data.get("i18n"),
-                controller=self._bot_users
+                controller=self._bot_users,
+                event=event,
+                workflow_data=data
             )
 
             await state.update_data(user_id=str(bot_user.id))

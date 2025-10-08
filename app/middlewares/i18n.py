@@ -3,7 +3,7 @@ from typing import Dict, Any
 from aiogram.types import TelegramObject
 from aiogram.utils.i18n import I18n, SimpleI18nMiddleware
 
-from app.models.user import BotUser
+from app.models.bot_user import BotUser
 
 
 class UserI18nMiddleware(SimpleI18nMiddleware):

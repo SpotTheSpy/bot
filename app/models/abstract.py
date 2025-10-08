@@ -13,9 +13,12 @@ class AbstractModel(BaseModel, ABC, arbitrary_types_allowed=True):
     @classmethod
     def from_json(
             cls,
-            data: Dict[str, Any],
+            data: Dict[str, Any] | None,
             **kwargs: Any
     ) -> Optional['AbstractModel']:
+        if data is None:
+            return
+
         data.update(kwargs)
 
         try:

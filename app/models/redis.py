@@ -23,7 +23,7 @@ class AbstractRedisModel(AbstractModel, ABC):
     @classmethod
     def from_json_and_controller(
             cls,
-            data: Dict[str, Any],
+            data: Dict[str, Any] | None,
             *,
             controller: 'RedisController',
             **kwargs: Any

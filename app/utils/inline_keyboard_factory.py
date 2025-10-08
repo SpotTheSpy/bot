@@ -65,18 +65,18 @@ class InlineKeyboardFactory:
         ]
 
     @staticmethod
-    def start_keyboard() -> InlineKeyboardMarkup:
+    def start_keyboard(locale: str | None = None) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
                     InlineKeyboardButton(
-                        text=_("button.start.play"),
+                        text=_("button.start.play", locale=locale),
                         callback_data=SwitchSceneAction(scene="choose_device").pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
-                        text=_("button.start.language"),
+                        text=_("button.start.language", locale=locale),
                         callback_data=SwitchSceneAction(scene="language").pack()
                     )
                 ]
@@ -153,14 +153,14 @@ class InlineKeyboardFactory:
     def single_device_configure_keyboard(
             cls,
             *,
-            min_player_amount: int,
-            max_player_amount: int,
-            selected_player_amount: int | None = None
+            min_amount: int,
+            max_amount: int,
+            selected_amount: int | None = None
     ) -> InlineKeyboardMarkup:
         builder = InlineKeyboardBuilder()
 
-        for player_amount in range(min_player_amount, max_player_amount + 1):
-            if player_amount == selected_player_amount:
+        for player_amount in range(min_amount, max_amount + 1):
+            if player_amount == selected_amount:
                 button_text: str = _("button.single_device.configure.player_amount.selected").format(
                     player_amount=player_amount
                 )
@@ -270,14 +270,14 @@ class InlineKeyboardFactory:
     def multi_device_configure_keyboard(
             cls,
             *,
-            min_player_amount: int,
-            max_player_amount: int,
-            selected_player_amount: int | None = None
+            min_amount: int,
+            max_amount: int,
+            selected_amount: int | None = None
     ) -> InlineKeyboardMarkup:
         builder = InlineKeyboardBuilder()
 
-        for player_amount in range(min_player_amount, max_player_amount + 1):
-            if player_amount == selected_player_amount:
+        for player_amount in range(min_amount, max_amount + 1):
+            if player_amount == selected_amount:
                 button_text: str = _("button.multi_device.configure.player_amount.selected").format(
                     player_amount=player_amount
                 )

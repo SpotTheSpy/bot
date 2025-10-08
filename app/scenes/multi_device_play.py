@@ -23,9 +23,10 @@ from app.exceptions.api import APIError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
+from app.models.bot_user import BotUser
 from app.models.multi_device_game import MultiDeviceGame, MultiDevicePlayer
 from app.models.qr_code import QRCode, BlurredQRCode
-from app.models.user import User, BotUser
+from app.models.user import User
 from app.scenes.base import BaseScene
 from app.utils.dict_factory import DictFactory
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory
