@@ -1,7 +1,6 @@
 from uuid import UUID
 
 from app.controllers.api import APIController, AttributedDict
-from app.exceptions.already_exists import AlreadyExistsError
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
@@ -142,7 +141,5 @@ class MultiDeviceGamesController(APIController):
 
         if response.status_code == NotFoundError.status_code:
             return
-        if response.status_code == AlreadyExistsError.status_code:
-            raise AlreadyExistsError("QR code with provided game ID already exists")
 
         return MultiDeviceGame.from_json(response)

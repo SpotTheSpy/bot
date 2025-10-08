@@ -112,6 +112,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self.has_photo = new_message.photo is not None
 
             await self.save()
+            return new_message
 
     async def edit_message(
             self,
@@ -210,6 +211,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         self.has_photo = new_message.photo is not None
 
         await self.save()
+        return new_message
 
     async def save(self) -> None:
         await self.controller.set(self)

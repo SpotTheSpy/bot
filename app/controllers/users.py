@@ -21,7 +21,7 @@ class UsersController(APIController):
                 first_name=first_name,
                 username=username,
                 locale=locale
-            ).to_json()
+            ).model_dump(mode="json")
         )
 
         if response.status_code == 409:
@@ -33,7 +33,6 @@ class UsersController(APIController):
             self,
             telegram_id: int
     ) -> User | None:
-        print("executing")
         response: AttributedDict = await self._get(
             f"users/telegram/{telegram_id}"
         )
@@ -50,5 +49,5 @@ class UsersController(APIController):
     ) -> None:
         await self._put(
             f"users/{user_id}",
-            json=UpdateUser(**values).to_json(exclude_unset=True)
+            json=UpdateUser(**values).model_dump(mode="json", exclude_unset=True)
         )

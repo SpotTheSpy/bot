@@ -12,6 +12,7 @@ from app.controllers.users import UsersController
 from app.controllers.redis import RedisController
 from app.middlewares.i18n import UserI18nMiddleware
 from app.middlewares.user import UserMiddleware
+from app.models.qr_code import QRCode
 from app.models.user import BotUser
 from app.routes.start import start_router
 from app.scenes.choose_device import ChooseDeviceScene
@@ -40,6 +41,7 @@ def create_dispatcher() -> Dispatcher:
     multi_device_games = MultiDeviceGamesController(api_config)
 
     bot_users = RedisController[BotUser](redis)
+    qr_codes = RedisController[QRCode](redis)
 
     new_dispatcher = Dispatcher(
         storage=RedisStorage(
@@ -50,7 +52,8 @@ def create_dispatcher() -> Dispatcher:
         users=users,
         single_device_games=single_device_games,
         multi_device_games=multi_device_games,
-        bot_users=bot_users
+        bot_users=bot_users,
+        qr_codes=qr_codes
     )
 
     UserMiddleware(
