@@ -360,11 +360,11 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery,
             *,
-            locale: str | None = None
+            new_locale: str | None = None
     ) -> None:
         await self.edit_message(
-            text=_("message.start", locale=locale),
-            reply_markup=InlineKeyboardFactory.start_keyboard(locale=locale)
+            text=_("message.start", locale=new_locale),
+            reply_markup=InlineKeyboardFactory.start_keyboard(locale=new_locale)
         )
         await callback_query.answer()
 
@@ -385,7 +385,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             callback_query: CallbackQuery,
             *,
             new_language: LanguageType
-    ) -> None:
+    ) -> str | None:
         if self.locale == new_language:
             await callback_query.answer(_("answer.language.same"))
             return
@@ -397,6 +397,8 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
 
         self.locale = new_language
         await self.save()
+
+        return new_language
 
     @_with_workflow_data
     async def choose_device_message(
@@ -512,7 +514,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         await self._prepare_in_single_device_game(player_index, game.player_amount)
 
         logger.info(
-            f"{self.first_name} (id={self.id}) "
+            f"{self.first_name} (id={self.telegram_id}) "
             f"started a single-device game"
         )
 
@@ -583,7 +585,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         await callback_query.answer()
 
         logger.info(
-            f"{self.first_name} (id={self.id}) "
+            f"{self.first_name} (id={self.telegram_id}) "
             f"finished a single-device game (game_id={game.game_id})"
         )
 

@@ -13,5 +13,5 @@ start_router.message.register(
 
 start_router.message.register(
     StartScene.as_handler(),
-    CommandStart()
+    CommandStart(deep_link=False)
 )

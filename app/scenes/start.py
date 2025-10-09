@@ -8,7 +8,7 @@ from app.scenes.base import BaseScene
 from app.utils.logging import logger
 
 
-class StartScene(BaseScene, state="start", reset_history_on_enter=True):
+class StartScene(BaseScene, state="start"):
     @on.message.enter()
     async def on_message_enter(
             self,
@@ -33,9 +33,9 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             self,
             callback_query: CallbackQuery,
             user: BotUser,
-            locale: str | None = None
+            new_locale: str | None = None
     ) -> None:
-        await user.start_message(locale=locale)
+        await user.start_message(new_locale=new_locale)
         await callback_query.answer()
 
     @on.message()

@@ -80,7 +80,7 @@ class UserMiddleware(BaseMiddleware):
                 from_json_method=BotUser.from_workflow_data
             )
         except (TypeError, ValueError):
-            bot_user = None
+            return
 
         return bot_user
 

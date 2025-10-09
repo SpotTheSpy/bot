@@ -24,17 +24,17 @@ class LanguageScene(BaseScene, state="language"):
             callback_data: ChooseLanguageAction,
             user: BotUser
     ) -> None:
-        await user.choose_language(new_language=callback_data.language_type)
+        locale: str | None = await user.choose_language(new_language=callback_data.language_type)
 
         await self.wizard.back(
             user=user,
-            locale=callback_data.language_type
+            new_locale=locale
         )
         await callback_query.answer()
 
         logger.info(
             f"{callback_query.from_user.first_name} (id={callback_query.from_user.id}) "
-            f"set language to \'{callback_data.language_type}\'"
+            f"set language to \'{locale}\'"
         )
 
     async def on_back(
