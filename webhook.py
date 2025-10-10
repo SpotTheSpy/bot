@@ -1,0 +1,66 @@
+import asyncio
+import logging
+import sys
+
+from aiogram import Bot
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
+from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
+from aiohttp import web
+from aiohttp.abc import Application
+from aiogram.loggers import event
+
+from app.bot import config, create_dispatcher
+
+
+async def on_startup(bot: Bot) -> None:
+    await bot.delete_webhook(drop_pending_updates=True)
+
+    await bot.set_webhook(
+        config.webhook_url.get_secret_value(),
+        secret_token=config.telegram_secret.get_secret_value()
+    )
+
+
+def main() -> None:
+    dispatcher = create_dispatcher()
+    dispatcher.startup.register(on_startup)
+
+    bot = Bot(
+        token=config.telegram_bot_token.get_secret_value(),
+        default=DefaultBotProperties(
+            parse_mode=ParseMode.HTML
+        )
+    )
+
+    app = Application()
+
+    webhook_requests_handler = SimpleRequestHandler(
+        dispatcher=dispatcher,
+        bot=bot,
+        secret_token=config.telegram_secret.get_secret_value(),
+    )
+    webhook_requests_handler.register(app, path=config.webhook_path.get_secret_value())
+
+    setup_application(app, dispatcher, bot=bot)
+
+    web.run_app(
+        app,
+        host="0.0.0.0",
+        port=8080
+    )
+
+
+if __name__ == "__main__":
+    if sys.platform == "win32":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(levelname)s %(asctime)s - %(message)s",
+        datefmt="%d-%m-%y %H:%M:%S"
+    )
+
+    event.setLevel(logging.ERROR)
+
+    main()
