@@ -9,6 +9,8 @@ class Config(BaseSettings):
 
     telegram_bot_token: SecretStr
     telegram_secret: SecretStr
+    webhook_url: str
+    webhook_path: str
 
     api_key: SecretStr
     base_url: str
