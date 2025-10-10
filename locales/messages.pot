@@ -1,0 +1,235 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-10-04 17:46+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: app./data/secret_words_controller.py:13
+msgid "data.secret_words"
+msgstr ""
+
+#: app./scenes/choose_device.py:19
+msgid "message.choose_device"
+msgstr ""
+
+#: app./scenes/language.py:24
+msgid "message.language.choose"
+msgstr ""
+
+#: app./scenes/language.py:40
+msgid "answer.language.same"
+msgstr ""
+
+#: app./scenes/multi_device_configure.py:29
+#: app./scenes/multi_device_configure.py:48
+msgid "message.multi_device.configure"
+msgstr ""
+
+#: app./scenes/multi_device_explain.py:19
+msgid "message.multi_device.explain"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:129
+msgid "message.multi_device.play.recruit.player.host"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:136
+msgid "message.multi_device.play.recruit.player"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:143
+msgid "message.multi_device.play.recruit"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:256
+msgid "message.multi_device.play.recruit.game_not_found"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:259
+msgid "message.multi_device.play.recruit.game_has_already_started"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:262
+msgid "message.multi_device.play.recruit.already_in_game"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:265
+msgid "message.multi_device.play.recruit.too_many_players"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:336
+msgid "answer.multi_device.play.too_few_players"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:414
+msgid "message.multi_device.play.finish"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:555
+msgid "message.multi_device.play.stop"
+msgstr ""
+
+#: app./scenes/multi_device_play.py:575
+msgid "message.multi_device.play.leave"
+msgstr ""
+
+#: app./scenes/single_device_configure.py:31
+#: app./scenes/single_device_configure.py:51
+msgid "message.single_device.configure"
+msgstr ""
+
+#: app./scenes/single_device_explain.py:19
+msgid "message.single_device.explain"
+msgstr ""
+
+#: app./scenes/single_device_play.py:74 app./scenes/single_device_play.py:174
+#: app./scenes/single_device_play.py:255
+msgid "message.single_device.play.prepare"
+msgstr ""
+
+#: app./scenes/single_device_play.py:165
+msgid "message.single_device.play.discuss"
+msgstr ""
+
+#: app./scenes/single_device_play.py:204
+msgid "message.single_device.play.finish"
+msgstr ""
+
+#: app./scenes/start.py:25 app./scenes/start.py:47
+msgid "message.start"
+msgstr ""
+
+#: app./utils/dict_factory.py:13
+msgid "message.single_device.play.view_role.citizen"
+msgstr ""
+
+#: app./utils/dict_factory.py:14
+msgid "message.single_device.play.view_role.spy"
+msgstr ""
+
+#: app./utils/dict_factory.py:23
+msgid "message.multi_device.play.view_role.citizen"
+msgstr ""
+
+#: app./utils/dict_factory.py:24
+msgid "message.multi_device.play.view_role.spy"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:34
+msgid "button.menu"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:41
+msgid "button.back"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:48
+msgid "button.right"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:49
+msgid "button.left"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:87
+msgid "button.start.play"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:93
+msgid "button.start.language"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:106
+msgid "button.choose_device.single_device"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:112
+msgid "button.choose_device.multi_device"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:128
+msgid "button.language.en"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:134
+msgid "button.language.uk"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:140
+msgid "button.language.ru"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:156
+#: app./utils/inline_keyboard_factory.py:273
+msgid "button.got_it"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:178
+msgid "button.single_device.configure.player_amount.selected"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:182
+msgid "button.single_device.configure.player_amount"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:195
+msgid "button.single_device.play"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:209
+msgid "button.single_device.view_role"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:225
+msgid "button.single_device.proceed"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:241
+msgid "button.single_device.finish"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:257
+msgid "button.single_device.play_again"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:295
+msgid "button.multi_device.configure.player_amount.selected"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:299
+msgid "button.multi_device.configure.player_amount"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:312
+msgid "button.multi_device.play"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:332
+msgid "button.multi_device.start"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:346
+msgid "button.multi_device.leave"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:367
+msgid "button.multi_device.finish"
+msgstr ""
+
+#: app./utils/inline_keyboard_factory.py:388
+msgid "button.multi_device.play_again"
+msgstr ""
+
