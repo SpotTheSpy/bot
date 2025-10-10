@@ -28,3 +28,7 @@ services:
 
 volumes:
   redis-data:
+
+networks:
+  shared-network:
+    external: true
