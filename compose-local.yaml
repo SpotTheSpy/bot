@@ -18,6 +18,8 @@ services:
     restart: on-failure
     command: bash -c "poetry run python polling.py"
     env_file: ".server.env"
+    networks:
+      - shared-network
     ports:
       - "8080:8080"
     labels:
