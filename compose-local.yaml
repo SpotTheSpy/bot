@@ -1,16 +1,18 @@
 services:
-  redis:
+  bot_redis:
     container_name: bot_redis
     image: redis:latest
     restart: on-failure
     command: "redis-server /usr/local/etc/redis/redis.conf"
+    networks:
+      - shared-network
     ports:
       - "7379:6379"
     volumes:
       - "redis-data:/data"
       - "./redis.conf:/usr/local/etc/redis/redis.conf"
 
-  server:
+  bot_server:
     container_name: bot_server
     build:
       context: .
