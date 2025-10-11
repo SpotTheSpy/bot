@@ -756,11 +756,11 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             else:
                 message_text: str = _("message.error")
 
-            await self.new_message(
-                chat_id=self.chat_id,
+            await message.answer(
                 text=message_text,
                 reply_markup=InlineKeyboardFactory.menu_keyboard()
             )
+            await message.delete()
             return
 
         await self._update_multi_device_game_recruitment_messages(game=game, joined_player_id=self.id)
