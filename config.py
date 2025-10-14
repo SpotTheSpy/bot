@@ -8,9 +8,9 @@ class Config(BaseSettings):
     title: ClassVar[str] = "SpotTheSpy"
 
     telegram_bot_token: SecretStr
-    telegram_secret: SecretStr
-    webhook_url: str
-    webhook_path: str
+    telegram_secret: SecretStr | None = None
+    webhook_url: str | None = None
+    webhook_path: str | None = None
 
     api_key: SecretStr
     base_url: str

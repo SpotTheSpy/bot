@@ -195,11 +195,6 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                         text=text,
                         **params
                     )
-                    if self.message_id is not None:
-                        await self.bot.delete_message(
-                            self.chat_id,
-                            self.message_id
-                        )
                 else:
                     params["caption_entities"] = params.pop("entities")
 
@@ -209,13 +204,21 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                         caption=text,
                         **params
                     )
-                    if self.message_id is not None:
-                        await self.bot.delete_message(
-                            self.chat_id,
-                            self.message_id
-                        )
-        except AiogramError:
+        except AiogramError as error:
+            logger.warning(
+                f"{self.first_name} (id={self.telegram_id}) "
+                f"got an error while receiving a new message: {error}"
+            )
             return
+        else:
+            if self.message_id is not None:
+                try:
+                    await self.bot.delete_message(
+                        self.chat_id,
+                        self.message_id
+                    )
+                except AiogramError:
+                    pass
 
         self.chat_id = new_message.chat.id
         self.message_id = new_message.message_id
@@ -281,10 +284,6 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                                 text=text,
                                 **params
                             )
-                            await self.bot.delete_message(
-                                self.chat_id,
-                                self.message_id
-                            )
                 else:
                     if self.has_photo:
                         params["caption_entities"] = params.pop("entities")
@@ -309,13 +308,20 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             caption=text,
                             **params
                         )
-                        await self.bot.delete_message(
-                            self.chat_id,
-                            self.message_id
-                        )
-        except AiogramError as e:
-            logger.exception(e)
+        except AiogramError as error:
+            logger.warning(
+                f"{self.first_name} (id={self.telegram_id}) "
+                f"got an error while editing message: {error}"
+            )
             return
+        else:
+            try:
+                await self.bot.delete_message(
+                    self.chat_id,
+                    self.message_id
+                )
+            except AiogramError:
+                pass
 
         self.chat_id = new_message.chat.id
         self.message_id = new_message.message_id
