@@ -8,6 +8,10 @@ from app.models.abstract import AbstractModel
 
 
 class User(AbstractModel):
+    """
+    Represents a basic user model.
+    """
+
     id: UUID
     telegram_id: int
     first_name: str
@@ -18,10 +22,19 @@ class User(AbstractModel):
 
     @property
     def primary_key(self) -> Any:
+        """
+        Primary key represented by a user UUID.
+        :return: User UUID.
+        """
+
         return self.id
 
 
 class CreateUser(BaseModel):
+    """
+    Model for creating a user.
+    """
+
     telegram_id: int
     first_name: str
     username: str | None
@@ -29,6 +42,10 @@ class CreateUser(BaseModel):
 
 
 class UpdateUser(BaseModel):
+    """
+    Model for updating a user.
+    """
+
     telegram_id: int | None = None
     first_name: str | None = None
     username: str | None = None

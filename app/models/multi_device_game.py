@@ -18,6 +18,10 @@ with open("app/data/blurred_qr_code.jpg", "rb") as __file:
 
 
 class MultiDevicePlayer(AbstractModel):
+    """
+    Represents a player in a multi-device game.
+    """
+
     user_id: UUID
     telegram_id: int
     first_name: str
@@ -25,10 +29,19 @@ class MultiDevicePlayer(AbstractModel):
 
     @property
     def primary_key(self) -> UUID:
+        """
+        Primary key represented by a user UUID.
+        :return: User UUID.
+        """
+
         return self.user_id
 
 
 class MultiDeviceGame(AbstractModel):
+    """
+    Represents a multi-device game.
+    """
+
     __BLURRED_QR_CODE_DATA: ClassVar[bytes] = _BLURRED_QR_CODE_DATA
 
     game_id: UUID
@@ -41,10 +54,20 @@ class MultiDeviceGame(AbstractModel):
 
     @property
     def primary_key(self) -> UUID:
+        """
+        Primary key represented by a game UUID.
+        :return: Game UUID.
+        """
+
         return self.game_id
 
     @property
     def join_url(self) -> str:
+        """
+        URL for joining a game.
+        :return: URL as string.
+        """
+
         payload: str = f"{Payload.JOIN}:{self.game_id}"
         encoded_payload: str = urlsafe_b64encode(payload.encode("utf-8")).decode("utf-8").replace("=", "")
         return Parameters.TELEGRAM_BOT_START_URL.format(payload=encoded_payload)
@@ -53,6 +76,15 @@ class MultiDeviceGame(AbstractModel):
             self,
             qr_codes: RedisController[QRCode]
     ) -> InputFile | str | None:
+        """
+        Retrieve a QR-Code file.
+
+        If QR-Code URL is not set, retrieves a blurred QR-Code file ID or a file from memory.
+        Otherwise, retrieves a generated QR-Code file from memory or, if was not found, retrieves from API.
+        :param qr_codes: QR-Codes controller instance.
+        :return: QR-Code file, file ID or None, if not exist.
+        """
+
         if self.qr_code_url is None:
             qr_code: QRCode = await qr_codes.get(Parameters.DEFAULT_BLURRED_QR_CODE_KEY)
 
@@ -75,5 +107,9 @@ class MultiDeviceGame(AbstractModel):
 
 
 class CreateMultiDeviceGame(BaseModel):
+    """
+    Model for creating a multi-device game.
+    """
+
     host_id: UUID
     player_amount: int

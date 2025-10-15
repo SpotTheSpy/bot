@@ -6,6 +6,10 @@ from app.models.abstract import AbstractModel
 
 
 class SingleDeviceGame(AbstractModel):
+    """
+    Represents a single-device game.
+    """
+
     game_id: UUID
     user_id: UUID
     secret_word: str
@@ -14,10 +18,19 @@ class SingleDeviceGame(AbstractModel):
 
     @property
     def primary_key(self) -> UUID:
+        """
+        Primary key represented by a game UUID.
+        :return: Game UUID.
+        """
+
         return self.game_id
 
 
 class CreateSingleDeviceGame(BaseModel):
+    """
+    Model for creating a single-device game.
+    """
+
     user_id: UUID
     telegram_id: int
     player_amount: int
