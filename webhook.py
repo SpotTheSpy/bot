@@ -23,6 +23,13 @@ async def on_startup(bot: Bot) -> None:
 
 
 def main() -> None:
+    if config.telegram_secret is None:
+        raise ValueError("Telegram secret is not set")
+    if config.webhook_url is None:
+        raise ValueError("Webhook URL is not set")
+    if config.webhook_path is None:
+        raise ValueError("Webhook path is not set")
+
     dispatcher = create_dispatcher()
     dispatcher.startup.register(on_startup)
 
