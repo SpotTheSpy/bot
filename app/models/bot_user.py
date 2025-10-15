@@ -762,10 +762,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             else:
                 message_text: str = _("message.error")
 
-            await message.answer(
-                text=message_text,
-                reply_markup=InlineKeyboardFactory.menu_keyboard()
-            )
+            await message.answer(text=message_text)
             await message.delete()
             return
 
