@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-04 17:46+0200\n"
-"PO-Revision-Date: 2025-10-11 23:28+0200\n"
+"POT-Creation-Date: 2025-10-15 14:25+0200\n"
+"PO-Revision-Date: 2025-10-15 14:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: ru <LL@li.org>\n"
 "Language: ru\n"
@@ -18,86 +18,35 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: Babel 2.17.0\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
-#: app./data/secret_words_controller.py:13
-msgid "data.secret_words"
+#: app./models/bot_user.py:359 app./models/bot_user.py:372
+msgid "message.start"
 msgstr ""
-"{\"airplane\": \"Самолёт\", \"airport\": \"Аэропорт\", "
-"\"albert_einstein\": \"Альберт Эйнштейн\", \"amusement_park\": \"Парк "
-"аттракционов\", \"ant\": \"Муравей\", \"apple\": \"Яблоко\", \"axe\": "
-"\"Топор\", \"bag\": \"Сумка\", \"ball\": \"Мяч\", \"balloon\": \"Воздушный "
-"шар\", \"banana\": \"Банан\", \"bank\": \"Банк\", \"bat\": \"Летучая "
-"мышь\", \"bathroom\": \"Ванная\", \"batman\": \"Бэтмен\", \"beach\": "
-"\"Пляж\", \"bear\": \"Медведь\", \"bed\": \"Кровать\", \"bedroom\": "
-"\"Спальня\", \"bee\": \"Пчела\", \"belt\": \"Пояс\", \"bike\": "
-"\"Велосипед\", \"bill_gates\": \"Билл Гейтс\", \"boat\": \"Лодка\", "
-"\"book\": \"Книга\", \"bottle\": \"Бутылка\", \"bread\": \"Хлеб\", "
-"\"bridge\": \"Мост\", \"builder\": \"Строитель\", \"burger\": \"Бургер\", "
-"\"bus\": \"Автобус\", \"bush\": \"Куст\", \"butterfly\": \"Бабочка\", "
-"\"cactus\": \"Кактус\", \"camera\": \"Камера\", \"car\": \"Машина\", "
-"\"carrot\": \"Морковь\", \"castle\": \"Замок\", \"cat\": \"Кошка\", "
-"\"cave\": \"Пещера\", \"chair\": \"Стул\", \"cheese\": \"Сыр\", "
-"\"cherry\": \"Вишня\", \"chicken\": \"Курица\", \"church\": \"Церковь\", "
-"\"cinema\": \"Кинотеатр\", \"circus\": \"Цирк\", \"clock\": \"Часы\", "
-"\"cloud\": \"Облако\", \"coat\": \"Пальто\", \"coffee\": \"Кофе\", "
-"\"coin\": \"Монета\", \"cow\": \"Корова\", \"crab\": \"Краб\", "
-"\"cristiano_ronaldo\": \"Криштиану Роналду\", \"cucumber\": \"Огурец\", "
-"\"cup\": \"Чашка\", \"deer\": \"Олень\", \"desert\": \"Пустыня\", "
-"\"doctor\": \"Доктор\", \"dog\": \"Собака\", \"doll\": \"Кукла\", "
-"\"dolphin\": \"Дельфин\", \"donald_trump\": \"Дональд Трамп\", \"dress\": "
-"\"Платье\", \"drum\": \"Барабан\", \"egg\": \"Яйцо\", \"elephant\": "
-"\"Слон\", \"elvis_presley\": \"Элвис Пресли\", \"eraser\": \"Ластик\", "
-"\"factory\": \"Фабрика\", \"farmer\": \"Фермер\", \"field\": \"Поле\", "
-"\"fire\": \"Огонь\", \"fish\": \"Рыба\", \"flower\": \"Цветок\", "
-"\"flute\": \"Флейта\", \"forest\": \"Лес\", \"fork\": \"Вилка\", \"fox\": "
-"\"Лиса\", \"garden\": \"Сад\", \"giraffe\": \"Жираф\", \"glasses\": "
-"\"Очки\", \"glove\": \"Перчатка\", \"grape\": \"Виноград\", \"guitar\": "
-"\"Гитара\", \"hammer\": \"Молоток\", \"hamster\": \"Хомяк\", "
-"\"harry_potter\": \"Гарри Поттер\", \"hat\": \"Шляпа\", \"helicopter\": "
-"\"Вертолёт\", \"helmet\": \"Шлем\", \"hill\": \"Холм\", \"horse\": "
-"\"Лошадь\", \"hospital\": \"Больница\", \"hotel\": \"Отель\", \"ice\": "
-"\"Лёд\", \"ice_cream\": \"Мороженое\", \"isaac_newton\": \"Исаак Ньютон\", "
-"\"island\": \"Остров\", \"juice\": \"Сок\", \"key\": \"Ключ\", "
-"\"kitchen\": \"Кухня\", \"knife\": \"Нож\", \"lake\": \"Озеро\", "
-"\"laptop\": \"Ноутбук\", \"leaf\": \"Лист\", \"lemon\": \"Лимон\", "
-"\"leonardo_da_vinci\": \"Леонардо да Винчи\", \"library\": \"Библиотека\", "
-"\"lion\": \"Лев\", \"lionel_messi\": \"Лионель Месси\", "
-"\"marilyn_monroe\": \"Мэрилин Монро\", \"michael_jackson\": \"Майкл "
-"Джексон\", \"mickey mouse\": \"Микки Маус\", \"milk\": \"Молоко\", "
-"\"monkey\": \"Обезьяна\", \"mountain\": \"Гора\", \"mud\": \"Грязь\", "
-"\"museum\": \"Музей\", \"notebook\": \"Тетрадь\", \"oak\": \"Дуб\", "
-"\"octopus\": \"Осьминог\", \"onion\": \"Лук\", \"orange\": \"Апельсин\", "
-"\"palm\": \"Пальма\", \"pan\": \"Сковорода\", \"pants\": \"Брюки\", "
-"\"park\": \"Парк\", \"pear\": \"Груша\", \"pen\": \"Ручка\", \"pencil\": "
-"\"Карандаш\", \"phone\": \"Телефон\", \"piano\": \"Пианино\", \"pig\": "
-"\"Свинья\", \"pikachu\": \"Пикачу\", \"pineapple\": \"Ананас\", \"pizza\": "
-"\"Пицца\", \"plate\": \"Тарелка\", \"playground\": \"Игровая площадка\", "
-"\"potato\": \"Картофель\", \"racket\": \"Ракетка\", \"rain\": \"Дождь\", "
-"\"restaurant\": \"Ресторан\", \"rice\": \"Рис\", \"river\": \"Река\", "
-"\"rock\": \"Камень\", \"rose\": \"Роза\", \"ruler\": \"Линейка\", "
-"\"sand\": \"Песок\", \"sandwich\": \"Бутерброд\", \"saw\": \"Пила\", "
-"\"school\": \"Школа\", \"scissors\": \"Ножницы\", \"shark\": \"Акула\", "
-"\"sheep\": \"Овца\", \"ship\": \"Корабль\", \"shirt\": \"Рубашка\", "
-"\"shoe\": \"Туфля\", \"shop\": \"Магазин\", \"shrek\": \"Шрек\", \"snow\": "
-"\"Снег\", \"sock\": \"Носок\", \"sofa\": \"Диван\", \"soldier\": "
-"\"Солдат\", \"spider_man\": \"Человек-паук\", \"spongebob\": \"Спанч "
-"Боб\", \"spoon\": \"Ложка\", \"stadium\": \"Стадион\", \"steve_jobs\": "
-"\"Стив Джобс\", \"strawberry\": \"Клубника\", \"submarine\": \"Подводная "
-"лодка\", \"sunflower\": \"Подсолнух\", \"superman\": \"Супермен\", "
-"\"table\": \"Стол\", \"tea\": \"Чай\", \"teacher\": \"Учитель\", "
-"\"teddy_bear\": \"Плюшевый медведь\", \"televisor\": \"Телевизор\", "
-"\"theater\": \"Театр\", \"thunder\": \"Гром\", \"tiger\": \"Тигр\", "
-"\"tomato\": \"Помидор\", \"toothbrush\": \"Зубная щётка\", \"towel\": "
-"\"Полотенце\", \"tower\": \"Башня\", \"train\": \"Поезд\", \"tree\": "
-"\"Дерево\", \"truck\": \"Грузовик\", \"tulip\": \"Тюльпан\", \"village\": "
-"\"Деревня\", \"violin\": \"Скрипка\", \"volcano\": \"Вулкан\", \"wallet\": "
-"\"Кошелёк\", \"water\": \"Вода\", \"waterfall\": \"Водопад\", "
-"\"watermelon\": \"Арбуз\", \"william_shakespeare\": \"Уильям Шекспир\", "
-"\"wind\": \"Ветер\", \"wolf\": \"Волк\", \"zebra\": \"Зебра\", \"zoo\": "
-"\"Зоопарк\"}"
+"🔍 <b>Добро пожаловать в SpotTheSpy!</b>\n"
+"\n"
+"Вас ждёт увлекательная игра тайн и подозрений, где один скрытый Шпион "
+"пытается угадать секретное слово, а Граждане объединяются, чтобы "
+"разоблачить его. Каждый вопрос, каждый ответ и даже пауза могут раскрыть "
+"правду — или спрятать ложь.\n"
+"\n"
+"Доверитесь ли вы интуиции или попадётесь на обман? Соберите друзей, "
+"наточите смекалку и приготовьтесь к испытанию на дедукцию, блеф и "
+"быстроту мышления."
 
-#: app./scenes/choose_device.py:19
+#: app./models/bot_user.py:383
+msgid "message.language.choose"
+msgstr ""
+"🌐 <b>Выберите язык</b>\n"
+"\n"
+"Этот язык будет использоваться для всех инструкций, ролей и игровых "
+"сообщений. Важно, чтобы его понимали все игроки."
+
+#: app./models/bot_user.py:396
+msgid "answer.language.same"
+msgstr "Выберите другой язык"
+
+#: app./models/bot_user.py:415
 msgid "message.choose_device"
 msgstr ""
 "📱 <b>Выберите формат игры</b>\n"
@@ -106,46 +55,132 @@ msgstr ""
 "игроками, либо на нескольких устройствах, где каждый подключается со "
 "своего телефона."
 
-#: app./scenes/language.py:24
-msgid "message.language.choose"
+#: app./models/bot_user.py:426
+msgid "message.single_device.explain"
 msgstr ""
-"🌐 <b>Выберите язык</b>\n"
+"📝 <b>Как играть</b>\n"
 "\n"
-"Этот язык будет использоваться для всех инструкций, ролей и игровых "
-"сообщений. Важно, чтобы его понимали все игроки."
+"Каждый игрок тайно получает роль: Гражданин или Шпион. Граждане знают "
+"секретное слово и должны вычислить Шпиона с помощью вопросов. Шпион "
+"слова не знает и должен замаскироваться, пытаясь его угадать.\n"
+"\n"
+"Помните: держите свою роль и слово в секрете до конца игры."
 
-#: app./scenes/language.py:40
-msgid "answer.language.same"
-msgstr "Выберите другой язык"
-
-#: app./scenes/multi_device_configure.py:29
-#: app./scenes/multi_device_configure.py:48
-msgid "message.multi_device.configure"
+#: app./models/bot_user.py:445
+msgid "message.single_device.configure"
 msgstr ""
 "⚙️ <b>Установите количество игроков</b>\n"
 "\n"
-"Используйте кнопки ниже, чтобы указать, сколько игроков будет участвовать "
-"в этой игре. Начинайте только тогда, когда все готовы, чтобы никто не "
-"остался за бортом."
+"Выберите, сколько игроков будет участвовать на этом устройстве. Телефон "
+"будет передаваться по кругу, чтобы каждый мог тайно посмотреть свою роль "
+"перед началом игры."
 
-#: app./scenes/multi_device_explain.py:19
+#: app./models/bot_user.py:585
+msgid "message.single_device.play.finish"
+msgstr ""
+"🎭 <b>Игра окончена!</b>\n"
+"\n"
+"Игрок <b>{spy_index}</b> был Шпионом!\n"
+"Секретное слово, известное Гражданам: <b>{secret_word}</b>.\n"
+"\n"
+"Спасибо за игру! Хотите сыграть ещё?"
+
+#: app./models/bot_user.py:614
+msgid "message.single_device.play.prepare"
+msgstr ""
+"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
+"\n"
+"Каждый игрок должен просмотреть роль втайне. Берите телефон только в "
+"свой ход и убедитесь, что никто не видит экран.\n"
+"\n"
+"<b>Игрок {player_index}/{player_amount}</b>"
+
+#: app./models/bot_user.py:623
+msgid "message.single_device.play.discuss"
+msgstr ""
+"👀 <b>Время обсуждения!</b>\n"
+"\n"
+"Теперь все могут говорить и делиться подозрениями. Граждане должны "
+"искать оговорки и намёки на Шпиона, а Шпиону нужно сохранять "
+"спокойствие, отвечать осторожно и избегать подозрений.\n"
+"\n"
+"Это ваш шанс задавать вопросы, запутывать и решать, кому доверять."
+
+#: app./models/bot_user.py:633
 msgid "message.multi_device.explain"
 msgstr ""
 "📝 <b>Как играть</b>\n"
 "\n"
 "Один игрок тайно выбирается Шпионом, остальные — Граждане, знающие "
-"секретное слово. Граждане задают и отвечают на вопросы, чтобы разоблачить "
-"Шпиона, а Шпион должен влиться в игру и угадать слово."
+"секретное слово. Граждане задают и отвечают на вопросы, чтобы "
+"разоблачить Шпиона, а Шпион должен влиться в игру и угадать слово."
 
-#: app./scenes/multi_device_play.py:129
+#: app./models/bot_user.py:653
+msgid "message.multi_device.configure"
+msgstr ""
+"⚙️ <b>Установите количество игроков</b>\n"
+"\n"
+"Используйте кнопки ниже, чтобы указать, сколько игроков будет "
+"участвовать в этой игре. Начинайте только тогда, когда все готовы, чтобы "
+"никто не остался за бортом."
+
+#: app./models/bot_user.py:755
+msgid "message.multi_device.play.recruit.game_not_found"
+msgstr "❌ Эта игра не найдена"
+
+#: app./models/bot_user.py:757
+msgid "message.multi_device.play.recruit.game_has_already_started"
+msgstr "❌ Эта игра уже началась"
+
+#: app./models/bot_user.py:759
+msgid "message.multi_device.play.recruit.already_in_game"
+msgstr "❌ Вы уже в игре"
+
+#: app./models/bot_user.py:761
+msgid "message.multi_device.play.recruit.too_many_players"
+msgstr "❌ В этой игре уже максимальное количество игроков"
+
+#: app./models/bot_user.py:763
+msgid "message.error"
+msgstr ""
+"⚠️ <b>Произошла ошибка</b>\n"
+"\n"
+"Попробуйте перезапустить бота."
+
+#: app./models/bot_user.py:806
+msgid "message.multi_device.play.stop"
+msgstr ""
+"🎭 <b>Хост вышел из игры</b>\n"
+"\n"
+"Игра завершена, так как хост больше не присутствует."
+
+#: app./models/bot_user.py:825
+msgid "message.multi_device.play.leave"
+msgstr "❌ <b>Вы вышли из игры</b>"
+
+#: app./models/bot_user.py:881
+msgid "answer.multi_device.play.too_few_players"
+msgstr "⏳ Подождите, пока присоединятся ещё игроки"
+
+#: app./models/bot_user.py:940
+msgid "message.multi_device.play.finish"
+msgstr ""
+"🎭 <b>Игра окончена!</b>\n"
+"\n"
+"Игрок <player>{first_name}</player> был Шпионом!\n"
+"Секретное слово, известное Гражданам: <b>{secret_word}</b>.\n"
+"\n"
+"Спасибо за игру — хотите сыграть ещё раз?"
+
+#: app./models/bot_user.py:1065
 msgid "message.multi_device.play.recruit.player.host"
 msgstr "<player>{index}. {first_name} (Хост)</player>"
 
-#: app./scenes/multi_device_play.py:136
+#: app./models/bot_user.py:1072
 msgid "message.multi_device.play.recruit.player"
 msgstr "<player>{index}. {first_name}</player>"
 
-#: app./scenes/multi_device_play.py:143
+#: app./models/bot_user.py:1079
 msgid "message.multi_device.play.recruit"
 msgstr ""
 "🔍 <b>Набор игроков в SpotTheSpy</b>\n"
@@ -158,114 +193,6 @@ msgstr ""
 "{players}\n"
 "\n"
 "<b>{player_amount}/{max_player_amount}</b>"
-
-#: app./scenes/multi_device_play.py:256
-msgid "message.multi_device.play.recruit.game_not_found"
-msgstr "❌ Эта игра не найдена"
-
-#: app./scenes/multi_device_play.py:259
-msgid "message.multi_device.play.recruit.game_has_already_started"
-msgstr "❌ Эта игра уже началась"
-
-#: app./scenes/multi_device_play.py:262
-msgid "message.multi_device.play.recruit.already_in_game"
-msgstr "❌ Вы уже в игре"
-
-#: app./scenes/multi_device_play.py:265
-msgid "message.multi_device.play.recruit.too_many_players"
-msgstr "❌ В этой игре уже максимальное количество игроков"
-
-#: app./scenes/multi_device_play.py:336
-msgid "answer.multi_device.play.too_few_players"
-msgstr "⏳ Подождите, пока присоединятся ещё игроки"
-
-#: app./scenes/multi_device_play.py:414
-msgid "message.multi_device.play.finish"
-msgstr ""
-"🎭 <b>Игра окончена!</b>\n"
-"\n"
-"Игрок <player>{first_name}</player> был Шпионом!\n"
-"Секретное слово, известное Гражданам: <b>{secret_word}</b>.\n"
-"\n"
-"Спасибо за игру — хотите сыграть ещё раз?"
-
-#: app./scenes/multi_device_play.py:555
-msgid "message.multi_device.play.stop"
-msgstr ""
-"🎭 <b>Хост вышел из игры</b>\n"
-"\n"
-"Игра завершена, так как хост больше не присутствует."
-
-#: app./scenes/multi_device_play.py:575
-msgid "message.multi_device.play.leave"
-msgstr "❌ <b>Вы вышли из игры</b>"
-
-#: app./scenes/single_device_configure.py:31
-#: app./scenes/single_device_configure.py:51
-msgid "message.single_device.configure"
-msgstr ""
-"⚙️ <b>Установите количество игроков</b>\n"
-"\n"
-"Выберите, сколько игроков будет участвовать на этом устройстве. Телефон "
-"будет передаваться по кругу, чтобы каждый мог тайно посмотреть свою роль "
-"перед началом игры."
-
-#: app./scenes/single_device_explain.py:19
-msgid "message.single_device.explain"
-msgstr ""
-"📝 <b>Как играть</b>\n"
-"\n"
-"Каждый игрок тайно получает роль: Гражданин или Шпион. Граждане знают "
-"секретное слово и должны вычислить Шпиона с помощью вопросов. Шпион слова "
-"не знает и должен замаскироваться, пытаясь его угадать.\n"
-"\n"
-"Помните: держите свою роль и слово в секрете до конца игры."
-
-#: app./scenes/single_device_play.py:74 app./scenes/single_device_play.py:174
-#: app./scenes/single_device_play.py:255
-msgid "message.single_device.play.prepare"
-msgstr ""
-"🤫 <b>Приготовьтесь узнать свою роль</b>\n"
-"\n"
-"Каждый игрок должен просмотреть роль втайне. Берите телефон только в свой "
-"ход и убедитесь, что никто не видит экран.\n"
-"\n"
-"<b>Игрок {player_index}/{player_amount}</b>"
-
-#: app./scenes/single_device_play.py:165
-msgid "message.single_device.play.discuss"
-msgstr ""
-"👀 <b>Время обсуждения!</b>\n"
-"\n"
-"Теперь все могут говорить и делиться подозрениями. Граждане должны искать "
-"оговорки и намёки на Шпиона, а Шпиону нужно сохранять спокойствие, "
-"отвечать осторожно и избегать подозрений.\n"
-"\n"
-"Это ваш шанс задавать вопросы, запутывать и решать, кому доверять."
-
-#: app./scenes/single_device_play.py:204
-msgid "message.single_device.play.finish"
-msgstr ""
-"🎭 <b>Игра окончена!</b>\n"
-"\n"
-"Игрок <b>{spy_index}</b> был Шпионом!\n"
-"Секретное слово, известное Гражданам: <b>{secret_word}</b>.\n"
-"\n"
-"Спасибо за игру! Хотите сыграть ещё?"
-
-#: app./scenes/start.py:25 app./scenes/start.py:47
-msgid "message.start"
-msgstr ""
-"🔍 <b>Добро пожаловать в SpotTheSpy!</b>\n"
-"\n"
-"Вас ждёт увлекательная игра тайн и подозрений, где один скрытый Шпион "
-"пытается угадать секретное слово, а Граждане объединяются, чтобы "
-"разоблачить его. Каждый вопрос, каждый ответ и даже пауза могут раскрыть "
-"правду — или спрятать ложь.\n"
-"\n"
-"Доверитесь ли вы интуиции или попадётесь на обман? Соберите друзей, "
-"наточите смекалку и приготовьтесь к испытанию на дедукцию, блеф и быстроту "
-"мышления."
 
 #: app./utils/dict_factory.py:13
 msgid "message.single_device.play.view_role.citizen"
@@ -285,129 +212,208 @@ msgstr ""
 "Ваша задача — угадать секретное слово, не выдав себя. Внимательно "
 "слушайте, задавайте вопросы и оставайтесь незаметным."
 
-#: app./utils/dict_factory.py:23
+#: app./utils/dict_factory.py:20
 msgid "message.multi_device.play.view_role.citizen"
 msgstr ""
 "👨 <b>Вы — Горожанин</b>\n"
 "\n"
-"Ваша задача — разоблачить Шпиона, не раскрывая секретное слово. Задавайте "
-"хитрые вопросы и внимательно слушайте ответы, чтобы заметить "
+"Ваша задача — разоблачить Шпиона, не раскрывая секретное слово. "
+"Задавайте хитрые вопросы и внимательно слушайте ответы, чтобы заметить "
 "подозрительное поведение.\n"
 "\n"
 "Секретное слово: <b>{secret_word}</b>"
 
-#: app./utils/dict_factory.py:24
+#: app./utils/dict_factory.py:21
 msgid "message.multi_device.play.view_role.spy"
 msgstr ""
 "🕵️‍♂️ <b>Вы — Шпион</b>\n"
 "\n"
-"Слейтесь с Горожанами и постарайтесь угадать секретное слово. Внимательно "
-"слушайте их ответы, задавайте умные вопросы и собирайте подсказки, не "
-"вызывая подозрений.\n"
+"Слейтесь с Горожанами и постарайтесь угадать секретное слово. "
+"Внимательно слушайте их ответы, задавайте умные вопросы и собирайте "
+"подсказки, не вызывая подозрений.\n"
 "\n"
 "Помните: нельзя раскрывать, что вы Шпион."
 
-#: app./utils/inline_keyboard_factory.py:34
+#: app./utils/inline_keyboard_factory.py:31
 msgid "button.menu"
 msgstr "📋 Меню"
 
-#: app./utils/inline_keyboard_factory.py:41
+#: app./utils/inline_keyboard_factory.py:35
 msgid "button.back"
 msgstr "◀️ Назад"
 
-#: app./utils/inline_keyboard_factory.py:48
+#: app./utils/inline_keyboard_factory.py:42
 msgid "button.right"
 msgstr "»"
 
-#: app./utils/inline_keyboard_factory.py:49
+#: app./utils/inline_keyboard_factory.py:43
 msgid "button.left"
 msgstr "«"
 
-#: app./utils/inline_keyboard_factory.py:87
+#: app./utils/inline_keyboard_factory.py:73
 msgid "button.start.play"
 msgstr "🔍 Играть в SpotTheSpy"
 
-#: app./utils/inline_keyboard_factory.py:93
+#: app./utils/inline_keyboard_factory.py:79
 msgid "button.start.language"
 msgstr "🌐 Язык"
 
-#: app./utils/inline_keyboard_factory.py:106
+#: app./utils/inline_keyboard_factory.py:92
 msgid "button.choose_device.single_device"
 msgstr "📲 Игра на одном устройстве"
 
-#: app./utils/inline_keyboard_factory.py:112
+#: app./utils/inline_keyboard_factory.py:98
 msgid "button.choose_device.multi_device"
 msgstr "🌐 Игра на нескольких устройствах"
 
-#: app./utils/inline_keyboard_factory.py:128
+#: app./utils/inline_keyboard_factory.py:114
 msgid "button.language.en"
 msgstr "🇬🇧 Английский"
 
-#: app./utils/inline_keyboard_factory.py:134
+#: app./utils/inline_keyboard_factory.py:120
 msgid "button.language.uk"
 msgstr "🇺🇦 Украинский"
 
-#: app./utils/inline_keyboard_factory.py:140
+#: app./utils/inline_keyboard_factory.py:126
 msgid "button.language.ru"
 msgstr "🇷🇺 Русский"
 
-#: app./utils/inline_keyboard_factory.py:156
-#: app./utils/inline_keyboard_factory.py:273
+#: app./utils/inline_keyboard_factory.py:142
+#: app./utils/inline_keyboard_factory.py:259
 msgid "button.got_it"
 msgstr "👌 Понятно"
 
-#: app./utils/inline_keyboard_factory.py:178
+#: app./utils/inline_keyboard_factory.py:164
 msgid "button.single_device.configure.player_amount.selected"
 msgstr "✅ {player_amount}"
 
-#: app./utils/inline_keyboard_factory.py:182
+#: app./utils/inline_keyboard_factory.py:168
 msgid "button.single_device.configure.player_amount"
 msgstr "{player_amount}"
 
-#: app./utils/inline_keyboard_factory.py:195
+#: app./utils/inline_keyboard_factory.py:181
 msgid "button.single_device.play"
 msgstr "🚀 Играть"
 
-#: app./utils/inline_keyboard_factory.py:209
+#: app./utils/inline_keyboard_factory.py:195
 msgid "button.single_device.view_role"
 msgstr "🔍 Посмотреть роль"
 
-#: app./utils/inline_keyboard_factory.py:225
+#: app./utils/inline_keyboard_factory.py:211
 msgid "button.single_device.proceed"
 msgstr "👉 Далее"
 
-#: app./utils/inline_keyboard_factory.py:241
+#: app./utils/inline_keyboard_factory.py:227
 msgid "button.single_device.finish"
 msgstr "🔍 Посмотреть результаты"
 
-#: app./utils/inline_keyboard_factory.py:257
+#: app./utils/inline_keyboard_factory.py:243
 msgid "button.single_device.play_again"
 msgstr "🚀 Играть снова"
 
-#: app./utils/inline_keyboard_factory.py:295
+#: app./utils/inline_keyboard_factory.py:281
 msgid "button.multi_device.configure.player_amount.selected"
 msgstr "✅ {player_amount}"
 
-#: app./utils/inline_keyboard_factory.py:299
+#: app./utils/inline_keyboard_factory.py:285
 msgid "button.multi_device.configure.player_amount"
 msgstr "{player_amount}"
 
-#: app./utils/inline_keyboard_factory.py:312
+#: app./utils/inline_keyboard_factory.py:298
 msgid "button.multi_device.play"
 msgstr "🚀 Играть"
 
-#: app./utils/inline_keyboard_factory.py:332
+#: app./utils/inline_keyboard_factory.py:317
 msgid "button.multi_device.start"
 msgstr "🚀 Начать игру"
 
-#: app./utils/inline_keyboard_factory.py:346
+#: app./utils/inline_keyboard_factory.py:331
 msgid "button.multi_device.leave"
 msgstr "❌ Выйти из игры"
 
-#: app./utils/inline_keyboard_factory.py:367
+#: app./utils/inline_keyboard_factory.py:351
 msgid "button.multi_device.finish"
 msgstr "🔍 Посмотреть результаты"
 
-#: app./utils/inline_keyboard_factory.py:388
+#: app./utils/inline_keyboard_factory.py:371
 msgid "button.multi_device.play_again"
 msgstr "🚀 Играть снова"
+
+#: app./utils/secret_words.py:9
+msgid "data.secret_words"
+msgstr ""
+"{\"airplane\": \"Самолёт\", \"airport\": \"Аэропорт\", "
+"\"albert_einstein\": \"Альберт Эйнштейн\", \"amusement_park\": \"Парк "
+"аттракционов\", \"ant\": \"Муравей\", \"apple\": \"Яблоко\", \"axe\": "
+"\"Топор\", \"bag\": \"Сумка\", \"ball\": \"Мяч\", \"balloon\": "
+"\"Воздушный шар\", \"banana\": \"Банан\", \"bank\": \"Банк\", \"bat\": "
+"\"Летучая мышь\", \"bathroom\": \"Ванная\", \"batman\": \"Бэтмен\", "
+"\"beach\": \"Пляж\", \"bear\": \"Медведь\", \"bed\": \"Кровать\", "
+"\"bedroom\": \"Спальня\", \"bee\": \"Пчела\", \"belt\": \"Пояс\", "
+"\"bike\": \"Велосипед\", \"bill_gates\": \"Билл Гейтс\", \"boat\": "
+"\"Лодка\", \"book\": \"Книга\", \"bottle\": \"Бутылка\", \"bread\": "
+"\"Хлеб\", \"bridge\": \"Мост\", \"builder\": \"Строитель\", \"burger\": "
+"\"Бургер\", \"bus\": \"Автобус\", \"bush\": \"Куст\", \"butterfly\": "
+"\"Бабочка\", \"cactus\": \"Кактус\", \"camera\": \"Камера\", \"car\": "
+"\"Машина\", \"carrot\": \"Морковь\", \"castle\": \"Замок\", \"cat\": "
+"\"Кошка\", \"cave\": \"Пещера\", \"chair\": \"Стул\", \"cheese\": "
+"\"Сыр\", \"cherry\": \"Вишня\", \"chicken\": \"Курица\", \"church\": "
+"\"Церковь\", \"cinema\": \"Кинотеатр\", \"circus\": \"Цирк\", \"clock\": "
+"\"Часы\", \"cloud\": \"Облако\", \"coat\": \"Пальто\", \"coffee\": "
+"\"Кофе\", \"coin\": \"Монета\", \"cow\": \"Корова\", \"crab\": \"Краб\", "
+"\"cristiano_ronaldo\": \"Криштиану Роналду\", \"cucumber\": \"Огурец\", "
+"\"cup\": \"Чашка\", \"deer\": \"Олень\", \"desert\": \"Пустыня\", "
+"\"doctor\": \"Доктор\", \"dog\": \"Собака\", \"doll\": \"Кукла\", "
+"\"dolphin\": \"Дельфин\", \"donald_trump\": \"Дональд Трамп\", "
+"\"dress\": \"Платье\", \"drum\": \"Барабан\", \"egg\": \"Яйцо\", "
+"\"elephant\": \"Слон\", \"elvis_presley\": \"Элвис Пресли\", \"eraser\": "
+"\"Ластик\", \"factory\": \"Фабрика\", \"farmer\": \"Фермер\", \"field\": "
+"\"Поле\", \"fire\": \"Огонь\", \"fish\": \"Рыба\", \"flower\": "
+"\"Цветок\", \"flute\": \"Флейта\", \"forest\": \"Лес\", \"fork\": "
+"\"Вилка\", \"fox\": \"Лиса\", \"garden\": \"Сад\", \"giraffe\": "
+"\"Жираф\", \"glasses\": \"Очки\", \"glove\": \"Перчатка\", \"grape\": "
+"\"Виноград\", \"guitar\": \"Гитара\", \"hammer\": \"Молоток\", "
+"\"hamster\": \"Хомяк\", \"harry_potter\": \"Гарри Поттер\", \"hat\": "
+"\"Шляпа\", \"helicopter\": \"Вертолёт\", \"helmet\": \"Шлем\", \"hill\": "
+"\"Холм\", \"horse\": \"Лошадь\", \"hospital\": \"Больница\", \"hotel\": "
+"\"Отель\", \"ice\": \"Лёд\", \"ice_cream\": \"Мороженое\", "
+"\"isaac_newton\": \"Исаак Ньютон\", \"island\": \"Остров\", \"juice\": "
+"\"Сок\", \"key\": \"Ключ\", \"kitchen\": \"Кухня\", \"knife\": \"Нож\", "
+"\"lake\": \"Озеро\", \"laptop\": \"Ноутбук\", \"leaf\": \"Лист\", "
+"\"lemon\": \"Лимон\", \"leonardo_da_vinci\": \"Леонардо да Винчи\", "
+"\"library\": \"Библиотека\", \"lion\": \"Лев\", \"lionel_messi\": "
+"\"Лионель Месси\", \"marilyn_monroe\": \"Мэрилин Монро\", "
+"\"michael_jackson\": \"Майкл Джексон\", \"mickey mouse\": \"Микки "
+"Маус\", \"milk\": \"Молоко\", \"monkey\": \"Обезьяна\", \"mountain\": "
+"\"Гора\", \"mud\": \"Грязь\", \"museum\": \"Музей\", \"notebook\": "
+"\"Тетрадь\", \"oak\": \"Дуб\", \"octopus\": \"Осьминог\", \"onion\": "
+"\"Лук\", \"orange\": \"Апельсин\", \"palm\": \"Пальма\", \"pan\": "
+"\"Сковорода\", \"pants\": \"Брюки\", \"park\": \"Парк\", \"pear\": "
+"\"Груша\", \"pen\": \"Ручка\", \"pencil\": \"Карандаш\", \"phone\": "
+"\"Телефон\", \"piano\": \"Пианино\", \"pig\": \"Свинья\", \"pikachu\": "
+"\"Пикачу\", \"pineapple\": \"Ананас\", \"pizza\": \"Пицца\", \"plate\": "
+"\"Тарелка\", \"playground\": \"Игровая площадка\", \"potato\": "
+"\"Картофель\", \"racket\": \"Ракетка\", \"rain\": \"Дождь\", "
+"\"restaurant\": \"Ресторан\", \"rice\": \"Рис\", \"river\": \"Река\", "
+"\"rock\": \"Камень\", \"rose\": \"Роза\", \"ruler\": \"Линейка\", "
+"\"sand\": \"Песок\", \"sandwich\": \"Бутерброд\", \"saw\": \"Пила\", "
+"\"school\": \"Школа\", \"scissors\": \"Ножницы\", \"shark\": \"Акула\", "
+"\"sheep\": \"Овца\", \"ship\": \"Корабль\", \"shirt\": \"Рубашка\", "
+"\"shoe\": \"Туфля\", \"shop\": \"Магазин\", \"shrek\": \"Шрек\", "
+"\"snow\": \"Снег\", \"sock\": \"Носок\", \"sofa\": \"Диван\", "
+"\"soldier\": \"Солдат\", \"spider_man\": \"Человек-паук\", "
+"\"spongebob\": \"Спанч Боб\", \"spoon\": \"Ложка\", \"stadium\": "
+"\"Стадион\", \"steve_jobs\": \"Стив Джобс\", \"strawberry\": "
+"\"Клубника\", \"submarine\": \"Подводная лодка\", \"sunflower\": "
+"\"Подсолнух\", \"superman\": \"Супермен\", \"table\": \"Стол\", \"tea\": "
+"\"Чай\", \"teacher\": \"Учитель\", \"teddy_bear\": \"Плюшевый медведь\", "
+"\"televisor\": \"Телевизор\", \"theater\": \"Театр\", \"thunder\": "
+"\"Гром\", \"tiger\": \"Тигр\", \"tomato\": \"Помидор\", \"toothbrush\": "
+"\"Зубная щётка\", \"towel\": \"Полотенце\", \"tower\": \"Башня\", "
+"\"train\": \"Поезд\", \"tree\": \"Дерево\", \"truck\": \"Грузовик\", "
+"\"tulip\": \"Тюльпан\", \"village\": \"Деревня\", \"violin\": "
+"\"Скрипка\", \"volcano\": \"Вулкан\", \"wallet\": \"Кошелёк\", "
+"\"water\": \"Вода\", \"waterfall\": \"Водопад\", \"watermelon\": "
+"\"Арбуз\", \"william_shakespeare\": \"Уильям Шекспир\", \"wind\": "
+"\"Ветер\", \"wolf\": \"Волк\", \"zebra\": \"Зебра\", \"zoo\": "
+"\"Зоопарк\"}"
