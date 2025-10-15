@@ -1,5 +1,3 @@
-from typing import List, Set
-
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.i18n import gettext as _
 from aiogram.utils.keyboard import InlineKeyboardBuilder
@@ -13,7 +11,6 @@ from app.actions.multi_device_leave import MultiDeviceLeaveAction
 from app.actions.multi_device_play import MultiDevicePlayAction
 from app.actions.multi_device_play_again import MultiDevicePlayAgainAction
 from app.actions.multi_device_start import MultiDeviceStartAction
-from app.actions.page_turn import PageTurnAction
 from app.actions.single_device_choose_player_amount import SingleDeviceChoosePlayerAmountAction
 from app.actions.single_device_finish import SingleDeviceFinishAction
 from app.actions.single_device_play import SingleDevicePlayAction
@@ -21,8 +18,7 @@ from app.actions.single_device_play_again import SingleDevicePlayAgainAction
 from app.actions.single_device_proceed import SingleDeviceProceedPlayerAction
 from app.actions.single_device_view_role import SingleDeviceViewRoleAction
 from app.actions.switch_scene import SwitchSceneAction
-from app.enums.language_type import LanguageType
-from app.enums.page_turn import PageTurn
+from app.enums.locale import Locale
 
 
 class InlineKeyboardFactory:
@@ -34,17 +30,6 @@ class InlineKeyboardFactory:
     def back_button() -> InlineKeyboardButton:
         return InlineKeyboardButton(text=_("button.back"), callback_data=BackAction().pack())
 
-    @staticmethod
-    def pagination_button(
-            page_turn: PageTurn
-    ) -> InlineKeyboardButton:
-        button_text: str = {
-            PageTurn.RIGHT: _("button.right"),
-            PageTurn.LEFT: _("button.left")
-        }.get(page_turn)
-
-        return InlineKeyboardButton(text=button_text, callback_data=PageTurnAction(turn=page_turn).pack())
-
     @classmethod
     def menu_keyboard(cls) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(inline_keyboard=[[cls.menu_button()]])
@@ -52,17 +37,6 @@ class InlineKeyboardFactory:
     @classmethod
     def back_keyboard(cls) -> InlineKeyboardMarkup:
         return InlineKeyboardMarkup(inline_keyboard=[[cls.back_button()]])
-
-    @classmethod
-    def pagination_row(
-            cls,
-            *,
-            exclude_turns: Set[PageTurn] | None = None
-    ) -> List[InlineKeyboardButton]:
-        return [
-            cls.pagination_button(page_turn) for page_turn in [PageTurn.LEFT, PageTurn.RIGHT]
-            if page_turn not in exclude_turns
-        ]
 
     @staticmethod
     def start_keyboard(locale: str | None = None) -> InlineKeyboardMarkup:
@@ -112,19 +86,19 @@ class InlineKeyboardFactory:
                 [
                     InlineKeyboardButton(
                         text=_("button.language.en"),
-                        callback_data=ChooseLanguageAction(language_type=LanguageType.ENGLISH).pack()
+                        callback_data=ChooseLanguageAction(language_type=Locale.ENGLISH).pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
                         text=_("button.language.uk"),
-                        callback_data=ChooseLanguageAction(language_type=LanguageType.UKRAINIAN).pack()
+                        callback_data=ChooseLanguageAction(language_type=Locale.UKRAINIAN).pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
                         text=_("button.language.ru"),
-                        callback_data=ChooseLanguageAction(language_type=LanguageType.RUSSIAN).pack()
+                        callback_data=ChooseLanguageAction(language_type=Locale.RUSSIAN).pack()
                     )
                 ],
                 [

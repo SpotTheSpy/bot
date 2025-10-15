@@ -1,5 +1,5 @@
 from enum import StrEnum
 
 
-class PayloadType(StrEnum):
+class Payload(StrEnum):
     JOIN = "join"

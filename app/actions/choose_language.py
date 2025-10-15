@@ -1,6 +1,10 @@
 from app.actions.action import Action
-from app.enums.language_type import LanguageType
+from app.enums.locale import Locale
 
 
 class ChooseLanguageAction(Action, prefix="choose_language"):
-    language_type: LanguageType
+    """
+    Callback action for choosing a new language.
+    """
+
+    language_type: Locale

@@ -23,7 +23,7 @@ from aiogram.utils.i18n import gettext as _
 from babel.support import LazyProxy
 
 from app.controllers.redis import RedisController
-from app.enums.language_type import LanguageType
+from app.enums.locale import Locale
 from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.api import APIError
@@ -390,7 +390,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery,
             *,
-            new_language: LanguageType
+            new_language: Locale
     ) -> str | None:
         if self.locale == new_language:
             await callback_query.answer(_("answer.language.same"))

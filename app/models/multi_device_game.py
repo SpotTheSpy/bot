@@ -7,7 +7,7 @@ from aiohttp import ClientSession
 from pydantic import BaseModel
 
 from app.controllers.redis import RedisController
-from app.enums.payload_type import PayloadType
+from app.enums.payload import Payload
 from app.enums.player_role import PlayerRole
 from app.models.abstract import AbstractModel
 from app.models.qr_code import QRCode
@@ -45,7 +45,7 @@ class MultiDeviceGame(AbstractModel):
 
     @property
     def join_url(self) -> str:
-        payload: str = f"{PayloadType.JOIN}:{self.game_id}"
+        payload: str = f"{Payload.JOIN}:{self.game_id}"
         encoded_payload: str = urlsafe_b64encode(payload.encode("utf-8")).decode("utf-8").replace("=", "")
         return Parameters.TELEGRAM_BOT_START_URL.format(payload=encoded_payload)
 
