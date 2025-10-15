@@ -1,10 +1,8 @@
 from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
-from aiogram.utils.i18n import gettext as _
 
 from app.models.bot_user import BotUser
 from app.scenes.base import BaseScene
-from app.utils.inline_keyboard_factory import InlineKeyboardFactory
 
 
 class MultiDeviceExplainScene(BaseScene, state="multi_device_explain"):

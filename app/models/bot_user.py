@@ -30,6 +30,7 @@ from app.exceptions.api import APIError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
+from app.logging import logger
 from app.models.multi_device_game import MultiDeviceGame, MultiDevicePlayer
 from app.models.qr_code import QRCode, BlurredQRCode
 from app.models.redis import AbstractRedisModel
@@ -38,8 +39,6 @@ from app.models.user import User
 from app.parameters import Parameters
 from app.utils.dict_factory import DictFactory
 from app.utils.inline_keyboard_factory import InlineKeyboardFactory
-from app.utils.logging import logger
-from app.utils.secret_words import SecretWordsController
 from config import Config
 
 if TYPE_CHECKING:
@@ -540,8 +539,8 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         role: PlayerRole = PlayerRole.SPY if player_index == game.spy_index else PlayerRole.CITIZEN
 
         await self.edit_message(
-            text=DictFactory.single_device_role_message().get(role).format(
-                secret_word=SecretWordsController.get_secret_word(game.secret_word),
+            text=DictFactory.single_device_role_messages.get(role).format(
+                secret_word=DictFactory.get_secret_word(game.secret_word),
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
@@ -583,7 +582,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
 
         await self.edit_message(
             text=_("message.single_device.play.finish").format(
-                secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                secret_word=DictFactory.get_secret_word(game.secret_word),
                 spy_index=game.spy_index + 1
             ),
             reply_markup=InlineKeyboardFactory.single_device_play_again_keyboard()
@@ -890,13 +889,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                 continue
 
             with player_bot_user.i18n.use_locale(player_bot_user.locale):
-                message_text: LazyProxy = DictFactory.multi_device_role_message().get(player.role)
+                message_text: LazyProxy = DictFactory.multi_device_role_messages.get(player.role)
 
                 tasks.append(
                     create_task(
                         player_bot_user.edit_message(
                             text=message_text.format(
-                                secret_word=SecretWordsController.get_secret_word(game.secret_word)
+                                secret_word=DictFactory.get_secret_word(game.secret_word)
                             ),
                             reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
                                 is_host=player.user_id == game.host_id
@@ -938,7 +937,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             with player_bot_user.i18n.use_locale(player_bot_user.locale):
                 message_text, entities = self._get_entities(
                     _("message.multi_device.play.finish").format(
-                        secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                        secret_word=DictFactory.get_secret_word(game.secret_word),
                         first_name=spy.first_name
                     ),
                     players=[spy]

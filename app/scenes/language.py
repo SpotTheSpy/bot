@@ -2,9 +2,9 @@ from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 
 from app.actions.choose_language import ChooseLanguageAction
+from app.logging import logger
 from app.models.bot_user import BotUser
 from app.scenes.base import BaseScene
-from app.utils.logging import logger
 
 
 class LanguageScene(BaseScene, state="language"):

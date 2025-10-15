@@ -3,9 +3,9 @@ import asyncio
 from aiogram.fsm.scene import on
 from aiogram.types import Message, CallbackQuery
 
+from app.logging import logger
 from app.models.bot_user import BotUser
 from app.scenes.base import BaseScene
-from app.utils.logging import logger
 
 
 class StartScene(BaseScene, state="start"):
