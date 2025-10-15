@@ -22,24 +22,49 @@ from app.enums.locale import Locale
 
 
 class KeyboardFactory:
+    """
+    Class for generating all variants of keyboards.
+    """
+
     @staticmethod
     def menu_button() -> InlineKeyboardButton:
+        """
+        :return: Menu button instance.
+        """
+
         return InlineKeyboardButton(text=_("button.menu"), callback_data=MenuAction().pack())
 
     @staticmethod
     def back_button() -> InlineKeyboardButton:
+        """
+        :return: Back button instance.
+        """
+
         return InlineKeyboardButton(text=_("button.back"), callback_data=BackAction().pack())
 
     @classmethod
     def menu_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Menu inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(inline_keyboard=[[cls.menu_button()]])
 
     @classmethod
     def back_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Back inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(inline_keyboard=[[cls.back_button()]])
 
     @staticmethod
     def start_keyboard(locale: str | None = None) -> InlineKeyboardMarkup:
+        """
+        :param locale: Locale for translating message. If None, a context locale is used.
+        :return: Start inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -59,6 +84,10 @@ class KeyboardFactory:
 
     @classmethod
     def choose_device_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Choose device inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -81,6 +110,10 @@ class KeyboardFactory:
 
     @classmethod
     def choose_language_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Choose language inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -109,6 +142,10 @@ class KeyboardFactory:
 
     @classmethod
     def single_device_explain_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Single-device explain keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -131,6 +168,13 @@ class KeyboardFactory:
             max_amount: int,
             selected_amount: int | None = None
     ) -> InlineKeyboardMarkup:
+        """
+        :param min_amount: Minimum possible amount of players.
+        :param max_amount: Maximum possible amount of players.
+        :param selected_amount: Selected amount of players.
+        :return: Single-device configure keyboard instance.
+        """
+
         builder = InlineKeyboardBuilder()
 
         for player_amount in range(min_amount, max_amount + 1):
@@ -162,6 +206,10 @@ class KeyboardFactory:
 
     @classmethod
     def single_device_view_role_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Single-device view role inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -178,6 +226,10 @@ class KeyboardFactory:
 
     @classmethod
     def single_device_proceed_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Single-device proceed inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -194,6 +246,10 @@ class KeyboardFactory:
 
     @classmethod
     def single_device_finish_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Single-device finish inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -210,6 +266,10 @@ class KeyboardFactory:
 
     @classmethod
     def single_device_play_again_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Single-device play again inline keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -226,6 +286,10 @@ class KeyboardFactory:
 
     @classmethod
     def multi_device_explain_keyboard(cls) -> InlineKeyboardMarkup:
+        """
+        :return: Multi-device explain keyboard instance.
+        """
+
         return InlineKeyboardMarkup(
             inline_keyboard=[
                 [
@@ -248,6 +312,13 @@ class KeyboardFactory:
             max_amount: int,
             selected_amount: int | None = None
     ) -> InlineKeyboardMarkup:
+        """
+        :param min_amount: Minimum possible amount of players.
+        :param max_amount: Maximum possible amount of players.
+        :param selected_amount: Selected amount of players.
+        :return: Multi-device configure keyboard instance.
+        """
+
         builder = InlineKeyboardBuilder()
 
         for player_amount in range(min_amount, max_amount + 1):
@@ -283,6 +354,11 @@ class KeyboardFactory:
             *,
             is_host: bool = False
     ) -> InlineKeyboardMarkup:
+        """
+        :param is_host: Whether to show inline keyboard for host player.
+        :return: Multi-device recruit keyboard instance.
+        """
+
         if is_host:
             return InlineKeyboardMarkup(
                 inline_keyboard=[
@@ -315,6 +391,11 @@ class KeyboardFactory:
             *,
             is_host: bool = False
     ) -> InlineKeyboardMarkup | None:
+        """
+        :param is_host: Whether to show inline keyboard for host player.
+        :return: Multi-device view role inline keyboard instance.
+        """
+
         if not is_host:
             return
 
@@ -335,6 +416,11 @@ class KeyboardFactory:
             *,
             is_host: bool = False
     ) -> InlineKeyboardMarkup:
+        """
+        :param is_host: Whether to show inline keyboard for host player.
+        :return: Multi-device play again inline keyboard instance.
+        """
+
         if not is_host:
             return cls.menu_keyboard()
 
