@@ -814,10 +814,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                 f"finished a multi-device game (game_id={game.game_id})"
             )
         else:
-            game: MultiDeviceGame | None = await multi_device_games.leave_game(
-                game.game_id,
-                self.id
-            )
+            game: MultiDeviceGame | None = await multi_device_games.leave_game(self.id)
 
             if update_message:
                 await self.edit_message(

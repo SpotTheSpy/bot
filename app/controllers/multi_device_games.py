@@ -22,6 +22,16 @@ class MultiDeviceGamesController(APIController):
             host_id: UUID,
             player_amount: int
     ) -> MultiDeviceGame:
+        """
+        Create a new multi-device game.
+
+        :param host_id: Host UUID.
+        :param player_amount: Count of players.
+
+        :raise AlreadyInGameError: If you are already in a multi-device game.
+        :return: A created multi-device game model.
+        """
+
         response: AttributedDict = await self._post(
             "multi_device_games",
             json=CreateMultiDeviceGame(
@@ -39,6 +49,13 @@ class MultiDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> MultiDeviceGame | None:
+        """
+        Retrieve a multi-device game by game UUID.
+
+        :param game_id: Game UUID.
+        :return: A multi-device game model.
+        """
+
         response: AttributedDict = await self._get(
             f"multi_device_games/{game_id}"
         )
@@ -52,6 +69,13 @@ class MultiDeviceGamesController(APIController):
             self,
             user_id: UUID
     ) -> MultiDeviceGame | None:
+        """
+       Retrieve a multi-device game by user UUID.
+
+       :param user_id: User UUID.
+       :return: A multi-device game model.
+       """
+
         response: AttributedDict = await self._get(
             f"multi_device_games/by_user_id/{user_id}"
         )
@@ -65,6 +89,12 @@ class MultiDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> None:
+        """
+        Remove a multi-device game by game UUID.
+
+        :param game_id: Game UUID.
+        """
+
         await self._delete(
             f"multi_device_games/{game_id}"
         )
@@ -74,6 +104,18 @@ class MultiDeviceGamesController(APIController):
             game_id: UUID,
             user_id: UUID
     ) -> MultiDeviceGame:
+        """
+        Join a multi-device game by game UUID.
+
+        :param game_id: Game UUID.
+        :param user_id: User UUID.
+        :raise NotFoundError: If a game was not found.
+        :raise GameHasAlreadyStartedError: If a game has already started.
+        :raise AlreadyInGameError: If a user is already in another game.
+        :raise InvalidPlayerAmountError: If a game has too many players.
+        :return: A multi-device game model.
+        """
+
         response: AttributedDict = await self._post(
             f"multi_device_games/{game_id}/join/{user_id}"
         )
@@ -91,11 +133,19 @@ class MultiDeviceGamesController(APIController):
 
     async def leave_game(
             self,
-            game_id: UUID,
             user_id: UUID
     ) -> MultiDeviceGame | None:
+        """
+        Leave a multi-device game by game UUID.
+
+        :param user_id: User UUID.
+        :raise NotFoundError: If a user or game was not found.
+        :raise NotInGameError: If a user is not in game.
+        :return: A multi-device game model.
+        """
+
         response: AttributedDict = await self._post(
-            f"multi_device_games/{game_id}/leave/{user_id}"
+            f"multi_device_games/leave/{user_id}"
         )
 
         if response.status_code == NotFoundError.status_code:
@@ -109,6 +159,16 @@ class MultiDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> MultiDeviceGame:
+        """
+        Start a multi-device game by game UUID
+
+        :param game_id: Game UUID.
+        :raise NotFoundError: If a game was not found.
+        :raise GameHasAlreadyStartedError: If a game has already started.
+        :raise InvalidPlayerAmountError: If a game has too few players.
+        :return: A multi-device game model.
+        """
+
         response: AttributedDict = await self._post(
             f"multi_device_games/{game_id}/start"
         )
@@ -126,6 +186,13 @@ class MultiDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> MultiDeviceGame | None:
+        """
+        Restart a multi-device game by game UUID
+
+        :param game_id: Game UUID.
+        :return: A multi-device game model.
+        """
+
         response: AttributedDict = await self._post(
             f"multi_device_games/{game_id}/restart"
         )
@@ -139,6 +206,13 @@ class MultiDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> MultiDeviceGame | None:
+        """
+        Generate a QR-Code for multi-device game by game UUID
+
+        :param game_id: Game UUID.
+        :return: A multi-device game model.
+        """
+
         response: AttributedDict = await self._post(
             f"multi_device_games/{game_id}/qr_code"
         )

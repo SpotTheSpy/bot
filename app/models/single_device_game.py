@@ -32,5 +32,4 @@ class CreateSingleDeviceGame(BaseModel):
     """
 
     user_id: UUID
-    telegram_id: int
     player_amount: int

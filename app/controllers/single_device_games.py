@@ -17,14 +17,22 @@ class SingleDeviceGamesController(APIController):
     async def create_game(
             self,
             user_id: UUID,
-            telegram_id: int,
             player_amount: int
     ) -> SingleDeviceGame:
+        """
+        Create a new single-device game.
+
+        :param user_id: Host UUID.
+        :param player_amount: Count of players.
+
+        :raise AlreadyInGameError: If you are already hosting a single-device game.
+        :return: A created single-device game model.
+        """
+
         response: AttributedDict = await self._post(
             "single_device_games",
             json=CreateSingleDeviceGame(
                 user_id=user_id,
-                telegram_id=telegram_id,
                 player_amount=player_amount
             ).model_dump(mode="json")
         )
@@ -38,6 +46,12 @@ class SingleDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> SingleDeviceGame | None:
+        """
+        Retrieve a single-device game by game UUID.
+
+        Returns single-device game model if exists, otherwise None.
+        """
+
         response: AttributedDict = await self._get(
             f"single_device_games/{game_id}"
         )
@@ -51,6 +65,12 @@ class SingleDeviceGamesController(APIController):
             self,
             user_id: UUID
     ) -> SingleDeviceGame | None:
+        """
+        Retrieve a single-device game by host UUID.
+
+        Returns single-device game model if exists, otherwise None.
+        """
+
         response: AttributedDict = await self._get(
             f"single_device_games/by_user_id/{user_id}"
         )
@@ -64,6 +84,10 @@ class SingleDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> None:
+        """
+        Remove a single-device game by game UUID.
+        """
+
         await self._delete(
             f"single_device_games/{game_id}"
         )
@@ -72,6 +96,12 @@ class SingleDeviceGamesController(APIController):
             self,
             game_id: UUID
     ) -> SingleDeviceGame | None:
+        """
+        Restart a single-device game by game UUID.
+
+        Returns single-device game model of a restarted game if was found, otherwise None.
+        """
+
         response: AttributedDict = await self._post(
             f"single_device_games/{game_id}/restart"
         )
