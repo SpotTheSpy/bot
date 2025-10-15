@@ -33,7 +33,7 @@ config = Config(_env_file=".env")
 def create_dispatcher() -> Dispatcher:
     i18n = I18n(path="locales", default_locale="en", domain="messages")
 
-    api_config = APIConfig(config.base_url, config.api_key.get_secret_value())
+    api_config = APIConfig(config.api_url, config.api_key.get_secret_value())
     users = UsersController(api_config)
     single_device_games = SingleDeviceGamesController(api_config)
     multi_device_games = MultiDeviceGamesController(api_config)
