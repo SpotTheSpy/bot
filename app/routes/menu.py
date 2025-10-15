@@ -5,6 +5,7 @@ from app.scenes.start import StartScene
 
 menu_router = Router(name=__name__)
 
+# Handler for menu buttons outside scene.
 menu_router.callback_query.register(
     StartScene.as_handler(),
     MenuAction.filter()
