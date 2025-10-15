@@ -21,7 +21,7 @@ from app.actions.switch_scene import SwitchSceneAction
 from app.enums.locale import Locale
 
 
-class InlineKeyboardFactory:
+class KeyboardFactory:
     @staticmethod
     def menu_button() -> InlineKeyboardButton:
         return InlineKeyboardButton(text=_("button.menu"), callback_data=MenuAction().pack())

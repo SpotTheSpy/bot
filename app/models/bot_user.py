@@ -38,7 +38,7 @@ from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User
 from app.parameters import Parameters
 from app.utils.dict_factory import DictFactory
-from app.utils.inline_keyboard_factory import InlineKeyboardFactory
+from app.utils.keyboard_factory import KeyboardFactory
 from config import Config
 
 if TYPE_CHECKING:
@@ -356,7 +356,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         await self.new_message(
             message.chat.id,
             text=_("message.start", locale=locale),
-            reply_markup=InlineKeyboardFactory.start_keyboard(locale=locale)
+            reply_markup=KeyboardFactory.start_keyboard(locale=locale)
         )
         await message.delete()
 
@@ -369,7 +369,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
     ) -> None:
         await self.edit_message(
             text=_("message.start", locale=new_locale),
-            reply_markup=InlineKeyboardFactory.start_keyboard(locale=new_locale)
+            reply_markup=KeyboardFactory.start_keyboard(locale=new_locale)
         )
         await callback_query.answer()
 
@@ -380,7 +380,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
     ) -> None:
         await self.edit_message(
             text=_("message.language.choose"),
-            reply_markup=InlineKeyboardFactory.choose_language_keyboard()
+            reply_markup=KeyboardFactory.choose_language_keyboard()
         )
         await callback_query.answer()
 
@@ -412,7 +412,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
     ) -> None:
         await self.edit_message(
             text=_("message.choose_device"),
-            reply_markup=InlineKeyboardFactory.choose_device_keyboard()
+            reply_markup=KeyboardFactory.choose_device_keyboard()
         )
         await callback_query.answer()
 
@@ -423,7 +423,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
     ) -> None:
         await self.edit_message(
             text=_("message.single_device.explain"),
-            reply_markup=InlineKeyboardFactory.single_device_explain_keyboard()
+            reply_markup=KeyboardFactory.single_device_explain_keyboard()
         )
         await callback_query.answer()
 
@@ -442,7 +442,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
 
         await self.edit_message(
             text=_("message.single_device.configure"),
-            reply_markup=InlineKeyboardFactory.single_device_configure_keyboard(
+            reply_markup=KeyboardFactory.single_device_configure_keyboard(
                 min_amount=Parameters.MIN_PLAYER_AMOUNT,
                 max_amount=Parameters.MAX_PLAYER_AMOUNT,
                 selected_amount=player_amount
@@ -544,7 +544,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
-            reply_markup=InlineKeyboardFactory.single_device_proceed_keyboard()
+            reply_markup=KeyboardFactory.single_device_proceed_keyboard()
         )
         await callback_query.answer()
 
@@ -585,7 +585,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                 secret_word=DictFactory.get_secret_word(game.secret_word),
                 spy_index=game.spy_index + 1
             ),
-            reply_markup=InlineKeyboardFactory.single_device_play_again_keyboard()
+            reply_markup=KeyboardFactory.single_device_play_again_keyboard()
         )
         await callback_query.answer()
 
@@ -614,13 +614,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                 player_index=player_index + 1,
                 player_amount=player_amount
             ),
-            reply_markup=InlineKeyboardFactory.single_device_view_role_keyboard()
+            reply_markup=KeyboardFactory.single_device_view_role_keyboard()
         )
 
     async def _discuss_in_single_device_game(self) -> None:
         await self.edit_message(
             text=_("message.single_device.play.discuss"),
-            reply_markup=InlineKeyboardFactory.single_device_finish_keyboard()
+            reply_markup=KeyboardFactory.single_device_finish_keyboard()
         )
 
     @_with_workflow_data
@@ -630,7 +630,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
     ) -> None:
         await self.edit_message(
             text=_("message.multi_device.explain"),
-            reply_markup=InlineKeyboardFactory.multi_device_explain_keyboard()
+            reply_markup=KeyboardFactory.multi_device_explain_keyboard()
         )
         await callback_query.answer()
 
@@ -650,7 +650,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         await callback_query.answer()
         await self.edit_message(
             text=_("message.multi_device.configure"),
-            reply_markup=InlineKeyboardFactory.multi_device_configure_keyboard(
+            reply_markup=KeyboardFactory.multi_device_configure_keyboard(
                 min_amount=Parameters.MIN_PLAYER_AMOUNT,
                 max_amount=Parameters.MAX_PLAYER_AMOUNT,
                 selected_amount=player_amount
@@ -846,7 +846,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             player_bot_user.edit_message(
                                 text=text,
                                 entities=entities,
-                                reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                                reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                                     is_host=player.user_id == game.host_id
                                 ),
                                 only_edit_caption=True
@@ -897,7 +897,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             text=message_text.format(
                                 secret_word=DictFactory.get_secret_word(game.secret_word)
                             ),
-                            reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_view_role_keyboard(
                                 is_host=player.user_id == game.host_id
                             )
                         )
@@ -948,7 +948,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                         player_bot_user.edit_message(
                             text=message_text,
                             entities=entities,
-                            reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_play_again_keyboard(
                                 is_host=player.user_id == game.host_id
                             )
                         )
@@ -1018,7 +1018,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                         text=text,
                         photo=qr_code,
                         entities=entities,
-                        reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                        reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                             is_host=game.host_id == player.user_id
                         )
                     )
@@ -1029,7 +1029,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             text=text,
                             photo=qr_code,
                             entities=entities,
-                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                                 is_host=game.host_id == player.user_id
                             )
                         )
@@ -1038,7 +1038,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             text=text,
                             photo=qr_code,
                             entities=entities,
-                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                                 is_host=game.host_id == player.user_id
                             ),
                             only_edit_caption=True
