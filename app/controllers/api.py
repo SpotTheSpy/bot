@@ -11,16 +11,35 @@ from app.parameters import Parameters
 
 @dataclass(frozen=True)
 class APIConfig:
-    base_url: str
+    """
+    Configuration model for API controllers.
+
+    Attributes:
+        api_url: Base URL for all api endpoints.
+        api_key: API-Key for authentication.
+    """
+
+    api_url: str
     api_key: str
 
 
 class AttributedDict(dict):
+    """
+    Dictionary subclass that allows accessing values as attributes.
+    """
+
     def __init__(
             self,
             dictionary: dict,
             **kwargs
     ) -> None:
+        """
+        Initialize AttributedDict.
+
+        :param dictionary: Dictionary to initialize.
+        :param kwargs: Additional keyword arguments.
+        """
+
         super().__init__(dictionary, **kwargs)
 
         for key, value in dictionary.items():
@@ -30,12 +49,29 @@ class AttributedDict(dict):
             self,
             item: str
     ) -> Any:
+        """
+        Get attribute value from dictionary.
+        :param item: Attribute to get.
+        :return: Attribute value.
+        """
+
         return self.__dict__.get(item)
 
     def __process_value__(
             self,
             value: Any
     ) -> Any:
+        """
+        Convert dictionary value to attributed value.
+
+        If value is an instance of dictionary, converts it to an AttributedDict.
+        If value is a list, applies recursively to each item in it.
+        Otherwise, returns the same value.
+
+        :param value: Value to convert.
+        :return: Converted value.
+        """
+
         if isinstance(value, dict):
             return AttributedDict(value)
 
@@ -51,28 +87,38 @@ class APIController(ABC):
             config: APIConfig,
             *,
             cycles: int | None = None,
-            timeout: int | None = None
+            timeout: int | None = None,
+            **kwargs: Any
     ) -> None:
+        """
+        API controller class.
+
+        Base class for building API controllers, provides methods for sending basic HTTP requests.
+
+        :param config: Configuration model for API controllers.
+        :param cycles: Number of retries to resend request if an ASGI server is temporarily unavailable.
+        :param timeout: Timeout of every retry in seconds.
+        :param kwargs: Additional headers.
+        """
+
         self._config = config
         self._cycles = cycles or Parameters.DEFAULT_API_RETRY_CYCLES
         self._timeout = timeout or Parameters.DEFAULT_API_RETRY_TIMEOUT
-        self._headers: Dict[str, Any] = {"API-Key": self._config.api_key}
-
-    def update_headers(
-            self,
-            headers: Dict[str, Any] | None = None,
-            **kwargs: Any
-    ) -> None:
-        if headers is not None:
-            kwargs.update(headers)
-
-        self._headers.update(kwargs)
+        self._headers: Dict[str, Any] = {"API-Key": self._config.api_key, **kwargs}
 
     async def _post(
             self,
             path: str,
             **kwargs
     ) -> AttributedDict:
+        """
+        Send a POST request to an API endpoint.
+
+        :param path: API endpoint path.
+        :param kwargs: Additional arguments.
+        :return: API response as an AttributedDict.
+        """
+
         @self._apply_resend
         async def __post() -> AttributedDict:
             headers = self._headers.copy()
@@ -82,7 +128,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.post(
-                    f"{self._config.base_url}/{path}",
+                    f"{self._config.api_url}/{path}",
                     **kwargs
                 )
 
@@ -96,6 +142,14 @@ class APIController(ABC):
             path: str,
             **kwargs
     ) -> AttributedDict:
+        """
+        Send a GET request to an API endpoint.
+
+        :param path: API endpoint path.
+        :param kwargs: Additional arguments.
+        :return: API response as an AttributedDict.
+        """
+
         @self._apply_resend
         async def __get() -> AttributedDict:
             headers = self._headers.copy()
@@ -105,7 +159,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.get(
-                    f"{self._config.base_url}/{path}",
+                    f"{self._config.api_url}/{path}",
                     **kwargs
                 )
 
@@ -119,6 +173,14 @@ class APIController(ABC):
             path: str,
             **kwargs
     ) -> AttributedDict:
+        """
+        Send a PUT request to an API endpoint.
+
+        :param path: API endpoint path.
+        :param kwargs: Additional arguments.
+        :return: API response as an AttributedDict.
+        """
+
         @self._apply_resend
         async def __put() -> AttributedDict:
             headers = self._headers.copy()
@@ -128,7 +190,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.put(
-                    f"{self._config.base_url}/{path}",
+                    f"{self._config.api_url}/{path}",
                     **kwargs
                 )
 
@@ -142,6 +204,14 @@ class APIController(ABC):
             path: str,
             **kwargs
     ) -> AttributedDict:
+        """
+        Send a DELETE request to an API endpoint.
+
+        :param path: API endpoint path.
+        :param kwargs: Additional arguments.
+        :return: API response as an AttributedDict.
+        """
+
         @self._apply_resend
         async def __delete() -> AttributedDict:
             headers = self._headers.copy()
@@ -151,7 +221,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.delete(
-                    f"{self._config.base_url}/{path}",
+                    f"{self._config.api_url}/{path}",
                     **kwargs
                 )
 
@@ -164,6 +234,13 @@ class APIController(ABC):
             self,
             func: Callable
     ) -> Callable:
+        """
+        Apply retrying process for methods if an endpoint is temporarily unavailable.
+
+        :param func: Function to apply retrying process.
+        :return: Result function.
+        """
+
         @wraps(func)
         async def wrapper(
                 *args,
@@ -184,6 +261,14 @@ class APIController(ABC):
 
     @staticmethod
     async def _construct_response(response: ClientResponse) -> AttributedDict:
+        """
+        Construct an AttributedDict object from response.
+
+        Converts JSON response to an AttributedDict and additionally sets a status code attribute.
+        :param response: Client response object.
+        :return: AttributedDict object.
+        """
+
         json_response: dict = await response.json() or {}
         json_response.update({"status_code": response.status})
 

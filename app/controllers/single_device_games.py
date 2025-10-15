@@ -8,6 +8,12 @@ from app.models.single_device_game import SingleDeviceGame
 
 
 class SingleDeviceGamesController(APIController):
+    """
+    Single-device games API controller class.
+
+    Provides methods for interacting with single-device games API endpoints.
+    """
+
     async def create_game(
             self,
             user_id: UUID,

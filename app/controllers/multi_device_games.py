@@ -11,6 +11,12 @@ from app.models.multi_device_game import MultiDeviceGame
 
 
 class MultiDeviceGamesController(APIController):
+    """
+    Multi-device games API controller class.
+
+    Provides methods for interacting with multi-device games API endpoints.
+    """
+
     async def create_game(
             self,
             host_id: UUID,

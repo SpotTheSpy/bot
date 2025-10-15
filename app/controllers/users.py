@@ -7,6 +7,12 @@ from app.models.user import CreateUser, User, UpdateUser
 
 
 class UsersController(APIController):
+    """
+    Users API controller class.
+
+    Provides methods for interacting with user API endpoints.
+    """
+
     async def create_user(
             self,
             telegram_id: int,
