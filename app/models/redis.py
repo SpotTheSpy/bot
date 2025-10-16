@@ -23,8 +23,14 @@ class AbstractRedisModel(AbstractModel, ABC):
     """
 
     key: ClassVar[str]
+    """
+    Unique object class key.
+    """
 
     _controller: Optional['RedisController'] = None
+    """
+    Redis controller instance.
+    """
 
     @property
     def controller(self) -> 'RedisController':

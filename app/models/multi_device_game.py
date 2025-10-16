@@ -13,6 +13,7 @@ from app.models.abstract import AbstractModel
 from app.models.qr_code import QRCode
 from app.parameters import Parameters
 
+# Loading blurred QR-Code to memory.
 with open("app/data/blurred_qr_code.jpg", "rb") as __file:
     _BLURRED_QR_CODE_DATA: bytes = __file.read()
 
@@ -20,12 +21,33 @@ with open("app/data/blurred_qr_code.jpg", "rb") as __file:
 class MultiDevicePlayer(AbstractModel):
     """
     Represents a player in a multi-device game.
+
+    Attributes:
+        user_id: UUID.
+        telegram_id: User's telegram ID.
+        first_name: First name from telegram.
+        role: User's role in game.
     """
 
     user_id: UUID
+    """
+    UUID.
+    """
+
     telegram_id: int
+    """
+    User's telegram ID.
+    """
+
     first_name: str
+    """
+    First name from telegram.
+    """
+
     role: PlayerRole | None = None
+    """
+    User's role in game.
+    """
 
     @property
     def primary_key(self) -> UUID:
@@ -40,17 +62,53 @@ class MultiDevicePlayer(AbstractModel):
 class MultiDeviceGame(AbstractModel):
     """
     Represents a multi-device game.
+
+    Attributes:
+        game_id: UUID.
+        host_id: Host UUID.
+        has_started: Is the game started.
+        player_amount: Count of max players who can join.
+        secret_word: Game's secret word tag.
+        qr_code_url: QR code URL for a direct image download.
+        players: List of game players.
     """
 
     __BLURRED_QR_CODE_DATA: ClassVar[bytes] = _BLURRED_QR_CODE_DATA
 
     game_id: UUID
+    """
+    UUID.
+    """
+
     host_id: UUID
+    """
+    Host UUID.
+    """
+
     has_started: bool
+    """
+    Is the game started.
+    """
+
     player_amount: int
+    """
+    Count of max players who can join.
+    """
+
     secret_word: str
+    """
+    Game's secret word tag.
+    """
+
     qr_code_url: str | None
+    """
+    QR code URL for a direct image download.
+    """
+
     players: List[MultiDevicePlayer]
+    """
+    List of game players.
+    """
 
     @property
     def primary_key(self) -> UUID:
@@ -109,7 +167,18 @@ class MultiDeviceGame(AbstractModel):
 class CreateMultiDeviceGame(BaseModel):
     """
     Model for creating a multi-device game.
+
+    Attributes:
+        host_id: Host UUID.
+        player_amount: Count of max players who can join.
     """
 
     host_id: UUID
+    """
+    Host UUID.
+    """
+
     player_amount: int
+    """
+    Count of max players who can join.
+    """

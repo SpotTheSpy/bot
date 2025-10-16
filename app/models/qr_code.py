@@ -8,12 +8,23 @@ from app.parameters import Parameters
 class QRCode(AbstractRedisModel):
     """
     Represents a QR-Code in a Redis database.
+
+    Attributes:
+        game_id: UUID.
+        file_id: File ID from Telegram.
     """
 
     key: ClassVar[str] = "qr_code"
 
     game_id: UUID | str
+    """
+    Game UUID.
+    """
+
     file_id: str | None = None
+    """
+    File ID from Telegram.
+    """
 
     @property
     def primary_key(self) -> Any:
