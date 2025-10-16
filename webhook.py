@@ -5,10 +5,11 @@ import sys
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiogram.loggers import event
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 from aiohttp import web
+from aiohttp.log import access_logger
 from aiohttp.web_app import Application
-from aiogram.loggers import event
 
 from app.bot import config, create_dispatcher
 
@@ -41,14 +42,12 @@ def main() -> None:
     )
 
     app = Application()
-
     webhook_requests_handler = SimpleRequestHandler(
         dispatcher=dispatcher,
         bot=bot,
         secret_token=config.telegram_secret.get_secret_value(),
     )
     webhook_requests_handler.register(app, path=config.webhook_path)
-
     setup_application(app, dispatcher, bot=bot)
 
     web.run_app(
@@ -59,7 +58,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    if sys.platform == "win32":
+    if sys.platform == "win32":  # Using SelectorEventLoop on Windows to avoid psycopg exceptions
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
     logging.basicConfig(
@@ -68,6 +67,7 @@ if __name__ == "__main__":
         datefmt="%d-%m-%y %H:%M:%S"
     )
 
+    access_logger.setLevel(logging.ERROR)
     event.setLevel(logging.ERROR)
 
     main()

@@ -7,6 +7,12 @@ from app.models.user import CreateUser, User, UpdateUser
 
 
 class UsersController(APIController):
+    """
+    Users API controller class.
+
+    Provides methods for interacting with user API endpoints.
+    """
+
     async def create_user(
             self,
             telegram_id: int,
@@ -14,6 +20,18 @@ class UsersController(APIController):
             username: str | None = None,
             locale: str | None = None
     ) -> User:
+        """
+        Create a new user.
+
+        :param telegram_id: User's telegram ID.
+        :param first_name: First name from telegram.
+        :param username: Username from telegram.
+        :param locale:  User's locale. Used to localize telegram responses.
+
+        :raise AlreadyExistsError: If a user with the same telegram ID or username already exists.
+        :return: A created user model.
+        """
+
         response: AttributedDict = await self._post(
             "users",
             json=CreateUser(
@@ -33,6 +51,12 @@ class UsersController(APIController):
             self,
             telegram_id: int
     ) -> User | None:
+        """
+        Retrieve a user by user ID.
+
+        Returns user model if exists, otherwise None.
+        """
+
         response: AttributedDict = await self._get(
             f"users/telegram/{telegram_id}"
         )
@@ -47,6 +71,10 @@ class UsersController(APIController):
             user_id: UUID,
             **values: Any
     ) -> None:
+        """
+        Update a user by user ID.
+        """
+
         await self._put(
             f"users/{user_id}",
             json=UpdateUser(**values).model_dump(mode="json", exclude_unset=True)

@@ -7,54 +7,144 @@ from aiohttp import ClientSession
 from pydantic import BaseModel
 
 from app.controllers.redis import RedisController
-from app.enums.payload_type import PayloadType
+from app.enums.payload import Payload
 from app.enums.player_role import PlayerRole
 from app.models.abstract import AbstractModel
 from app.models.qr_code import QRCode
-from app.parameters import Parameters
+from config import config
 
+# Loading blurred QR-Code to memory.
 with open("app/data/blurred_qr_code.jpg", "rb") as __file:
     _BLURRED_QR_CODE_DATA: bytes = __file.read()
 
 
 class MultiDevicePlayer(AbstractModel):
+    """
+    Represents a player in a multi-device game.
+
+    Attributes:
+        user_id: UUID.
+        telegram_id: User's telegram ID.
+        first_name: First name from telegram.
+        role: User's role in game.
+    """
+
     user_id: UUID
+    """
+    UUID.
+    """
+
     telegram_id: int
+    """
+    User's telegram ID.
+    """
+
     first_name: str
+    """
+    First name from telegram.
+    """
+
     role: PlayerRole | None = None
+    """
+    User's role in game.
+    """
 
     @property
     def primary_key(self) -> UUID:
+        """
+        Primary key represented by a user UUID.
+        :return: User UUID.
+        """
+
         return self.user_id
 
 
 class MultiDeviceGame(AbstractModel):
+    """
+    Represents a multi-device game.
+
+    Attributes:
+        game_id: UUID.
+        host_id: Host UUID.
+        has_started: Is the game started.
+        player_amount: Count of max players who can join.
+        secret_word: Game's secret word tag.
+        qr_code_url: QR code URL for a direct image download.
+        players: List of game players.
+    """
+
     __BLURRED_QR_CODE_DATA: ClassVar[bytes] = _BLURRED_QR_CODE_DATA
 
     game_id: UUID
+    """
+    UUID.
+    """
+
     host_id: UUID
+    """
+    Host UUID.
+    """
+
     has_started: bool
+    """
+    Is the game started.
+    """
+
     player_amount: int
+    """
+    Count of max players who can join.
+    """
+
     secret_word: str
+    """
+    Game's secret word tag.
+    """
+
     qr_code_url: str | None
+    """
+    QR code URL for a direct image download.
+    """
+
     players: List[MultiDevicePlayer]
+    """
+    List of game players.
+    """
 
     @property
     def primary_key(self) -> UUID:
+        """
+        Primary key represented by a game UUID.
+        :return: Game UUID.
+        """
+
         return self.game_id
 
     @property
     def join_url(self) -> str:
-        payload: str = f"{PayloadType.JOIN}:{self.game_id}"
+        """
+        URL for joining a game.
+        :return: URL as string.
+        """
+
+        payload: str = f"{Payload.JOIN}:{self.game_id}"
         encoded_payload: str = urlsafe_b64encode(payload.encode("utf-8")).decode("utf-8").replace("=", "")
-        return Parameters.TELEGRAM_BOT_START_URL.format(payload=encoded_payload)
+        return config.telegram_bot_start_url.format(payload=encoded_payload)
 
     async def get_qr_code(
             self,
             qr_codes: RedisController[QRCode]
     ) -> InputFile | str | None:
+        """
+        Retrieve a QR-Code file.
+
+        If QR-Code URL is not set, retrieves a blurred QR-Code file ID or a file from memory.
+        Otherwise, retrieves a generated QR-Code file from memory or, if was not found, retrieves from API.
+        :param qr_codes: QR-Codes controller instance.
+        :return: QR-Code file, file ID or None, if not exist.
+        """
+
         if self.qr_code_url is None:
-            qr_code: QRCode = await qr_codes.get(Parameters.DEFAULT_BLURRED_QR_CODE_KEY)
+            qr_code: QRCode = await qr_codes.get(config.default_blurred_qr_code_key)
 
             if qr_code is None or qr_code.file_id is None:
                 return BufferedInputFile(self.__BLURRED_QR_CODE_DATA, "blurred.jpg")
@@ -75,5 +165,20 @@ class MultiDeviceGame(AbstractModel):
 
 
 class CreateMultiDeviceGame(BaseModel):
+    """
+    Model for creating a multi-device game.
+
+    Attributes:
+        host_id: Host UUID.
+        player_amount: Count of max players who can join.
+    """
+
     host_id: UUID
+    """
+    Host UUID.
+    """
+
     player_amount: int
+    """
+    Count of max players who can join.
+    """

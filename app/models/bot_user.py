@@ -23,24 +23,22 @@ from aiogram.utils.i18n import gettext as _
 from babel.support import LazyProxy
 
 from app.controllers.redis import RedisController
-from app.enums.language_type import LanguageType
+from app.enums.locale import Locale
 from app.enums.player_role import PlayerRole
 from app.exceptions.already_in_game import AlreadyInGameError
 from app.exceptions.api import APIError
 from app.exceptions.game_has_already_started import GameHasAlreadyStartedError
 from app.exceptions.invalid_player_amount import InvalidPlayerAmountError
 from app.exceptions.not_found import NotFoundError
+from app.logging import logger
 from app.models.multi_device_game import MultiDeviceGame, MultiDevicePlayer
 from app.models.qr_code import QRCode, BlurredQRCode
 from app.models.redis import AbstractRedisModel
 from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User
-from app.parameters import Parameters
 from app.utils.dict_factory import DictFactory
-from app.utils.inline_keyboard_factory import InlineKeyboardFactory
-from app.utils.logging import logger
-from app.utils.secret_words import SecretWordsController
-from config import Config
+from app.utils.keyboard_factory import KeyboardFactory
+from config import Config, config
 
 if TYPE_CHECKING:
     from app.controllers.multi_device_games import MultiDeviceGamesController
@@ -53,6 +51,13 @@ else:
 
 
 def _with_workflow_data(func: Callable) -> Callable:
+    """
+    Insert BotUser's workflow data parameters to available coroutine arguments.
+
+    :param func: Coroutine.
+    :return: New coroutine with only acceptable arguments filled.
+    """
+
     @wraps(func)
     async def wrapper(self, *args, **kwargs):
         spec: FullArgSpec = getfullargspec(func)
@@ -75,11 +80,35 @@ def _with_workflow_data(func: Callable) -> Callable:
 
 
 class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
+    """
+    Represents a bot user with a private message to work with.
+
+    This class provides full control over any user. For each user system assigns a message,
+    and on every action this message is modified. If it cannot be, it is instantly replaced with a new one,
+    and the other one deletes while information about a created message is stored in cache.
+
+    Every BotUser instance has full access for modifying his primary message and force to modify messages of others,
+    if one action of user requires visible changes on another user's main message.
+
+    Every possible concrete action with user's primary message is represented as a method in this class.
+    """
+
     key: ClassVar[str] = "bot_user"
 
     chat_id: int | None = None
+    """
+    Primary message chat ID.
+    """
+
     message_id: int | None = None
+    """
+    Primary message ID.
+    """
+
     has_photo: bool | None = None
+    """
+    Whether primary message has a photo.
+    """
 
     _bot: Bot | None = None
     _state: FSMContext | None = None
@@ -95,48 +124,88 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
 
     @property
     def bot(self) -> Bot:
+        """
+        Bot instance which operates event.
+        :return: Bot instance.
+        """
+
         if self._bot is None:
             raise ValueError("Bot is not set")
         return self._bot
 
     @property
     def state(self) -> FSMContext:
+        """
+        State instance of a user.
+        :return: State instance.
+        """
+
         if self._state is None:
             raise ValueError("State is not set")
         return self._state
 
     @property
     def config(self) -> Config:
+        """
+        Global config instance.
+        :return: Config instance.
+        """
+
         if self._config is None:
             raise ValueError("Config is not set")
         return self._config
 
     @property
     def i18n(self) -> I18n:
+        """
+        I18n instance for retrieving context.
+        :return: I18n instance.
+        """
+
         if self._i18n is None:
             raise ValueError("I18n is not set")
         return self._i18n
 
     @property
     def users(self) -> 'UsersController':
+        """
+        Users API controller instance.
+        :return: API controller instance.
+        """
+
         if self._users is None:
             raise ValueError("Users is not set")
         return self._users
 
     @property
     def single_device_games(self) -> Optional['SingleDeviceGamesController']:
+        """
+        Single-device games API controller instance.
+        :return: API controller instance.
+        """
+
         if self._single_device_games is None:
             raise ValueError("SingleDeviceGames is not set")
         return self._single_device_games
 
     @property
     def multi_device_games(self) -> Optional['MultiDeviceGamesController']:
+        """
+        Multi-device games API controller instance.
+        :return: API controller instance.
+        """
+
         if self._multi_device_games is None:
             raise ValueError("MultiDeviceGames is not set")
         return self._multi_device_games
 
     @property
     def qr_codes(self) -> Optional[RedisController[QRCode]]:
+        """
+        QR-Codes Redis controller instance.
+        :return: Redis controller instance.
+        """
+
         if self._qr_codes is None:
             raise ValueError("QRCode is not set")
         return self._qr_codes
@@ -151,6 +220,17 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             workflow_data: Dict[str, Any] | None = None,
             **kwargs: Any
     ) -> Self | None:
+        """
+        Reconstruct a model instance from a JSON-Serialized dictionary and workflow data.
+
+        :param data: Dictionary to reconstruct a model instance.
+        :param controller: Redis controller instance.
+        :param event: Telegram event object.
+        :param workflow_data: Dispatcher workflow data with all required attributes.
+        :param kwargs: Any additional JSON-Serializable parameters.
+        :return: A model instance if validated successfully, else None.
+        """
+
         user = cls.from_json(data, **kwargs)
 
         if user is not None:
@@ -176,6 +256,17 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             entities: List[MessageEntity] | None = None,
             reply_markup: InlineKeyboardMarkup | None = None
     ) -> Message | None:
+        """
+        Replace an old message with a new one.
+
+        :param chat_id: Chat ID to send a new message.
+        :param text: Message text.
+        :param photo: Message photo.
+        :param entities: Message text entities.
+        :param reply_markup: Reply markup.
+        :return: Message instance if succeeded, otherwise None.
+        """
+
         if chat_id is not None:
             self.chat_id = chat_id
 
@@ -237,6 +328,19 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             reply_markup: InlineKeyboardMarkup | None = None,
             only_edit_caption: bool = False
     ) -> Message | None:
+        """
+        Edit an existing message, replace with a new one if necessary.
+
+        :param chat_id: Chat ID to edit message.
+        :param message_id: Message ID.
+        :param text: Message text.
+        :param photo: Message photo.
+        :param entities: Message text entities.
+        :param reply_markup: Reply markup.
+        :param only_edit_caption: Whether to only edit caption of a message with a photo.
+        :return: Message instance if succeeded, otherwise None.
+        """
+
         if chat_id is not None:
             self.chat_id = chat_id
         elif self.chat_id is None:
@@ -330,14 +434,18 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         await self.save()
         return new_message
 
-    async def save(self) -> None:
-        await self.controller.set(self)
-
     @_with_workflow_data
     async def get_bot_user(
             self,
             user_id: UUID
     ) -> Self | None:
+        """
+        Retrieve another BotUser instance by user UUID.
+
+        :param user_id: User UUID.
+        :return: BotUser instance if exists, otherwise None.
+        """
+
         if user_id == self.id:
             return self
 
@@ -352,12 +460,16 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             message: Message,
             *,
-            locale: str | None = None
+            new_locale: str | None = None
     ) -> None:
+        """
+        Send a new start menu message.
+        """
+
         await self.new_message(
             message.chat.id,
-            text=_("message.start", locale=locale),
-            reply_markup=InlineKeyboardFactory.start_keyboard(locale=locale)
+            text=_("message.start", locale=new_locale),
+            reply_markup=KeyboardFactory.start_keyboard(locale=new_locale)
         )
         await message.delete()
 
@@ -368,9 +480,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             *,
             new_locale: str | None = None
     ) -> None:
+        """
+        Display a start menu message.
+        """
+
         await self.edit_message(
             text=_("message.start", locale=new_locale),
-            reply_markup=InlineKeyboardFactory.start_keyboard(locale=new_locale)
+            reply_markup=KeyboardFactory.start_keyboard(locale=new_locale)
         )
         await callback_query.answer()
 
@@ -379,9 +495,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        """
+        Display a choose language menu.
+        """
+
         await self.edit_message(
             text=_("message.language.choose"),
-            reply_markup=InlineKeyboardFactory.choose_language_keyboard()
+            reply_markup=KeyboardFactory.choose_language_keyboard()
         )
         await callback_query.answer()
 
@@ -390,8 +510,14 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery,
             *,
-            new_language: LanguageType
+            new_language: Locale
     ) -> str | None:
+        """
+        Set a new language.
+
+        :return: New language if succeeded, otherwise None.
+        """
+
         if self.locale == new_language:
             await callback_query.answer(_("answer.language.same"))
             return
@@ -411,9 +537,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        """
+        Display a choose device menu.
+        """
+
         await self.edit_message(
             text=_("message.choose_device"),
-            reply_markup=InlineKeyboardFactory.choose_device_keyboard()
+            reply_markup=KeyboardFactory.choose_device_keyboard()
         )
         await callback_query.answer()
 
@@ -422,9 +552,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        """
+        Display an explanation menu for a single-device game.
+        """
+
         await self.edit_message(
             text=_("message.single_device.explain"),
-            reply_markup=InlineKeyboardFactory.single_device_explain_keyboard()
+            reply_markup=KeyboardFactory.single_device_explain_keyboard()
         )
         await callback_query.answer()
 
@@ -436,16 +570,20 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             state: FSMContext,
             player_amount: int | None = None
     ) -> None:
+        """
+        Display a configuration menu for a single-device game.
+        """
+
         if player_amount is None:
-            player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
+            player_amount: int = config.default_player_amount
 
         await state.update_data(player_amount=player_amount)
 
         await self.edit_message(
             text=_("message.single_device.configure"),
-            reply_markup=InlineKeyboardFactory.single_device_configure_keyboard(
-                min_amount=Parameters.MIN_PLAYER_AMOUNT,
-                max_amount=Parameters.MAX_PLAYER_AMOUNT,
+            reply_markup=KeyboardFactory.single_device_configure_keyboard(
+                min_amount=config.min_player_amount,
+                max_amount=config.max_player_amount,
                 selected_amount=player_amount
             )
         )
@@ -459,10 +597,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             single_device_games: 'SingleDeviceGamesController',
             player_amount: int
     ) -> SingleDeviceGame | None:
+        """
+        Create a new single-device game.
+        """
+
         try:
             game: SingleDeviceGame = await single_device_games.create_game(
                 self.id,
-                self.telegram_id,
                 player_amount
             )
         except AlreadyInGameError:
@@ -478,6 +619,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             state: FSMContext,
             single_device_games: 'SingleDeviceGamesController'
     ) -> SingleDeviceGame | None:
+        """
+        Get user's single-device game.
+        """
+
         return (
             SingleDeviceGame.from_json(await state.get_value("game"))
             or await single_device_games.get_game_by_user_id(self.id)
@@ -490,6 +635,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             single_device_games: 'SingleDeviceGamesController',
             game_id: UUID | None = None
     ) -> None:
+        """
+        End user's single-device game.
+        """
+
         if game_id is None:
             game: SingleDeviceGame = await self.get_single_device_game()
 
@@ -508,6 +657,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             state: FSMContext,
             player_amount: int
     ) -> None:
+        """
+        Start a single-device game and show a menu.
+        """
+
         game: SingleDeviceGame | None = await self.create_single_device_game(player_amount=player_amount)
 
         if game is None:
@@ -531,6 +684,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             *,
             state: FSMContext
     ) -> None:
+        """
+        View player's role in a single-device game.
+        """
+
         game: SingleDeviceGame | None = await self.get_single_device_game()
 
         if game is None:
@@ -540,12 +697,12 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         role: PlayerRole = PlayerRole.SPY if player_index == game.spy_index else PlayerRole.CITIZEN
 
         await self.edit_message(
-            text=DictFactory.single_device_role_message().get(role).format(
-                secret_word=SecretWordsController.get_secret_word(game.secret_word),
+            text=DictFactory.single_device_role_messages.get(role).format(
+                secret_word=DictFactory.get_secret_word(game.secret_word),
                 player_index=player_index + 1,
                 player_amount=game.player_amount
             ),
-            reply_markup=InlineKeyboardFactory.single_device_proceed_keyboard()
+            reply_markup=KeyboardFactory.single_device_proceed_keyboard()
         )
         await callback_query.answer()
 
@@ -556,6 +713,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             *,
             state: FSMContext
     ) -> None:
+        """
+        Proceed to next player in a single-device game.
+        """
+
         game: SingleDeviceGame | None = await self.get_single_device_game()
 
         if game is None:
@@ -576,6 +737,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        """
+        Finish a single-device game.
+        """
+
         game: SingleDeviceGame | None = await self.get_single_device_game()
 
         if game is None:
@@ -583,10 +748,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
 
         await self.edit_message(
             text=_("message.single_device.play.finish").format(
-                secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                secret_word=DictFactory.get_secret_word(game.secret_word),
                 spy_index=game.spy_index + 1
             ),
-            reply_markup=InlineKeyboardFactory.single_device_play_again_keyboard()
+            reply_markup=KeyboardFactory.single_device_play_again_keyboard()
         )
         await callback_query.answer()
 
@@ -597,6 +762,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
 
     @_with_workflow_data
     async def restart_single_device_game(self) -> None:
+        """
+        Restart a single-device game.
+        """
+
         game: SingleDeviceGame = await self.get_single_device_game()
 
         if game is None:
@@ -610,18 +779,26 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             player_index: int,
             player_amount: int
     ) -> None:
+        """
+        Prepare for a role view in a single-device game.
+        """
+
         await self.edit_message(
             text=_("message.single_device.play.prepare").format(
                 player_index=player_index + 1,
                 player_amount=player_amount
             ),
-            reply_markup=InlineKeyboardFactory.single_device_view_role_keyboard()
+            reply_markup=KeyboardFactory.single_device_view_role_keyboard()
         )
 
     async def _discuss_in_single_device_game(self) -> None:
+        """
+        Display a discuss menu in a single-device game.
+        """
+
         await self.edit_message(
             text=_("message.single_device.play.discuss"),
-            reply_markup=InlineKeyboardFactory.single_device_finish_keyboard()
+            reply_markup=KeyboardFactory.single_device_finish_keyboard()
         )
 
     @_with_workflow_data
@@ -629,9 +806,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        """
+        Display an explanation menu for a multi-device game.
+        """
+
         await self.edit_message(
             text=_("message.multi_device.explain"),
-            reply_markup=InlineKeyboardFactory.multi_device_explain_keyboard()
+            reply_markup=KeyboardFactory.multi_device_explain_keyboard()
         )
         await callback_query.answer()
 
@@ -643,17 +824,21 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             state: FSMContext,
             player_amount: int | None = None
     ) -> None:
+        """
+        Display a configuration menu for a multi-device game.
+        """
+
         if player_amount is None:
-            player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
+            player_amount: int = config.default_player_amount
 
         await state.update_data(player_amount=player_amount)
 
         await callback_query.answer()
         await self.edit_message(
             text=_("message.multi_device.configure"),
-            reply_markup=InlineKeyboardFactory.multi_device_configure_keyboard(
-                min_amount=Parameters.MIN_PLAYER_AMOUNT,
-                max_amount=Parameters.MAX_PLAYER_AMOUNT,
+            reply_markup=KeyboardFactory.multi_device_configure_keyboard(
+                min_amount=config.min_player_amount,
+                max_amount=config.max_player_amount,
                 selected_amount=player_amount
             )
         )
@@ -666,6 +851,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             multi_device_games: 'MultiDeviceGamesController',
             player_amount: int
     ) -> MultiDeviceGame | None:
+        """
+        Create a multi-device game.
+        """
+
         try:
             game: MultiDeviceGame = await multi_device_games.create_game(
                 self.id,
@@ -682,6 +871,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             *,
             multi_device_games: 'MultiDeviceGamesController'
     ) -> None:
+        """
+        Get user's multi-device game.
+        """
+
         return await multi_device_games.get_game_by_user_id(self.id)
 
     @_with_workflow_data
@@ -692,6 +885,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             qr_codes: RedisController[QRCode],
             game_id: UUID | None = None
     ) -> None:
+        """
+        End user's multi-device game.
+        """
+
         if game_id is None:
             game: MultiDeviceGame = await self.get_multi_device_game()
 
@@ -712,6 +909,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             qr_codes: RedisController[QRCode],
             player_amount: int
     ) -> None:
+        """
+        Start a recruitment for a multi-device game and show a menu.
+        """
+
         game: MultiDeviceGame | None = await self.create_multi_device_game(player_amount=player_amount)
 
         if game is None:
@@ -743,6 +944,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             multi_device_games: 'MultiDeviceGamesController',
             game_id: UUID
     ) -> MultiDeviceGame | None:
+        """
+        Join a multi-device game and show a menu.
+        """
+
         self.chat_id = message.chat.id
 
         try:
@@ -780,6 +985,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             multi_device_games: 'MultiDeviceGamesController',
             update_message: bool = True
     ) -> None:
+        """
+        Leave a multi-device game.
+        """
+
         game: MultiDeviceGame | None = await self.get_multi_device_game()
 
         if game is None:
@@ -815,10 +1024,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                 f"finished a multi-device game (game_id={game.game_id})"
             )
         else:
-            game: MultiDeviceGame | None = await multi_device_games.leave_game(
-                game.game_id,
-                self.id
-            )
+            game: MultiDeviceGame | None = await multi_device_games.leave_game(self.id)
 
             if update_message:
                 await self.edit_message(
@@ -847,7 +1053,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             player_bot_user.edit_message(
                                 text=text,
                                 entities=entities,
-                                reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                                reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                                     is_host=player.user_id == game.host_id
                                 ),
                                 only_edit_caption=True
@@ -870,6 +1076,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             multi_device_games: 'MultiDeviceGamesController',
             qr_codes: RedisController[QRCode]
     ) -> None:
+        """
+        Start a multi-device game.
+        """
+
         game: MultiDeviceGame = await self.get_multi_device_game()
 
         if game is None:
@@ -890,15 +1100,15 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                 continue
 
             with player_bot_user.i18n.use_locale(player_bot_user.locale):
-                message_text: LazyProxy = DictFactory.multi_device_role_message().get(player.role)
+                message_text: LazyProxy = DictFactory.multi_device_role_messages.get(player.role)
 
                 tasks.append(
                     create_task(
                         player_bot_user.edit_message(
                             text=message_text.format(
-                                secret_word=SecretWordsController.get_secret_word(game.secret_word)
+                                secret_word=DictFactory.get_secret_word(game.secret_word)
                             ),
-                            reply_markup=InlineKeyboardFactory.multi_device_view_role_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_view_role_keyboard(
                                 is_host=player.user_id == game.host_id
                             )
                         )
@@ -920,6 +1130,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             self,
             callback_query: CallbackQuery
     ) -> None:
+        """
+        Finish a multi-device game.
+        """
+
         game: MultiDeviceGame | None = await self.get_multi_device_game()
 
         if game is None:
@@ -938,7 +1152,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             with player_bot_user.i18n.use_locale(player_bot_user.locale):
                 message_text, entities = self._get_entities(
                     _("message.multi_device.play.finish").format(
-                        secret_word=SecretWordsController.get_secret_word(game.secret_word),
+                        secret_word=DictFactory.get_secret_word(game.secret_word),
                         first_name=spy.first_name
                     ),
                     players=[spy]
@@ -949,7 +1163,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                         player_bot_user.edit_message(
                             text=message_text,
                             entities=entities,
-                            reply_markup=InlineKeyboardFactory.multi_device_play_again_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_play_again_keyboard(
                                 is_host=player.user_id == game.host_id
                             )
                         )
@@ -971,6 +1185,10 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             multi_device_games: 'MultiDeviceGamesController',
             qr_codes: RedisController[QRCode]
     ) -> None:
+        """
+        Restart a multi-device game.
+        """
+
         game: MultiDeviceGame = await self.get_multi_device_game()
 
         if game is None:
@@ -1001,6 +1219,15 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             game: MultiDeviceGame,
             joined_player_id: UUID | None = None
     ) -> Message | None:
+        """
+        Update a recruitment message for all players.
+
+        :param qr_codes: QR-Codes Redis controller instance.
+        :param game: MultiDeviceGame instance.
+        :param joined_player_id: UUID of a player who had just joined the game.
+        :return: Message instance of a host player.
+        """
+
         tasks: List[Task] = []
 
         qr_code: InputFile | str | None = await game.get_qr_code(qr_codes)
@@ -1019,7 +1246,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                         text=text,
                         photo=qr_code,
                         entities=entities,
-                        reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                        reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                             is_host=game.host_id == player.user_id
                         )
                     )
@@ -1030,7 +1257,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             text=text,
                             photo=qr_code,
                             entities=entities,
-                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                                 is_host=game.host_id == player.user_id
                             )
                         )
@@ -1039,7 +1266,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             text=text,
                             photo=qr_code,
                             entities=entities,
-                            reply_markup=InlineKeyboardFactory.multi_device_recruit_keyboard(
+                            reply_markup=KeyboardFactory.multi_device_recruit_keyboard(
                                 is_host=game.host_id == player.user_id
                             ),
                             only_edit_caption=True
@@ -1057,6 +1284,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             cls,
             game: MultiDeviceGame
     ) -> Tuple[str, List[MessageEntity]]:
+        """
+        Create a recruitment message.
+
+        :param game: MultiDeviceGame instance.
+        :return: Message text as a string and a list of entities based on a game instance.
+        """
+
         players: List[str] = []
 
         for index, player in enumerate(game.players):
@@ -1092,6 +1326,15 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             join_url: str | None = None,
             players: List[MultiDevicePlayer] | None = None
     ) -> Tuple[str, List[MessageEntity]]:
+        """
+        Retrieve entities from a multi-device game recruitment message.
+
+        :param text: Message text.
+        :param join_url: Game join URL.
+        :param players: List of players in game.
+        :return: Edited text without any tags and a list of entities.
+        """
+
         entities: List[MessageEntity] = []
         tags_to_find: List[str] = ["b", "join", "player"]
 

@@ -2,12 +2,16 @@ from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 
 from app.actions.choose_language import ChooseLanguageAction
+from app.logging import logger
 from app.models.bot_user import BotUser
 from app.scenes.base import BaseScene
-from app.utils.logging import logger
 
 
 class LanguageScene(BaseScene, state="language"):
+    """
+    Scene for choosing a bot language.
+    """
+
     @on.callback_query.enter()
     async def on_enter(
             self,
@@ -24,7 +28,7 @@ class LanguageScene(BaseScene, state="language"):
             callback_data: ChooseLanguageAction,
             user: BotUser
     ) -> None:
-        locale: str | None = await user.choose_language(new_language=callback_data.language_type)
+        locale: str | None = await user.choose_language(new_language=callback_data.locale)
 
         await self.wizard.back(
             user=user,

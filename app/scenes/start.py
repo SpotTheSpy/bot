@@ -3,20 +3,24 @@ import asyncio
 from aiogram.fsm.scene import on
 from aiogram.types import Message, CallbackQuery
 
+from app.logging import logger
 from app.models.bot_user import BotUser
 from app.scenes.base import BaseScene
-from app.utils.logging import logger
 
 
 class StartScene(BaseScene, state="start"):
+    """
+    Scene for a start menu.
+    """
+
     @on.message.enter()
     async def on_message_enter(
             self,
             message: Message,
             user: BotUser,
-            locale: str | None = None
+            new_locale: str | None = None
     ) -> None:
-        await user.new_start_message(locale=locale)
+        await user.new_start_message(new_locale=new_locale)
 
         logger.info(
             f"{message.from_user.first_name} (id={message.from_user.id}) "
@@ -37,6 +41,11 @@ class StartScene(BaseScene, state="start"):
     ) -> None:
         await user.start_message(new_locale=new_locale)
         await callback_query.answer()
+
+        await asyncio.gather(
+            user.end_single_device_game(),
+            user.leave_multi_device_game(update_message=False)
+        )
 
     @on.message()
     async def on_message(

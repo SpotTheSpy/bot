@@ -13,11 +13,24 @@ from app.models.user import User
 
 
 class UserMiddleware(BaseMiddleware):
+    """
+    Middleware for retrieving user information.
+
+    Tries to retrieve user from cache, if failed, retrieves user from API.
+    """
+
     def __init__(
             self,
             users: UsersController,
             bot_users: RedisController[BotUser]
     ) -> None:
+        """
+        Initialize middleware.
+
+        :param users: Users API controller instance.
+        :param bot_users: Bot users Redis controller instance.
+        """
+
         self._users = users
         self._bot_users = bot_users
 
@@ -27,6 +40,15 @@ class UserMiddleware(BaseMiddleware):
             event: TelegramObject,
             data: Dict[str, Any]
     ) -> Any:
+        """
+        Retrieve user from cache and API.
+
+        :param handler: Telegram handler object.
+        :param event: Telegram event object.
+        :param data: Workflow data.
+        :return: Handler result with BotUser instance inserted in a workflow data.
+        """
+
         from_user: AiogramUser | None = data.get("event_from_user")
         chat: Chat | None = data.get("event_chat")
 
@@ -54,6 +76,13 @@ class UserMiddleware(BaseMiddleware):
             router: Router,
             exclude: Set[str] | None = None
     ) -> None:
+        """
+        Set up middleware in every event observer.
+
+        :param router: Main router instance.
+        :param exclude: Exclude events.
+        """
+
         if exclude is None:
             exclude = set()
 
@@ -70,6 +99,14 @@ class UserMiddleware(BaseMiddleware):
             event: TelegramObject,
             data: Dict[str, Any]
     ) -> BotUser | None:
+        """
+        Tries to retrieve user from cache.
+        :param state: FSMContext instance.
+        :param event: Telegram event object.
+        :param data: Workflow data.
+        :return: BotUser instance if found, otherwise None.
+        """
+
         try:
             user_id = UUID(await state.get_value("user_id"))
 
@@ -90,6 +127,15 @@ class UserMiddleware(BaseMiddleware):
             event: TelegramObject,
             data: Dict[str, Any]
     ) -> BotUser | None:
+        """
+        Tries to retrieve user from API.
+
+        :param from_user: Aiogram user instance.
+        :param event: Telegram event object.
+        :param data: Workflow data.
+        :return: BotUser instance if found, otherwise None.
+        """
+
         user: User | None = await self._users.get_user(from_user.id)
 
         if user is None:
@@ -115,6 +161,13 @@ class UserMiddleware(BaseMiddleware):
             bot_user: BotUser,
             from_user: AiogramUser
     ) -> None:
+        """
+        Update user values if first name or username were updated.
+
+        :param bot_user: BotUser instance.
+        :param from_user: Aiogram user instance.
+        """
+
         update_values: Dict[str, Any] = {}
 
         if bot_user.first_name != from_user.first_name:
@@ -138,6 +191,15 @@ class UserMiddleware(BaseMiddleware):
             event: TelegramObject,
             chat: Chat | None = None
     ) -> None:
+        """
+        Update BotUser message info if exists, and set user UUID to state.
+
+        :param bot_user: BotUser instance.
+        :param state: FSMContext instance.
+        :param event: Telegram event object.
+        :param chat: Aiogram chat instance.
+        """
+
         if chat is not None:
             if bot_user.chat_id is None:
                 bot_user.chat_id = chat.id
