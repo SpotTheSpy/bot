@@ -356,6 +356,8 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             "reply_markup": reply_markup
         }
 
+        delete_message: bool = False
+
         if entities:
             params["parse_mode"] = None
 
@@ -388,6 +390,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                                 text=text,
                                 **params
                             )
+                            delete_message = True
                 else:
                     if self.has_photo:
                         params["caption_entities"] = params.pop("entities")
@@ -412,6 +415,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
                             caption=text,
                             **params
                         )
+                        delete_message = True
         except AiogramError as error:
             logger.warning(
                 f"{self.first_name} (id={self.telegram_id}) "
@@ -419,13 +423,14 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
             )
             return
         else:
-            try:
-                await self.bot.delete_message(
-                    self.chat_id,
-                    self.message_id
-                )
-            except AiogramError:
-                pass
+            if delete_message:
+                try:
+                    await self.bot.delete_message(
+                        self.chat_id,
+                        self.message_id
+                    )
+                except AiogramError:
+                    pass
 
         self.chat_id = new_message.chat.id
         self.message_id = new_message.message_id
@@ -761,7 +766,13 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         )
 
     @_with_workflow_data
-    async def restart_single_device_game(self) -> None:
+    async def restart_single_device_game(
+            self,
+            callback_query: CallbackQuery,
+            *,
+            state: FSMContext,
+            single_device_games: 'SingleDeviceGamesController',
+    ) -> None:
         """
         Restart a single-device game.
         """
@@ -771,8 +782,18 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         if game is None:
             return  # TODO: Error message
 
-        await self.end_single_device_game(game_id=game.game_id)
-        await self.start_single_device_game(player_amount=game.player_amount)
+        game = await single_device_games.restart_game(game.game_id)
+
+        player_index: int = 0
+        await state.update_data(game=game.to_json(), player_index=player_index)
+
+        await callback_query.answer()
+        await self._prepare_in_single_device_game(player_index, game.player_amount)
+
+        logger.info(
+            f"{self.first_name} (id={self.telegram_id}) "
+            f"started a single-device game"
+        )
 
     async def _prepare_in_single_device_game(
             self,

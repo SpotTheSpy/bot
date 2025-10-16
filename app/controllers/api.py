@@ -84,9 +84,12 @@ class APIController(ABC):
         :param kwargs: Additional headers.
         """
 
+        self._api_key: str = config.api_key.get_secret_value()
+        self._api_url: str = config.api_url
+
         self._cycles = cycles or config.api_retry_cycles
         self._timeout = timeout or config.api_retry_timeout
-        self._headers: Dict[str, Any] = {"API-Key": config.api_key, **kwargs}
+        self._headers: Dict[str, Any] = {"API-Key": self._api_key, **kwargs}
 
     async def _post(
             self,
@@ -110,7 +113,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.post(
-                    f"{config.api_url}/{path}",
+                    f"{self._api_url}/{path}",
                     **kwargs
                 )
 
@@ -141,7 +144,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.get(
-                    f"{config.api_url}/{path}",
+                    f"{self._api_url}/{path}",
                     **kwargs
                 )
 
@@ -172,7 +175,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.put(
-                    f"{config.api_url}/{path}",
+                    f"{self._api_url}/{path}",
                     **kwargs
                 )
 
@@ -203,7 +206,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.delete(
-                    f"{config.api_url}/{path}",
+                    f"{self._api_url}/{path}",
                     **kwargs
                 )
 
