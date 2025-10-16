@@ -76,7 +76,7 @@ class Config(BaseSettings):
     Timeout in seconds between retrying API calls.
     """
 
-    telegram_bot_start_url: str = "https://t.me/SpotTheSpyBot?start={payload}"
+    telegram_bot_start_url: str
     """
     Telegram bot URL template used to generate a bot deeplink.
     """
