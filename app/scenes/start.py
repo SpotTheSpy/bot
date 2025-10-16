@@ -9,6 +9,10 @@ from app.scenes.base import BaseScene
 
 
 class StartScene(BaseScene, state="start"):
+    """
+    Scene for a start menu.
+    """
+
     @on.message.enter()
     async def on_message_enter(
             self,
@@ -37,6 +41,11 @@ class StartScene(BaseScene, state="start"):
     ) -> None:
         await user.start_message(new_locale=new_locale)
         await callback_query.answer()
+
+        await asyncio.gather(
+            user.end_single_device_game(),
+            user.leave_multi_device_game(update_message=False)
+        )
 
     @on.message()
     async def on_message(

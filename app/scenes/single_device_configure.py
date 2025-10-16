@@ -9,6 +9,10 @@ from app.scenes.base import BaseScene
 
 
 class SingleDeviceConfigureScene(BaseScene, state="single_device_configure"):
+    """
+    Scene for configuring a single-device game.
+    """
+
     @on.callback_query.enter()
     async def on_enter(
             self,

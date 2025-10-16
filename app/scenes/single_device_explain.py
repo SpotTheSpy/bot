@@ -6,6 +6,10 @@ from app.scenes.base import BaseScene
 
 
 class SingleDeviceExplainScene(BaseScene, state="single_device_explain"):
+    """
+    Scene for explanation how to play a single-device game.
+    """
+
     @on.callback_query.enter()
     async def on_enter(
             self,

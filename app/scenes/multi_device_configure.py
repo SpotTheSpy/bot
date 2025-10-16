@@ -10,6 +10,10 @@ from app.scenes.base import BaseScene
 
 
 class MultiDeviceConfigureScene(BaseScene, state="multi_device_configure"):
+    """
+    Scene for configuring a multi-device game.
+    """
+
     @on.callback_query.enter()
     async def on_enter(
             self,

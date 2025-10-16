@@ -6,6 +6,10 @@ from app.scenes.base import BaseScene
 
 
 class ChooseDeviceScene(BaseScene, state="choose_device"):
+    """
+    Scene for choosing a device to play on.
+    """
+
     @on.callback_query.enter()
     async def on_enter(
             self,

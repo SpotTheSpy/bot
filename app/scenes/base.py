@@ -6,21 +6,27 @@ from aiogram.fsm.scene import Scene, on
 from aiogram.types import CallbackQuery
 
 from app.actions.back import BackAction
-from app.actions.menu import MenuAction
 from app.actions.switch_scene import SwitchSceneAction
 
 
 class BaseScene(Scene, ABC, state="base"):
-    async def on_menu(
-            self,
-            **kwargs
-    ) -> None:
-        await self.wizard.goto("start", **kwargs)
+    """
+    Base class for all scenes.
+
+    Implements basic behaviour for simple actions like switching scenes and returning to a previous scene,
+    and allows to override it in subclasses.
+    """
 
     async def on_back(
             self,
             **kwargs
     ) -> None:
+        """
+        Basic method for returning to a previous scene.
+
+        :param kwargs: Additional arguments.
+        """
+
         await self.wizard.back(**kwargs)
 
     async def on_switch_scene(
@@ -28,24 +34,24 @@ class BaseScene(Scene, ABC, state="base"):
             callback_data: SwitchSceneAction,
             **kwargs
     ) -> None:
+        """
+        Basic method for switching a scene.
+
+        :param callback_data: Scene's state for switching.
+        :param kwargs: Additional arguments.
+        """
+
         await self.wizard.goto(callback_data.scene, **kwargs)
 
     async def on_scene_leave(
             self,
             **kwargs
     ) -> None:
-        pass
+        """
+        Basic method for leaving a scene.
 
-    @on.callback_query(MenuAction.filter())
-    async def __on_menu(
-            self,
-            callback_query: CallbackQuery,
-            **kwargs
-    ) -> None:
-        await self._prepare_coroutine(
-            self.on_menu,
-            **kwargs
-        )
+        :param kwargs: Additional arguments.
+        """
 
     @on.callback_query(BackAction.filter())
     async def __on_back(
@@ -88,6 +94,14 @@ class BaseScene(Scene, ABC, state="base"):
             coroutine: Callable[..., Awaitable[None]],
             **kwargs
     ) -> Awaitable[None]:
+        """
+        Create a coroutine and insert only available arguments to avoid exceptions.
+
+        :param coroutine: Coroutine callable to create.
+        :param kwargs: Additional arguments for passing to coroutine.
+        :return: Awaitable coroutine.
+        """
+
         arg_spec: FullArgSpec = getfullargspec(coroutine)
 
         args: List[str] = arg_spec.args

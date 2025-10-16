@@ -8,6 +8,10 @@ from app.scenes.base import BaseScene
 
 
 class LanguageScene(BaseScene, state="language"):
+    """
+    Scene for choosing a bot language.
+    """
+
     @on.callback_query.enter()
     async def on_enter(
             self,
