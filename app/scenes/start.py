@@ -18,9 +18,9 @@ class StartScene(BaseScene, state="start"):
             self,
             message: Message,
             user: BotUser,
-            locale: str | None = None
+            new_locale: str | None = None
     ) -> None:
-        await user.new_start_message(locale=locale)
+        await user.new_start_message(new_locale=new_locale)
 
         logger.info(
             f"{message.from_user.first_name} (id={message.from_user.id}) "
