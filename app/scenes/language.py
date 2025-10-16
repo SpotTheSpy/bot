@@ -28,7 +28,7 @@ class LanguageScene(BaseScene, state="language"):
             callback_data: ChooseLanguageAction,
             user: BotUser
     ) -> None:
-        locale: str | None = await user.choose_language(new_language=callback_data.language_type)
+        locale: str | None = await user.choose_language(new_language=callback_data.locale)
 
         await self.wizard.back(
             user=user,

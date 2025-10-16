@@ -119,19 +119,19 @@ class KeyboardFactory:
                 [
                     InlineKeyboardButton(
                         text=_("button.language.en"),
-                        callback_data=ChooseLanguageAction(language_type=Locale.ENGLISH).pack()
+                        callback_data=ChooseLanguageAction(locale=Locale.ENGLISH).pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
                         text=_("button.language.uk"),
-                        callback_data=ChooseLanguageAction(language_type=Locale.UKRAINIAN).pack()
+                        callback_data=ChooseLanguageAction(locale=Locale.UKRAINIAN).pack()
                     )
                 ],
                 [
                     InlineKeyboardButton(
                         text=_("button.language.ru"),
-                        callback_data=ChooseLanguageAction(language_type=Locale.RUSSIAN).pack()
+                        callback_data=ChooseLanguageAction(locale=Locale.RUSSIAN).pack()
                     )
                 ],
                 [

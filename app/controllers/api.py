@@ -20,7 +20,14 @@ class APIConfig:
     """
 
     api_url: str
+    """
+    Base URL for all api endpoints.
+    """
+
     api_key: str
+    """
+    API-Key for authentication.
+    """
 
 
 class AttributedDict(dict):

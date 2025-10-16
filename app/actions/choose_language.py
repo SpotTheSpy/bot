@@ -5,6 +5,12 @@ from app.enums.locale import Locale
 class ChooseLanguageAction(Action, prefix="choose_language"):
     """
     Callback action for choosing a new language.
+
+    Attributes:
+        locale: New locale to be set.
     """
 
-    language_type: Locale
+    locale: Locale
+    """
+    New locale to be set.
+    """
