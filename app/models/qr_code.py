@@ -2,7 +2,7 @@ from typing import Any, ClassVar
 from uuid import UUID
 
 from app.models.redis import AbstractRedisModel
-from app.parameters import Parameters
+from config import config
 
 
 class QRCode(AbstractRedisModel):
@@ -41,4 +41,4 @@ class BlurredQRCode(QRCode):
     Represents a blurred QR-Code in a Redis database.
     """
 
-    game_id: str = Parameters.DEFAULT_BLURRED_QR_CODE_KEY
+    game_id: str = config.default_blurred_qr_code_key

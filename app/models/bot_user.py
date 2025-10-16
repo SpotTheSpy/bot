@@ -36,10 +36,9 @@ from app.models.qr_code import QRCode, BlurredQRCode
 from app.models.redis import AbstractRedisModel
 from app.models.single_device_game import SingleDeviceGame
 from app.models.user import User
-from app.parameters import Parameters
 from app.utils.dict_factory import DictFactory
 from app.utils.keyboard_factory import KeyboardFactory
-from config import Config
+from config import Config, config
 
 if TYPE_CHECKING:
     from app.controllers.multi_device_games import MultiDeviceGamesController
@@ -576,15 +575,15 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         """
 
         if player_amount is None:
-            player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
+            player_amount: int = config.default_player_amount
 
         await state.update_data(player_amount=player_amount)
 
         await self.edit_message(
             text=_("message.single_device.configure"),
             reply_markup=KeyboardFactory.single_device_configure_keyboard(
-                min_amount=Parameters.MIN_PLAYER_AMOUNT,
-                max_amount=Parameters.MAX_PLAYER_AMOUNT,
+                min_amount=config.min_player_amount,
+                max_amount=config.max_player_amount,
                 selected_amount=player_amount
             )
         )
@@ -830,7 +829,7 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         """
 
         if player_amount is None:
-            player_amount: int = Parameters.DEFAULT_PLAYER_AMOUNT
+            player_amount: int = config.default_player_amount
 
         await state.update_data(player_amount=player_amount)
 
@@ -838,8 +837,8 @@ class BotUser(User, AbstractRedisModel, arbitrary_types_allowed=True):
         await self.edit_message(
             text=_("message.multi_device.configure"),
             reply_markup=KeyboardFactory.multi_device_configure_keyboard(
-                min_amount=Parameters.MIN_PLAYER_AMOUNT,
-                max_amount=Parameters.MAX_PLAYER_AMOUNT,
+                min_amount=config.min_player_amount,
+                max_amount=config.max_player_amount,
                 selected_amount=player_amount
             )
         )

@@ -1,33 +1,11 @@
 import asyncio
 from abc import ABC
-from dataclasses import dataclass
 from functools import wraps
 from typing import Callable, Any, Dict
 
 from aiohttp import ClientConnectorError, ClientSession, ClientResponse
 
-from app.parameters import Parameters
-
-
-@dataclass(frozen=True)
-class APIConfig:
-    """
-    Configuration model for API controllers.
-
-    Attributes:
-        api_url: Base URL for all api endpoints.
-        api_key: API-Key for authentication.
-    """
-
-    api_url: str
-    """
-    Base URL for all api endpoints.
-    """
-
-    api_key: str
-    """
-    API-Key for authentication.
-    """
+from config import config
 
 
 class AttributedDict(dict):
@@ -91,8 +69,6 @@ class AttributedDict(dict):
 class APIController(ABC):
     def __init__(
             self,
-            config: APIConfig,
-            *,
             cycles: int | None = None,
             timeout: int | None = None,
             **kwargs: Any
@@ -108,10 +84,9 @@ class APIController(ABC):
         :param kwargs: Additional headers.
         """
 
-        self._config = config
-        self._cycles = cycles or Parameters.DEFAULT_API_RETRY_CYCLES
-        self._timeout = timeout or Parameters.DEFAULT_API_RETRY_TIMEOUT
-        self._headers: Dict[str, Any] = {"API-Key": self._config.api_key, **kwargs}
+        self._cycles = cycles or config.api_retry_cycles
+        self._timeout = timeout or config.api_retry_timeout
+        self._headers: Dict[str, Any] = {"API-Key": config.api_key, **kwargs}
 
     async def _post(
             self,
@@ -135,7 +110,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.post(
-                    f"{self._config.api_url}/{path}",
+                    f"{config.api_url}/{path}",
                     **kwargs
                 )
 
@@ -166,7 +141,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.get(
-                    f"{self._config.api_url}/{path}",
+                    f"{config.api_url}/{path}",
                     **kwargs
                 )
 
@@ -197,7 +172,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.put(
-                    f"{self._config.api_url}/{path}",
+                    f"{config.api_url}/{path}",
                     **kwargs
                 )
 
@@ -228,7 +203,7 @@ class APIController(ABC):
 
             async with client_session as session:
                 request = session.delete(
-                    f"{self._config.api_url}/{path}",
+                    f"{config.api_url}/{path}",
                     **kwargs
                 )
 

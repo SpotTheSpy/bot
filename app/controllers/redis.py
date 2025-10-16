@@ -4,7 +4,7 @@ from typing import Any, Tuple, List, Generic, TypeVar, Type, Callable, Dict
 from redis.asyncio import Redis
 
 from app.models.redis import AbstractRedisModel
-from app.parameters import Parameters
+from config import config
 
 T = TypeVar('T', bound=AbstractRedisModel)
 
@@ -40,7 +40,7 @@ class RedisController(Generic[T]):
         """
 
         self._redis: Redis = redis
-        self._default_key: str = default_key or Parameters.DEFAULT_REDIS_KEY
+        self._default_key: str = default_key or config.default_redis_key
 
     @property
     def object_class(self) -> Type[T]:

@@ -50,3 +50,47 @@ class Config(BaseSettings):
     """
     DSN for Redis connection.
     """
+
+    min_player_amount: int = 3
+    """
+    Minimum player count in any game.
+    """
+
+    max_player_amount: int = 8
+    """
+    Maximum player count in any game.
+    """
+
+    default_player_amount: int = 4
+    """
+    Default player count in any game.
+    """
+
+    api_retry_cycles: int = 3
+    """
+    Number of times to retry API calls if the ASGI server is temporarily unavailable.
+    """
+
+    api_retry_timeout: int = 1
+    """
+    Timeout in seconds between retrying API calls.
+    """
+
+    telegram_bot_start_url: str = "https://t.me/SpotTheSpyBot?start={payload}"
+    """
+    Telegram bot URL template used to generate a bot deeplink.
+    """
+
+    default_redis_key: str = "spotthespy"
+    """
+    Default prefix for all Redis keys managed by Redis controllers.
+    """
+
+    default_blurred_qr_code_key: str = "blurred"
+    """
+    Default Redis key for blurred QR-Code file ID.
+    """
+
+
+# Main Config instance.
+config = Config(_env_file=".env")

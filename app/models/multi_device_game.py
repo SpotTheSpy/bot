@@ -11,7 +11,7 @@ from app.enums.payload import Payload
 from app.enums.player_role import PlayerRole
 from app.models.abstract import AbstractModel
 from app.models.qr_code import QRCode
-from app.parameters import Parameters
+from config import config
 
 # Loading blurred QR-Code to memory.
 with open("app/data/blurred_qr_code.jpg", "rb") as __file:
@@ -128,7 +128,7 @@ class MultiDeviceGame(AbstractModel):
 
         payload: str = f"{Payload.JOIN}:{self.game_id}"
         encoded_payload: str = urlsafe_b64encode(payload.encode("utf-8")).decode("utf-8").replace("=", "")
-        return Parameters.TELEGRAM_BOT_START_URL.format(payload=encoded_payload)
+        return config.telegram_bot_start_url.format(payload=encoded_payload)
 
     async def get_qr_code(
             self,
@@ -144,7 +144,7 @@ class MultiDeviceGame(AbstractModel):
         """
 
         if self.qr_code_url is None:
-            qr_code: QRCode = await qr_codes.get(Parameters.DEFAULT_BLURRED_QR_CODE_KEY)
+            qr_code: QRCode = await qr_codes.get(config.default_blurred_qr_code_key)
 
             if qr_code is None or qr_code.file_id is None:
                 return BufferedInputFile(self.__BLURRED_QR_CODE_DATA, "blurred.jpg")

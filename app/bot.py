@@ -5,7 +5,6 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.i18n import I18n
 from redis.asyncio import Redis
 
-from app.controllers.api import APIConfig
 from app.controllers.multi_device_games import MultiDeviceGamesController
 from app.controllers.redis import RedisController
 from app.controllers.single_device_games import SingleDeviceGamesController
@@ -33,10 +32,9 @@ config = Config(_env_file=".env")
 def create_dispatcher() -> Dispatcher:
     i18n = I18n(path="locales", default_locale="en", domain="messages")
 
-    api_config = APIConfig(config.api_url, config.api_key.get_secret_value())
-    users = UsersController(api_config)
-    single_device_games = SingleDeviceGamesController(api_config)
-    multi_device_games = MultiDeviceGamesController(api_config)
+    users = UsersController()
+    single_device_games = SingleDeviceGamesController()
+    multi_device_games = MultiDeviceGamesController()
 
     redis = Redis.from_url(config.redis_dsn.get_secret_value())
     bot_users = RedisController[BotUser](redis)
