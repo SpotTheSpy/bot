@@ -7,7 +7,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.loggers import event
 
-from app.bot.bot import create_dispatcher
+from src.bot.bot import create_dispatcher
 from config import config
 
 
