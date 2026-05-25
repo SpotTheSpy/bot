@@ -1,0 +1,40 @@
+services:
+  # PostgreSQL Database.
+  spotthespy_bot_postgres:
+    container_name: spotthespy_bot_postgres
+    image: postgres:latest
+    restart: on-failure
+    env_file: ".postgres.env"
+    ports:
+      - "5433:5432"
+    volumes:
+      - "spotthespy-postgres-data:/var/lib/postgresql"
+
+  # Redis database for operating games and caching data.
+  spotthespy_bot_redis:
+    container_name: spotthespy_bot_redis
+    image: redis:latest
+    restart: on-failure
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "spotthespy-redis-data:/data"
+      - "./redis.conf:/usr/local/etc/redis/redis.conf"
+
+  # Broker for managing celery tasks.
+  spotthespy_bot_rabbitmq:
+    container_name: spotthespy_bot_rabbitmq
+    image: rabbitmq:3-management
+    restart: on-failure
+    env_file: ".rabbitmq.env"
+    ports:
+      - "5672:5672"
+      - "5673:15672"
+    volumes:
+      - "spotthespy-rabbitmq-data:/data"
+
+volumes:
+  spotthespy-postgres-data:
+  spotthespy-redis-data:
+  spotthespy-rabbitmq-data:

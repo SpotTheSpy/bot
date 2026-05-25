@@ -1,0 +1,11 @@
+*.env
+*.conf
+.venv
+.idea
+.claude
+
+__pycache__/
+*.py[cod]
+*.so
+
+celerybeat*
