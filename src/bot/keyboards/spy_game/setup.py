@@ -4,8 +4,12 @@ from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from config import config
 from src.bot.actions.back import BackAction
-from src.bot.actions.spy.setup import SpySetupAction, SpySetupPlayerAmountAction, \
-    SpySetupCategoryAction, SpySetupSpyCountAction
+from src.bot.actions.spy_game.setup import (
+    SpyGameSetupAction,
+    SpyGameSetupPlayerAmountAction,
+    SpyGameSetupCategoryAction,
+    SpyGameSetupSpyCountAction,
+)
 from src.core.enums.spy_category import SpyCategory
 from src.core.enums.spy_count import SpyCount
 from src.core.enums.spy_game_parameter import SpyGameParameter
@@ -24,7 +28,7 @@ def spy_game_setup_keyboard(
                         "setup-spy-game.button-player-count",
                         player_count=player_count,
                     ),
-                    callback_data=SpySetupAction(game_parameter=SpyGameParameter.PLAYER_COUNT).pack(),
+                    callback_data=SpyGameSetupAction(game_parameter=SpyGameParameter.PLAYER_COUNT).pack(),
                 )
             ],
             [
@@ -33,7 +37,7 @@ def spy_game_setup_keyboard(
                         "setup-spy-game.button-category",
                         category=category,
                     ),
-                    callback_data=SpySetupAction(game_parameter=SpyGameParameter.CATEGORY).pack(),
+                    callback_data=SpyGameSetupAction(game_parameter=SpyGameParameter.CATEGORY).pack(),
                 )
             ],
             [
@@ -42,7 +46,7 @@ def spy_game_setup_keyboard(
                         "setup-spy-game.button-spy-count",
                         spy_count=spy_count,
                     ),
-                    callback_data=SpySetupAction(game_parameter=SpyGameParameter.SPY_COUNT).pack(),
+                    callback_data=SpyGameSetupAction(game_parameter=SpyGameParameter.SPY_COUNT).pack(),
                 )
             ],
             [
@@ -68,7 +72,7 @@ def spy_game_setup_player_count_keyboard(
                     player_count=player_count,
                     selected=str(player_count == selected_player_count).lower(),
                 ),
-                callback_data=SpySetupPlayerAmountAction(player_count=player_count).pack(),
+                callback_data=SpyGameSetupPlayerAmountAction(player_count=player_count).pack(),
             )
         )
 
@@ -98,7 +102,7 @@ def spy_game_setup_category_keyboard(
                     category=category,
                     selected=str(category == selected_category).lower(),
                 ),
-                callback_data=SpySetupCategoryAction(category=category).pack(),
+                callback_data=SpyGameSetupCategoryAction(category=category).pack(),
             )
         )
 
@@ -128,7 +132,7 @@ def spy_game_setup_spy_count_keyboard(
                     spy_count=spy_count,
                     selected=str(spy_count == selected_spy_count).lower(),
                 ),
-                callback_data=SpySetupSpyCountAction(spy_count=spy_count).pack(),
+                callback_data=SpyGameSetupSpyCountAction(spy_count=spy_count).pack(),
             )
         )
 

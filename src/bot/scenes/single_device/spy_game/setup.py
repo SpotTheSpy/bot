@@ -7,13 +7,13 @@ from aiogram.types import CallbackQuery, Message
 from aiogram_i18n import I18nContext
 
 from config import config
-from src.bot.actions.spy.setup import (
+from src.bot.actions.spy_game.setup import (
     SpyGameSetupAction,
     SpyGameSetupPlayerAmountAction,
     SpyGameSetupCategoryAction,
     SpyGameSetupSpyCountAction,
 )
-from src.bot.actions.spy.play import SpyGamePlayAction
+from src.bot.actions.spy_game.play import SpyGamePlayAction
 from src.bot.keyboards.spy_game.setup import (
     spy_game_setup_keyboard,
     spy_game_setup_player_count_keyboard,
