@@ -8,8 +8,10 @@ from aiogram_i18n.cores import FluentCompileCore
 from redis.asyncio import Redis
 
 from config import config
+from src.bot.locale_manager import LocaleManager
 from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
+from src.bot.scenes.language import LanguageScene
 from src.bot.scenes.start import StartScene
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
@@ -65,6 +67,9 @@ def create_dispatcher() -> Dispatcher:
             path="locales/{locale}",
             default_locale="en",
         ),
+        manager=LocaleManager(
+            default_locale="en",
+        )
     ).setup(dispatcher)
 
     dispatcher.include_routers(
@@ -73,6 +78,7 @@ def create_dispatcher() -> Dispatcher:
 
     SceneRegistry(dispatcher).add(
         StartScene,
+        LanguageScene,
     )
 
     return dispatcher

@@ -48,9 +48,16 @@ class UserMiddleware(BaseMiddleware):
             user: RedisUser | None = await self._try_get_user_from_redis(user_id, user_controller)
 
             if user is not None:
+                message_id: int | None = user.message.message_id
+
                 user.message.bot = event.bot
                 data["user"] = user
-                return await handler(event, data)
+                result: Any = await handler(event, data)
+
+                if message_id != user.message.message_id:
+                    await user_controller.set(user, expire=TimeStamp.DAY)
+
+                return result
 
         postgres: PostgresController = data.get("postgres")
         if postgres is None:
@@ -67,6 +74,13 @@ class UserMiddleware(BaseMiddleware):
             )
 
         user: RedisUser = await self._set_user_to_redis(user, user_controller, event.bot)
+        message_id: int | None = user.message.message_id
+
+        data["user"] = user
+        result: Any = await handler(event, data)
+
+        if message_id != user.message.message_id:
+            await user_controller.set(user, expire=TimeStamp.DAY)
 
         await self._set_user_id_to_redis(
             TelegramUser.new(
@@ -76,8 +90,7 @@ class UserMiddleware(BaseMiddleware):
             telegram_user_controller,
         )
 
-        data["user"] = user
-        return await handler(event, data)
+        return result
 
     @staticmethod
     async def _try_get_user_id_from_redis(
@@ -92,7 +105,12 @@ class UserMiddleware(BaseMiddleware):
         :return: UUID if exists.
         """
 
-        return await telegram_user_controller.get(telegram_id)
+        telegram_user: TelegramUser = await telegram_user_controller.get(telegram_id)
+
+        if telegram_user is None:
+            return None
+
+        return telegram_user.user_id
 
     @staticmethod
     async def _try_get_user_from_redis(
@@ -179,6 +197,7 @@ class UserMiddleware(BaseMiddleware):
         """
 
         new_user: RedisUser = RedisUser.new(
+            user.id,
             user.telegram_id,
             user.first_name,
             user.settings.locale,

@@ -1,4 +1,4 @@
-from enum import StrEnum
+from enum import StrEnum, auto
 from typing import Any
 
 
@@ -7,7 +7,20 @@ class Locale(StrEnum):
     Enum of all supported locales.
     """
 
-    ENGLISH = "en"
+    EN = auto()
+    """
+    English.
+    """
+
+    UK = auto()
+    """
+    Ukrainian.
+    """
+
+    RU = auto()
+    """
+    Russian.
+    """
 
     @classmethod
     def _missing_(
@@ -15,7 +28,7 @@ class Locale(StrEnum):
             value: Any,
     ) -> "Locale":
         """
-        Defaults to ENGLISH if the provided locale is not supported.
+        Defaults to EN if the provided locale is not supported.
         """
 
-        return cls.ENGLISH
+        return cls.EN

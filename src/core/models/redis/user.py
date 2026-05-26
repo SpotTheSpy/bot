@@ -5,7 +5,7 @@ from uuid import UUID
 from aiogram import Bot
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import InlineKeyboardMarkup, LinkPreviewOptions
-from uuid_extensions import uuid7
+from aiogram.types import Message as AiogramMessage
 
 from src.core.enums.locale import Locale
 from src.core.models.abstract import AbstractModel
@@ -104,7 +104,7 @@ class Message(AbstractModel):
 
         new_message, *_ = await asyncio.gather(*coroutines, return_exceptions=True)
 
-        if not isinstance(new_message, Message):
+        if not isinstance(new_message, AiogramMessage):
             return
 
         self.message_id = new_message.message_id
@@ -200,13 +200,14 @@ class User(RedisModel):
     @classmethod
     def new(
             cls,
+            user_id: UUID,
             telegram_id: int,
             first_name: str,
             locale: Locale,
             message: Message,
     ) -> "User":
         return cls(
-            id=uuid7(),
+            id=user_id,
             telegram_id=telegram_id,
             first_name=first_name,
             locale=locale,
