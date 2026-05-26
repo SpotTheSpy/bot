@@ -7,13 +7,14 @@ from aiogram.types import CallbackQuery, Message
 from aiogram_i18n import I18nContext
 
 from config import config
-from src.bot.actions.single_device_games.spy.setup import (
-    SpySetupAction,
-    SpySetupPlayerAmountAction,
-    SpySetupCategoryAction,
-    SpySetupSpyCountAction,
+from src.bot.actions.spy.setup import (
+    SpyGameSetupAction,
+    SpyGameSetupPlayerAmountAction,
+    SpyGameSetupCategoryAction,
+    SpyGameSetupSpyCountAction,
 )
-from src.bot.keyboards.setup import (
+from src.bot.actions.spy.play import SpyGamePlayAction
+from src.bot.keyboards.spy_game.setup import (
     spy_game_setup_keyboard,
     spy_game_setup_player_count_keyboard,
     spy_game_setup_category_keyboard,
@@ -65,7 +66,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
 
         await callback_query.answer()
 
-    @on.callback_query(SpySetupAction.filter(F.game_parameter == SpyGameParameter.PLAYER_COUNT))
+    @on.callback_query(SpyGameSetupAction.filter(F.game_parameter == SpyGameParameter.PLAYER_COUNT))
     async def on_setup_player_count(
             self,
             callback_query: CallbackQuery,
@@ -87,7 +88,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
 
         await callback_query.answer()
 
-    @on.callback_query(SpySetupAction.filter(F.game_parameter == SpyGameParameter.CATEGORY))
+    @on.callback_query(SpyGameSetupAction.filter(F.game_parameter == SpyGameParameter.CATEGORY))
     async def on_setup_category(
             self,
             callback_query: CallbackQuery,
@@ -109,7 +110,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
 
         await callback_query.answer()
 
-    @on.callback_query(SpySetupAction.filter(F.game_parameter == SpyGameParameter.SPY_COUNT))
+    @on.callback_query(SpyGameSetupAction.filter(F.game_parameter == SpyGameParameter.SPY_COUNT))
     async def on_setup_spy_count(
             self,
             callback_query: CallbackQuery,
@@ -131,11 +132,11 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
 
         await callback_query.answer()
 
-    @on.callback_query(SpySetupPlayerAmountAction.filter())
+    @on.callback_query(SpyGameSetupPlayerAmountAction.filter())
     async def on_choose_player_count(
             self,
             callback_query: CallbackQuery,
-            callback_data: SpySetupPlayerAmountAction,
+            callback_data: SpyGameSetupPlayerAmountAction,
             user: User,
             state: FSMContext,
             i18n: I18nContext,
@@ -148,11 +149,11 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
         await callback_query.answer()
         await state.update_data(player_count=callback_data.player_count)
 
-    @on.callback_query(SpySetupCategoryAction.filter())
+    @on.callback_query(SpyGameSetupCategoryAction.filter())
     async def on_choose_category(
             self,
             callback_query: CallbackQuery,
-            callback_data: SpySetupCategoryAction,
+            callback_data: SpyGameSetupCategoryAction,
             user: User,
             state: FSMContext,
             i18n: I18nContext,
@@ -165,11 +166,11 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
         await callback_query.answer()
         await state.update_data(category=callback_data.category)
 
-    @on.callback_query(SpySetupSpyCountAction.filter())
+    @on.callback_query(SpyGameSetupSpyCountAction.filter())
     async def on_choose_spy_count(
             self,
             callback_query: CallbackQuery,
-            callback_data: SpySetupSpyCountAction,
+            callback_data: SpyGameSetupSpyCountAction,
             user: User,
             state: FSMContext,
             i18n: I18nContext,
@@ -182,24 +183,24 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
         await callback_query.answer()
         await state.update_data(spy_count=callback_data.spy_count)
 
-    """@on.callback_query(SingleDevicePlayAction.filter())
+    @on.callback_query(SpyGamePlayAction.filter())
     async def on_play(
             self,
             callback_query: CallbackQuery,
-            user: BotUser,
-            state: FSMContext
+            user: User,
+            state: FSMContext,
     ) -> None:
         data: Dict[str, Any] = await state.get_data()
 
         await self.wizard.goto(
-            "single_device_play",
+            "single_device_spy_game_play",
             user=user,
             player_count=data.get("player_count"),
             category=data.get("category"),
             spy_count=data.get("spy_count")
         )
 
-        await callback_query.answer()"""
+        await callback_query.answer()
 
     @on.callback_query.leave()
     async def on_leave(

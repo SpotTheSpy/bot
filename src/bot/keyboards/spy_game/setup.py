@@ -4,7 +4,7 @@ from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from config import config
 from src.bot.actions.back import BackAction
-from src.bot.actions.single_device_games.spy.setup import SpySetupAction, SpySetupPlayerAmountAction, \
+from src.bot.actions.spy.setup import SpySetupAction, SpySetupPlayerAmountAction, \
     SpySetupCategoryAction, SpySetupSpyCountAction
 from src.core.enums.spy_category import SpyCategory
 from src.core.enums.spy_count import SpyCount

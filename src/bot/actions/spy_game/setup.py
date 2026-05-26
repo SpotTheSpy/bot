@@ -4,7 +4,7 @@ from src.core.enums.spy_count import SpyCount
 from src.core.enums.spy_game_parameter import SpyGameParameter
 
 
-class SpySetupAction(BaseAction, prefix="spy_setup"):
+class SpyGameSetupAction(BaseAction, prefix="spy_game_setup"):
     """
     Callback action for configuring a spy game parameter.
     """
@@ -15,7 +15,7 @@ class SpySetupAction(BaseAction, prefix="spy_setup"):
     """
 
 
-class SpySetupPlayerAmountAction(BaseAction, prefix="spy_setup_player_count"):
+class SpyGameSetupPlayerAmountAction(BaseAction, prefix="spy_game_setup_player_count"):
     """
     Callback action for choosing player count in a spy game.
     """
@@ -26,7 +26,7 @@ class SpySetupPlayerAmountAction(BaseAction, prefix="spy_setup_player_count"):
     """
 
 
-class SpySetupCategoryAction(BaseAction, prefix="spy_setup_category"):
+class SpyGameSetupCategoryAction(BaseAction, prefix="spy_game_setup_category"):
     """
     Callback action for configuring a spy game secret word category.
     """
@@ -37,7 +37,7 @@ class SpySetupCategoryAction(BaseAction, prefix="spy_setup_category"):
     """
 
 
-class SpySetupSpyCountAction(BaseAction, prefix="spy_setup_spy_count"):
+class SpyGameSetupSpyCountAction(BaseAction, prefix="spy_game_setup_spy_count"):
     """
     Callback action for configuring a spy game secret word category.
     """
