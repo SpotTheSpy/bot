@@ -51,6 +51,11 @@ class Config(BaseSettings):
     URL path by which telegram will send updates (Required only if webhook is used).
     """
 
+    default_redis_key: str = "spotthespy"
+    """
+    Default Redis object key.
+    """
+
 
 # Main Config instance.
 config = Config(_env_file=".env")

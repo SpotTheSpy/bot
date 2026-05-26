@@ -1,10 +1,14 @@
 from aiogram import Dispatcher, BaseMiddleware
 from aiogram.fsm.scene import SceneRegistry
+from aiogram.fsm.storage.base import DefaultKeyBuilder
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.fsm.strategy import FSMStrategy
 from aiogram_i18n import I18nMiddleware
 from aiogram_i18n.cores import FluentCompileCore
+from redis.asyncio import Redis
 
 from config import config
+from src.core.controllers.postgres_controller import PostgresController
 
 
 def _register_middlewares(
@@ -29,9 +33,21 @@ def create_dispatcher() -> Dispatcher:
     :return: Dispatcher instance.
     """
 
+    postgres: PostgresController = PostgresController.from_dsn(config.postgres_dsn.get_secret_value())
+    redis: Redis = Redis.from_url(config.redis_dsn.get_secret_value(), decode_responses=True)
+
     dispatcher = Dispatcher(
+        storage=RedisStorage(
+            redis,
+            key_builder=DefaultKeyBuilder(
+                prefix=config.default_redis_key,
+                with_destiny=True,
+            ),
+        ),
         fsm_strategy=FSMStrategy.GLOBAL_USER,
         config=config,
+        postgres=postgres,
+        redis=redis,
     )
 
     _register_middlewares(

@@ -6,9 +6,9 @@ from sqlalchemy.ext.asyncio import AsyncEngine, async_sessionmaker, AsyncSession
 from src.core.controllers.session import AbstractSessionController
 
 
-class DatabaseController(AbstractSessionController[AsyncSession]):
+class PostgresController(AbstractSessionController[AsyncSession]):
     """
-    Database session controller. Creates only one session per instance,
+    PostgreSQL session controller. Creates only one session per instance,
     and yields it via async context manager.
     """
 
