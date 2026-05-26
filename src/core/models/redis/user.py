@@ -1,4 +1,4 @@
-from typing import Any, ClassVar
+from typing import ClassVar
 from uuid import UUID
 
 from aiogram import Bot

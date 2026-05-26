@@ -2,7 +2,6 @@ from typing import Callable, Any, Awaitable, Dict
 from uuid import UUID
 
 from aiogram import BaseMiddleware, Bot
-from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject, User as AiogramUser
 from sqlalchemy import select, Result
 from sqlalchemy.orm import joinedload
@@ -12,6 +11,7 @@ from src.core.controllers.redis import RedisController
 from src.core.enums.locale import Locale
 from src.core.enums.time_stamp import TimeStamp
 from src.core.models.postgres import User as PostgresUser, UserSettings
+from src.core.models.redis.telegram_user import TelegramUser
 from src.core.models.redis.user import User as RedisUser, Message
 
 
@@ -34,13 +34,15 @@ class UserMiddleware(BaseMiddleware):
         if from_user is None:
             return await handler(event, data)
 
-        state: FSMContext = data.get("state")
+        telegram_user_controller: RedisController[TelegramUser] = data.get("telegram_user_controller")
+        if telegram_user_controller is None:
+            raise ValueError("Telegram user controller instance is not set.")
 
         user_controller: RedisController[RedisUser] = data.get("user_controller")
         if user_controller is None:
             raise ValueError("User controller instance is not set.")
 
-        user_id: UUID | None = await self._try_get_user_id_from_state(state)
+        user_id: UUID | None = await self._try_get_user_id_from_redis(from_user.id, telegram_user_controller)
 
         if user_id is not None:
             user: RedisUser | None = await self._try_get_user_from_redis(user_id, user_controller)
@@ -65,31 +67,32 @@ class UserMiddleware(BaseMiddleware):
             )
 
         user: RedisUser = await self._set_user_to_redis(user, user_controller, event.bot)
-        await self._set_user_id_to_state(user.id, state)
+
+        await self._set_user_id_to_redis(
+            TelegramUser.new(
+                user.telegram_id,
+                user.id,
+            ),
+            telegram_user_controller,
+        )
 
         data["user"] = user
         return await handler(event, data)
 
     @staticmethod
-    async def _try_get_user_id_from_state(
-            state: FSMContext,
+    async def _try_get_user_id_from_redis(
+            telegram_id: int,
+            telegram_user_controller: RedisController[TelegramUser],
     ) -> UUID | None:
         """
         Tries to get user ID from state, None if absent.
 
-        :param state: FSMContext instance.
+        :param telegram_id: User's telegram ID.
+        :param telegram_user_controller: Telegram user controller instance.
         :return: UUID if exists.
         """
 
-        user_id: str | None = await state.get_value("user_id")
-
-        if user_id is None:
-            return
-
-        try:
-            return UUID(user_id)
-        except ValueError:
-            pass
+        return await telegram_user_controller.get(telegram_id)
 
     @staticmethod
     async def _try_get_user_from_redis(
@@ -191,15 +194,15 @@ class UserMiddleware(BaseMiddleware):
         return new_user
 
     @staticmethod
-    async def _set_user_id_to_state(
-            user_id: UUID,
-            state: FSMContext,
+    async def _set_user_id_to_redis(
+            telegram_user: TelegramUser,
+            telegram_user_controller: RedisController[TelegramUser],
     ) -> None:
         """
         Sets user ID to state.
 
-        :param user_id: User ID.
-        :param state: FSMContext instance.
+        :param telegram_user: Telegram User object.
+        :param telegram_user_controller: Telegram user controller instance.
         """
 
-        await state.update_data(user_id=str(user_id))
+        await telegram_user_controller.set(telegram_user, expire=TimeStamp.DAY)

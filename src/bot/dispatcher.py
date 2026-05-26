@@ -1,5 +1,4 @@
 from aiogram import Dispatcher, BaseMiddleware
-from aiogram.fsm.scene import SceneRegistry
 from aiogram.fsm.storage.base import DefaultKeyBuilder
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.fsm.strategy import FSMStrategy
@@ -12,6 +11,7 @@ from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
+from src.core.models.redis.telegram_user import TelegramUser
 from src.core.models.redis.user import User
 
 
@@ -53,6 +53,7 @@ def create_dispatcher() -> Dispatcher:
         postgres=postgres,
         redis=redis,
         user_controller=RedisController[User](redis),
+        telegram_user_controller=RedisController[TelegramUser](redis),
     )
 
     _register_middlewares(
