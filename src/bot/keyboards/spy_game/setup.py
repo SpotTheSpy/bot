@@ -4,6 +4,7 @@ from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from config import config
 from src.bot.actions.back import BackAction
+from src.bot.actions.spy_game.play import SpyGamePlayAction
 from src.bot.actions.spy_game.setup import (
     SpyGameSetupAction,
     SpyGameSetupPlayerAmountAction,
@@ -47,6 +48,12 @@ def spy_game_setup_keyboard(
                         spy_count=spy_count,
                     ),
                     callback_data=SpyGameSetupAction(game_parameter=SpyGameParameter.SPY_COUNT).pack(),
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text=LazyProxy("setup-spy-game.button-play"),
+                    callback_data=SpyGamePlayAction().pack(),
                 )
             ],
             [

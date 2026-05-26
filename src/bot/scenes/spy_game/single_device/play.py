@@ -1,4 +1,3 @@
-from typing import Dict, Any
 from uuid import UUID
 
 from aiogram.fsm.context import FSMContext
@@ -19,7 +18,7 @@ from src.core.controllers.redis import RedisController
 from src.core.enums.spy_category import SpyCategory
 from src.core.enums.spy_count import SpyCount
 from src.core.enums.spy_player_role import SpyPlayerRole
-from src.core.models.redis.spy_game.secret_words_queue import SecretWordQueue
+from src.core.models.redis.spy_game.secret_word_queue import SecretWordQueue
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.user import User
 
@@ -67,7 +66,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         await user_controller.set(user)
 
         await state.update_data(
-            game_id=game.id,
             player_index=0,
         )
 
@@ -91,15 +89,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             i18n: I18nContext,
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
     ) -> None:
-        data: Dict[str, Any] = await state.get_data()
-
-        game_id: UUID = data.get("game_id")
+        game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
             return  # TODO: Error message
-        game: SingleDeviceSpyGame = await single_device_spy_game_controller.get(game_id)
+        game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             return  # TODO: Error message
-        player_index: int = data.get("player_index")
+        player_index: int | None = await state.get_value("player_index")
         if player_index is None:
             return   # TODO: Error message
 
@@ -109,7 +105,7 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             i18n.get(
                 "play-single-device-spy-game-view-role",
                 role=role,
-                secret_word=game.secret_word,
+                secret_word=i18n.get(f"secret-word-{game.secret_word}"),
             ),
             reply_markup=single_device_spy_game_proceed_keyboard()
         )
@@ -125,15 +121,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             i18n: I18nContext,
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
     ) -> None:
-        data: Dict[str, Any] = await state.get_data()
-
-        game_id: UUID = data.get("game_id")
+        game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
             return  # TODO: Error message
-        game: SingleDeviceSpyGame = await single_device_spy_game_controller.get(game_id)
+        game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             return  # TODO: Error message
-        player_index: int = data.get("player_index")
+        player_index: int | None = await state.get_value("player_index")
         if player_index is None:
             return  # TODO: Error message
 
@@ -173,15 +167,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             i18n: I18nContext,
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
     ) -> None:
-        data: Dict[str, Any] = await state.get_data()
-
-        game_id: UUID = data.get("game_id")
+        game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
             return  # TODO: Error message
-        game: SingleDeviceSpyGame = await single_device_spy_game_controller.get(game_id)
+        game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             return  # TODO: Error message
-        player_index: int = data.get("player_index")
+        player_index: int | None = await state.get_value("player_index")
         if player_index is None:
             return  # TODO: Error message
 
@@ -192,7 +184,7 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
                 "play-single-device-spy-game-results",
                 count=len(game.spy_indices),
                 spies=spies,
-                secret_word=game.secret_word,
+                secret_word=i18n.get(f"secret-word-{game.secret_word}"),
             ),
             reply_markup=single_device_spy_game_results_keyboard()
         )
@@ -210,15 +202,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
             secret_word_controller: RedisController[SecretWordQueue],
     ) -> None:
-        data: Dict[str, Any] = await state.get_data()
-
-        game_id: UUID = data.get("game_id")
+        game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
             return  # TODO: Error message
-        game: SingleDeviceSpyGame = await single_device_spy_game_controller.get(game_id)
+        game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             return  # TODO: Error message
-        player_index: int = data.get("player_index")
+        player_index: int | None = await state.get_value("player_index")
         if player_index is None:
             return  # TODO: Error message
 
@@ -245,7 +235,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         await user_controller.set(user)
 
         await state.update_data(
-            game_id=game.id,
             player_index=0,
         )
 
@@ -263,21 +252,16 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
     @on.callback_query.leave()
     async def on_leave(
             self,
+            callback_query: CallbackQuery,
             user: User,
-            state: FSMContext,
             user_controller: RedisController[User],
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
     ) -> None:
-        data: Dict[str, Any] = await state.get_data()
-
+        await single_device_spy_game_controller.remove(user.active_games.active_single_device_spy_game)
         user.active_games.active_single_device_spy_game = None
         await user_controller.set(user)
 
-        game_id: UUID = data.get("game_id")
-        if game_id is None:
-            return
-
-        await single_device_spy_game_controller.remove(game_id)
+        await callback_query.answer()
 
     @on.message()
     async def on_message(

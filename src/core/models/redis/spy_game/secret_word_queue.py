@@ -5,6 +5,7 @@ from uuid import UUID
 from pydantic import Field
 
 from config import config
+from src.core.assets.secret_words import get_secret_words
 from src.core.enums.spy_category import SpyCategory
 from src.core.models.redis.abstract import AbstractRedisModel
 
@@ -63,4 +64,16 @@ class SecretWordQueue(AbstractRedisModel):
         :return: Secret word tag as a string.
         """
 
-        return "aboba"
+        possible_words: Set[str] = get_secret_words(category)
+        available_words: Set[str] = possible_words - set(self.secret_words)
+
+        if not available_words:
+            available_words = possible_words
+
+        word: str = choice(list(available_words))
+
+        self.secret_words.append(word)
+        if len(self.secret_words) > self.guaranteed_unique_count:
+            self.secret_words.pop(0)
+
+        return word

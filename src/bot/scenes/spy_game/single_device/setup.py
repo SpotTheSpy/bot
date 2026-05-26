@@ -7,6 +7,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram_i18n import I18nContext
 
 from config import config
+from src.bot.actions.back import BackAction
 from src.bot.actions.spy_game.setup import (
     SpyGameSetupAction,
     SpyGameSetupPlayerAmountAction,
@@ -187,14 +188,12 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
     async def on_play(
             self,
             callback_query: CallbackQuery,
-            user: User,
             state: FSMContext,
     ) -> None:
         data: Dict[str, Any] = await state.get_data()
 
         await self.wizard.goto(
             "single_device_spy_game_play",
-            user=user,
             player_count=data.get("player_count"),
             category=data.get("category"),
             spy_count=data.get("spy_count")
@@ -223,8 +222,10 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
     ) -> None:
         await message.delete()
 
+    @on.callback_query(BackAction.filter())
     async def on_back(
             self,
+            callback_query: CallbackQuery,
             user: User,
             state: FSMContext,
             i18n: I18nContext,
@@ -241,8 +242,6 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
         category: SpyCategory = data.get("category")
         spy_count: SpyCount = data.get("spy_count")
 
-        await state.update_data(game_parameter=None)
-
         await user.message.edit(
             i18n.get("setup-spy-game"),
             reply_markup=spy_game_setup_keyboard(
@@ -251,3 +250,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
                 spy_count,
             ),
         )
+
+        await state.update_data(game_parameter=None)
+
+        await callback_query.answer()

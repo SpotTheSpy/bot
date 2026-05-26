@@ -18,7 +18,7 @@ from src.bot.scenes.spy_game.single_device.tutorial import SingleDeviceSpyGameTu
 from src.bot.scenes.start import StartScene
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
-from src.core.models.redis.spy_game.secret_words_queue import SecretWordQueue
+from src.core.models.redis.spy_game.secret_word_queue import SecretWordQueue
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.telegram_user import TelegramUser
 from src.core.models.redis.user import User
