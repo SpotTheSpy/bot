@@ -1,7 +1,10 @@
-from typing import ClassVar
+import asyncio
+from typing import ClassVar, List, Coroutine
 from uuid import UUID
 
 from aiogram import Bot
+from aiogram.exceptions import TelegramBadRequest
+from aiogram.types import InlineKeyboardMarkup, LinkPreviewOptions
 from uuid_extensions import uuid7
 
 from src.core.enums.locale import Locale
@@ -37,11 +40,13 @@ class Message(AbstractModel):
             *,
             bot: Bot,
     ) -> "Message":
-        return cls(
+        new_message: Message = cls(
             chat_id=chat_id,
             message_id=message_id,
-            _bot=bot,
         )
+
+        new_message.bot = bot
+        return new_message
 
     @property
     def bot(self) -> Bot:
@@ -59,6 +64,102 @@ class Message(AbstractModel):
             raise ValueError("Bot instance is already initialized.")
 
         self._bot = value
+
+    async def replace(
+            self,
+            text: str,
+            *,
+            reply_markup: InlineKeyboardMarkup | None = None,
+            message_to_delete: int | None = None,
+    ) -> None:
+        """
+        Replace a message with a new one.
+
+        :param text: Text of the message.
+        :param reply_markup: Reply markup.
+        :param message_to_delete: Message ID which should be deleted alongside with an old message,
+        usually a user's command.
+        """
+
+        coroutines: List[Coroutine] = [
+            self.bot.send_message(
+                chat_id=self.chat_id,
+                text=text,
+                reply_markup=reply_markup,
+                link_preview_options=LinkPreviewOptions(is_disabled=True),
+            ),
+            self.bot.delete_message(
+                self.chat_id,
+                self.message_id
+            ),
+        ]
+
+        if message_to_delete is not None:
+            coroutines.append(
+                self.bot.delete_message(
+                    self.chat_id,
+                    message_to_delete
+                )
+            )
+
+        new_message, *_ = await asyncio.gather(*coroutines, return_exceptions=True)
+
+        if not isinstance(new_message, Message):
+            return
+
+        self.message_id = new_message.message_id
+
+    async def edit(
+            self,
+            text: str,
+            *,
+            reply_markup: InlineKeyboardMarkup | None = None,
+            message_to_delete: int | None = None,
+    ) -> None:
+        """
+        Edit a message. Replaces old one if fails.
+
+        :param text: Text of the message.
+        :param reply_markup: Reply markup.
+        :param message_to_delete: Message ID which should be deleted alongside with an old message,
+        if editing fails.
+        """
+
+        try:
+            if self.message_id is None:
+                raise ValueError
+
+            coroutines: List[Coroutine] = [
+                self.bot.edit_message_text(
+                    chat_id=self.chat_id,
+                    message_id=self.message_id,
+                    text=text,
+                    reply_markup=reply_markup,
+                    link_preview_options=LinkPreviewOptions(is_disabled=True),
+                ),
+            ]
+
+            if message_to_delete is not None:
+                coroutines.append(
+                    self.bot.delete_message(
+                        self.chat_id,
+                        message_to_delete,
+                    ),
+                )
+
+            result, *_ = await asyncio.gather(*coroutines, return_exceptions=True)
+
+            if isinstance(result, Exception):
+                raise result
+        except (TelegramBadRequest, ValueError) as error:
+            if isinstance(error, TelegramBadRequest) and "message is not modified" in error.message:
+                return
+
+            await self.replace(
+                text,
+                reply_markup=reply_markup,
+                message_to_delete=message_to_delete,
+            )
 
 
 class User(RedisModel):

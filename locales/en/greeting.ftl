@@ -1,0 +1,1 @@
+greeting = Hello { $first_name } lol

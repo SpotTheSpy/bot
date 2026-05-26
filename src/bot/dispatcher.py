@@ -1,4 +1,5 @@
 from aiogram import Dispatcher, BaseMiddleware
+from aiogram.fsm.scene import SceneRegistry
 from aiogram.fsm.storage.base import DefaultKeyBuilder
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.fsm.strategy import FSMStrategy
@@ -9,6 +10,7 @@ from redis.asyncio import Redis
 from config import config
 from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
+from src.bot.scenes.start import StartScene
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
 from src.core.models.redis.telegram_user import TelegramUser
@@ -43,10 +45,7 @@ def create_dispatcher() -> Dispatcher:
     dispatcher = Dispatcher(
         storage=RedisStorage(
             redis,
-            key_builder=DefaultKeyBuilder(
-                prefix=config.default_redis_key,
-                with_destiny=True,
-            ),
+            key_builder=DefaultKeyBuilder(with_destiny=True),
         ),
         fsm_strategy=FSMStrategy.GLOBAL_USER,
         config=config,
@@ -69,7 +68,11 @@ def create_dispatcher() -> Dispatcher:
     ).setup(dispatcher)
 
     dispatcher.include_routers(
-        start_router
+        start_router,
+    )
+
+    SceneRegistry(dispatcher).add(
+        StartScene,
     )
 
     return dispatcher
