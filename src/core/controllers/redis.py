@@ -5,9 +5,9 @@ from redis.asyncio import Redis
 
 from config import config
 from src.core.enums.time_stamp import TimeStamp
-from src.core.models.redis.base import RedisModel
+from src.core.models.redis.abstract import AbstractRedisModel
 
-_T = TypeVar("_T", bound=RedisModel)
+_T = TypeVar("_T", bound=AbstractRedisModel)
 
 
 class RedisController(Generic[_T]):
@@ -63,7 +63,7 @@ class RedisController(Generic[_T]):
         """
 
         try:
-            return self.object_class.key
+            return self.object_class.key()
         except AttributeError:
             raise ValueError("Key attribute in generic redis object class is not set")
 

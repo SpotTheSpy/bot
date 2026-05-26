@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Any, ClassVar, Optional
+from typing import Dict, Any, Optional
 
 from pydantic import ValidationError
 
 from src.core.models.abstract import AbstractModel
 
 
-class RedisModel(AbstractModel, ABC):
+class AbstractRedisModel(AbstractModel, ABC):
     """
     Base class for Redis models.
 
@@ -19,10 +19,14 @@ class RedisModel(AbstractModel, ABC):
     Value is a JSON-Serialized object by to_json() method.
     """
 
-    key: ClassVar[str]
-    """
-    Unique object class key.
-    """
+    @classmethod
+    @abstractmethod
+    def key(cls) -> str:
+        """
+        Unique model class key.
+
+        :return: Unique model class key.
+        """
 
     @property
     @abstractmethod
@@ -38,7 +42,7 @@ class RedisModel(AbstractModel, ABC):
             cls,
             data: Dict[str, Any] | None,
             **kwargs: Any
-    ) -> Optional["RedisModel"]:
+    ) -> Optional["AbstractRedisModel"]:
         """
         Reconstruct a model instance from a JSON-Serialized dictionary.
 

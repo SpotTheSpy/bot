@@ -12,11 +12,14 @@ from src.bot.locale_manager import LocaleManager
 from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
 from src.bot.scenes.language import LanguageScene
-from src.bot.scenes.single_device.spy_game.setup import SingleDeviceSpyGameSetupScene
-from src.bot.scenes.single_device.spy_game.tutorial import SingleDeviceSpyGameTutorialScene
+from src.bot.scenes.spy_game.single_device.play import SingleDeviceSpyGamePlayScene
+from src.bot.scenes.spy_game.single_device.setup import SingleDeviceSpyGameSetupScene
+from src.bot.scenes.spy_game.single_device.tutorial import SingleDeviceSpyGameTutorialScene
 from src.bot.scenes.start import StartScene
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
+from src.core.models.redis.spy_game.secret_words_queue import SecretWordQueue
+from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.telegram_user import TelegramUser
 from src.core.models.redis.user import User
 
@@ -57,6 +60,8 @@ def create_dispatcher() -> Dispatcher:
         redis=redis,
         user_controller=RedisController[User](redis),
         telegram_user_controller=RedisController[TelegramUser](redis),
+        single_device_spy_game_controller=RedisController[SingleDeviceSpyGame](redis),
+        secret_word_controller=RedisController[SecretWordQueue](redis),
     )
 
     _register_middlewares(
@@ -83,6 +88,7 @@ def create_dispatcher() -> Dispatcher:
         LanguageScene,
         SingleDeviceSpyGameTutorialScene,
         SingleDeviceSpyGameSetupScene,
+        SingleDeviceSpyGamePlayScene,
     )
 
     return dispatcher

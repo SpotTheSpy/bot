@@ -197,7 +197,6 @@ class UserMiddleware(BaseMiddleware):
         """
 
         new_user: RedisUser = RedisUser.new(
-            user.id,
             user.telegram_id,
             user.first_name,
             user.settings.locale,
@@ -206,6 +205,7 @@ class UserMiddleware(BaseMiddleware):
                 None,
                 bot=bot,
             ),
+            user_id=user.id,
         )
 
         await user_controller.set(new_user, expire=TimeStamp.DAY)

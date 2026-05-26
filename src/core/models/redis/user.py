@@ -1,15 +1,16 @@
 import asyncio
-from typing import ClassVar, List, Coroutine
+from typing import List, Coroutine
 from uuid import UUID
 
 from aiogram import Bot
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import InlineKeyboardMarkup, LinkPreviewOptions
 from aiogram.types import Message as AiogramMessage
+from uuid_extensions import uuid7
 
 from src.core.enums.locale import Locale
 from src.core.models.abstract import AbstractModel
-from src.core.models.redis.base import RedisModel
+from src.core.models.redis.abstract import AbstractRedisModel
 
 
 class Message(AbstractModel):
@@ -163,14 +164,30 @@ class Message(AbstractModel):
             )
 
 
-class User(RedisModel):
+class ActiveGames(AbstractModel):
     """
-    Represents a user which is currently using bot.
+    Represents user's active games.
     """
 
-    key: ClassVar[str] = "user"
+    active_single_device_spy_game: UUID | None = None
     """
-    Unique key for user models.
+    ID of user's active single device spy game.
+    """
+
+    @classmethod
+    def new(
+            cls,
+            *,
+            active_single_device_spy_game: UUID | None = None,
+    ) -> "ActiveGames":
+        return cls(
+            active_single_device_spy_game=active_single_device_spy_game,
+        )
+
+
+class User(AbstractRedisModel):
+    """
+    Represents a user which is currently using bot.
     """
 
     id: UUID
@@ -198,22 +215,34 @@ class User(RedisModel):
     Message sent by the bot with which user is currently interacting.
     """
 
+    active_games: ActiveGames
+    """
+    A set of active games IDs.
+    """
+
     @classmethod
     def new(
             cls,
-            user_id: UUID,
             telegram_id: int,
             first_name: str,
             locale: Locale,
             message: Message,
+            *,
+            user_id: UUID | None = None,
+            active_games: ActiveGames | None = None,
     ) -> "User":
         return cls(
-            id=user_id,
+            id=user_id or uuid7(),
             telegram_id=telegram_id,
             first_name=first_name,
             locale=locale,
             message=message,
+            active_games=active_games or ActiveGames.new(),
         )
+
+    @classmethod
+    def key(cls) -> str:
+        return "user"
 
     @property
     def primary_key(self) -> UUID:

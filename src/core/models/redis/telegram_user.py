@@ -1,15 +1,9 @@
-from typing import ClassVar
 from uuid import UUID
 
-from src.core.models.redis.base import RedisModel
+from src.core.models.redis.abstract import AbstractRedisModel
 
 
-class TelegramUser(RedisModel):
-    key: ClassVar[str] = "telegram_user"
-    """
-    Unique key for telegram user models.
-    """
-
+class TelegramUser(AbstractRedisModel):
     telegram_id: int
     """
     Telegram ID.
@@ -30,6 +24,10 @@ class TelegramUser(RedisModel):
             telegram_id=telegram_id,
             user_id=user_id,
         )
+
+    @classmethod
+    def key(cls) -> str:
+        return "telegram_user"
 
     @property
     def primary_key(self) -> int:

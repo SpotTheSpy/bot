@@ -20,7 +20,6 @@ class LanguageScene(BaseScene, state="language"):
             self,
             callback_query: CallbackQuery,
             user: User,
-            state: FSMContext,
             i18n: I18nContext,
     ) -> None:
         await user.message.edit(
