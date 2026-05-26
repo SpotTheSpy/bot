@@ -1,6 +1,6 @@
 from abc import ABC
 from inspect import getfullargspec, FullArgSpec
-from typing import List, Callable, Awaitable
+from typing import List, Callable, Awaitable, Any
 
 from aiogram.fsm.scene import Scene, on
 from aiogram.types import CallbackQuery
@@ -52,12 +52,14 @@ class BaseScene(Scene, ABC, state="base"):
                 **kwargs
             )
 
+        await callback_query.answer()
+
     @on.callback_query(SwitchSceneAction.filter())
     async def __on_switch_scene(
             self,
             callback_query: CallbackQuery,
             callback_data: SwitchSceneAction,
-            **kwargs,
+            **kwargs: Any,
     ) -> None:
         """
         Telegram handler for SwitchSceneAction.
@@ -68,6 +70,8 @@ class BaseScene(Scene, ABC, state="base"):
             callback_data=callback_data,
             **kwargs
         )
+
+        await callback_query.answer()
 
     @staticmethod
     def _prepare_coroutine(

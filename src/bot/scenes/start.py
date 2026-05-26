@@ -8,6 +8,10 @@ from src.core.models.redis.user import User
 
 
 class StartScene(BaseScene, state="start", reset_history_on_enter=True):
+    """
+    Landing scene.
+    """
+
     @on.message.enter()
     async def on_message_enter(
             self,
@@ -40,3 +44,10 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
         )
 
         await callback_query.answer()
+
+    @on.message()
+    async def on_message(
+            self,
+            message: Message
+    ) -> None:
+        await message.delete()

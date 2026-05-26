@@ -1,6 +1,6 @@
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.scene import on
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, Message
 from aiogram_i18n import I18nContext
 
 from src.bot.actions.switch_language import SwitchLanguageAction
@@ -11,6 +11,10 @@ from src.core.models.redis.user import User
 
 
 class LanguageScene(BaseScene, state="language"):
+    """
+    Scene for switching the language.
+    """
+
     @on.callback_query.enter()
     async def on_enter(
             self,
@@ -25,7 +29,6 @@ class LanguageScene(BaseScene, state="language"):
         )
 
         await callback_query.answer()
-        await state.update_data(selected_locale=None)
 
     @on.callback_query(SwitchLanguageAction.filter())
     async def on_switch_language(
@@ -63,12 +66,10 @@ class LanguageScene(BaseScene, state="language"):
             i18n: I18nContext,
     ) -> None:
         selected_locale: str | None = await state.get_value("selected_locale")
-
         if selected_locale is None:
             return
 
         selected_locale: Locale = Locale(selected_locale)
-
         if selected_locale == user.locale:
             return
 
@@ -79,3 +80,12 @@ class LanguageScene(BaseScene, state="language"):
                 selected_locale,
             )
         )
+
+        await state.update_data(selected_locale=None)
+
+    @on.message()
+    async def on_message(
+            self,
+            message: Message
+    ) -> None:
+        await message.delete()

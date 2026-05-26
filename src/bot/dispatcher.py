@@ -12,6 +12,8 @@ from src.bot.locale_manager import LocaleManager
 from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
 from src.bot.scenes.language import LanguageScene
+from src.bot.scenes.single_device_games.spy.setup import SingleDeviceSpyGameSetupScene
+from src.bot.scenes.single_device_games.spy.tutorial import SingleDeviceSpyGameTutorialScene
 from src.bot.scenes.start import StartScene
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
@@ -79,6 +81,8 @@ def create_dispatcher() -> Dispatcher:
     SceneRegistry(dispatcher).add(
         StartScene,
         LanguageScene,
+        SingleDeviceSpyGameTutorialScene,
+        SingleDeviceSpyGameSetupScene,
     )
 
     return dispatcher

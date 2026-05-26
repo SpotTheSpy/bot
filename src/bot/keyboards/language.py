@@ -8,6 +8,13 @@ from src.core.enums.locale import Locale
 
 
 def language_keyboard(translation_locale: str | None = None) -> InlineKeyboardMarkup:
+    """
+    Create a keyboard for selecting desired language.
+
+    :param translation_locale: Locale for translating button text.
+    :return: InlineKeyboardMarkup.
+    """
+
     builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
     for locale in Locale:

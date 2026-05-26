@@ -1,7 +1,33 @@
-from typing import ClassVar
+from typing import ClassVar, Type
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings
+
+
+class DefaultGameParameters:
+    """
+    Provides basic game setup parameters.
+    """
+
+    MIN_PLAYER_COUNT = 3
+    """
+    Minimum number of players allowed to play a game.
+    """
+
+    MAX_PLAYER_COUNT = 8
+    """
+    Maximum number of players allowed to play a game.
+    """
+
+    DEFAULT_PLAYER_COUNT = 4
+    """
+    Default number of players in game.
+    """
+
+    GUARANTEED_UNIQUE_WORD_COUNT = 30
+    """
+    Minimum number of guaranteed unique words before repetition in a spy game.
+    """
 
 
 class Config(BaseSettings):
@@ -54,6 +80,11 @@ class Config(BaseSettings):
     default_redis_key: str = "spotthespy"
     """
     Default Redis object key.
+    """
+
+    game_parameters: Type[DefaultGameParameters] = DefaultGameParameters
+    """
+    Default game parameters.
     """
 
 
