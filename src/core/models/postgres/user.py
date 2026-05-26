@@ -4,10 +4,10 @@ from sqlalchemy import Column, UUID, String, DateTime, BigInteger
 from sqlalchemy.orm import relationship
 from uuid_extensions import uuid7
 
-from src.core.models.database.base import Base
+from src.core.models.postgres.base import PostgresModel
 
 
-class User(Base):
+class User(PostgresModel):
     """
     Database user object.
     """

@@ -8,7 +8,10 @@ from aiogram_i18n.cores import FluentCompileCore
 from redis.asyncio import Redis
 
 from config import config
-from src.core.controllers.postgres_controller import PostgresController
+from src.bot.middlewares.user import UserMiddleware
+from src.core.controllers.postgres import PostgresController
+from src.core.controllers.redis import RedisController
+from src.core.models.redis.user import User
 
 
 def _register_middlewares(
@@ -48,11 +51,12 @@ def create_dispatcher() -> Dispatcher:
         config=config,
         postgres=postgres,
         redis=redis,
+        user_controller=RedisController[User](redis),
     )
 
     _register_middlewares(
         dispatcher,
-
+        UserMiddleware(),
     )
 
     I18nMiddleware(

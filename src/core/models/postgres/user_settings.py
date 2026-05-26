@@ -3,10 +3,10 @@ from datetime import datetime
 from sqlalchemy import Column, UUID, DateTime, ForeignKey, Boolean, String
 from sqlalchemy.orm import relationship
 
-from src.core.models.database.base import Base
+from src.core.models.postgres.base import PostgresModel
 
 
-class UserSettings(Base):
+class UserSettings(PostgresModel):
     """
     Database object for storing user settings.
     """
