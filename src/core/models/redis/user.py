@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, ClassVar
 from uuid import UUID
 
 from aiogram import Bot
@@ -64,6 +64,11 @@ class Message(AbstractModel):
 class User(RedisModel):
     """
     Represents a user which is currently using bot.
+    """
+
+    key: ClassVar[str] = "user"
+    """
+    Unique key for user models.
     """
 
     id: UUID

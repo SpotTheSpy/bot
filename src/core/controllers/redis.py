@@ -64,7 +64,7 @@ class RedisController(Generic[_T]):
 
         try:
             return self.object_class.key
-        except NameError:
+        except AttributeError:
             raise ValueError("Key attribute in generic redis object class is not set")
 
     async def set(

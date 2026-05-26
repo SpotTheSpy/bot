@@ -9,6 +9,7 @@ from redis.asyncio import Redis
 
 from config import config
 from src.bot.middlewares.user import UserMiddleware
+from src.bot.routes.start import start_router
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
 from src.core.models.redis.user import User
@@ -67,11 +68,7 @@ def create_dispatcher() -> Dispatcher:
     ).setup(dispatcher)
 
     dispatcher.include_routers(
-
-    )
-
-    SceneRegistry(dispatcher).add(
-
+        start_router
     )
 
     return dispatcher

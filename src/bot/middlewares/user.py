@@ -124,7 +124,7 @@ class UserMiddleware(BaseMiddleware):
                 .options(
                     joinedload(PostgresUser.settings),
                 )
-                .where(telegram_id=telegram_id)
+                .filter_by(telegram_id=telegram_id)
             )
 
             return result.scalar_one_or_none()
@@ -202,4 +202,4 @@ class UserMiddleware(BaseMiddleware):
         :param state: FSMContext instance.
         """
 
-        await state.update_data(user_id=user_id)
+        await state.update_data(user_id=str(user_id))
