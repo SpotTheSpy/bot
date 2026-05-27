@@ -31,7 +31,7 @@ class DefaultGameParameters:
 
     GUARANTEED_UNIQUE_QUESTION_COUNT = 20
     """
-    Minimum number of guaranteed unique questions before repetition in an imposter game.
+    Minimum number of guaranteed unique questions before repetition in an impostor game.
     """
 
 

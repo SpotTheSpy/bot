@@ -7,9 +7,9 @@ from src.bot.scenes.base import BaseScene
 from src.core.models.redis.user import User
 
 
-class SingleDeviceImposterGameTutorialScene(BaseScene, state="single_device_imposter_game_tutorial"):
+class SingleDeviceImpostorGameTutorialScene(BaseScene, state="single_device_impostor_game_tutorial"):
     """
-    Scene for the single device imposter game tutorial.
+    Scene for the single device impostor game tutorial.
     """
 
     @on.callback_query.enter()
@@ -20,8 +20,8 @@ class SingleDeviceImposterGameTutorialScene(BaseScene, state="single_device_impo
             i18n: I18nContext,
     ) -> None:
         await user.message.edit(
-            i18n.get("tutorial-single-device-imposter-game"),
-            reply_markup=tutorial_keyboard("single_device_imposter_game_setup"),
+            i18n.get("tutorial-single-device-impostor-game"),
+            reply_markup=tutorial_keyboard("single_device_impostor_game_setup"),
         )
 
         await callback_query.answer()

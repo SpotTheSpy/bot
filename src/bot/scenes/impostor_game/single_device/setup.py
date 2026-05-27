@@ -8,26 +8,26 @@ from aiogram_i18n import I18nContext
 
 from config import config
 from src.bot.actions.back import BackAction
-from src.bot.actions.imposter_game.play import ImposterGamePlayAction
-from src.bot.actions.imposter_game.setup import (
-    ImposterGameSetupAction,
-    ImposterGameSetupPlayerAmountAction,
-    ImposterGameSetupImposterCountAction,
+from src.bot.actions.impostor_game.play import ImpostorGamePlayAction
+from src.bot.actions.impostor_game.setup import (
+    ImpostorGameSetupAction,
+    ImpostorGameSetupPlayerAmountAction,
+    ImpostorGameSetupImpostorCountAction,
 )
-from src.bot.keyboards.imposter_game.setup import (
-    imposter_game_setup_keyboard,
-    imposter_game_setup_player_count_keyboard,
-    imposter_game_setup_imposter_count_keyboard,
+from src.bot.keyboards.impostor_game.setup import (
+    impostor_game_setup_keyboard,
+    impostor_game_setup_player_count_keyboard,
+    impostor_game_setup_impostor_count_keyboard,
 )
 from src.bot.scenes.base import BaseScene
-from src.core.enums.imposter_count import ImposterCount
-from src.core.enums.imposter_game_parameter import ImposterGameParameter
+from src.core.enums.impostor_count import ImpostorCount
+from src.core.enums.impostor_game_parameter import ImpostorGameParameter
 from src.core.models.redis.user import User
 
 
-class SingleDeviceImposterGameSetupScene(BaseScene, state="single_device_imposter_game_setup"):
+class SingleDeviceImpostorGameSetupScene(BaseScene, state="single_device_impostor_game_setup"):
     """
-    Scene for the single device imposter game setup.
+    Scene for the single device impostor game setup.
     """
 
     @on.callback_query.enter()
@@ -39,30 +39,30 @@ class SingleDeviceImposterGameSetupScene(BaseScene, state="single_device_imposte
             i18n: I18nContext,
     ) -> None:
         """
-        Display a setup menu for a single-device imposter game.
+        Display a setup menu for a single-device impostor game.
         """
 
         player_count: int = config.game_parameters.DEFAULT_PLAYER_COUNT
-        imposter_count: ImposterCount = ImposterCount.SINGLE
+        impostor_count: ImpostorCount = ImpostorCount.SINGLE
 
         await state.update_data(
             game_parameter=None,
             player_count=player_count,
-            imposter_count=imposter_count,
+            impostor_count=impostor_count,
         )
 
         await user.message.edit(
-            i18n.get("setup-imposter-game"),
-            reply_markup=imposter_game_setup_keyboard(
+            i18n.get("setup-impostor-game"),
+            reply_markup=impostor_game_setup_keyboard(
                 i18n,
                 player_count,
-                imposter_count,
+                impostor_count,
             ),
         )
 
         await callback_query.answer()
 
-    @on.callback_query(ImposterGameSetupAction.filter(F.game_parameter == ImposterGameParameter.PLAYER_COUNT))
+    @on.callback_query(ImpostorGameSetupAction.filter(F.game_parameter == ImpostorGameParameter.PLAYER_COUNT))
     async def on_setup_player_count(
             self,
             callback_query: CallbackQuery,
@@ -73,74 +73,74 @@ class SingleDeviceImposterGameSetupScene(BaseScene, state="single_device_imposte
         player_count: int = await state.get_value("player_count")
 
         await user.message.edit(
-            i18n.get("setup-imposter-game-player-count"),
-            reply_markup=imposter_game_setup_player_count_keyboard(player_count),
+            i18n.get("setup-impostor-game-player-count"),
+            reply_markup=impostor_game_setup_player_count_keyboard(player_count),
         )
 
         await state.update_data(
-            game_parameter=ImposterGameParameter.PLAYER_COUNT,
+            game_parameter=ImpostorGameParameter.PLAYER_COUNT,
             player_count=player_count,
         )
 
         await callback_query.answer()
 
-    @on.callback_query(ImposterGameSetupAction.filter(F.game_parameter == ImposterGameParameter.IMPOSTER_COUNT))
-    async def on_setup_imposter_count(
+    @on.callback_query(ImpostorGameSetupAction.filter(F.game_parameter == ImpostorGameParameter.IMPOSTOR_COUNT))
+    async def on_setup_impostor_count(
             self,
             callback_query: CallbackQuery,
             user: User,
             state: FSMContext,
             i18n: I18nContext,
     ) -> None:
-        imposter_count: ImposterCount = await state.get_value("imposter_count")
+        impostor_count: ImpostorCount = await state.get_value("impostor_count")
 
         await user.message.edit(
-            i18n.get("setup-imposter-game-imposter-count"),
-            reply_markup=imposter_game_setup_imposter_count_keyboard(i18n, imposter_count),
+            i18n.get("setup-impostor-game-impostor-count"),
+            reply_markup=impostor_game_setup_impostor_count_keyboard(i18n, impostor_count),
         )
 
         await state.update_data(
-            game_parameter=ImposterGameParameter.IMPOSTER_COUNT,
-            imposter_count=imposter_count
+            game_parameter=ImpostorGameParameter.IMPOSTOR_COUNT,
+            impostor_count=impostor_count
         )
 
         await callback_query.answer()
 
-    @on.callback_query(ImposterGameSetupPlayerAmountAction.filter())
+    @on.callback_query(ImpostorGameSetupPlayerAmountAction.filter())
     async def on_choose_player_count(
             self,
             callback_query: CallbackQuery,
-            callback_data: ImposterGameSetupPlayerAmountAction,
+            callback_data: ImpostorGameSetupPlayerAmountAction,
             user: User,
             state: FSMContext,
             i18n: I18nContext,
     ) -> None:
         await user.message.edit(
-            i18n.get("setup-imposter-game-player-count"),
-            reply_markup=imposter_game_setup_player_count_keyboard(callback_data.player_count),
+            i18n.get("setup-impostor-game-player-count"),
+            reply_markup=impostor_game_setup_player_count_keyboard(callback_data.player_count),
         )
 
         await callback_query.answer()
         await state.update_data(player_count=callback_data.player_count)
 
-    @on.callback_query(ImposterGameSetupImposterCountAction.filter())
-    async def on_choose_imposter_count(
+    @on.callback_query(ImpostorGameSetupImpostorCountAction.filter())
+    async def on_choose_impostor_count(
             self,
             callback_query: CallbackQuery,
-            callback_data: ImposterGameSetupImposterCountAction,
+            callback_data: ImpostorGameSetupImpostorCountAction,
             user: User,
             state: FSMContext,
             i18n: I18nContext,
     ) -> None:
         await user.message.edit(
-            i18n.get("setup-imposter-game-imposter-count"),
-            reply_markup=imposter_game_setup_imposter_count_keyboard(i18n, callback_data.imposter_count),
+            i18n.get("setup-impostor-game-impostor-count"),
+            reply_markup=impostor_game_setup_impostor_count_keyboard(i18n, callback_data.impostor_count),
         )
 
         await callback_query.answer()
-        await state.update_data(imposter_count=callback_data.imposter_count)
+        await state.update_data(impostor_count=callback_data.impostor_count)
 
-    @on.callback_query(ImposterGamePlayAction.filter())
+    @on.callback_query(ImpostorGamePlayAction.filter())
     async def on_play(
             self,
             callback_query: CallbackQuery,
@@ -149,9 +149,9 @@ class SingleDeviceImposterGameSetupScene(BaseScene, state="single_device_imposte
         data: Dict[str, Any] = await state.get_data()
 
         await self.wizard.goto(
-            "single_device_imposter_game_play",
+            "single_device_impostor_game_play",
             player_count=data.get("player_count"),
-            imposter_count=data.get("imposter_count"),
+            impostor_count=data.get("impostor_count"),
         )
 
         await callback_query.answer()
@@ -164,7 +164,7 @@ class SingleDeviceImposterGameSetupScene(BaseScene, state="single_device_imposte
     ) -> None:
         await state.update_data(
             player_count=None,
-            imposter_count=None,
+            impostor_count=None,
         )
 
         await callback_query.answer()
@@ -186,21 +186,21 @@ class SingleDeviceImposterGameSetupScene(BaseScene, state="single_device_imposte
     ) -> None:
         data: Dict[str, Any] = await state.get_data()
 
-        game_parameter: ImposterGameParameter | None = data.get("game_parameter")
+        game_parameter: ImpostorGameParameter | None = data.get("game_parameter")
 
         if game_parameter is None:
             await self.wizard.back(user=user)
             return
 
         player_count: int = data.get("player_count")
-        imposter_count: ImposterCount = data.get("imposter_count")
+        impostor_count: ImpostorCount = data.get("impostor_count")
 
         await user.message.edit(
-            i18n.get("setup-imposter-game"),
-            reply_markup=imposter_game_setup_keyboard(
+            i18n.get("setup-impostor-game"),
+            reply_markup=impostor_game_setup_keyboard(
                 i18n,
                 player_count,
-                imposter_count,
+                impostor_count,
             ),
         )
 

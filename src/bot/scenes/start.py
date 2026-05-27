@@ -7,7 +7,7 @@ from src.bot.logger import logger
 from src.bot.scenes.base import BaseScene
 from src.core.controllers.redis import RedisController
 from src.core.enums.time_stamp import TimeStamp
-from src.core.models.redis.imposter_game.single_device import SingleDeviceImposterGame
+from src.core.models.redis.impostor_game.single_device import SingleDeviceImpostorGame
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.user import User, ActiveGames
 
@@ -25,7 +25,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             i18n: I18nContext,
             user_controller: RedisController[User],
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
-            single_device_imposter_game_controller: RedisController[SingleDeviceImposterGame],
+            single_device_impostor_game_controller: RedisController[SingleDeviceImpostorGame],
     ) -> None:
         await user.message.replace(
             i18n.get("greeting"),
@@ -37,7 +37,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             user,
             user_controller,
             single_device_spy_game_controller,
-            single_device_imposter_game_controller,
+            single_device_impostor_game_controller,
         )
 
         logger.info(
@@ -52,7 +52,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             i18n: I18nContext,
             user_controller: RedisController[User],
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
-            single_device_imposter_game_controller: RedisController[SingleDeviceImposterGame],
+            single_device_impostor_game_controller: RedisController[SingleDeviceImpostorGame],
     ) -> None:
         await user.message.edit(
             i18n.get("greeting"),
@@ -65,7 +65,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             user,
             user_controller,
             single_device_spy_game_controller,
-            single_device_imposter_game_controller,
+            single_device_impostor_game_controller,
         )
 
     @on.message()
@@ -80,13 +80,13 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             user: User,
             user_controller: RedisController[User],
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
-            single_device_imposter_game_controller: RedisController[SingleDeviceImposterGame],
+            single_device_impostor_game_controller: RedisController[SingleDeviceImpostorGame],
     ) -> None:
         if user.active_games.active_single_device_spy_game is not None:
             await single_device_spy_game_controller.remove(user.active_games.active_single_device_spy_game)
 
-        if user.active_games.active_single_device_imposter_game is not None:
-            await single_device_imposter_game_controller.remove(user.active_games.active_single_device_imposter_game)
+        if user.active_games.active_single_device_impostor_game is not None:
+            await single_device_impostor_game_controller.remove(user.active_games.active_single_device_impostor_game)
 
         user.active_games = ActiveGames.new()
         await user_controller.set(user, expire=TimeStamp.DAY)

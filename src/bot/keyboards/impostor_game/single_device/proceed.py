@@ -1,7 +1,7 @@
 from aiogram_i18n import LazyProxy
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from src.bot.actions.imposter_game.single_device.proceed import SingleDeviceImpostorGameProceedAction
+from src.bot.actions.impostor_game.single_device.proceed import SingleDeviceImpostorGameProceedAction
 from src.bot.actions.spy_game.single_device.proceed import SingleDeviceSpyGameProceedAction
 
 

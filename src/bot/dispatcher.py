@@ -12,9 +12,9 @@ from src.bot.locale_manager import LocaleManager
 from src.bot.middlewares.error import ErrorMiddleware
 from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
-from src.bot.scenes.imposter_game.single_device.play import SingleDeviceImposterGamePlayScene
-from src.bot.scenes.imposter_game.single_device.setup import SingleDeviceImposterGameSetupScene
-from src.bot.scenes.imposter_game.single_device.tutorial import SingleDeviceImposterGameTutorialScene
+from src.bot.scenes.impostor_game.single_device.play import SingleDeviceImpostorGamePlayScene
+from src.bot.scenes.impostor_game.single_device.setup import SingleDeviceImpostorGameSetupScene
+from src.bot.scenes.impostor_game.single_device.tutorial import SingleDeviceImpostorGameTutorialScene
 from src.bot.scenes.language import LanguageScene
 from src.bot.scenes.spy_game.single_device.play import SingleDeviceSpyGamePlayScene
 from src.bot.scenes.spy_game.single_device.setup import SingleDeviceSpyGameSetupScene
@@ -22,8 +22,8 @@ from src.bot.scenes.spy_game.single_device.tutorial import SingleDeviceSpyGameTu
 from src.bot.scenes.start import StartScene
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
-from src.core.models.redis.imposter_game.imposter_question_queue import ImposterQuestionQueue
-from src.core.models.redis.imposter_game.single_device import SingleDeviceImposterGame
+from src.core.models.redis.impostor_game.impostor_question_queue import ImpostorQuestionQueue
+from src.core.models.redis.impostor_game.single_device import SingleDeviceImpostorGame
 from src.core.models.redis.spy_game.secret_word_queue import SecretWordQueue
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.telegram_user import TelegramUser
@@ -53,8 +53,8 @@ def create_dispatcher() -> Dispatcher:
         telegram_user_controller=RedisController[TelegramUser](redis),
         single_device_spy_game_controller=RedisController[SingleDeviceSpyGame](redis),
         secret_word_controller=RedisController[SecretWordQueue](redis),
-        single_device_imposter_game_controller=RedisController[SingleDeviceImposterGame](redis),
-        imposter_question_controller=RedisController[ImposterQuestionQueue](redis),
+        single_device_impostor_game_controller=RedisController[SingleDeviceImpostorGame](redis),
+        impostor_question_controller=RedisController[ImpostorQuestionQueue](redis),
     )
 
     dispatcher.update.outer_middleware.register(UserMiddleware())
@@ -81,9 +81,9 @@ def create_dispatcher() -> Dispatcher:
         SingleDeviceSpyGameTutorialScene,
         SingleDeviceSpyGameSetupScene,
         SingleDeviceSpyGamePlayScene,
-        SingleDeviceImposterGameTutorialScene,
-        SingleDeviceImposterGameSetupScene,
-        SingleDeviceImposterGamePlayScene,
+        SingleDeviceImpostorGameTutorialScene,
+        SingleDeviceImpostorGameSetupScene,
+        SingleDeviceImpostorGamePlayScene,
     )
 
     return dispatcher

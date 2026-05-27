@@ -182,18 +182,18 @@ class ActiveGames(AbstractModel):
     ID of user's active single device spy game.
     """
 
-    active_single_device_imposter_game: UUID | None = None
+    active_single_device_impostor_game: UUID | None = None
 
     @classmethod
     def new(
             cls,
             *,
             active_single_device_spy_game: UUID | None = None,
-            active_single_device_imposter_game: UUID | None = None,
+            active_single_device_impostor_game: UUID | None = None,
     ) -> "ActiveGames":
         return cls(
             active_single_device_spy_game=active_single_device_spy_game,
-            active_single_device_imposter_game=active_single_device_imposter_game,
+            active_single_device_impostor_game=active_single_device_impostor_game,
         )
 
 

@@ -3,9 +3,9 @@ from random import shuffle, choices
 from typing import Tuple, List
 
 
-class ImposterCount(StrEnum):
+class ImpostorCount(StrEnum):
     """
-    Count of imposters in the imposter game.
+    Count of impostors in the impostor game.
     """
 
     SINGLE = auto()
@@ -17,10 +17,10 @@ class ImposterCount(StrEnum):
             player_count: int,
     ) -> Tuple[int, ...]:
         """
-        Retrieve random indices of imposters in game from player count.
+        Retrieve random indices of impostors in game from player count.
 
-        If imposter count is random, there is a 40% chance of either having one or two imposters,
-        a 7.5% chance of having 0 imposters and a 2.5% chance of all players being imposters.
+        If impostor count is random, there is a 40% chance of either having one or two impostors,
+        a 7.5% chance of having 0 impostors and a 2.5% chance of all players being impostors.
 
         :param player_count: Count of players.
         :return: Tuple of player indices.

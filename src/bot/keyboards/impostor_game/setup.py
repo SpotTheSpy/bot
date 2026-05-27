@@ -4,39 +4,39 @@ from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from config import config
 from src.bot.actions.back import BackAction
-from src.bot.actions.imposter_game.play import ImposterGamePlayAction
-from src.bot.actions.imposter_game.setup import (
-    ImposterGameSetupAction,
-    ImposterGameSetupPlayerAmountAction,
-    ImposterGameSetupImposterCountAction,
+from src.bot.actions.impostor_game.play import ImpostorGamePlayAction
+from src.bot.actions.impostor_game.setup import (
+    ImpostorGameSetupAction,
+    ImpostorGameSetupPlayerAmountAction,
+    ImpostorGameSetupImpostorCountAction,
 )
-from src.core.enums.imposter_count import ImposterCount
-from src.core.enums.imposter_game_parameter import ImposterGameParameter
+from src.core.enums.impostor_count import ImpostorCount
+from src.core.enums.impostor_game_parameter import ImpostorGameParameter
 
 
-def imposter_game_setup_keyboard(
+def impostor_game_setup_keyboard(
         i18n: I18nContext,
         player_count: int,
-        imposter_count: ImposterCount,
+        impostor_count: ImpostorCount,
 ) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 InlineKeyboardButton(
                     text=LazyProxy(
-                        "setup-imposter-game.button-player-count",
+                        "setup-impostor-game.button-player-count",
                         player_count=player_count,
                     ),
-                    callback_data=ImposterGameSetupAction(game_parameter=ImposterGameParameter.PLAYER_COUNT).pack(),
+                    callback_data=ImpostorGameSetupAction(game_parameter=ImpostorGameParameter.PLAYER_COUNT).pack(),
                 )
             ],
             [
                 InlineKeyboardButton(
                     text=LazyProxy(
-                        "setup-imposter-game.button-imposter-count",
-                        imposter_count=i18n.get("parameters-imposter-count", imposter_count=imposter_count),
+                        "setup-impostor-game.button-impostor-count",
+                        impostor_count=i18n.get("parameters-impostor-count", impostor_count=impostor_count),
                     ),
-                    callback_data=ImposterGameSetupAction(game_parameter=ImposterGameParameter.IMPOSTER_COUNT).pack(),
+                    callback_data=ImpostorGameSetupAction(game_parameter=ImpostorGameParameter.IMPOSTOR_COUNT).pack(),
                 )
             ],
             [
@@ -45,15 +45,15 @@ def imposter_game_setup_keyboard(
                     callback_data=BackAction().pack(),
                 ),
                 InlineKeyboardButton(
-                    text=LazyProxy("setup-imposter-game.button-play"),
-                    callback_data=ImposterGamePlayAction().pack(),
+                    text=LazyProxy("setup-impostor-game.button-play"),
+                    callback_data=ImpostorGamePlayAction().pack(),
                 ),
             ],
         ]
     )
 
 
-def imposter_game_setup_player_count_keyboard(
+def impostor_game_setup_player_count_keyboard(
         selected_player_count: int,
 ) -> InlineKeyboardMarkup:
     builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
@@ -62,11 +62,11 @@ def imposter_game_setup_player_count_keyboard(
         builder.add(
             InlineKeyboardButton(
                 text=LazyProxy(
-                    "setup-imposter-game-player-count.button",
+                    "setup-impostor-game-player-count.button",
                     player_count=player_count,
                     selected=str(player_count == selected_player_count).lower(),
                 ),
-                callback_data=ImposterGameSetupPlayerAmountAction(player_count=player_count).pack(),
+                callback_data=ImpostorGameSetupPlayerAmountAction(player_count=player_count).pack(),
             )
         )
 
@@ -81,23 +81,23 @@ def imposter_game_setup_player_count_keyboard(
     return builder.as_markup()
 
 
-def imposter_game_setup_imposter_count_keyboard(
+def impostor_game_setup_impostor_count_keyboard(
         i18n: I18nContext,
-        selected_imposter_count: ImposterCount,
+        selected_impostor_count: ImpostorCount,
 ) -> InlineKeyboardMarkup:
     builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
 
-    for imposter_count in ImposterCount:
-        imposter_count = ImposterCount(imposter_count)
+    for impostor_count in ImpostorCount:
+        impostor_count = ImpostorCount(impostor_count)
 
         builder.add(
             InlineKeyboardButton(
                 text=LazyProxy(
-                    "setup-imposter-game-imposter-count.button",
-                    imposter_count=i18n.get("parameters-imposter-count", imposter_count=imposter_count),
-                    selected=str(imposter_count == selected_imposter_count).lower(),
+                    "setup-impostor-game-impostor-count.button",
+                    impostor_count=i18n.get("parameters-impostor-count", impostor_count=impostor_count),
+                    selected=str(impostor_count == selected_impostor_count).lower(),
                 ),
-                callback_data=ImposterGameSetupImposterCountAction(imposter_count=imposter_count).pack(),
+                callback_data=ImpostorGameSetupImpostorCountAction(impostor_count=impostor_count).pack(),
             )
         )
 

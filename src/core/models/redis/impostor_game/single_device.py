@@ -3,18 +3,18 @@ from uuid import UUID
 
 from uuid_extensions import uuid7
 
-from src.core.enums.imposter_count import ImposterCount
-from src.core.models.redis.imposter_game.abstract import AbstractImposterGame
+from src.core.enums.impostor_count import ImpostorCount
+from src.core.models.redis.impostor_game.abstract import AbstractImpostorGame
 
 
-class SingleDeviceImposterGame(AbstractImposterGame):
+class SingleDeviceImpostorGame(AbstractImpostorGame):
     """
-    Represents a single-device imposter game.
+    Represents a single-device impostor game.
     """
 
-    imposter_indices: Tuple[int, ...] | None = None
+    impostor_indices: Tuple[int, ...] | None = None
     """
-    Indices of imposters in game.
+    Indices of impostors in game.
     """
 
     answers: Tuple[str | None, ...] | None = None
@@ -27,11 +27,11 @@ class SingleDeviceImposterGame(AbstractImposterGame):
             context: Any,
     ) -> None:
         """
-        Set random imposter indices and empty answers after an object initialization.
+        Set random impostor indices and empty answers after an object initialization.
         """
 
-        if self.imposter_indices is None:
-            self.imposter_indices = self.imposter_count.get_indices(self.player_count)
+        if self.impostor_indices is None:
+            self.impostor_indices = self.impostor_count.get_indices(self.player_count)
 
         if self.answers is None:
             self.answers = (None,) * self.player_count
@@ -42,21 +42,21 @@ class SingleDeviceImposterGame(AbstractImposterGame):
             host_id: UUID,
             player_count: int,
             real_question: str,
-            imposter_question: str,
-            imposter_count: ImposterCount,
+            impostor_question: str,
+            impostor_count: ImpostorCount,
             *,
             game_id: UUID | None = None,
-    ) -> "SingleDeviceImposterGame":
+    ) -> "SingleDeviceImpostorGame":
         """
         Generate a new instance using only required parameters.
 
         :param host_id: Host ID.
         :param player_count: Count of players.
         :param real_question: Question which citizens get.
-        :param imposter_question: Question which imposter(s) get.
-        :param imposter_count: Count of imposters.
+        :param impostor_question: Question which impostor(s) get.
+        :param impostor_count: Count of impostors.
         :param game_id: Optional game ID, created if None.
-        :return: New single-device imposter game instance.
+        :return: New single-device impostor game instance.
         """
 
         return cls(
@@ -64,10 +64,10 @@ class SingleDeviceImposterGame(AbstractImposterGame):
             host_id=host_id,
             player_count=player_count,
             real_question=real_question,
-            imposter_question=imposter_question,
-            imposter_count=imposter_count,
+            impostor_question=impostor_question,
+            impostor_count=impostor_count,
         )
 
     @classmethod
     def key(cls) -> str:
-        return "single_device_imposter_game"
+        return "single_device_impostor_game"

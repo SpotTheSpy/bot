@@ -5,5 +5,5 @@ greeting =
 
     Will you trust your instincts or fall for deception? Gather your group, sharpen your wits, and prepare for a challenge of deduction, bluff, and quick thinking.
     .button-spy-game = 🔍 Play Spot the Spy
-    .button-imposter-game = 🎭 Play Guess the Imposter
+    .button-impostor-game = 🎭 Play Guess the Impostor
     .button-language = 🌐 Language

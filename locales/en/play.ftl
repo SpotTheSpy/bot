@@ -53,7 +53,7 @@ play-single-device-spy-game-results = { $count ->
 }
     .button-play-again = 🚀 Play again
 
-play-single-device-imposter-game-prepare =
+play-single-device-impostor-game-prepare =
     🤫 <b>Get ready to answer your question</b>
 
     Each player must view and answer their question privately. Only hold the phone when it’s your turn, and make sure no one else can see the screen.
@@ -62,7 +62,7 @@ play-single-device-imposter-game-prepare =
     .button-view-question = 🔍 View question
 
 play-single-device-impostor-game-view-question =
-    Below is a question you need to answer by typing in chat. You dont know yet whether you are an imposter or not - the real question is going to be revealed after everyone gives their answer.
+    Below is a question you need to answer by typing in chat. You dont know yet whether you are an impostor or not - the real question is going to be revealed after everyone gives their answer.
 
     <b>Your question:</b> { $question }
     .button-proceed = 👉 Proceed

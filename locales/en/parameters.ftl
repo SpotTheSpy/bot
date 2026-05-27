@@ -21,9 +21,9 @@ parameters-spy-count = { $spy_count ->
     *[other] Unknown Count
 }
 
-parameters-imposter-count = { $imposter_count ->
-    [single] One imposter 🕵️‍♂️
-    [double] Two imposters 🕵️‍♂️
-    [random] Random count of imposters 🎭
+parameters-impostor-count = { $impostor_count ->
+    [single] One impostor 🕵️‍♂️
+    [double] Two impostors 🕵️‍♂️
+    [random] Random count of impostors 🎭
     *[other] Unknown Count
 }
