@@ -13,5 +13,5 @@ def get_imposter_questions() -> Dict[str, Dict[ImposterPlayerRole, Set[str]]]:
             role: set(questions)
             for role, questions in bucket.items()
         }
-        for bucket_key, bucket in imposter_questions.values()
+        for bucket_key, bucket in imposter_questions.items()
     }

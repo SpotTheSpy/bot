@@ -7,6 +7,7 @@ from src.bot.logger import logger
 from src.bot.scenes.base import BaseScene
 from src.core.controllers.redis import RedisController
 from src.core.enums.time_stamp import TimeStamp
+from src.core.models.redis.imposter_game.single_device import SingleDeviceImposterGame
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.user import User, ActiveGames
 
@@ -24,6 +25,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             i18n: I18nContext,
             user_controller: RedisController[User],
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
+            single_device_imposter_game_controller: RedisController[SingleDeviceImposterGame],
     ) -> None:
         await user.message.replace(
             i18n.get("greeting"),
@@ -31,7 +33,12 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             message_to_delete=message.message_id,
         )
 
-        await self._cleanup_games(user, user_controller, single_device_spy_game_controller)
+        await self._cleanup_games(
+            user,
+            user_controller,
+            single_device_spy_game_controller,
+            single_device_imposter_game_controller,
+        )
 
         logger.info(
             f"{user.telegram_id} ({user.first_name}) opened the landing page."
@@ -45,6 +52,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             i18n: I18nContext,
             user_controller: RedisController[User],
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
+            single_device_imposter_game_controller: RedisController[SingleDeviceImposterGame],
     ) -> None:
         await user.message.edit(
             i18n.get("greeting"),
@@ -53,7 +61,12 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
 
         await callback_query.answer()
 
-        await self._cleanup_games(user, user_controller, single_device_spy_game_controller)
+        await self._cleanup_games(
+            user,
+            user_controller,
+            single_device_spy_game_controller,
+            single_device_imposter_game_controller,
+        )
 
     @on.message()
     async def on_message(
@@ -67,9 +80,13 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             user: User,
             user_controller: RedisController[User],
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
+            single_device_imposter_game_controller: RedisController[SingleDeviceImposterGame],
     ) -> None:
         if user.active_games.active_single_device_spy_game is not None:
             await single_device_spy_game_controller.remove(user.active_games.active_single_device_spy_game)
+
+        if user.active_games.active_single_device_imposter_game is not None:
+            await single_device_imposter_game_controller.remove(user.active_games.active_single_device_imposter_game)
 
         user.active_games = ActiveGames.new()
         await user_controller.set(user, expire=TimeStamp.DAY)

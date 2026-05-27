@@ -12,6 +12,7 @@ from src.bot.locale_manager import LocaleManager
 from src.bot.middlewares.error import ErrorMiddleware
 from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
+from src.bot.scenes.imposter_game.single_device.play import SingleDeviceImposterGamePlayScene
 from src.bot.scenes.imposter_game.single_device.setup import SingleDeviceImposterGameSetupScene
 from src.bot.scenes.imposter_game.single_device.tutorial import SingleDeviceImposterGameTutorialScene
 from src.bot.scenes.language import LanguageScene
@@ -82,6 +83,7 @@ def create_dispatcher() -> Dispatcher:
         SingleDeviceSpyGamePlayScene,
         SingleDeviceImposterGameTutorialScene,
         SingleDeviceImposterGameSetupScene,
+        SingleDeviceImposterGamePlayScene,
     )
 
     return dispatcher
