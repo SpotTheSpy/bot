@@ -153,7 +153,6 @@ class Message(AbstractModel):
             if isinstance(result, Exception):
                 raise result
         except (TelegramBadRequest, ValueError) as error:
-            print(error)
             if isinstance(error, TelegramBadRequest) and "message is not modified" in error.message:
                 return
 

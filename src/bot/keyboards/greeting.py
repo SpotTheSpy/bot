@@ -22,6 +22,12 @@ def greeting_keyboard() -> InlineKeyboardMarkup:
             ],
             [
                 InlineKeyboardButton(
+                    text=LazyProxy("greeting.button-imposter-game"),
+                    callback_data=SwitchSceneAction(scene="single_device_imposter_game_tutorial").pack(),
+                )
+            ],
+            [
+                InlineKeyboardButton(
                     text=LazyProxy("greeting.button-language"),
                     callback_data=SwitchSceneAction(scene="language").pack(),
                 )
