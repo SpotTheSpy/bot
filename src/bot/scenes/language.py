@@ -38,17 +38,16 @@ class LanguageScene(BaseScene, state="language"):
             state: FSMContext,
             i18n: I18nContext,
     ) -> None:
-        previous_selected_locale: str | None = await state.get_value("selected_locale")
+        previous_selected_locale: str = await state.get_value("selected_locale") or user.locale
 
-        if previous_selected_locale is not None:
-            if callback_data.locale == Locale(previous_selected_locale):
-                await callback_query.answer(
-                    i18n.get(
-                        "language.answer-same",
-                        previous_selected_locale,
-                    )
+        if callback_data.locale == Locale(previous_selected_locale):
+            await callback_query.answer(
+                i18n.get(
+                    "language.answer-same",
+                    previous_selected_locale,
                 )
-                return
+            )
+            return
 
         await user.message.edit(
             i18n.get(

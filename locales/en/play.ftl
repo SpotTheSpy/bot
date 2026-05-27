@@ -1,8 +1,7 @@
 play-single-device-spy-game-prepare =
     🤫 <b>Get ready to view your role</b>
 
-    Each player must check their role privately. Only hold the phone when
-    it’s your turn, and make sure no one else can see the screen.
+    Each player must check their role privately. Only hold the phone when it’s your turn, and make sure no one else can see the screen.
 
     <b>Player { $player_index }/{ $player_count }</b>
     .button-view-role = 🔍 View role
