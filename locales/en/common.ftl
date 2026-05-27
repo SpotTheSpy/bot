@@ -5,4 +5,4 @@ button-got-it = 👌 Got it
 error =
     ⚠️ <b>An error occured</b>
 
-    Please try restarting the bot.
+    Please try executing <b>/start</b> command or restarting the bot.

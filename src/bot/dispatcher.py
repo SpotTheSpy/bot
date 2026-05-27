@@ -1,4 +1,4 @@
-from aiogram import Dispatcher, BaseMiddleware
+from aiogram import Dispatcher
 from aiogram.fsm.scene import SceneRegistry
 from aiogram.fsm.storage.base import DefaultKeyBuilder
 from aiogram.fsm.storage.redis import RedisStorage
@@ -9,6 +9,7 @@ from redis.asyncio import Redis
 
 from config import config
 from src.bot.locale_manager import LocaleManager
+from src.bot.middlewares.error import ErrorMiddleware
 from src.bot.middlewares.user import UserMiddleware
 from src.bot.routes.start import start_router
 from src.bot.scenes.language import LanguageScene
@@ -22,21 +23,6 @@ from src.core.models.redis.spy_game.secret_word_queue import SecretWordQueue
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.telegram_user import TelegramUser
 from src.core.models.redis.user import User
-
-
-def _register_middlewares(
-        dispatcher: Dispatcher,
-        *middlewares: BaseMiddleware,
-) -> None:
-    """
-    Registers all middlewares as an outer middleware on a dispatcher.
-
-    :param dispatcher: Dispatcher instance.
-    :param middlewares: List of middleware instances.
-    """
-
-    for middleware in middlewares:
-        dispatcher.update.outer_middleware.register(middleware)
 
 
 def create_dispatcher() -> Dispatcher:
@@ -64,10 +50,7 @@ def create_dispatcher() -> Dispatcher:
         secret_word_controller=RedisController[SecretWordQueue](redis),
     )
 
-    _register_middlewares(
-        dispatcher,
-        UserMiddleware(),
-    )
+    dispatcher.update.outer_middleware.register(UserMiddleware())
 
     I18nMiddleware(
         core=FluentCompileCore(
@@ -78,6 +61,8 @@ def create_dispatcher() -> Dispatcher:
             default_locale="en",
         )
     ).setup(dispatcher)
+
+    dispatcher.update.outer_middleware.register(ErrorMiddleware())
 
     dispatcher.include_routers(
         start_router,

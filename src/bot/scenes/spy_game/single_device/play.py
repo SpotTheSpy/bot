@@ -9,6 +9,7 @@ from src.bot.actions.spy_game.single_device.finish import SingleDeviceSpyGameFin
 from src.bot.actions.spy_game.single_device.play_again import SingleDeviceSpyGamePlayAgainAction
 from src.bot.actions.spy_game.single_device.proceed import SingleDeviceSpyGameProceedAction
 from src.bot.actions.spy_game.single_device.view_role import SingleDeviceSpyGameViewRoleAction
+from src.bot.exceptions.game import GameError
 from src.bot.keyboards.spy_game.single_device.discuss import single_device_spy_game_discuss_keyboard
 from src.bot.keyboards.spy_game.single_device.proceed import single_device_spy_game_proceed_keyboard
 from src.bot.keyboards.spy_game.single_device.results import single_device_spy_game_results_keyboard
@@ -91,13 +92,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
     ) -> None:
         game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
-            return  # TODO: Error message
+            raise GameError("Game ID was not found.")
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
-            return  # TODO: Error message
+            raise GameError("Game was not found.")
         player_index: int | None = await state.get_value("player_index")
         if player_index is None:
-            return   # TODO: Error message
+            raise GameError("Player index was not found.")
 
         role: SpyPlayerRole = SpyPlayerRole.SPY if player_index in game.spy_indices else SpyPlayerRole.CITIZEN
 
@@ -123,13 +124,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
     ) -> None:
         game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
-            return  # TODO: Error message
+            raise GameError("Game ID was not found.")
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
-            return  # TODO: Error message
+            raise GameError("Game was not found.")
         player_index: int | None = await state.get_value("player_index")
         if player_index is None:
-            return  # TODO: Error message
+            raise GameError("Player index was not found.")
 
         player_index += 1
 
@@ -169,13 +170,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
     ) -> None:
         game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
-            return  # TODO: Error message
+            raise GameError("Game ID was not found.")
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
-            return  # TODO: Error message
+            raise GameError("Game was not found.")
         player_index: int | None = await state.get_value("player_index")
         if player_index is None:
-            return  # TODO: Error message
+            raise GameError("Player index was not found.")
 
         spies: str = ", ".join([str(spy + 1) for spy in game.spy_indices])
 
@@ -204,13 +205,13 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
     ) -> None:
         game_id: UUID | None = user.active_games.active_single_device_spy_game
         if game_id is None:
-            return  # TODO: Error message
+            raise GameError("Game ID was not found.")
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
-            return  # TODO: Error message
+            raise GameError("Game was not found.")
         player_index: int | None = await state.get_value("player_index")
         if player_index is None:
-            return  # TODO: Error message
+            raise GameError("Player index was not found.")
 
         secret_word_queue: SecretWordQueue | None = await secret_word_controller.get(user.id)
 
