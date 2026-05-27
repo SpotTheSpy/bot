@@ -1,10 +1,10 @@
 import json
-from typing import Any, Dict, Set
+from typing import Dict, Set, List
 
 from src.core.enums.spy_category import SpyCategory
 
 with open("src/core/assets/secret_words.json", "r", encoding="utf-8") as file:
-    secret_words: Dict[str, Any] = json.load(file)
+    secret_words: Dict[SpyCategory, List[str]] = json.load(file)
 
 
 def get_secret_words(

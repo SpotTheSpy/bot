@@ -118,7 +118,7 @@ def spy_game_setup_category_keyboard(
         )
     )
 
-    builder.adjust(2, 2, 2, 1)
+    builder.adjust(2, repeat=True)
     return builder.as_markup()
 
 

@@ -1,10 +1,16 @@
 parameters-spy-categories = { $category ->
     [general] Общее 🎨
     [food] Еда 🍎
-    [nature] Природа ☘️
+    [plants] Природа ☘️
     [animals] Животные 🐶
     [places] Места 🏠
+    [geography] География 🌎
+    [households] Предметы быта 🏠
+    [professions] Профессии 👷
+    [sports] Спорт ⚽️
+    [mythology] Мифология 🔱
     [celebrities] Знаменитости 🫅
+    [characters] Персонажи 🪄
     *[other] Неизвестная категория
 }
 
