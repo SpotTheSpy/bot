@@ -5,6 +5,7 @@ from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 from aiogram_i18n import I18nContext
 
+from src.core.models.postgres.single_device_spy_game import SingleDeviceSpyGame as PostgresSingleDeviceSpyGame
 from src.bot.actions.spy_game.single_device.finish import SingleDeviceSpyGameFinishAction
 from src.bot.actions.spy_game.single_device.play_again import SingleDeviceSpyGamePlayAgainAction
 from src.bot.actions.spy_game.single_device.proceed import SingleDeviceSpyGameProceedAction
@@ -16,6 +17,7 @@ from src.bot.keyboards.spy_game.single_device.results import single_device_spy_g
 from src.bot.keyboards.spy_game.single_device.view_role import single_device_spy_game_view_role_keyboard
 from src.bot.logger import logger
 from src.bot.scenes.base import BaseScene
+from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
 from src.core.enums.spy_category import SpyCategory
 from src.core.enums.spy_count import SpyCount
@@ -172,6 +174,7 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             user: User,
             state: FSMContext,
             i18n: I18nContext,
+            postgres: PostgresController,
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
     ) -> None:
         game_id: UUID | None = user.active_games.active_single_device_spy_game
@@ -197,6 +200,21 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         )
 
         await callback_query.answer()
+
+        async with postgres.session() as session:
+            new_game: PostgresSingleDeviceSpyGame = PostgresSingleDeviceSpyGame(
+                id=game.id,
+                host_id=game.host_id,
+                host_telegram_id=user.telegram_id,
+                player_count=game.player_count,
+                secret_word=game.secret_word,
+                category=game.category,
+                spy_count=game.spy_count,
+                spy_indices=game.spy_indices,
+            )
+
+            session.add(new_game)
+            await session.commit()
 
         logger.info(
             f"{user.telegram_id} ({user.first_name}) finished the single-device spy game."

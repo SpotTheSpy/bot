@@ -14,7 +14,7 @@ class User(PostgresModel):
 
     __tablename__ = "users"
 
-    id = Column(UUID(True), primary_key=True, default=uuid7, nullable=False, index=True)
+    id = Column(UUID(True), primary_key=True, default=uuid7, nullable=False)
     """
     UUID.
     """
@@ -42,4 +42,9 @@ class User(PostgresModel):
     settings = relationship("UserSettings", back_populates="user", uselist=False)
     """
     Settings object related to user.
+    """
+
+    single_device_spy_games = relationship("SingleDeviceSpyGame", back_populates="user")
+    """
+    Single-device spy games hosted by user.
     """
