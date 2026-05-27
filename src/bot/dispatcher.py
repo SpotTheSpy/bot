@@ -19,6 +19,8 @@ from src.bot.scenes.spy_game.single_device.tutorial import SingleDeviceSpyGameTu
 from src.bot.scenes.start import StartScene
 from src.core.controllers.postgres import PostgresController
 from src.core.controllers.redis import RedisController
+from src.core.models.redis.imposter_game.imposter_question_queue import ImposterQuestionQueue
+from src.core.models.redis.imposter_game.single_device import SingleDeviceImposterGame
 from src.core.models.redis.spy_game.secret_word_queue import SecretWordQueue
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.telegram_user import TelegramUser
@@ -48,6 +50,8 @@ def create_dispatcher() -> Dispatcher:
         telegram_user_controller=RedisController[TelegramUser](redis),
         single_device_spy_game_controller=RedisController[SingleDeviceSpyGame](redis),
         secret_word_controller=RedisController[SecretWordQueue](redis),
+        single_device_imposter_game_controller=RedisController[SingleDeviceImposterGame](redis),
+        imposter_question_controller=RedisController[ImposterQuestionQueue](redis),
     )
 
     dispatcher.update.outer_middleware.register(UserMiddleware())
