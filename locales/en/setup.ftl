@@ -33,3 +33,29 @@ setup-spy-game-spy-count =
         [true] ✅ { $spy_count }
         *[false] { $spy_count }
     }
+
+setup-imposter-game =
+    ⚙️ <b>Game setup</b>
+
+    Use the options below to configure your game before starting. You can set the total number of players and decide how many Imposters will be in the game. Make sure everyone agrees on the setup before continuing.
+    .button-player-count = Players: { $player_count } 👤
+    .button-imposter-count = Imposters: { $imposter_count }
+    .button-play = 🚀 Play
+
+setup-imposter-game-player-count =
+    ⚙️ <b>Set player count</b>
+
+    Choose how many players will participate on this device. The phone will be passed around so each player can privately answer their question before the game begins.
+    .button = { $selected ->
+        [true] ✅ { $player_count } 👤
+        *[false] { $player_count } 👤
+    }
+
+setup-imposter-game-imposter-count =
+    ⚙️ <b>Set number of Imposters</b>
+
+    Choose how many Imposters will be hiding among the Citizens. More imposters add more chaos to the game, and if you pick random count - the game can get completely crazy. Balance wisely for the best experience.
+    .button = { $selected ->
+        [true] ✅ { $imposter_count }
+        *[false] { $imposter_count }
+    }

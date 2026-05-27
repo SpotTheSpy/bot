@@ -1,5 +1,5 @@
 from random import choice
-from typing import Any, List, Set
+from typing import List, Set
 from uuid import UUID
 
 from pydantic import Field
