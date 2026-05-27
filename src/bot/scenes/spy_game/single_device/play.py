@@ -14,6 +14,7 @@ from src.bot.keyboards.spy_game.single_device.discuss import single_device_spy_g
 from src.bot.keyboards.spy_game.single_device.proceed import single_device_spy_game_proceed_keyboard
 from src.bot.keyboards.spy_game.single_device.results import single_device_spy_game_results_keyboard
 from src.bot.keyboards.spy_game.single_device.view_role import single_device_spy_game_view_role_keyboard
+from src.bot.logger import logger
 from src.bot.scenes.base import BaseScene
 from src.core.controllers.redis import RedisController
 from src.core.enums.spy_category import SpyCategory
@@ -81,6 +82,10 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         )
 
         await callback_query.answer()
+
+        logger.info(
+            f"{user.telegram_id} ({user.first_name}) started a single-device spy game."
+        )
 
     @on.callback_query(SingleDeviceSpyGameViewRoleAction.filter())
     async def on_view_role(
@@ -193,6 +198,10 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
 
         await callback_query.answer()
 
+        logger.info(
+            f"{user.telegram_id} ({user.first_name}) finished the single-device spy game."
+        )
+
     @on.callback_query(SingleDeviceSpyGamePlayAgainAction.filter())
     async def on_play_again(
             self,
@@ -251,6 +260,10 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
 
         await callback_query.answer()
 
+        logger.info(
+            f"{user.telegram_id} ({user.first_name}) started a single-device spy game."
+        )
+
     @on.callback_query.leave()
     async def on_leave(
             self,
@@ -264,6 +277,10 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         await user_controller.set(user, expire=TimeStamp.DAY)
 
         await callback_query.answer()
+
+        logger.info(
+            f"{user.telegram_id} ({user.first_name}) left the single-device spy game."
+        )
 
     @on.message()
     async def on_message(

@@ -5,6 +5,7 @@ from aiogram_i18n import I18nContext
 
 from src.bot.actions.switch_language import SwitchLanguageAction
 from src.bot.keyboards.language import language_keyboard
+from src.bot.logger import logger
 from src.bot.scenes.base import BaseScene
 from src.core.enums.locale import Locale
 from src.core.models.redis.user import User
@@ -85,6 +86,10 @@ class LanguageScene(BaseScene, state="language"):
         )
 
         await state.update_data(selected_locale=None)
+
+        logger.info(
+            f"{user.telegram_id} ({user.first_name}) switched language to \'{selected_locale}\'."
+        )
 
     @on.message()
     async def on_message(

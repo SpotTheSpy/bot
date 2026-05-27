@@ -3,8 +3,10 @@ from aiogram.types import Message, CallbackQuery
 from aiogram_i18n import I18nContext
 
 from src.bot.keyboards.greeting import greeting_keyboard
+from src.bot.logger import logger
 from src.bot.scenes.base import BaseScene
 from src.core.controllers.redis import RedisController
+from src.core.enums.time_stamp import TimeStamp
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.user import User, ActiveGames
 
@@ -30,6 +32,10 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
         )
 
         await self._cleanup_games(user, user_controller, single_device_spy_game_controller)
+
+        logger.info(
+            f"{user.telegram_id} ({user.first_name}) opened the landing page."
+        )
 
     @on.callback_query.enter()
     async def on_callback_query_enter(
