@@ -17,16 +17,24 @@ class SingleDeviceImposterGame(AbstractImposterGame):
     Indices of imposters in game.
     """
 
+    answers: Tuple[str | None, ...] | None = None
+    """
+    Sequence of answers collected from all the players.
+    """
+
     def model_post_init(
             self,
             context: Any,
     ) -> None:
         """
-        Set random imposter indices after an object initialization.
+        Set random imposter indices and empty answers after an object initialization.
         """
 
         if self.imposter_indices is None:
             self.imposter_indices = self.imposter_count.get_indices(self.player_count)
+
+        if self.answers is None:
+            self.answers = (None,) * self.player_count
 
     @classmethod
     def new(
