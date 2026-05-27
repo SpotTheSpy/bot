@@ -42,7 +42,12 @@ class LanguageScene(BaseScene, state="language"):
 
         if previous_selected_locale is not None:
             if callback_data.locale == Locale(previous_selected_locale):
-                await callback_query.answer()
+                await callback_query.answer(
+                    i18n.get(
+                        "language.answer-same",
+                        previous_selected_locale,
+                    )
+                )
                 return
 
         await user.message.edit(

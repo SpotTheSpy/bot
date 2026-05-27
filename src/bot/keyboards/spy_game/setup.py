@@ -1,5 +1,5 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram_i18n import LazyProxy
+from aiogram_i18n import LazyProxy, I18nContext
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from config import config
@@ -17,6 +17,7 @@ from src.core.enums.spy_game_parameter import SpyGameParameter
 
 
 def spy_game_setup_keyboard(
+        i18n: I18nContext,
         player_count: int,
         category: SpyCategory,
         spy_count: SpyCount,
@@ -30,37 +31,33 @@ def spy_game_setup_keyboard(
                         player_count=player_count,
                     ),
                     callback_data=SpyGameSetupAction(game_parameter=SpyGameParameter.PLAYER_COUNT).pack(),
-                )
-            ],
-            [
+                ),
                 InlineKeyboardButton(
                     text=LazyProxy(
                         "setup-spy-game.button-category",
-                        category=category,
+                        category=i18n.get("parameters-spy-categories", category=category),
                     ),
                     callback_data=SpyGameSetupAction(game_parameter=SpyGameParameter.CATEGORY).pack(),
-                )
+                ),
             ],
             [
                 InlineKeyboardButton(
                     text=LazyProxy(
                         "setup-spy-game.button-spy-count",
-                        spy_count=spy_count,
+                        spy_count=i18n.get("parameters-spy-count", spy_count=spy_count),
                     ),
                     callback_data=SpyGameSetupAction(game_parameter=SpyGameParameter.SPY_COUNT).pack(),
                 )
             ],
             [
                 InlineKeyboardButton(
-                    text=LazyProxy("setup-spy-game.button-play"),
-                    callback_data=SpyGamePlayAction().pack(),
-                )
-            ],
-            [
-                InlineKeyboardButton(
                     text=LazyProxy("button-back"),
                     callback_data=BackAction().pack(),
-                )
+                ),
+                InlineKeyboardButton(
+                    text=LazyProxy("setup-spy-game.button-play"),
+                    callback_data=SpyGamePlayAction().pack(),
+                ),
             ],
         ]
     )
@@ -95,6 +92,7 @@ def spy_game_setup_player_count_keyboard(
 
 
 def spy_game_setup_category_keyboard(
+        i18n: I18nContext,
         selected_category: SpyCategory,
 ) -> InlineKeyboardMarkup:
     builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
@@ -106,7 +104,7 @@ def spy_game_setup_category_keyboard(
             InlineKeyboardButton(
                 text=LazyProxy(
                     "setup-spy-game-category.button",
-                    category=category,
+                    category=i18n.get("parameters-spy-categories", category=category),
                     selected=str(category == selected_category).lower(),
                 ),
                 callback_data=SpyGameSetupCategoryAction(category=category).pack(),
@@ -125,6 +123,7 @@ def spy_game_setup_category_keyboard(
 
 
 def spy_game_setup_spy_count_keyboard(
+        i18n: I18nContext,
         selected_spy_count: SpyCount,
 ) -> InlineKeyboardMarkup:
     builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
@@ -136,7 +135,7 @@ def spy_game_setup_spy_count_keyboard(
             InlineKeyboardButton(
                 text=LazyProxy(
                     "setup-spy-game-spy-count.button",
-                    spy_count=spy_count,
+                    spy_count=i18n.get("parameters-spy-count", spy_count=spy_count),
                     selected=str(spy_count == selected_spy_count).lower(),
                 ),
                 callback_data=SpyGameSetupSpyCountAction(spy_count=spy_count).pack(),

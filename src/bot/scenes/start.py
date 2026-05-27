@@ -24,10 +24,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
     ) -> None:
         await user.message.replace(
-            i18n.get(
-                "greeting",
-                first_name=message.from_user.first_name,
-            ),
+            i18n.get("greeting"),
             reply_markup=greeting_keyboard(),
             message_to_delete=message.message_id,
         )
@@ -44,10 +41,7 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
     ) -> None:
         await user.message.edit(
-            i18n.get(
-                "greeting",
-                first_name=callback_query.from_user.first_name,
-            ),
+            i18n.get("greeting"),
             reply_markup=greeting_keyboard(),
         )
 

@@ -59,6 +59,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
         await user.message.edit(
             i18n.get("setup-spy-game"),
             reply_markup=spy_game_setup_keyboard(
+                i18n,
                 player_count,
                 category,
                 spy_count,
@@ -101,7 +102,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
 
         await user.message.edit(
             i18n.get("setup-spy-game-category"),
-            reply_markup=spy_game_setup_category_keyboard(category),
+            reply_markup=spy_game_setup_category_keyboard(i18n, category),
         )
 
         await state.update_data(
@@ -123,7 +124,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
 
         await user.message.edit(
             i18n.get("setup-spy-game-spy-count"),
-            reply_markup=spy_game_setup_spy_count_keyboard(spy_count),
+            reply_markup=spy_game_setup_spy_count_keyboard(i18n, spy_count),
         )
 
         await state.update_data(
@@ -161,7 +162,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
     ) -> None:
         await user.message.edit(
             i18n.get("setup-spy-game-category"),
-            reply_markup=spy_game_setup_category_keyboard(callback_data.category),
+            reply_markup=spy_game_setup_category_keyboard(i18n, callback_data.category),
         )
 
         await callback_query.answer()
@@ -178,7 +179,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
     ) -> None:
         await user.message.edit(
             i18n.get("setup-spy-game-spy-count"),
-            reply_markup=spy_game_setup_spy_count_keyboard(callback_data.spy_count),
+            reply_markup=spy_game_setup_spy_count_keyboard(i18n, callback_data.spy_count),
         )
 
         await callback_query.answer()
@@ -245,6 +246,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
         await user.message.edit(
             i18n.get("setup-spy-game"),
             reply_markup=spy_game_setup_keyboard(
+                i18n,
                 player_count,
                 category,
                 spy_count,
