@@ -1,0 +1,122 @@
+{
+  "weekly-frequencies": {
+    "citizen": [
+      "cook-real-meal",
+      "exercise-weekly",
+      "call-family-member"
+    ],
+    "imposter": [
+      "eat-takeout",
+      "take-walk",
+      "check-social-media-morning"
+    ]
+  },
+  "lifetime-counts": {
+    "citizen": [
+      "countries-visited",
+      "serious-relationships",
+      "times-moved-cities"
+    ],
+    "imposter": [
+      "concerts-attended",
+      "jobs-had",
+      "languages-tried"
+    ]
+  },
+  "hours-duration": {
+    "citizen": [
+      "sleep-last-night",
+      "screen-time-yesterday",
+      "work-typical-day"
+    ],
+    "imposter": [
+      "phone-yesterday",
+      "commute-weekly",
+      "tv-weekend-day"
+    ]
+  },
+  "milestone-age": {
+    "citizen": [
+      "first-kiss-age",
+      "first-phone-age",
+      "first-lived-alone-age"
+    ],
+    "imposter": [
+      "learned-bike-age",
+      "first-job-age",
+      "first-travel-abroad-age"
+    ]
+  },
+  "food-favorite": {
+    "citizen": [
+      "favorite-breakfast",
+      "comfort-food",
+      "last-thing-ate"
+    ],
+    "imposter": [
+      "favorite-snack",
+      "favorite-dessert",
+      "lazy-food"
+    ]
+  },
+  "place-type": {
+    "citizen": [
+      "perfect-first-date-place",
+      "alone-place",
+      "most-productive-place"
+    ],
+    "imposter": [
+      "meet-new-people-place",
+      "thinking-place",
+      "most-relaxed-place"
+    ]
+  },
+  "person-name": {
+    "citizen": [
+      "fictional-friend",
+      "last-texted",
+      "someone-admire"
+    ],
+    "imposter": [
+      "fictional-relate-to",
+      "last-made-laugh",
+      "someone-jealous"
+    ]
+  },
+  "everyday-object": {
+    "citizen": [
+      "most-useful-thing-owned",
+      "in-bag-now",
+      "last-bought"
+    ],
+    "imposter": [
+      "hate-to-lose",
+      "on-desk",
+      "bought-never-used"
+    ]
+  },
+  "self-rating-scale": {
+    "citizen": [
+      "cooking-skills-rating",
+      "patience-rating",
+      "organized-rating"
+    ],
+    "imposter": [
+      "sense-of-direction-rating",
+      "adventurous-rating",
+      "keeping-secrets-rating"
+    ]
+  },
+  "three-words-phrase": {
+    "citizen": [
+      "morning-three-words",
+      "last-vacation-three-words",
+      "ideal-weekend-three-words"
+    ],
+    "imposter": [
+      "typical-evening-three-words",
+      "last-big-trip-three-words",
+      "dream-weekend-three-words"
+    ]
+  }
+}

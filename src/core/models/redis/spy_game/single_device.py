@@ -23,7 +23,7 @@ class SingleDeviceSpyGame(AbstractSpyGame):
             context: Any,
     ) -> None:
         """
-        Set a random spy indices after an object initialization.
+        Set random spy indices after an object initialization.
         """
 
         if self.spy_indices is None:
