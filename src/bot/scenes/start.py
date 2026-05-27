@@ -66,4 +66,4 @@ class StartScene(BaseScene, state="start", reset_history_on_enter=True):
             await single_device_spy_game_controller.remove(user.active_games.active_single_device_spy_game)
 
         user.active_games = ActiveGames.new()
-        await user_controller.set(user)
+        await user_controller.set(user, expire=TimeStamp.DAY)
