@@ -29,6 +29,11 @@ class DefaultGameParameters:
     Minimum number of guaranteed unique words before repetition in a spy game.
     """
 
+    GUARANTEED_UNIQUE_QUESTION_COUNT = 20
+    """
+    Minimum number of guaranteed unique questions before repetition in an impostor game.
+    """
+
 
 class Config(BaseSettings):
     """

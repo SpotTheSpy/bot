@@ -20,6 +20,7 @@ class LocaleManager(BaseManager):
     ) -> None:
         """
         LocaleManager Constructor.
+
         :param default_locale: Default locale to use if user's locale is absent or invalid.
         """
 
@@ -48,6 +49,7 @@ class LocaleManager(BaseManager):
     ) -> None:
         """
         Updates locale in database.
+
         :param locale: New locale value.
         :param user: User instance.
         :param postgres: Postgres database session instance.

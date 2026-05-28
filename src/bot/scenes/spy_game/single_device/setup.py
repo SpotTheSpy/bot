@@ -8,13 +8,13 @@ from aiogram_i18n import I18nContext
 
 from config import config
 from src.bot.actions.back import BackAction
+from src.bot.actions.spy_game.play import SpyGamePlayAction
 from src.bot.actions.spy_game.setup import (
     SpyGameSetupAction,
     SpyGameSetupPlayerAmountAction,
     SpyGameSetupCategoryAction,
     SpyGameSetupSpyCountAction,
 )
-from src.bot.actions.spy_game.play import SpyGamePlayAction
 from src.bot.keyboards.spy_game.setup import (
     spy_game_setup_keyboard,
     spy_game_setup_player_count_keyboard,
@@ -197,7 +197,7 @@ class SingleDeviceSpyGameSetupScene(BaseScene, state="single_device_spy_game_set
             "single_device_spy_game_play",
             player_count=data.get("player_count"),
             category=data.get("category"),
-            spy_count=data.get("spy_count")
+            spy_count=data.get("spy_count"),
         )
 
         await callback_query.answer()

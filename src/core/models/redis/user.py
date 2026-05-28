@@ -8,6 +8,7 @@ from aiogram.types import InlineKeyboardMarkup, LinkPreviewOptions
 from aiogram.types import Message as AiogramMessage
 from uuid_extensions import uuid7
 
+from src.bot.logger import logger
 from src.core.enums.locale import Locale
 from src.core.models.abstract import AbstractModel
 from src.core.models.redis.abstract import AbstractRedisModel
@@ -106,6 +107,10 @@ class Message(AbstractModel):
         new_message, *_ = await asyncio.gather(*coroutines, return_exceptions=True)
 
         if not isinstance(new_message, AiogramMessage):
+            if isinstance(new_message, (TelegramBadRequest, ValueError)):
+                logger.warning(
+                    f"{self.chat_id} ({self.message_id}) Error while replacing message: {new_message}."
+                )
             return
 
         self.message_id = new_message.message_id
@@ -153,9 +158,12 @@ class Message(AbstractModel):
             if isinstance(result, Exception):
                 raise result
         except (TelegramBadRequest, ValueError) as error:
-            print(error)
             if isinstance(error, TelegramBadRequest) and "message is not modified" in error.message:
                 return
+
+            logger.warning(
+                f"{self.chat_id} ({self.message_id}) Error while editing message: {error}. Trying to replace..."
+            )
 
             await self.replace(
                 text,
@@ -174,14 +182,18 @@ class ActiveGames(AbstractModel):
     ID of user's active single device spy game.
     """
 
+    active_single_device_impostor_game: UUID | None = None
+
     @classmethod
     def new(
             cls,
             *,
             active_single_device_spy_game: UUID | None = None,
+            active_single_device_impostor_game: UUID | None = None,
     ) -> "ActiveGames":
         return cls(
             active_single_device_spy_game=active_single_device_spy_game,
+            active_single_device_impostor_game=active_single_device_impostor_game,
         )
 
 

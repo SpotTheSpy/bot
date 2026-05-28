@@ -5,7 +5,6 @@ from aiogram.fsm.scene import on
 from aiogram.types import CallbackQuery, Message
 from aiogram_i18n import I18nContext
 
-from src.core.models.postgres.single_device_spy_game import SingleDeviceSpyGame as PostgresSingleDeviceSpyGame
 from src.bot.actions.spy_game.single_device.finish import SingleDeviceSpyGameFinishAction
 from src.bot.actions.spy_game.single_device.play_again import SingleDeviceSpyGamePlayAgainAction
 from src.bot.actions.spy_game.single_device.proceed import SingleDeviceSpyGameProceedAction
@@ -23,6 +22,7 @@ from src.core.enums.spy_category import SpyCategory
 from src.core.enums.spy_count import SpyCount
 from src.core.enums.spy_player_role import SpyPlayerRole
 from src.core.enums.time_stamp import TimeStamp
+from src.core.models.postgres.single_device_spy_game import SingleDeviceSpyGame as PostgresSingleDeviceSpyGame
 from src.core.models.redis.spy_game.secret_word_queue import SecretWordQueue
 from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.user import User
@@ -172,7 +172,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             self,
             callback_query: CallbackQuery,
             user: User,
-            state: FSMContext,
             i18n: I18nContext,
             postgres: PostgresController,
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
@@ -183,9 +182,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             raise GameError("Game was not found.")
-        player_index: int | None = await state.get_value("player_index")
-        if player_index is None:
-            raise GameError("Player index was not found.")
 
         spies: str = ", ".join([str(spy + 1) for spy in game.spy_indices])
 
@@ -237,9 +233,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             raise GameError("Game was not found.")
-        player_index: int | None = await state.get_value("player_index")
-        if player_index is None:
-            raise GameError("Player index was not found.")
 
         secret_word_queue: SecretWordQueue | None = await secret_word_controller.get(user.id)
 
