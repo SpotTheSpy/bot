@@ -48,3 +48,8 @@ class User(PostgresModel):
     """
     Single-device spy games hosted by user.
     """
+
+    single_device_impostor_games = relationship("SingleDeviceImpostorGame", back_populates="user")
+    """
+    Single-device impostor games hosted by user.
+    """

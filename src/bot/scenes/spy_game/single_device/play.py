@@ -172,7 +172,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
             self,
             callback_query: CallbackQuery,
             user: User,
-            state: FSMContext,
             i18n: I18nContext,
             postgres: PostgresController,
             single_device_spy_game_controller: RedisController[SingleDeviceSpyGame],
@@ -183,9 +182,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             raise GameError("Game was not found.")
-        player_index: int | None = await state.get_value("player_index")
-        if player_index is None:
-            raise GameError("Player index was not found.")
 
         spies: str = ", ".join([str(spy + 1) for spy in game.spy_indices])
 
@@ -237,9 +233,6 @@ class SingleDeviceSpyGamePlayScene(BaseScene, state="single_device_spy_game_play
         game: SingleDeviceSpyGame | None = await single_device_spy_game_controller.get(game_id)
         if game is None:
             raise GameError("Game was not found.")
-        player_index: int | None = await state.get_value("player_index")
-        if player_index is None:
-            raise GameError("Player index was not found.")
 
         secret_word_queue: SecretWordQueue | None = await secret_word_controller.get(user.id)
 

@@ -1,6 +1,8 @@
-from typing import Tuple, Any
+from typing import Tuple, Any, List
 from uuid import UUID
 
+from aiogram import html
+from aiogram_i18n import I18nContext
 from uuid_extensions import uuid7
 
 from src.core.enums.impostor_count import ImpostorCount
@@ -17,7 +19,7 @@ class SingleDeviceImpostorGame(AbstractImpostorGame):
     Indices of impostors in game.
     """
 
-    answers: Tuple[str | None, ...] | None = None
+    answers: List[str | None] | None = None
     """
     Sequence of answers collected from all the players.
     """
@@ -34,7 +36,7 @@ class SingleDeviceImpostorGame(AbstractImpostorGame):
             self.impostor_indices = self.impostor_count.get_indices(self.player_count)
 
         if self.answers is None:
-            self.answers = (None,) * self.player_count
+            self.answers = [None] * self.player_count
 
     @classmethod
     def new(
@@ -71,3 +73,30 @@ class SingleDeviceImpostorGame(AbstractImpostorGame):
     @classmethod
     def key(cls) -> str:
         return "single_device_impostor_game"
+
+    def get_answers_as_string(
+            self,
+            i18n: I18nContext,
+            player_index: int = -1
+    ) -> str:
+        answers: List[str] = []
+
+        for index in range(player_index + 1):
+            answers.append(
+                i18n.get(
+                    "play-single-device-impostor-game-discuss.answer",
+                    player_index=index + 1,
+                    answer=html.quote(self.answers[index]),
+                )
+            )
+
+        if player_index + 1 < self.player_count:
+            answers.append(
+                i18n.get(
+                    "play-single-device-impostor-game-discuss.answer",
+                    player_index=player_index + 2,
+                    answer=i18n.get("play-single-device-impostor-game-discuss.answer-empty"),
+                )
+            )
+
+        return "\n".join(answers)

@@ -12,7 +12,7 @@ from src.core.models.redis.spy_game.single_device import SingleDeviceSpyGame
 from src.core.models.redis.user import User, ActiveGames
 
 
-class StartScene(BaseScene, state="start", reset_history_on_enter=True):
+class StartScene(BaseScene, state="start", reset_data_on_enter=True, reset_history_on_enter=True):
     """
     Landing scene.
     """
