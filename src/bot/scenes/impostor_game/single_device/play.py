@@ -254,7 +254,7 @@ class SingleDeviceImpostorGamePlayScene(BaseScene, state="single_device_impostor
         if game is None:
             raise GameError("Game was not found.")
 
-        impostors: str = ", ".join([str(spy + 1) for spy in game.impostor_indices])
+        impostors: str = ", ".join([str(impostor + 1) for impostor in game.impostor_indices])
 
         await user.message.edit(
             i18n.get(

@@ -1,162 +1,1102 @@
 {
-  "nightly-duration": {
-    "citizen": ["sleep-last-night", "weeknight-sleep-hours", "sleep-hours-needed", "average-nightly-sleep", "weekend-sleep-hours"],
-    "impostor": ["daily-screen-time", "work-sitting-hours", "evening-tv-hours", "phone-hours-daily", "daily-indoor-hours"]
+  "single-word-food": {
+    "citizen": [
+      "ultimate-comfort-food",
+      "eat-every-day",
+      "most-overrated-food",
+      "guilty-pleasure-food",
+      "desert-island-food",
+      "stressed-snack",
+      "food-personality",
+      "post-fast-food"
+    ],
+    "impostor": [
+      "refuse-to-eat",
+      "most-disgusting-food",
+      "last-meal-food",
+      "regret-eating",
+      "late-night-food",
+      "embarrassed-love",
+      "wedding-dinner-food",
+      "most-overpriced-food"
+    ]
   },
-  "weekly-active-days": {
-    "citizen": ["exercise-days-weekly", "gym-visits-weekly", "days-physically-active", "days-take-a-walk", "sport-sessions-weekly"],
-    "impostor": ["home-cooked-days-weekly", "productive-days-weekly", "days-leave-house", "early-rises-weekly", "days-follow-routine"]
+  "cuisine-country": {
+    "citizen": [
+      "best-food-country",
+      "one-cuisine-life",
+      "underrated-cuisine",
+      "visit-for-food",
+      "takeout-cuisine",
+      "date-night-cuisine",
+      "tourist-recommend",
+      "happiest-cuisine"
+    ],
+    "impostor": [
+      "worst-food-rep",
+      "never-tried-cuisine",
+      "overrated-cuisine",
+      "best-street-food",
+      "open-restaurant-cuisine",
+      "best-dessert-country",
+      "surprising-food-love",
+      "comfort-cuisine"
+    ]
   },
-  "skill-self-rating": {
-    "citizen": ["cooking-skill-rating", "driving-skill-rating", "dancing-skill-rating", "singing-skill-rating", "social-skill-rating"],
-    "impostor": ["confidence-self-rating", "patience-self-rating", "humor-self-rating", "creativity-self-rating", "ambition-self-rating"]
+  "food-rating-scale": {
+    "citizen": [
+      "spice-tolerance",
+      "picky-eater-scale",
+      "cooking-skill-rate",
+      "food-adventure-scale",
+      "eating-out-love",
+      "healthy-eating-rate",
+      "sweet-tooth-scale",
+      "diet-discipline"
+    ],
+    "impostor": [
+      "cooking-for-others",
+      "grocery-enjoyment",
+      "food-cravings-rate",
+      "judge-food-choices",
+      "new-restaurant-excitement",
+      "bad-meal-ruiner",
+      "leftovers-enthusiasm",
+      "food-photo-urge"
+    ]
   },
-  "morning-prep-minutes": {
-    "citizen": ["shower-duration-minutes", "morning-routine-minutes", "time-to-get-ready", "breakfast-time-minutes", "wake-to-door-minutes"],
-    "impostor": ["lunch-break-minutes", "nap-length-minutes", "daily-walk-duration", "daily-commute-minutes", "evening-wind-down-minutes"]
+  "drink-name": {
+    "citizen": [
+      "party-drink",
+      "personality-drink",
+      "cold-night-drink",
+      "overrated-drink",
+      "bar-blind-order",
+      "celebration-drink",
+      "morning-drink",
+      "always-return-drink"
+    ],
+    "impostor": [
+      "regret-drink",
+      "embarrassed-drink-love",
+      "underrated-drink",
+      "desert-island-drink",
+      "childhood-drink",
+      "worst-drink-ever",
+      "big-win-toast",
+      "never-date-drink"
+    ]
   },
-  "comfort-food": {
-    "citizen": ["favorite-comfort-food", "late-night-snack-pick", "food-you-overeat", "ideal-movie-snack", "food-for-bad-day"],
-    "impostor": ["food-when-you-are-sick", "childhood-favorite-food", "food-you-eat-daily", "first-food-learned-cook", "food-always-stocked"]
+  "food-frequency-number": {
+    "citizen": [
+      "coffee-cups-day",
+      "eat-out-weekly",
+      "meals-per-day",
+      "daily-snacks",
+      "cook-at-home",
+      "water-glasses-day",
+      "regret-eating-weekly",
+      "new-foods-monthly"
+    ],
+    "impostor": [
+      "skip-meal-weekly",
+      "food-think-hours",
+      "delivery-apps-count",
+      "fridge-condiments",
+      "unhealthy-weekly",
+      "breakfast-weekly",
+      "recipe-check-weekly",
+      "food-photos-weekly"
+    ]
   },
-  "dream-animal": {
-    "citizen": ["dream-pet-animal", "spirit-animal", "cutest-animal", "animal-youd-befriend", "animal-for-personality"],
-    "impostor": ["first-pet-species", "animal-reincarnated-as", "animal-you-relate-to", "wild-animal-youd-tame", "animal-as-guardian"]
+  "vacation-destination": {
+    "citizen": [
+      "dream-vacation-spot",
+      "return-vacation-place",
+      "honeymoon-destination",
+      "retire-destination",
+      "bucket-list-country",
+      "spontaneous-trip",
+      "birthday-trip",
+      "solo-travel-pick"
+    ],
+    "impostor": [
+      "overrated-vacation",
+      "never-return-place",
+      "avoid-tourist-trap",
+      "worst-vacation-country",
+      "skip-on-map",
+      "regret-visiting",
+      "overhyped-landmark",
+      "worst-holiday-spot"
+    ]
   },
-  "best-season": {
-    "citizen": ["best-season-overall", "season-for-romance", "season-of-best-mood", "season-to-freeze-forever", "season-best-activities"],
-    "impostor": ["birth-season", "season-feel-productive", "season-prefer-travel", "season-with-best-food", "season-for-adventures"]
+  "city-name": {
+    "citizen": [
+      "best-city-world",
+      "most-exciting-city",
+      "city-to-move",
+      "city-for-weekend",
+      "coolest-city-vibe",
+      "best-food-city",
+      "city-feels-like-home",
+      "city-for-night-out"
+    ],
+    "impostor": [
+      "most-overrated-city",
+      "city-to-avoid",
+      "most-boring-city",
+      "dirtiest-city-visited",
+      "city-not-get-hype",
+      "worst-city-for-tourists",
+      "city-you-left-fast",
+      "bad-vibes-city"
+    ]
   },
-  "travel-country": {
-    "citizen": ["dream-vacation-country", "country-youd-live-in", "most-romantic-country", "country-for-best-food", "country-to-visit-once"],
-    "impostor": ["country-feel-drawn-to", "safest-feeling-country", "country-for-long-trip", "country-youd-retire-in", "bucket-list-country"]
+  "country-name": {
+    "citizen": [
+      "most-beautiful-country",
+      "friendliest-country",
+      "country-live-abroad",
+      "country-culture-love",
+      "safest-feeling-country",
+      "best-nature-country",
+      "country-for-adventure",
+      "secretly-love-country"
+    ],
+    "impostor": [
+      "hardest-country-navigate",
+      "country-culture-shock",
+      "country-wouldnt-move",
+      "most-chaotic-country",
+      "country-felt-unwelcome",
+      "coldest-country-vibe",
+      "country-nothing-like-expected",
+      "country-skip-entirely"
+    ]
   },
-  "color-pick": {
-    "citizen": ["favorite-color", "color-youd-paint-bedroom", "color-of-your-aura", "color-matching-personality", "color-you-wear-most"],
-    "impostor": ["lucky-color", "color-associated-with-peace", "color-for-your-brand", "color-youd-dye-hair", "most-calming-color"]
+  "place-type-word": {
+    "citizen": [
+      "ideal-holiday-type",
+      "recharge-place-type",
+      "feel-alive-setting",
+      "romantic-place-type",
+      "explore-place-type",
+      "work-best-location",
+      "best-place-think",
+      "move-if-could-place"
+    ],
+    "impostor": [
+      "avoid-at-all-costs",
+      "most-stressful-place",
+      "never-live-place-type",
+      "overrated-setting",
+      "worst-place-for-date",
+      "dread-visiting-type",
+      "least-relaxing-place",
+      "wrong-person-place"
+    ]
   },
-  "streaming-pick": {
-    "citizen": ["favorite-streaming-service", "streaming-id-pay-for", "streaming-for-movies", "streaming-used-most", "streaming-id-keep-last"],
-    "impostor": ["streaming-shared-password", "streaming-for-music", "streaming-family-uses", "streaming-for-binge", "streaming-for-sports"]
+  "travel-number": {
+    "citizen": [
+      "countries-visited-count",
+      "flights-per-year",
+      "ideal-trip-days",
+      "trips-per-year",
+      "hours-flight-limit",
+      "days-pack-before",
+      "cities-bucket-list",
+      "travel-prep-hours"
+    ],
+    "impostor": [
+      "days-before-homesick",
+      "luggage-bag-count",
+      "airport-arrive-early",
+      "trip-regret-days",
+      "countries-wish-visited",
+      "holiday-photos-count",
+      "travel-apps-on-phone",
+      "times-gotten-lost"
+    ]
   },
-  "fast-food-brand": {
-    "citizen": ["favorite-fast-food-chain", "fast-food-guilty-pleasure", "fast-food-for-road-trip", "go-to-fast-food", "fast-food-late-night"],
-    "impostor": ["most-visited-fast-food", "most-reliable-fast-food", "fast-food-for-group", "fast-food-for-hangover", "fast-food-childhood-memory"]
+  "music-artist-name": {
+    "citizen": [
+      "desert-island-artist",
+      "most-played-artist",
+      "artist-got-you-through",
+      "artist-everyone-should-know",
+      "artist-never-skip",
+      "artist-defines-your-taste",
+      "artist-saw-live-dream",
+      "artist-recommend-anyone"
+    ],
+    "impostor": [
+      "artist-dont-get-hype",
+      "overrated-music-artist",
+      "guilty-pleasure-artist",
+      "artist-given-up-on",
+      "artist-ruined-by-fame",
+      "artist-skip-always",
+      "artist-cant-explain",
+      "artist-surprised-you"
+    ]
   },
-  "cancel-excuse": {
-    "citizen": ["best-excuse-being-late", "excuse-cancel-plans", "excuse-missing-call", "excuse-not-texting-back", "excuse-skipping-gym"],
-    "impostor": ["lie-you-tell-most", "reason-leave-party-early", "excuse-avoiding-social", "reason-cancel-last-minute", "excuse-for-being-lazy"]
+  "song-title-word": {
+    "citizen": [
+      "funeral-song-pick",
+      "wedding-first-dance",
+      "driving-song",
+      "hype-before-big-moment",
+      "song-stuck-forever",
+      "song-brings-you-back",
+      "song-cry-every-time",
+      "karaoke-go-to"
+    ],
+    "impostor": [
+      "walkout-song-pick",
+      "most-annoying-song",
+      "guilty-pleasure-song",
+      "song-you-hate-love",
+      "first-song-you-learned",
+      "song-at-victory-party",
+      "song-delete-from-history",
+      "song-reminds-ex"
+    ]
+  },
+  "film-title-word": {
+    "citizen": [
+      "comfort-rewatch-film",
+      "film-changed-your-life",
+      "most-rewatched-movie",
+      "film-everyone-must-see",
+      "film-takes-you-somewhere",
+      "film-laugh-hardest",
+      "film-recommend-date",
+      "film-you-love-defending"
+    ],
+    "impostor": [
+      "most-overrated-film",
+      "film-walked-out-on",
+      "film-put-you-to-sleep",
+      "film-dont-get-praise",
+      "film-regret-watching",
+      "film-ruined-by-ending",
+      "film-too-long",
+      "film-embarrassed-loved"
+    ]
+  },
+  "tv-show-word": {
+    "citizen": [
+      "show-rewatch-comfort",
+      "show-recommend-anyone",
+      "show-stayed-up-for",
+      "show-miss-most",
+      "show-made-you-emotional",
+      "show-everyone-sleeping-on",
+      "show-got-you-through",
+      "show-start-tonight"
+    ],
+    "impostor": [
+      "show-dont-get-hype",
+      "show-quit-mid-season",
+      "overhyped-tv-show",
+      "show-went-on-too-long",
+      "show-ruined-by-finale",
+      "show-you-pretend-watched",
+      "show-never-understood-love",
+      "show-too-dark-for-you"
+    ]
+  },
+  "entertainment-rating-number": {
+    "citizen": [
+      "rate-music-taste",
+      "rate-film-knowledge",
+      "concerts-attended-life",
+      "hours-screen-daily",
+      "rate-singing-ability",
+      "streaming-services-count",
+      "rate-dance-moves",
+      "episodes-in-one-sit"
+    ],
+    "impostor": [
+      "rate-instrument-skill",
+      "gigs-you-want-attend",
+      "hours-music-daily",
+      "rate-film-cry-easily",
+      "playlists-on-phone",
+      "rate-entertainment-snob",
+      "films-this-year",
+      "rate-karaoke-confidence"
+    ]
+  },
+  "dating-dealbreaker-word": {
+    "citizen": [
+      "biggest-dating-dealbreaker",
+      "first-date-red-flag",
+      "trait-always-attracted-to",
+      "quality-non-negotiable-partner",
+      "turn-off-immediately",
+      "green-flag-dating",
+      "thing-ruins-attraction",
+      "dealbreaker-friend-warns"
+    ],
+    "impostor": [
+      "trait-always-forgive",
+      "quality-overrate-in-partner",
+      "surprising-thing-attracted-to",
+      "first-impression-dealmaker",
+      "quality-underrated-partner",
+      "thing-friends-judge-you-for",
+      "instant-trust-signal",
+      "thing-you-always-overlook"
+    ]
+  },
+  "social-habit-number": {
+    "citizen": [
+      "close-friends-count",
+      "unanswered-messages-count",
+      "cancel-plans-monthly",
+      "nights-out-monthly",
+      "days-reply-to-text",
+      "friends-call-emergency",
+      "social-events-per-month",
+      "years-oldest-friendship"
+    ],
+    "impostor": [
+      "times-ghosted-someone",
+      "exes-still-in-contact",
+      "hours-alone-need-weekly",
+      "people-in-inner-circle",
+      "arguments-per-month",
+      "first-dates-per-year",
+      "contacts-never-text",
+      "times-changed-for-someone"
+    ]
+  },
+  "who-in-your-life": {
+    "citizen": [
+      "call-at-worst-moment",
+      "trust-with-big-secret",
+      "stranded-desert-island-person",
+      "most-honest-person-know",
+      "person-makes-you-laugh",
+      "person-changed-you-most",
+      "go-to-advice-person",
+      "person-id-call-bail"
+    ],
+    "impostor": [
+      "hardest-person-to-impress",
+      "person-you-avoid-texting",
+      "person-surprised-by-you",
+      "person-you-envy-secretly",
+      "person-you-outgrew",
+      "person-owes-you-apology",
+      "last-person-to-annoy",
+      "person-you-miss-unexpectedly"
+    ]
+  },
+  "first-impression-word": {
+    "citizen": [
+      "thing-you-judge-first",
+      "quality-spot-in-seconds",
+      "vibe-check-first-look",
+      "thing-makes-likeable-fast",
+      "thing-notice-before-name",
+      "quality-remember-after-meeting",
+      "thing-puts-you-at-ease",
+      "biggest-first-meeting-tell"
+    ],
+    "impostor": [
+      "thing-you-fake-on-meeting",
+      "impression-you-wish-gave",
+      "thing-misread-about-you",
+      "word-you-want-to-be-described",
+      "thing-you-perform-early",
+      "first-impression-you-regret",
+      "thing-strangers-assume-wrong",
+      "fastest-way-to-win-you-over"
+    ]
+  },
+  "relationship-type-word": {
+    "citizen": [
+      "your-friendship-style",
+      "type-of-partner-you-are",
+      "how-you-handle-conflict",
+      "your-love-language-word",
+      "type-of-friend-you-are",
+      "how-others-describe-you-social",
+      "your-social-energy-type",
+      "role-in-friend-group"
+    ],
+    "impostor": [
+      "type-youre-drawn-to",
+      "relationship-you-envy",
+      "type-you-clash-with",
+      "social-situation-you-dread",
+      "type-of-ex-you-have",
+      "kind-of-drunk-you-are",
+      "social-mask-you-wear",
+      "type-you-always-befriend"
+    ]
+  },
+  "sleep-and-rest-numbers": {
+    "citizen": [
+      "hours-sleep-nightly",
+      "ideal-sleep-hours",
+      "latest-youve-slept",
+      "naps-per-week",
+      "snooze-presses-morning",
+      "hours-to-fall-asleep",
+      "nights-bad-sleep-weekly",
+      "earliest-wake-up-ever"
+    ],
+    "impostor": [
+      "choose-number-one-ten-sleep",
+      "choose-hours-one-twelve",
+      "times-woken-up-nightly",
+      "days-survived-no-sleep",
+      "years-since-slept-well",
+      "hours-in-bed-not-sleeping",
+      "weekend-lie-in-hours",
+      "nightmares-per-month"
+    ]
+  },
+  "age-and-milestones": {
+    "citizen": [
+      "age-feel-inside",
+      "age-hit-peak-confidence",
+      "age-you-felt-adult",
+      "age-best-years-of-life",
+      "age-id-go-back-to",
+      "age-you-stop-caring",
+      "age-want-to-retire",
+      "age-life-got-easier"
+    ],
+    "impostor": [
+      "age-made-worst-decision",
+      "age-first-heartbreak",
+      "age-most-embarrassing-moment",
+      "age-peaked-looks",
+      "age-you-dread-turning",
+      "age-most-fun-in-life",
+      "age-when-grow-up",
+      "age-want-to-freeze-time"
+    ]
+  },
+  "self-rating-skills": {
+    "citizen": [
+      "rate-your-confidence",
+      "rate-your-patience",
+      "rate-your-intelligence",
+      "rate-your-humour",
+      "rate-your-ambition",
+      "rate-your-emotional-iq",
+      "rate-your-memory",
+      "rate-your-common-sense"
+    ],
+    "impostor": [
+      "rate-your-luck",
+      "rate-your-stubbornness",
+      "rate-your-laziness",
+      "rate-your-pettiness",
+      "rate-your-jealousy",
+      "rate-your-impulsiveness",
+      "rate-your-overthinking",
+      "rate-your-sarcasm"
+    ]
+  },
+  "money-and-spending": {
+    "citizen": [
+      "times-check-bank-weekly",
+      "subscriptions-paying-for",
+      "times-impulse-bought-monthly",
+      "years-savings-would-last",
+      "percent-tip-restaurant",
+      "things-in-cart-not-bought",
+      "times-split-bill-regret",
+      "years-big-purchase-saved"
+    ],
+    "impostor": [
+      "choose-number-ten-hundred",
+      "choose-percentage-zero-fifty",
+      "times-lent-money-regret",
+      "items-bought-never-used",
+      "times-overpaid-something",
+      "months-from-payday-broke",
+      "times-treated-someone-resented",
+      "rounds-bought-at-bar"
+    ]
+  },
+  "body-and-fitness-numbers": {
+    "citizen": [
+      "workouts-per-week",
+      "steps-walk-daily",
+      "rate-your-fitness-level",
+      "minutes-exercise-daily",
+      "rate-your-flexibility",
+      "litres-water-daily",
+      "years-since-ran",
+      "rest-days-per-week"
+    ],
+    "impostor": [
+      "choose-number-fitness-scale",
+      "choose-minutes-ten-ninety",
+      "rate-your-pain-tolerance",
+      "rate-your-coordination",
+      "rate-competitive-at-sports",
+      "sports-played-lifetime",
+      "injuries-in-last-year",
+      "times-joined-quit-gym"
+    ]
+  },
+  "morning-routine-word": {
+    "citizen": [
+      "first-thing-morning",
+      "morning-mood-word",
+      "cant-start-day-without",
+      "morning-personality-type",
+      "morning-ritual-word",
+      "best-part-of-morning",
+      "morning-enemy-word",
+      "wake-up-motivation"
+    ],
+    "impostor": [
+      "last-thing-before-sleep",
+      "evening-wind-down",
+      "night-owl-habit",
+      "bedtime-procrastination",
+      "cant-sleep-without",
+      "evening-ritual-word",
+      "last-check-before-bed",
+      "guilty-late-night-habit"
+    ]
+  },
+  "chores-and-cleaning": {
+    "citizen": [
+      "most-hated-chore",
+      "chore-always-put-off",
+      "cleaning-trigger-word",
+      "chore-secretly-enjoy",
+      "first-chore-you-skip",
+      "chore-do-last",
+      "cleaning-style-word",
+      "chore-stress-you-out"
+    ],
+    "impostor": [
+      "most-satisfying-tidy",
+      "clutter-you-tolerate",
+      "cleaning-song-vibe",
+      "worst-mess-to-find",
+      "chore-judge-others-on",
+      "organisation-style-word",
+      "home-smell-preference",
+      "first-thing-tidy-guests"
+    ]
+  },
+  "daily-habits-frequency": {
+    "citizen": [
+      "check-phone-hourly",
+      "times-mirror-daily",
+      "times-wash-hands-daily",
+      "bathroom-breaks-workday",
+      "times-reread-sent-message",
+      "cups-hot-drink-daily",
+      "times-lock-check-daily",
+      "times-apologise-daily"
+    ],
+    "impostor": [
+      "times-change-mind-daily",
+      "times-sigh-daily",
+      "tabs-open-right-now",
+      "times-swear-daily",
+      "times-check-time-hourly",
+      "times-snack-daily",
+      "alarms-set-morning",
+      "times-rewrite-message-daily"
+    ]
+  },
+  "personal-quirks-word": {
+    "citizen": [
+      "weird-habit-admit",
+      "thing-do-when-nobody-watching",
+      "comfort-object-word",
+      "thing-do-before-big-task",
+      "procrastination-style",
+      "quirk-makes-you-you",
+      "thing-do-on-autopilot",
+      "habit-tried-to-break"
+    ],
+    "impostor": [
+      "habit-no-one-knows",
+      "thing-do-in-car-alone",
+      "secret-home-ritual",
+      "guilty-daily-pleasure",
+      "thing-do-bored-word",
+      "habit-others-would-judge",
+      "thing-put-off-daily",
+      "odd-comfort-behaviour"
+    ]
+  },
+  "routine-ratings-numbers": {
+    "citizen": [
+      "rate-your-punctuality",
+      "rate-your-tidiness",
+      "rate-your-productivity",
+      "rate-morning-person-scale",
+      "rate-your-routine-discipline",
+      "rate-forgetfulness",
+      "rate-your-organisation",
+      "rate-daily-stress-level"
+    ],
+    "impostor": [
+      "rate-your-adaptability",
+      "rate-your-decisiveness",
+      "rate-your-restlessness",
+      "rate-your-distractibility",
+      "rate-your-tardiness-guilt",
+      "rate-your-neatness-desk",
+      "rate-errand-enjoyment",
+      "rate-your-rule-following"
+    ]
   },
   "superpower-pick": {
-    "citizen": ["superpower-youd-choose", "fictional-ability-wanted", "magic-power-daily-life", "power-for-convenience", "superpower-if-only-one"],
-    "impostor": ["superpower-fear-in-others", "ability-for-your-child", "power-for-saving-world", "superpower-for-job", "ability-if-no-consequences"]
+    "citizen": [
+      "superpower-you-want",
+      "power-use-every-day",
+      "superpower-pick-as-kid",
+      "power-to-help-others",
+      "power-nobody-else-gets",
+      "power-for-one-day",
+      "power-to-survive-anything",
+      "secretly-want-this-power"
+    ],
+    "impostor": [
+      "power-youd-abuse",
+      "power-sounds-bad-actually-great",
+      "power-everyone-picks-wrong",
+      "power-for-revenge",
+      "power-most-dangerous-in-your-hands",
+      "power-to-cheat-at-life",
+      "power-pick-for-ex",
+      "power-nobody-ever-picks"
+    ]
   },
-  "go-to-emoji": {
-    "citizen": ["emoji-that-represents-you", "emoji-you-use-most", "emoji-for-personality", "emoji-youd-be", "emoji-default-mood"],
-    "impostor": ["emoji-for-best-friend", "emoji-sums-up-week", "emoji-for-monday", "emoji-to-crush", "emoji-in-every-message"]
+  "hypothetical-place": {
+    "citizen": [
+      "hide-from-world-place",
+      "build-dream-home-location",
+      "live-inside-film-world",
+      "place-to-start-over",
+      "place-to-be-alone-forever",
+      "place-run-to-bad-day",
+      "past-era-place",
+      "place-raise-a-family"
+    ],
+    "impostor": [
+      "last-place-youd-hide",
+      "place-apocalypse-bunker",
+      "fictional-place-avoid",
+      "place-id-send-nemesis",
+      "place-feel-lost-forever",
+      "place-most-wrong-for-you",
+      "place-everyone-loves-you-hate",
+      "past-time-place-avoid"
+    ]
   },
-  "small-spend": {
-    "citizen": ["amount-spend-lunch", "typical-coffee-price", "usual-tip-amount", "average-snack-spend", "cost-of-daily-treat"],
-    "impostor": ["average-uber-cost", "amount-random-online-buy", "cost-last-impulse-buy", "spend-on-last-outing", "typical-snack-run-cost"]
+  "would-you-rather-word": {
+    "citizen": [
+      "famous-or-rich",
+      "love-or-success",
+      "past-or-future",
+      "read-minds-or-invisible",
+      "live-forever-or-perfectly",
+      "restart-life-or-skip-ahead",
+      "always-hot-or-always-cold",
+      "lose-memory-or-lose-friends"
+    ],
+    "impostor": [
+      "never-eat-or-never-sleep",
+      "always-early-or-always-late",
+      "no-music-or-no-films",
+      "speak-all-languages-or-play-all-instruments",
+      "always-win-or-always-loved",
+      "no-internet-or-no-transport",
+      "know-the-day-you-die-or-not",
+      "swap-lives-person-pick"
+    ]
   },
-  "teen-milestone-age": {
-    "citizen": ["age-got-first-phone", "age-first-social-media", "age-felt-grown-up", "age-first-part-time-job", "age-cared-about-looks"],
-    "impostor": ["age-learned-ride-bike", "age-first-sleepover", "age-first-best-friend", "age-stayed-home-alone", "age-of-first-crush"]
+  "dream-scenario-name": {
+    "citizen": [
+      "dinner-guest-dead-or-alive",
+      "celebrity-best-friend",
+      "famous-person-give-advice",
+      "person-on-your-apocalypse-team",
+      "mentor-in-another-life",
+      "person-to-be-for-a-day",
+      "historical-figure-coffee",
+      "person-to-solve-your-problems"
+    ],
+    "impostor": [
+      "celebrity-to-be-stuck-with",
+      "fictional-character-trust-most",
+      "famous-person-road-trip",
+      "historical-figure-avoid",
+      "person-to-argue-with",
+      "celebrity-worst-travel-companion",
+      "person-to-trade-problems-with",
+      "fictional-villain-most-understand"
+    ]
   },
-  "cartoon-character": {
-    "citizen": ["favorite-childhood-cartoon", "cartoon-character-you-relate-to", "cartoon-character-youd-be", "cartoon-you-still-watch", "most-nostalgic-cartoon"],
-    "impostor": ["animated-villain-you-liked", "first-cartoon-you-remember", "cartoon-character-youd-date", "cartoon-best-theme-song", "cartoon-shaped-your-humor"]
+  "hypothetical-number": {
+    "citizen": [
+      "years-live-past-100",
+      "millions-quit-job",
+      "years-off-life-for-wealth",
+      "people-on-ideal-island",
+      "hours-time-machine-past",
+      "days-completely-alone",
+      "lives-if-you-had-nine",
+      "years-swap-era"
+    ],
+    "impostor": [
+      "choose-age-twenty-hundred",
+      "choose-number-millions",
+      "choose-days-one-thirty",
+      "people-ideal-party-size",
+      "years-into-future-visit",
+      "minutes-of-fame-want",
+      "alternate-lives-youd-want",
+      "years-younger-start-again"
+    ]
   },
-  "music-genre": {
-    "citizen": ["favorite-music-genre", "genre-for-driving", "genre-fits-your-mood", "genre-for-a-party", "genre-you-secretly-love"],
-    "impostor": ["genre-for-workout", "music-friends-associate-you", "genre-for-studying", "genre-at-house-party", "genre-for-cooking"]
+  "fears-and-phobias": {
+    "citizen": [
+      "biggest-irrational-fear",
+      "fear-others-would-laugh-at",
+      "childhood-fear-still-have",
+      "fear-you-never-admit",
+      "thing-gives-you-chills",
+      "scared-of-that-surprises-you",
+      "fear-that-controls-you",
+      "thing-you-avoid-from-fear"
+    ],
+    "impostor": [
+      "thing-that-creeps-you-out",
+      "sound-that-unsettles-you",
+      "image-stuck-in-head",
+      "thing-others-love-you-hate",
+      "place-that-makes-uneasy",
+      "thing-you-google-at-night",
+      "fear-youve-given-into",
+      "thing-makes-you-bolt"
+    ]
   },
-  "city-transport": {
-    "citizen": ["usual-commute-method", "preferred-city-transport", "how-you-get-to-work", "transport-in-new-city", "transport-for-short-trip"],
-    "impostor": ["transport-if-no-car", "mode-for-late-night", "eco-transport-you-use", "transport-when-abroad", "transport-you-wish-existed"]
+  "pet-peeves-word": {
+    "citizen": [
+      "biggest-everyday-pet-peeve",
+      "thing-strangers-do-annoys",
+      "habit-in-others-cant-stand",
+      "thing-ruins-good-mood",
+      "pet-peeve-embarrassed-by",
+      "word-or-phrase-hate",
+      "thing-done-wrong-by-everyone",
+      "peeve-at-work-or-school"
+    ],
+    "impostor": [
+      "thing-you-do-that-annoys",
+      "thing-judge-people-silently",
+      "minor-thing-you-overreact-to",
+      "thing-you-notice-nobody-else",
+      "peeve-that-makes-no-sense",
+      "thing-you-correct-people-on",
+      "habit-you-hate-in-yourself",
+      "thing-ruins-otherwise-good-day"
+    ]
   },
-  "planet-pick": {
-    "citizen": ["pick-favorite-planet", "planet-youd-visit", "planet-matching-vibe", "planet-for-vacation", "most-interesting-planet"],
-    "impostor": ["planet-named-after-god", "planet-associated-mystery", "planet-that-sounds-coolest", "planet-youd-name-pet", "most-beautiful-planet"]
+  "cringe-and-embarrassment": {
+    "citizen": [
+      "most-cringe-phase",
+      "embarrassing-thing-still-think-about",
+      "thing-you-did-that-haunts",
+      "cringe-interest-you-had",
+      "embarrassing-thing-caught-doing",
+      "style-choice-you-regret",
+      "cringe-thing-you-said-recently",
+      "most-embarrassing-public-moment"
+    ],
+    "impostor": [
+      "lie-you-got-caught-in",
+      "embarrassing-thing-you-still-do",
+      "autocorrect-fail-type",
+      "thing-you-bragged-about-wrongly",
+      "thing-you-pretended-to-know",
+      "embarrassing-search-history-topic",
+      "voice-note-you-regret",
+      "thing-you-did-to-impress-failed"
+    ]
   },
-  "board-game-pick": {
-    "citizen": ["favorite-board-game", "game-you-always-win", "game-at-family-gathering", "go-to-game-night", "game-you-take-seriously"],
-    "impostor": ["game-for-first-date", "game-you-play-online", "card-game-you-know", "game-with-most-drama", "game-youd-compete-in"]
+  "ick-factor-word": {
+    "citizen": [
+      "biggest-romantic-ick",
+      "instant-ick-first-date",
+      "ick-others-dont-get",
+      "ick-you-cant-explain",
+      "physical-ick-biggest",
+      "ick-in-a-friend",
+      "ick-you-judge-yourself-for",
+      "ick-that-surprises-people"
+    ],
+    "impostor": [
+      "thing-you-do-that-is-ick",
+      "sound-that-is-ick",
+      "word-that-gives-you-ick",
+      "texture-that-is-ick",
+      "food-combination-is-ick",
+      "habit-you-have-thats-ick",
+      "ick-that-others-find-cute",
+      "type-of-person-instant-ick"
+    ]
   },
-  "school-subject": {
-    "citizen": ["favorite-school-subject", "subject-you-were-best-at", "subject-youd-still-study", "subject-teacher-liked-you", "subject-you-miss"],
-    "impostor": ["subject-youd-teach", "subject-that-shaped-you", "hardest-subject-for-you", "subject-for-extra-class", "subject-you-wish-existed"]
+  "annoyance-rating-number": {
+    "citizen": [
+      "rate-your-anger-triggers",
+      "rate-road-rage",
+      "rate-noise-sensitivity",
+      "rate-confrontation-likelihood",
+      "rate-your-grudge-holding",
+      "rate-your-cringe-sensitivity",
+      "rate-tolerance-for-rudeness",
+      "rate-slow-walkers-rage"
+    ],
+    "impostor": [
+      "rate-your-overcritical-nature",
+      "rate-embarrassment-sensitivity",
+      "rate-your-passive-aggression",
+      "rate-awkward-silence-comfort",
+      "rate-your-fear-of-conflict",
+      "rate-your-social-anxiety",
+      "rate-cancel-plans-guilt",
+      "rate-your-overthinking-social"
+    ]
   },
-  "phone-brand": {
-    "citizen": ["current-phone-brand", "phone-brand-youd-never-leave", "phone-brand-you-recommend", "dream-phone-brand", "phone-brand-you-trust"],
-    "impostor": ["first-phone-brand-owned", "phone-brand-parents-use", "phone-brand-most-friends", "phone-brand-switched-from", "brand-you-almost-bought"]
+  "best-worst-purchase": {
+    "citizen": [
+      "best-purchase-ever-made",
+      "thing-worth-every-penny",
+      "purchase-changed-daily-life",
+      "thing-buy-over-and-over",
+      "gift-to-yourself-ever",
+      "most-used-possession",
+      "buy-again-in-heartbeat",
+      "thing-own-that-impresses"
+    ],
+    "impostor": [
+      "worst-purchase-ever-made",
+      "biggest-waste-of-money",
+      "thing-bought-never-used",
+      "impulse-buy-most-regret",
+      "thing-bought-to-impress",
+      "subscription-waste-money",
+      "thing-bought-twice-regret",
+      "most-overpriced-thing-owned"
+    ]
   },
-  "film-genre": {
-    "citizen": ["favorite-movie-genre", "genre-for-friday-night", "movie-genre-always-pick", "genre-you-always-finish", "genre-for-long-flight"],
-    "impostor": ["genre-for-date-night", "genre-you-fall-asleep-to", "genre-when-need-laugh", "genre-for-stormy-night", "movie-genre-solo-night"]
+  "brand-loyalty-word": {
+    "citizen": [
+      "brand-you-always-return-to",
+      "brand-you-swear-by",
+      "brand-defines-your-personality",
+      "brand-you-recommend-everyone",
+      "brand-loyal-since-forever",
+      "brand-worth-spending-more",
+      "brand-you-trust-completely",
+      "brand-miss-if-disappeared"
+    ],
+    "impostor": [
+      "brand-you-refuse-to-buy",
+      "most-overrated-brand",
+      "brand-you-outgrew",
+      "brand-you-judge-others-for",
+      "brand-status-symbol-eye-roll",
+      "brand-overhyped-overpriced",
+      "brand-you-switched-from",
+      "brand-you-pretend-to-like"
+    ]
   },
-  "years-in-place": {
-    "citizen": ["years-in-current-city", "years-at-current-job", "years-knowing-best-friend", "years-in-current-home", "years-same-phone-brand"],
-    "impostor": ["years-since-last-moved", "years-doing-main-hobby", "years-with-partner", "years-using-same-bag", "years-since-big-change"]
+  "whats-in-your-bag": {
+    "citizen": [
+      "thing-always-in-your-bag",
+      "weirdest-thing-carry-daily",
+      "item-panic-without",
+      "thing-overpacked-with",
+      "oldest-thing-in-your-bag",
+      "thing-carried-just-in-case",
+      "item-everyone-borrows-from-you",
+      "thing-embarrassed-found-in-bag"
+    ],
+    "impostor": [
+      "thing-always-lose",
+      "thing-buy-most-replacements-of",
+      "collection-you-hoard",
+      "thing-clutter-your-home",
+      "drawer-full-of-what",
+      "thing-keep-meaning-to-throw",
+      "object-you-bizarrely-collect",
+      "sentimental-object-you-keep"
+    ]
   },
-  "household-must-have": {
-    "citizen": ["item-youd-grab-in-fire", "most-used-kitchen-item", "item-cannot-live-without", "item-you-always-carry", "most-important-daily-object"],
-    "impostor": ["item-you-lose-most-often", "item-you-own-too-many", "most-broken-item-home", "first-thing-you-unpack", "item-you-always-replace"]
+  "shopping-style-word": {
+    "citizen": [
+      "shopping-style-one-word",
+      "type-of-shopper-you-are",
+      "thing-always-browse-first",
+      "best-shopping-day-vibe",
+      "shop-you-could-live-in",
+      "online-vs-instore-pick",
+      "thing-you-research-obsessively",
+      "shopping-mood-trigger"
+    ],
+    "impostor": [
+      "thing-always-overspend-on",
+      "shop-you-always-leave-broke",
+      "worst-shopping-companion-type",
+      "shopping-habit-you-hide",
+      "thing-you-window-shop-never-buy",
+      "shopping-excuse-you-always-use",
+      "sale-trap-you-always-fall-for",
+      "thing-you-overbuy-when-sad"
+    ]
   },
-  "irrational-fear": {
-    "citizen": ["biggest-irrational-fear", "thing-gives-you-chills", "thing-makes-you-cringe", "fear-embarrassed-by", "phobia-you-wont-admit"],
-    "impostor": ["sound-you-cannot-stand", "texture-you-hate", "smell-that-grosses-you", "sight-makes-you-gag", "sensation-you-avoid"]
+  "price-and-money-numbers": {
+    "citizen": [
+      "most-spent-single-purchase",
+      "price-walk-away-from",
+      "amount-feel-rich-with",
+      "monthly-spend-on-yourself",
+      "amount-lend-without-thinking",
+      "price-consider-expensive-meal",
+      "amount-find-on-street",
+      "savings-feel-comfortable"
+    ],
+    "impostor": [
+      "choose-amount-ten-thousand",
+      "choose-price-one-hundred",
+      "times-regret-cheap-option",
+      "years-save-dream-purchase",
+      "times-splurged-this-year",
+      "percent-income-spend-fun",
+      "amount-stress-about-losing",
+      "times-split-bill-regretted-generosity"
+    ]
   },
-  "waiting-minutes": {
-    "citizen": ["walk-to-nearest-cafe", "walk-to-nearest-grocery", "time-to-city-center", "walk-to-nearest-park", "time-to-reach-friend"],
-    "impostor": ["wait-time-at-restaurant", "queue-time-at-shop", "wait-in-waiting-room", "wait-for-food-delivery", "wait-at-airport-security"]
+  "color-as-vibe": {
+    "citizen": [
+      "color-describes-personality",
+      "color-feel-most-yourself",
+      "color-your-life-right-now",
+      "color-of-your-energy",
+      "color-you-always-return-to",
+      "color-your-happiest-memory",
+      "color-youd-paint-your-world",
+      "color-defines-your-decade"
+    ],
+    "impostor": [
+      "color-you-secretly-love",
+      "color-that-unsettles-you",
+      "color-of-your-worst-mood",
+      "color-of-your-ex-vibe",
+      "color-that-screams-danger",
+      "color-you-judge-on-others",
+      "color-of-a-bad-decision",
+      "color-of-your-inner-child"
+    ]
   },
-  "ice-cream-flavor": {
-    "citizen": ["favorite-ice-cream-flavor", "go-to-ice-cream-order", "flavor-youd-eat-daily", "flavor-for-a-breakup", "flavor-you-always-return-to"],
-    "impostor": ["childhood-ice-cream-memory", "flavor-of-your-personality", "ice-cream-flavor-youd-ban", "flavor-you-pick-when-sharing", "flavor-you-wish-existed"]
+  "animal-as-personality": {
+    "citizen": [
+      "animal-you-are-at-heart",
+      "animal-your-friends-would-pick",
+      "animal-in-a-crisis",
+      "animal-at-a-party",
+      "animal-first-thing-morning",
+      "animal-spirit-guide",
+      "animal-in-your-professional-life",
+      "animal-that-matches-your-energy"
+    ],
+    "impostor": [
+      "animal-your-nemesis",
+      "animal-you-actually-are-not-want",
+      "animal-your-ex-was",
+      "animal-you-become-when-angry",
+      "animal-most-like-your-boss",
+      "animal-least-like-you",
+      "animal-on-a-bad-day",
+      "animal-that-intimidates-you"
+    ]
   },
-  "hot-drink-count": {
-    "citizen": ["coffee-cups-daily", "morning-coffees-count", "caffeinated-drinks-daily", "espresso-shots-daily", "hot-drinks-per-day"],
-    "impostor": ["snacks-eaten-daily", "teas-per-day", "glasses-juice-daily", "sodas-per-day", "glasses-milk-daily"]
+  "weather-and-season-vibe": {
+    "citizen": [
+      "season-that-is-you",
+      "weather-matches-your-mood",
+      "weather-feel-most-alive",
+      "season-born-to-live-in",
+      "weather-of-your-personality",
+      "season-hate-to-love",
+      "weather-comfort-pick",
+      "season-most-productive"
+    ],
+    "impostor": [
+      "weather-of-your-worst-self",
+      "season-that-drains-you",
+      "weather-makes-you-spiral",
+      "season-everyone-loves-you-dread",
+      "weather-of-your-exes-personality",
+      "season-you-make-bad-decisions",
+      "weather-you-blame-your-mood-on",
+      "season-that-changed-you"
+    ]
   },
-  "friend-group-size": {
-    "citizen": ["number-close-friends", "friends-you-text-regularly", "people-in-inner-circle", "friends-call-monthly", "childhood-friends-still-close"],
-    "impostor": ["coworkers-chat-daily", "family-members-contact-weekly", "people-know-your-secrets", "social-mutuals-know-irl", "neighbors-know-by-name"]
+  "personality-descriptor-word": {
+    "citizen": [
+      "one-word-for-yourself",
+      "word-you-want-on-tombstone",
+      "word-that-follows-you",
+      "word-best-friends-use-for-you",
+      "word-you-aspire-to-be",
+      "word-enemies-would-use",
+      "word-for-yourself-at-best",
+      "word-you-resist-being-called"
+    ],
+    "impostor": [
+      "word-describes-your-chaos",
+      "word-for-yourself-at-worst",
+      "word-you-wish-described-you",
+      "word-your-childhood-self-used",
+      "word-that-scares-you-about-yourself",
+      "word-people-misuse-for-you",
+      "word-that-defines-your-year",
+      "word-you-secretly-like-being-called"
+    ]
   },
-  "weekly-eats-out": {
-    "citizen": ["takeout-orders-weekly", "restaurant-visits-weekly", "times-eat-out-weekly", "delivery-orders-weekly", "meals-outside-home-weekly"],
-    "impostor": ["grocery-runs-weekly", "coffee-shop-visits-weekly", "convenience-store-visits", "cafes-visited-weekly", "market-visits-weekly"]
-  },
-  "independence-age": {
-    "citizen": ["age-got-drivers-license", "age-first-drove-alone", "age-passed-driving-test", "age-owned-first-car", "age-first-rented-car"],
-    "impostor": ["age-first-solo-travel", "age-first-flight-alone", "age-first-night-away", "age-opened-bank-account", "age-got-first-job"]
-  },
-  "scrolling-minutes": {
-    "citizen": ["minutes-on-social-media-daily", "time-on-instagram-daily", "time-on-tiktok-daily", "phone-browse-morning", "scrolling-before-bed"],
-    "impostor": ["time-browsing-news-daily", "youtube-time-daily", "chatting-apps-minutes", "email-time-daily", "time-reading-articles"]
-  },
-  "pizza-topping": {
-    "citizen": ["favorite-pizza-topping", "topping-on-any-pizza", "pizza-topping-forever", "pizza-topping-when-alone", "topping-youd-never-skip"],
-    "impostor": ["favorite-sandwich-filling", "topping-for-burger", "ingredient-add-to-everything", "taco-filling-you-pick", "wrap-ingredient-always-add"]
-  },
-  "weather-type": {
-    "citizen": ["favorite-type-weather", "weather-for-staying-in", "best-weather-for-walk", "ideal-vacation-weather", "weather-love-waking-to"],
-    "impostor": ["weather-matching-your-mood", "weather-youd-pick-forever", "weather-on-ideal-birthday", "weather-you-secretly-love", "weather-that-energizes-you"]
-  },
-  "time-of-day": {
-    "citizen": ["most-productive-time-of-day", "time-feel-most-creative", "favorite-part-of-day", "best-time-for-meal", "when-you-feel-best"],
-    "impostor": ["time-check-phone-most", "time-feel-most-social", "time-make-best-decisions", "when-energy-peaks", "time-you-overthink-most"]
-  },
-  "decade-to-visit": {
-    "citizen": ["decade-youd-time-travel-to", "best-decade-for-music", "decade-best-fashion", "decade-for-best-movies", "decade-for-best-vibes"],
-    "impostor": ["decade-you-feel-born-in", "decade-your-taste-belongs", "decade-relate-to-culturally", "decade-wish-grew-up-in", "decade-for-best-tv"]
-  },
-  "sport-name": {
-    "citizen": ["sport-you-enjoy-watching", "favorite-sport-to-play", "sport-youd-go-pro-in", "sport-you-play-casually", "most-fun-sport"],
-    "impostor": ["sport-you-played-as-kid", "sport-for-fitness", "sport-of-your-country", "sport-for-your-personality", "sport-youd-watch-live"]
-  },
-  "lucky-number": {
-    "citizen": ["your-lucky-number", "number-that-feels-like-you", "favorite-single-digit", "number-you-pick-in-guess", "number-you-always-return-to"],
-    "impostor": ["random-number-one-to-ten", "pick-any-number-one-ten", "first-number-that-pops", "number-you-just-thought-of", "number-between-one-and-ten"]
+  "wildcard-opinions-number": {
+    "citizen": [
+      "number-of-opinions-per-day",
+      "rate-your-open-mindedness",
+      "times-changed-your-mind-this-year",
+      "rate-your-self-awareness",
+      "rate-your-optimism",
+      "times-right-in-argument-weekly",
+      "rate-your-ability-to-read-people",
+      "rate-your-life-satisfaction"
+    ],
+    "impostor": [
+      "rate-your-contrarianism",
+      "rate-your-nostalgia",
+      "rate-your-superstition",
+      "times-been-told-youre-intense",
+      "rate-your-existential-dread",
+      "rate-your-romanticism",
+      "rate-your-cynicism",
+      "times-felt-misunderstood-this-month"
+    ]
   }
 }

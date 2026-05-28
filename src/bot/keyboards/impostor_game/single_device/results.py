@@ -2,7 +2,7 @@ from aiogram_i18n import LazyProxy
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from src.bot.actions.back import BackAction
-from src.bot.actions.spy_game.single_device.play_again import SingleDeviceSpyGamePlayAgainAction
+from src.bot.actions.impostor_game.single_device.play_again import SingleDeviceImpostorGamePlayAgainAction
 
 
 def single_device_impostor_game_results_keyboard() -> InlineKeyboardMarkup:
@@ -11,7 +11,7 @@ def single_device_impostor_game_results_keyboard() -> InlineKeyboardMarkup:
             [
                 InlineKeyboardButton(
                     text=LazyProxy("play-single-device-impostor-game-results.button-play-again"),
-                    callback_data=SingleDeviceSpyGamePlayAgainAction().pack()
+                    callback_data=SingleDeviceImpostorGamePlayAgainAction().pack()
                 )
             ],
             [
