@@ -1,14 +1,16 @@
 setup-spy-game =
     ⚙️ <b>Game setup</b>
 
-    Use the options below to configure your game before starting. You can set the total number of players, choose the secret word category, and decide how many Spies will be in the game. Make sure everyone agrees on the setup before continuing.
+    Use the options below to configure your game before starting.
+
+    You can choose the number of players, select a secret word category, and decide how many spies will be in the game. Make sure everyone agrees on the setup before continuing.
     .button-player-count = Players: { $player_count } 👤
     .button-category = Category: { $category }
     .button-spy-count = Spies: { $spy_count }
     .button-play = 🚀 Play
 
 setup-spy-game-player-count =
-    ⚙️ <b>Set player count</b>
+    👤 <b>Choose player count</b>
 
     Choose how many players will participate on this device. The phone will be passed around so each player can privately check their role before the game begins.
     .button = { $selected ->
@@ -17,18 +19,18 @@ setup-spy-game-player-count =
     }
 
 setup-spy-game-category =
-    ⚙️ <b>Choose secret word category</b>
+    🎨 <b>Choose secret word category</b>
 
-    Select the theme for your game’s secret words. Different categorie change how challenging or funny each round can be, so pick one tha suits your group best.
+    Select the theme for your game’s secret words. Different categories change how challenging or funny each round can be, so pick one that suits your group best.
     .button = { $selected ->
         [true] ✅ { $category }
         *[false] { $category }
     }
 
 setup-spy-game-spy-count =
-    ⚙️ <b>Set number of Spies</b>
+    🕵️ <b>Choose number of spies</b>
 
-    Choose how many Spies will be hiding among the Citizens. More spies add more chaos to the game, and if you pick random count - the game can get completely crazy. Balance wisely for the best experience.
+    Choose how many spies will be hiding among the citizens. More spies add more chaos to the game, and if you choose a random number of spies, the game can get completely crazy. Balance wisely for the best experience.
     .button = { $selected ->
         [true] ✅ { $spy_count }
         *[false] { $spy_count }
@@ -37,13 +39,15 @@ setup-spy-game-spy-count =
 setup-impostor-game =
     ⚙️ <b>Game setup</b>
 
-    Use the options below to configure your game before starting. You can set the total number of players and decide how many Impostors will be in the game. Make sure everyone agrees on the setup before continuing.
+    Use the options below to configure your game before starting.
+
+    You can choose the total number of players and select how many impostors will be in the game. Make sure everyone agrees on the setup before continuing.
     .button-player-count = Players: { $player_count } 👤
     .button-impostor-count = Impostors: { $impostor_count }
     .button-play = 🚀 Play
 
 setup-impostor-game-player-count =
-    ⚙️ <b>Set player count</b>
+    👤 <b>Choose player count</b>
 
     Choose how many players will participate on this device. The phone will be passed around so each player can privately answer their question before the game begins.
     .button = { $selected ->
@@ -52,9 +56,9 @@ setup-impostor-game-player-count =
     }
 
 setup-impostor-game-impostor-count =
-    ⚙️ <b>Set number of Impostors</b>
+    🎭 <b>Choose number of impostors</b>
 
-    Choose how many Impostors will be hiding among the Citizens. More impostors add more chaos to the game, and if you pick random count - the game can get completely crazy. Balance wisely for the best experience.
+    Select how many impostors will be hiding among the citizens. More impostors add more chaos to the game, and if you choose a random number of impostors, the game can get completely crazy. Balance wisely for the best experience.
     .button = { $selected ->
         [true] ✅ { $impostor_count }
         *[false] { $impostor_count }

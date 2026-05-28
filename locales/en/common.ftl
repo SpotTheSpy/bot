@@ -2,6 +2,6 @@ button-back = ◀️ Back
 button-got-it = 👌 Got it
 
 error =
-    ⚠️ <b>An error occured</b>
+    ⚠️ <b>An error occurred</b>
 
-    Please try executing <b>/start</b> command or restarting the bot.
+    Please try using the <b>/start</b> command or restart the bot.

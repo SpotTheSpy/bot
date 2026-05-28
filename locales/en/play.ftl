@@ -1,16 +1,16 @@
 play-single-device-spy-game-prepare =
     🤫 <b>Get ready to view your role</b>
 
-    Each player must check their role privately. Only hold the phone when it’s your turn, and make sure no one else can see the screen.
+    Each player should check their role privately. Hold the phone only when it’s your turn, and make sure no one else can see the screen.
 
     <b>Player { $player_index }/{ $player_count }</b>
     .button-view-role = 🔍 View role
 
 play-single-device-spy-game-view-role = { $role ->
     [spy]
-        🕵️‍♂️ <b>You are the Spy</b>
+        🕵️ <b>You are the Spy</b>
 
-        Blend in with the citizens and try to guess the secret word. Listen carefully to their answers and ask smart questions to collect clues without raising suspicion.
+        Blend in with the citizens and try to guess the secret word. Listen carefully to their answers and ask smart questions to gather clues without raising suspicion.
     *[citizen]
         👨 <b>You are a Citizen</b>
 
@@ -32,31 +32,31 @@ play-single-device-spy-game-results = { $count ->
     [0]
         🎭 <b>Game Over!</b>
 
-        There were no spies in this game!
+        There were no spies in this game.
         The secret word known to the citizens was: <b>{ $secret_word }</b>.
 
-        Thanks for playing! Want to go another round?
+        Thanks for playing! Want to play another round?
     [one]
         🎭 <b>Game Over!</b>
 
-        Player <b>{ $spies }</b> was the spy!
+        Player <b>{ $spies }</b> was the spy.
         The secret word known to the citizens was: <b>{ $secret_word }</b>.
 
-        Thanks for playing! Want to go another round?
+        Thanks for playing! Want to play another round?
     *[other]
         🎭 <b>Game Over!</b>
 
-        Players <b>{ $spies }</b> were the spies!
+        Players <b>{ $spies }</b> were the spies.
         The secret word known to the citizens was: <b>{ $secret_word }</b>.
 
-        Thanks for playing! Want to go another round?
+        Thanks for playing! Want to play another round?
 }
     .button-play-again = 🚀 Play again
 
 play-single-device-impostor-game-prepare =
     🤫 <b>Get ready to answer your question</b>
 
-    Each player must view and answer their question privately. Only hold the phone when it’s your turn, and make sure no one else can see the screen.
+    Each player will receive a question and must answer it privately. Only hold the phone when it’s your turn, and make sure no one else can see the screen.
 
     <b>Player { $player_index }/{ $player_count }</b>
     .button-view-question = 🔍 View question
@@ -64,18 +64,18 @@ play-single-device-impostor-game-prepare =
 play-single-device-impostor-game-view-question =
     <b>Your question:</b> { $question }
 
-    You need to answer it by typing in chat. You also dont know yet whether you are an impostor or not - the real question is going to be revealed after everyone gives their answer.
+    Answer it by typing in the chat. At this stage, you don’t know whether your question is the real one or the impostor version - everything will be revealed after all players submit their answers.
 
     <b>Your answer:</b> { $answer }
-    .empty-answer = <i>Type in chat...</i>
+    .empty-answer = <i>Type your answer...</i>
     .button-proceed = 👉 Proceed
 
 play-single-device-impostor-game-discuss =
-    👀 <b>Time to view the answers!</b>
+    👀 <b>Time to reveal the answers!</b>
 
-    You may now reveal every player answers one by one, and present them to the group.
+    Reveal each player’s answer one by one and present them to the group.
 
-    Then, once every answer is revealed - discuss, talk and share suspicions. Citizens should look for slips and inconsistencies that reveal the impostor, while the impostor must stay calm, answer carefully, and try to avoid suspicion.
+    After all answers are shown, discuss them together. Look for inconsistencies, unusual wording, or anything that feels out of place. Try to determine who received a different question based on their answer and your knowledge of the players.
 
     <b>The real question was:</b> { $question }
 
@@ -89,28 +89,30 @@ play-single-device-impostor-game-results = { $count ->
     [0]
         🎭 <b>Game Over!</b>
 
-        There were no impostors in this game!
+        There were no impostors in this game.
 
         <b>The question was:</b> { $real_question }
 
-        Thanks for playing! Want to go another round?
+        Thanks for playing! Want to play another round?
+
     [one]
         🎭 <b>Game Over!</b>
 
-        Player <b>{ $impostors }</b> was the impostor!
+        Player <b>{ $impostors }</b> was an impostor!
 
         <b>The real question was:</b> { $real_question }
-        <b>The question impostor had was:</b> { $impostor_question }
+        <b>The impostor's question was:</b> { $impostor_question }
 
-        Thanks for playing! Want to go another round?
+        Thanks for playing! Want to play another round?
+
     *[other]
         🎭 <b>Game Over!</b>
 
-        Players <b>{ $impostors }</b> were the impostors!
+        Players <b>{ $impostors }</b> were impostors!
 
         <b>The real question was:</b> { $real_question }
-        <b>The question impostor had was:</b> { $impostor_question }
+        <b>The impostors' questions were:</b> { $impostor_question }
 
-        Thanks for playing! Want to go another round?
+        Thanks for playing! Want to play another round?
 }
     .button-play-again = 🚀 Play again

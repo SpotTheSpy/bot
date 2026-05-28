@@ -1,122 +1,162 @@
 {
-  "weekly-frequencies": {
-    "citizen": [
-      "cook-real-meal",
-      "exercise-weekly",
-      "call-family-member"
-    ],
-    "impostor": [
-      "eat-takeout",
-      "take-walk",
-      "check-social-media-morning"
-    ]
+  "nightly-duration": {
+    "citizen": ["sleep-last-night", "weeknight-sleep-hours", "sleep-hours-needed", "average-nightly-sleep", "weekend-sleep-hours"],
+    "impostor": ["daily-screen-time", "work-sitting-hours", "evening-tv-hours", "phone-hours-daily", "daily-indoor-hours"]
   },
-  "lifetime-counts": {
-    "citizen": [
-      "countries-visited",
-      "serious-relationships",
-      "times-moved-cities"
-    ],
-    "impostor": [
-      "concerts-attended",
-      "jobs-had",
-      "languages-tried"
-    ]
+  "weekly-active-days": {
+    "citizen": ["exercise-days-weekly", "gym-visits-weekly", "days-physically-active", "days-take-a-walk", "sport-sessions-weekly"],
+    "impostor": ["home-cooked-days-weekly", "productive-days-weekly", "days-leave-house", "early-rises-weekly", "days-follow-routine"]
   },
-  "hours-duration": {
-    "citizen": [
-      "sleep-last-night",
-      "screen-time-yesterday",
-      "work-typical-day"
-    ],
-    "impostor": [
-      "phone-yesterday",
-      "commute-weekly",
-      "tv-weekend-day"
-    ]
+  "skill-self-rating": {
+    "citizen": ["cooking-skill-rating", "driving-skill-rating", "dancing-skill-rating", "singing-skill-rating", "social-skill-rating"],
+    "impostor": ["confidence-self-rating", "patience-self-rating", "humor-self-rating", "creativity-self-rating", "ambition-self-rating"]
   },
-  "milestone-age": {
-    "citizen": [
-      "first-kiss-age",
-      "first-phone-age",
-      "first-lived-alone-age"
-    ],
-    "impostor": [
-      "learned-bike-age",
-      "first-job-age",
-      "first-travel-abroad-age"
-    ]
+  "morning-prep-minutes": {
+    "citizen": ["shower-duration-minutes", "morning-routine-minutes", "time-to-get-ready", "breakfast-time-minutes", "wake-to-door-minutes"],
+    "impostor": ["lunch-break-minutes", "nap-length-minutes", "daily-walk-duration", "daily-commute-minutes", "evening-wind-down-minutes"]
   },
-  "food-favorite": {
-    "citizen": [
-      "favorite-breakfast",
-      "comfort-food",
-      "last-thing-ate"
-    ],
-    "impostor": [
-      "favorite-snack",
-      "favorite-dessert",
-      "lazy-food"
-    ]
+  "comfort-food": {
+    "citizen": ["favorite-comfort-food", "late-night-snack-pick", "food-you-overeat", "ideal-movie-snack", "food-for-bad-day"],
+    "impostor": ["food-when-you-are-sick", "childhood-favorite-food", "food-you-eat-daily", "first-food-learned-cook", "food-always-stocked"]
   },
-  "place-type": {
-    "citizen": [
-      "perfect-first-date-place",
-      "alone-place",
-      "most-productive-place"
-    ],
-    "impostor": [
-      "meet-new-people-place",
-      "thinking-place",
-      "most-relaxed-place"
-    ]
+  "dream-animal": {
+    "citizen": ["dream-pet-animal", "spirit-animal", "cutest-animal", "animal-youd-befriend", "animal-for-personality"],
+    "impostor": ["first-pet-species", "animal-reincarnated-as", "animal-you-relate-to", "wild-animal-youd-tame", "animal-as-guardian"]
   },
-  "person-name": {
-    "citizen": [
-      "fictional-friend",
-      "last-texted",
-      "someone-admire"
-    ],
-    "impostor": [
-      "fictional-relate-to",
-      "last-made-laugh",
-      "someone-jealous"
-    ]
+  "best-season": {
+    "citizen": ["best-season-overall", "season-for-romance", "season-of-best-mood", "season-to-freeze-forever", "season-best-activities"],
+    "impostor": ["birth-season", "season-feel-productive", "season-prefer-travel", "season-with-best-food", "season-for-adventures"]
   },
-  "everyday-object": {
-    "citizen": [
-      "most-useful-thing-owned",
-      "in-bag-now",
-      "last-bought"
-    ],
-    "impostor": [
-      "hate-to-lose",
-      "on-desk",
-      "bought-never-used"
-    ]
+  "travel-country": {
+    "citizen": ["dream-vacation-country", "country-youd-live-in", "most-romantic-country", "country-for-best-food", "country-to-visit-once"],
+    "impostor": ["country-feel-drawn-to", "safest-feeling-country", "country-for-long-trip", "country-youd-retire-in", "bucket-list-country"]
   },
-  "self-rating-scale": {
-    "citizen": [
-      "cooking-skills-rating",
-      "patience-rating",
-      "organized-rating"
-    ],
-    "impostor": [
-      "sense-of-direction-rating",
-      "adventurous-rating",
-      "keeping-secrets-rating"
-    ]
+  "color-pick": {
+    "citizen": ["favorite-color", "color-youd-paint-bedroom", "color-of-your-aura", "color-matching-personality", "color-you-wear-most"],
+    "impostor": ["lucky-color", "color-associated-with-peace", "color-for-your-brand", "color-youd-dye-hair", "most-calming-color"]
   },
-  "three-words-phrase": {
-    "citizen": [
-      "morning-three-words",
-      "last-vacation-three-words",
-      "ideal-weekend-three-words"
-    ],
-    "impostor": [
-      "typical-evening-three-words",
-      "last-big-trip-three-words",
-      "dream-weekend-three-words"
-    ]
+  "streaming-pick": {
+    "citizen": ["favorite-streaming-service", "streaming-id-pay-for", "streaming-for-movies", "streaming-used-most", "streaming-id-keep-last"],
+    "impostor": ["streaming-shared-password", "streaming-for-music", "streaming-family-uses", "streaming-for-binge", "streaming-for-sports"]
+  },
+  "fast-food-brand": {
+    "citizen": ["favorite-fast-food-chain", "fast-food-guilty-pleasure", "fast-food-for-road-trip", "go-to-fast-food", "fast-food-late-night"],
+    "impostor": ["most-visited-fast-food", "most-reliable-fast-food", "fast-food-for-group", "fast-food-for-hangover", "fast-food-childhood-memory"]
+  },
+  "cancel-excuse": {
+    "citizen": ["best-excuse-being-late", "excuse-cancel-plans", "excuse-missing-call", "excuse-not-texting-back", "excuse-skipping-gym"],
+    "impostor": ["lie-you-tell-most", "reason-leave-party-early", "excuse-avoiding-social", "reason-cancel-last-minute", "excuse-for-being-lazy"]
+  },
+  "superpower-pick": {
+    "citizen": ["superpower-youd-choose", "fictional-ability-wanted", "magic-power-daily-life", "power-for-convenience", "superpower-if-only-one"],
+    "impostor": ["superpower-fear-in-others", "ability-for-your-child", "power-for-saving-world", "superpower-for-job", "ability-if-no-consequences"]
+  },
+  "go-to-emoji": {
+    "citizen": ["emoji-that-represents-you", "emoji-you-use-most", "emoji-for-personality", "emoji-youd-be", "emoji-default-mood"],
+    "impostor": ["emoji-for-best-friend", "emoji-sums-up-week", "emoji-for-monday", "emoji-to-crush", "emoji-in-every-message"]
+  },
+  "small-spend": {
+    "citizen": ["amount-spend-lunch", "typical-coffee-price", "usual-tip-amount", "average-snack-spend", "cost-of-daily-treat"],
+    "impostor": ["average-uber-cost", "amount-random-online-buy", "cost-last-impulse-buy", "spend-on-last-outing", "typical-snack-run-cost"]
+  },
+  "teen-milestone-age": {
+    "citizen": ["age-got-first-phone", "age-first-social-media", "age-felt-grown-up", "age-first-part-time-job", "age-cared-about-looks"],
+    "impostor": ["age-learned-ride-bike", "age-first-sleepover", "age-first-best-friend", "age-stayed-home-alone", "age-of-first-crush"]
+  },
+  "cartoon-character": {
+    "citizen": ["favorite-childhood-cartoon", "cartoon-character-you-relate-to", "cartoon-character-youd-be", "cartoon-you-still-watch", "most-nostalgic-cartoon"],
+    "impostor": ["animated-villain-you-liked", "first-cartoon-you-remember", "cartoon-character-youd-date", "cartoon-best-theme-song", "cartoon-shaped-your-humor"]
+  },
+  "music-genre": {
+    "citizen": ["favorite-music-genre", "genre-for-driving", "genre-fits-your-mood", "genre-for-a-party", "genre-you-secretly-love"],
+    "impostor": ["genre-for-workout", "music-friends-associate-you", "genre-for-studying", "genre-at-house-party", "genre-for-cooking"]
+  },
+  "city-transport": {
+    "citizen": ["usual-commute-method", "preferred-city-transport", "how-you-get-to-work", "transport-in-new-city", "transport-for-short-trip"],
+    "impostor": ["transport-if-no-car", "mode-for-late-night", "eco-transport-you-use", "transport-when-abroad", "transport-you-wish-existed"]
+  },
+  "planet-pick": {
+    "citizen": ["pick-favorite-planet", "planet-youd-visit", "planet-matching-vibe", "planet-for-vacation", "most-interesting-planet"],
+    "impostor": ["planet-named-after-god", "planet-associated-mystery", "planet-that-sounds-coolest", "planet-youd-name-pet", "most-beautiful-planet"]
+  },
+  "board-game-pick": {
+    "citizen": ["favorite-board-game", "game-you-always-win", "game-at-family-gathering", "go-to-game-night", "game-you-take-seriously"],
+    "impostor": ["game-for-first-date", "game-you-play-online", "card-game-you-know", "game-with-most-drama", "game-youd-compete-in"]
+  },
+  "school-subject": {
+    "citizen": ["favorite-school-subject", "subject-you-were-best-at", "subject-youd-still-study", "subject-teacher-liked-you", "subject-you-miss"],
+    "impostor": ["subject-youd-teach", "subject-that-shaped-you", "hardest-subject-for-you", "subject-for-extra-class", "subject-you-wish-existed"]
+  },
+  "phone-brand": {
+    "citizen": ["current-phone-brand", "phone-brand-youd-never-leave", "phone-brand-you-recommend", "dream-phone-brand", "phone-brand-you-trust"],
+    "impostor": ["first-phone-brand-owned", "phone-brand-parents-use", "phone-brand-most-friends", "phone-brand-switched-from", "brand-you-almost-bought"]
+  },
+  "film-genre": {
+    "citizen": ["favorite-movie-genre", "genre-for-friday-night", "movie-genre-always-pick", "genre-you-always-finish", "genre-for-long-flight"],
+    "impostor": ["genre-for-date-night", "genre-you-fall-asleep-to", "genre-when-need-laugh", "genre-for-stormy-night", "movie-genre-solo-night"]
+  },
+  "years-in-place": {
+    "citizen": ["years-in-current-city", "years-at-current-job", "years-knowing-best-friend", "years-in-current-home", "years-same-phone-brand"],
+    "impostor": ["years-since-last-moved", "years-doing-main-hobby", "years-with-partner", "years-using-same-bag", "years-since-big-change"]
+  },
+  "household-must-have": {
+    "citizen": ["item-youd-grab-in-fire", "most-used-kitchen-item", "item-cannot-live-without", "item-you-always-carry", "most-important-daily-object"],
+    "impostor": ["item-you-lose-most-often", "item-you-own-too-many", "most-broken-item-home", "first-thing-you-unpack", "item-you-always-replace"]
+  },
+  "irrational-fear": {
+    "citizen": ["biggest-irrational-fear", "thing-gives-you-chills", "thing-makes-you-cringe", "fear-embarrassed-by", "phobia-you-wont-admit"],
+    "impostor": ["sound-you-cannot-stand", "texture-you-hate", "smell-that-grosses-you", "sight-makes-you-gag", "sensation-you-avoid"]
+  },
+  "waiting-minutes": {
+    "citizen": ["walk-to-nearest-cafe", "walk-to-nearest-grocery", "time-to-city-center", "walk-to-nearest-park", "time-to-reach-friend"],
+    "impostor": ["wait-time-at-restaurant", "queue-time-at-shop", "wait-in-waiting-room", "wait-for-food-delivery", "wait-at-airport-security"]
+  },
+  "ice-cream-flavor": {
+    "citizen": ["favorite-ice-cream-flavor", "go-to-ice-cream-order", "flavor-youd-eat-daily", "flavor-for-a-breakup", "flavor-you-always-return-to"],
+    "impostor": ["childhood-ice-cream-memory", "flavor-of-your-personality", "ice-cream-flavor-youd-ban", "flavor-you-pick-when-sharing", "flavor-you-wish-existed"]
+  },
+  "hot-drink-count": {
+    "citizen": ["coffee-cups-daily", "morning-coffees-count", "caffeinated-drinks-daily", "espresso-shots-daily", "hot-drinks-per-day"],
+    "impostor": ["snacks-eaten-daily", "teas-per-day", "glasses-juice-daily", "sodas-per-day", "glasses-milk-daily"]
+  },
+  "friend-group-size": {
+    "citizen": ["number-close-friends", "friends-you-text-regularly", "people-in-inner-circle", "friends-call-monthly", "childhood-friends-still-close"],
+    "impostor": ["coworkers-chat-daily", "family-members-contact-weekly", "people-know-your-secrets", "social-mutuals-know-irl", "neighbors-know-by-name"]
+  },
+  "weekly-eats-out": {
+    "citizen": ["takeout-orders-weekly", "restaurant-visits-weekly", "times-eat-out-weekly", "delivery-orders-weekly", "meals-outside-home-weekly"],
+    "impostor": ["grocery-runs-weekly", "coffee-shop-visits-weekly", "convenience-store-visits", "cafes-visited-weekly", "market-visits-weekly"]
+  },
+  "independence-age": {
+    "citizen": ["age-got-drivers-license", "age-first-drove-alone", "age-passed-driving-test", "age-owned-first-car", "age-first-rented-car"],
+    "impostor": ["age-first-solo-travel", "age-first-flight-alone", "age-first-night-away", "age-opened-bank-account", "age-got-first-job"]
+  },
+  "scrolling-minutes": {
+    "citizen": ["minutes-on-social-media-daily", "time-on-instagram-daily", "time-on-tiktok-daily", "phone-browse-morning", "scrolling-before-bed"],
+    "impostor": ["time-browsing-news-daily", "youtube-time-daily", "chatting-apps-minutes", "email-time-daily", "time-reading-articles"]
+  },
+  "pizza-topping": {
+    "citizen": ["favorite-pizza-topping", "topping-on-any-pizza", "pizza-topping-forever", "pizza-topping-when-alone", "topping-youd-never-skip"],
+    "impostor": ["favorite-sandwich-filling", "topping-for-burger", "ingredient-add-to-everything", "taco-filling-you-pick", "wrap-ingredient-always-add"]
+  },
+  "weather-type": {
+    "citizen": ["favorite-type-weather", "weather-for-staying-in", "best-weather-for-walk", "ideal-vacation-weather", "weather-love-waking-to"],
+    "impostor": ["weather-matching-your-mood", "weather-youd-pick-forever", "weather-on-ideal-birthday", "weather-you-secretly-love", "weather-that-energizes-you"]
+  },
+  "time-of-day": {
+    "citizen": ["most-productive-time-of-day", "time-feel-most-creative", "favorite-part-of-day", "best-time-for-meal", "when-you-feel-best"],
+    "impostor": ["time-check-phone-most", "time-feel-most-social", "time-make-best-decisions", "when-energy-peaks", "time-you-overthink-most"]
+  },
+  "decade-to-visit": {
+    "citizen": ["decade-youd-time-travel-to", "best-decade-for-music", "decade-best-fashion", "decade-for-best-movies", "decade-for-best-vibes"],
+    "impostor": ["decade-you-feel-born-in", "decade-your-taste-belongs", "decade-relate-to-culturally", "decade-wish-grew-up-in", "decade-for-best-tv"]
+  },
+  "sport-name": {
+    "citizen": ["sport-you-enjoy-watching", "favorite-sport-to-play", "sport-youd-go-pro-in", "sport-you-play-casually", "most-fun-sport"],
+    "impostor": ["sport-you-played-as-kid", "sport-for-fitness", "sport-of-your-country", "sport-for-your-personality", "sport-youd-watch-live"]
+  },
+  "lucky-number": {
+    "citizen": ["your-lucky-number", "number-that-feels-like-you", "favorite-single-digit", "number-you-pick-in-guess", "number-you-always-return-to"],
+    "impostor": ["random-number-one-to-ten", "pick-any-number-one-ten", "first-number-that-pops", "number-you-just-thought-of", "number-between-one-and-ten"]
   }
 }
