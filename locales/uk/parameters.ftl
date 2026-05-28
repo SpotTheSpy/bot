@@ -1,7 +1,7 @@
 parameters-spy-categories = { $category ->
     [general] Загальне 🎨
     [food] Їжа 🍎
-    [plants] Природа ☘️
+    [plants] Рослини ☘️
     [animals] Тварини 🐶
     [places] Місця 🏠
     [geography] Географія 🌎
@@ -18,5 +18,12 @@ parameters-spy-count = { $spy_count ->
     [single] Один шпигун 🕵️‍♂️
     [double] Два шпигуни 🕵️‍♂️
     [random] Випадкова кількість шпигунів 🎭
+    *[other] Невідома кількість
+}
+
+parameters-impostor-count = { $impostor_count ->
+    [single] Один самозванець 🕵️‍♂️
+    [double] Два самозванці 🕵️‍♂️
+    [random] Випадкова кількість самозванців 🎭
     *[other] Невідома кількість
 }
