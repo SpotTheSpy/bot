@@ -73,5 +73,202 @@
             "coffee-order-identity-sound-italian-at-counter": "What coffee would you order to sound extra Italian at the counter?",
             "coffee-order-identity-photo-ready-trendy": "What coffee would you order because it looks the most photogenic right now?"
         }
+    },
+    "one-word-openers": {
+        "citizen": {
+            "one-word-openers-friend-long-silence": "What one word would you actually text to a close friend you haven't messaged in months to break the ice?",
+            "one-word-openers-weekend-plan-spark": "What one word would you actually text to kick off weekend plans in your group chat?",
+            "one-word-openers-sibling-small-win": "What one word would you actually text to your sibling to flex a tiny victory?",
+            "one-word-openers-waiting-late-friend": "What one word would you actually text to your always-late friend while you're already outside?"
+        },
+        "impostor": {
+            "one-word-openers-support-missing-package": "What one word would you actually type first in a chat with customer support about a missing package?",
+            "one-word-openers-recruiter-follow-up": "What one word would you actually use to begin a follow-up message to a recruiter after an interview?",
+            "one-word-openers-doctor-confirm": "What one word would you actually use to start a text to your doctor's office to confirm an appointment?",
+            "one-word-openers-boss-day-off": "What one word would you actually use to begin a message to your boss when requesting a day off?"
+        }
+    },
+    "cooking-spice-confessions": {
+        "citizen": {
+            "cooking-spice-confessions-overuse-at-home": "Which spice do you actually overuse at home?",
+            "cooking-spice-confessions-burn-through-fastest": "Which spice do you burn through fastest in a month?",
+            "cooking-spice-confessions-bland-dish-rescue": "Which spice do you reach for first when a dish tastes flat?",
+            "cooking-spice-confessions-breakfast-eggs-go-to": "Which spice is your default on breakfast eggs?"
+        },
+        "impostor": {
+            "cooking-spice-confessions-claim-love-avoid": "Which spice do you claim to love, but quietly avoid cooking with?",
+            "cooking-spice-confessions-pantry-for-show": "Which spice sits in your pantry mostly for show?"
+        }
+    },
+    "time-for-money-tradeoffs": {
+        "citizen": {
+            "time-for-money-tradeoffs-hotel-early-check-in-2h": "What's the most you'd pay to check in two hours early at your hotel today?",
+            "time-for-money-tradeoffs-storm-grocery-delivery-tonight": "What's the most you'd pay to have tonight's grocery run delivered during a storm instead of going yourself?",
+            "time-for-money-tradeoffs-deep-clean-kitchen-after-cooking": "What's the most you'd pay to have a pro deep-clean your kitchen after a chaotic cooking day?",
+            "time-for-money-tradeoffs-same-day-phone-screen-repair": "What's the most you'd pay for guaranteed same-day repair of a cracked phone screen?",
+            "time-for-money-tradeoffs-rush-passport-photo-30min": "What's the most you'd pay to get passport photos taken and printed in 30 minutes instead of tomorrow?"
+        },
+        "impostor": {
+            "time-for-money-tradeoffs-reserve-last-aisle-seat-2h-flight": "What's the most you'd pay to reserve the last aisle seat on a fully booked two-hour flight?",
+            "time-for-money-tradeoffs-setup-new-wifi-and-migrate": "What's the most you'd pay to have a tech set up a new Wi-Fi router and migrate your devices?",
+            "time-for-money-tradeoffs-first-available-doctor-appointment": "What's the most you'd pay to lock in the first available doctor appointment this afternoon?"
+        }
+    },
+    "awkward-silence-thresholds": {
+        "citizen": {
+            "awkward-silence-thresholds-hug-duration": "How many seconds can a hug last before it feels awkward for you?",
+            "awkward-silence-thresholds-handshake-release": "How many seconds do you prefer a handshake to last before you let go?",
+            "awkward-silence-thresholds-door-holding-cutoff": "When holding a door for someone approaching, how many seconds away can they be before you stop holding it?",
+            "awkward-silence-thresholds-re-knock-delay": "After your first knock on a friend's door, how many seconds do you wait before knocking again?"
+        },
+        "impostor": {
+            "awkward-silence-thresholds-sneeze-bless-you": "After someone sneezes and no one speaks, how many silent seconds before you say 'bless you'?",
+            "awkward-silence-thresholds-phone-dead-air-check": "On a phone call when the other side goes quiet, how many silent seconds before you ask 'Are you still there?'"
+        }
+    },
+    "month-move-bluff-cities": {
+        "citizen": {
+            "month-move-bluff-cities-spontaneous-3day": "If flights were free tomorrow, which city would you fly to for a spontaneous 3-day stay?",
+            "month-move-bluff-cities-learn-cuisine-month": "To spend a month learning its home cooking from locals, which city would you choose?",
+            "month-move-bluff-cities-share-flat-strangers": "If you had to share a flat with strangers for a month, which city would you tolerate best?",
+            "month-move-bluff-cities-night-shifts-month": "If you had to work night shifts for a month, which city would suit you best?"
+        },
+        "impostor": {
+            "month-move-bluff-cities-bluff-high-school-there": "Which city could you convincingly claim you went to high school in?",
+            "month-move-bluff-cities-fake-accent-local": "Which city could you imitate the local accent of well enough to pass briefly?",
+            "month-move-bluff-cities-bluff-tourist-questions": "Which city could you field tourist questions about all day without getting caught?"
+        }
+    },
+    "laundry-re-wear-counts": {
+        "citizen": {
+            "laundry-re-wear-counts-tshirt-no-sweat": "How many wears do you give a T-shirt you didn't sweat in before washing?",
+            "laundry-re-wear-counts-polo-normal-day": "How many wears do you give a polo shirt after a normal day before washing?",
+            "laundry-re-wear-counts-sleep-shirt": "How many wears do you give a sleep shirt or pajama top before washing?",
+            "laundry-re-wear-counts-turtleneck-solo": "How many wears do you give a turtleneck worn on its own before washing?"
+        },
+        "impostor": {
+            "laundry-re-wear-counts-jeans": "How many wears do you give your jeans before washing?",
+            "laundry-re-wear-counts-hoodie-indoors-no-sweat": "How many wears do you give a hoodie worn indoors with no sweat before washing?",
+            "laundry-re-wear-counts-casual-shorts": "How many wears do you give casual non-athletic shorts before washing?"
+        }
+    },
+    "books-finished-counts": {
+        "citizen": {
+            "books-finished-counts-physical-print": "How many print books did you actually finish last year?",
+            "books-finished-counts-rescued": "How many books you had previously abandoned did you finally finish last year?"
+        },
+        "impostor": {
+            "books-finished-counts-say-on-first-date": "On a first date, how many books would you say you finished last year?",
+            "books-finished-counts-say-on-profile": "On your profile bio, how many books would you claim you finished last year?",
+            "books-finished-counts-say-to-not-nerdy": "To avoid sounding too nerdy, how many books would you say you finished last year?",
+            "books-finished-counts-say-in-competition": "If the chat turns competitive, how many books would you say you finished last year?"
+        }
+    },
+    "checkout-impulse-snacks": {
+        "citizen": {
+            "snack-pick-home-backup": "What's the snack you keep a backup of at home, just in case?",
+            "snack-pick-road-trip-first": "For a long road trip, what's the snack you pack first?",
+            "snack-pick-desk-stash-default": "At your work or study desk, what's your default stash snack?",
+            "snack-pick-late-night-go-to": "For a late-night craving at home, what's your go-to snack?",
+            "snack-pick-movie-purchase": "At the movies, what snack do you actually buy for yourself?",
+            "snack-pick-healthy-you-stick-to": "When you're trying to be healthy, what's the snack you actually stick to?"
+        },
+        "impostor": {
+            "snack-pick-vending-machine-default": "From a vending machine, what's your default pick?",
+            "snack-pick-coins-only-buy": "With only coins on you, what's the snack you buy?",
+            "snack-pick-late-session-fuel": "During a late study or gaming session, what's the snack that keeps you going?"
+        }
+    },
+    "free-day-wake-times": {
+        "citizen": {
+            "free-day-wake-times-actual-free-day-wakeup": "On a free day, what time do you usually wake up?",
+            "free-day-wake-times-weekday-alarm-set": "What time is your weekday morning alarm set for?",
+            "free-day-wake-times-first-phone-check": "After waking, what time do you usually check your phone?",
+            "free-day-wake-times-solo-breakfast-time": "When you're alone, what time do you usually eat breakfast?",
+            "free-day-wake-times-lunch-typical-start": "What time do you usually start lunch?"
+        },
+        "impostor": {
+            "free-day-wake-times-look-productive-work-start": "To look extra productive online, what start-work time would you say?",
+            "free-day-wake-times-seem-healthy-breakfast-time": "If trying to seem health-conscious, what breakfast time would you claim?",
+            "free-day-wake-times-avoid-early-meetings-wakeup": "If you were trying to avoid early meetings, what wake-up time would you say?"
+        }
+    },
+    "battery-panic-percentages": {
+        "citizen": {
+            "battery-panic-percentages-low-power-on": "At what battery percentage do you switch on Low Power mode?",
+            "battery-panic-percentages-seek-charger": "At what battery percentage do you start actively hunting for a charger?",
+            "battery-panic-percentages-disable-radios": "At what battery percentage do you turn off Wi-Fi and Bluetooth to stretch the battery?",
+            "battery-panic-percentages-pack-power-bank": "At what battery percentage would you decide to pack a power bank before heading out?"
+        },
+        "impostor": {
+            "battery-panic-percentages-go-live-stream": "At what battery percentage would you still go live on social media for 20 minutes?",
+            "battery-panic-percentages-start-ninety-minute-movie": "At what battery percentage do you still start a 90-minute movie?",
+            "battery-panic-percentages-enable-hotspot": "At what battery percentage would you still enable your hotspot for a friend for 30 minutes?"
+        }
+    },
+    "plate-bite-limits": {
+        "citizen": {
+            "plate-bite-limits-friends-entree-max-bites": "What's the maximum number of bites you'll take from a friend's entr\u00e9e before it feels rude?",
+            "plate-bite-limits-uninvited-fries-cap": "How many fries can you snag off someone's plate uninvited before you feel out of line?",
+            "plate-bite-limits-table-dessert-hogging-cap": "How many bites of a shared-for-the-table dessert will you take before you feel you're hogging it?",
+            "plate-bite-limits-roommate-leftovers-bites-cap": "How many bites of your roommate's leftovers will you take without asking before you feel wrong about it?"
+        },
+        "impostor": {
+            "plate-bite-limits-distracted-friend-fries-actually": "How many fries would you actually snag if it's your close friend and they're distracted?",
+            "plate-bite-limits-perfect-milkshake-sips-actually": "How many sips of their milkshake would you actually take if it's made exactly how you like it?",
+            "plate-bite-limits-dont-mind-sushi-pieces-actually": "How many pieces of sushi would you actually lift from their platter if they shrug and say they don't mind?",
+            "plate-bite-limits-forgiving-sibling-burger-actually": "How many bites from your sibling's burger would you actually take, knowing they'll forgive you?"
+        }
+    },
+    "replay-or-edit-year": {
+        "citizen": {
+            "replay-or-edit-year-friend-group-again": "Which exact year of your life would you redo unchanged just to feel that friend group again?",
+            "replay-or-edit-year-trips-replay": "Which exact year of your life would you replay as-is purely for the trips you took?",
+            "replay-or-edit-year-hobby-phase": "Which exact year of your life would you live again exactly to enjoy your weird hobby phase?"
+        },
+        "impostor": {
+            "replay-or-edit-year-switch-class-major": "Which exact year of your life would you change to pick a different class or major?",
+            "replay-or-edit-year-keep-habit": "Which exact year of your life would you modify to keep a habit you dropped?"
+        }
+    },
+    "personal-burst-loudness": {
+        "citizen": {
+            "personal-burst-loudness-laugh-default": "Rate your laugh loudness from 1 to 10.",
+            "personal-burst-loudness-hiccup-typical": "Rate your hiccup loudness from 1 to 10.",
+            "personal-burst-loudness-nose-blow": "Rate your nose-blow loudness from 1 to 10.",
+            "personal-burst-loudness-knuckle-crack": "Rate your knuckle-crack loudness from 1 to 10."
+        },
+        "impostor": {
+            "personal-burst-loudness-sneeze-default": "Rate your sneeze loudness from 1 to 10.",
+            "personal-burst-loudness-cough-default": "Rate your cough loudness from 1 to 10.",
+            "personal-burst-loudness-burp-default": "Rate your burp loudness from 1 to 10.",
+            "personal-burst-loudness-finger-snap": "Rate your finger-snap loudness from 1 to 10."
+        }
+    },
+    "cafe-wifi-password-words": {
+        "citizen": {
+            "cafe-wifi-password-words-next-after-coffee-fails": "After 'coffee' fails as a Wi-Fi password guess, what's the next single word you'd try?",
+            "cafe-wifi-password-words-cat-themed-cafe": "In a cat-themed cafe, what's your go-to single-word Wi-Fi password guess?",
+            "cafe-wifi-password-words-touristy-area-first-guess": "In a super-touristy restaurant, what's the single word you'd use to guess a Wi-Fi password?"
+        },
+        "impostor": {
+            "cafe-wifi-password-words-rememberable-for-regulars": "If you ran the cafe, what one word would you set as a Wi-Fi password so regulars remember it instantly?",
+            "cafe-wifi-password-words-tourist-friendly-simple": "For tourists with limited English, what simple one word would you set as a Wi-Fi password in your cafe?",
+            "cafe-wifi-password-words-subtle-staff-in-joke": "What one word Wi-Fi password would you set as a subtle staff joke customers won't notice?"
+        }
+    },
+    "household-chore-strategies": {
+        "citizen": {
+            "household-chore-strategies-unprompted-enjoy": "Which household chore do you do unprompted because you kind of enjoy it?",
+            "household-chore-strategies-first-on-cleaning-day": "What chore do you always tackle first on a cleaning day without thinking?",
+            "household-chore-strategies-finish-when-exhausted": "Which chore will you still finish even when you're dead tired?",
+            "household-chore-strategies-wont-let-others": "What's the one chore you won't let anyone else do because you prefer your way?",
+            "household-chore-strategies-childhood-habit": "Which chore from your childhood stuck with you and you still do by habit?",
+            "household-chore-strategies-pre-guest-quick-fix": "What chore do you do right before guests arrive to make the place feel decent?"
+        },
+        "impostor": {
+            "household-chore-strategies-volunteer-to-dodge": "Which household chore would you volunteer for to dodge the one you hate most?",
+            "household-chore-strategies-max-thanks-min-effort": "Which chore earns maximum gratitude for minimum effort?"
+        }
     }
 }

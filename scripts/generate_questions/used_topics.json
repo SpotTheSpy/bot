@@ -18,5 +18,65 @@
     {
         "key": "coffee-order-identity",
         "topic": "Your honest rushed coffee order versus the one chosen to signal expertise."
+    },
+    {
+        "key": "one-word-openers",
+        "topic": "The exact one-word openers you'd actually text in different situations."
+    },
+    {
+        "key": "cooking-spice-confessions",
+        "topic": "Personal spice and herb habits you actually use versus ones you posture about in your own cooking."
+    },
+    {
+        "key": "time-for-money-tradeoffs",
+        "topic": "Your personal price ceilings for buying time or skipping hassles."
+    },
+    {
+        "key": "awkward-silence-thresholds",
+        "topic": "Your personal second-count thresholds for social micro-awkwardness."
+    },
+    {
+        "key": "month-move-bluff-cities",
+        "topic": "Cities you'd plausibly move to short-term versus cities you could convincingly claim familiarity with."
+    },
+    {
+        "key": "laundry-rewear-counts",
+        "topic": "Your personal number of wears before washing common clothing items."
+    },
+    {
+        "key": "books-finished-counts",
+        "topic": "Your actual versus performative yearly book completion numbers."
+    },
+    {
+        "key": "checkout-impulse-snacks",
+        "topic": "Your overbought pantry snack when \u201cstocking up\u201d versus your impulse snack you grab at checkout."
+    },
+    {
+        "key": "free-day-wake-times",
+        "topic": "Your actual free-day wake time versus the time you'd claim to impress early risers."
+    },
+    {
+        "key": "battery-panic-percentages",
+        "topic": "Your personal phone battery percentage comfort and risk thresholds."
+    },
+    {
+        "key": "plate-bite-limits",
+        "topic": "Your etiquette limit versus your true temptation for taking bites from someone else's food."
+    },
+    {
+        "key": "replay-or-edit-year",
+        "topic": "The specific year of your own life you'd replay unchanged versus the one you'd revisit to tweak."
+    },
+    {
+        "key": "personal-burst-loudness",
+        "topic": "Self-assessed loudness of common bursts (laughs vs sneezes) on a 1\u201310 scale."
+    },
+    {
+        "key": "cafe-wifi-password-words",
+        "topic": "The single word you'd try for a cafe Wi\u2011Fi password versus the word you'd choose if you ran the place."
+    },
+    {
+        "key": "household-chore-strategies",
+        "topic": "Household chores you truly gravitate to versus ones you strategically volunteer for."
     }
 ]
