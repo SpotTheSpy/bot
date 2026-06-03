@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "key": "camera-roll-confessions",
+        "topic": "Confessional stats about your phone's camera roll."
+    },
+    {
+        "key": "song-skip-thresholds",
+        "topic": "Your skip threshold for songs in different listening contexts."
+    },
+    {
+        "key": "midnight-habits-counts",
+        "topic": "Personal late-night habits tracked as weekly counts."
+    },
+    {
+        "key": "travel-packing-quirks",
+        "topic": "Your habitual packing blind spots and excesses on short trips."
+    },
+    {
+        "key": "coffee-order-identity",
+        "topic": "Your honest rushed coffee order versus the one chosen to signal expertise."
+    }
+]

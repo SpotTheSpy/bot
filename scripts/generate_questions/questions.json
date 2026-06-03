@@ -1,1 +1,77 @@
-{}
+{
+    "camera-roll-confessions": {
+        "citizen": {
+            "camera-roll-confessions-selfies-total": "How many selfies are in your camera roll right now?",
+            "camera-roll-confessions-food-photos": "How many photos of food are in your camera roll?",
+            "camera-roll-confessions-videos-total": "How many videos are in your camera roll?",
+            "camera-roll-confessions-memes-saved": "How many memes have you saved in your camera roll?",
+            "camera-roll-confessions-last-7-days": "How many photos did you take in the last 7 days?"
+        },
+        "impostor": {
+            "camera-roll-confessions-delete-if-parent-scrolling": "How many photos in your camera roll would you delete if a parent started scrolling right now?",
+            "camera-roll-confessions-lock-behind-passcode": "How many photos in your camera roll would you lock behind a passcode if it were built in?",
+            "camera-roll-confessions-mark-as-cringe": "How many photos in your camera roll would you tag as 'cringe' if you were honest?"
+        }
+    },
+    "song-skip-thresholds": {
+        "citizen": {
+            "song-skip-thresholds-friend-recommendation": "How many seconds do you give a new song someone recommended before you skip it?",
+            "song-skip-thresholds-favorite-artist-single": "How many seconds do you give a brand-new single from your favorite artist before you skip it?",
+            "song-skip-thresholds-sibling-homemade-track": "How many seconds do you give a track your sibling made at home before you skip?",
+            "song-skip-thresholds-nostalgic-teenage-throwback": "How many seconds do you give a teenage-years throwback song before you skip?"
+        },
+        "impostor": {
+            "song-skip-thresholds-random-shuffle": "How many seconds do you give a random song on shuffle before you skip it?",
+            "song-skip-thresholds-unfamiliar-live-radio": "How many seconds do you give an unfamiliar song on live radio before you switch stations?",
+            "song-skip-thresholds-unknown-language": "How many seconds do you give a song in a language you don't understand before you skip?",
+            "song-skip-thresholds-gym-momentum-breaker": "How many seconds do you give a song that breaks your gym playlist's momentum before you skip?",
+            "song-skip-thresholds-tiktok-viral": "How many seconds do you give a TikTok-viral song before you skip?"
+        }
+    },
+    "midnight-habits-counts": {
+        "citizen": {
+            "midnight-habits-counts-intentional-past-midnight": "This week, how many times did you stay up past midnight on purpose?",
+            "midnight-habits-counts-one-more-episode-cross": "This week, how many times did \"one more episode\" push you past midnight?",
+            "midnight-habits-counts-tossing-past-midnight": "This week, how many times did you lie in bed awake until after midnight?",
+            "midnight-habits-counts-screens-off-before-midnight": "This week, how many times did you switch off all screens before midnight?",
+            "midnight-habits-counts-stayed-past-2am": "This week, how many times did you stay up past 2:00 AM?"
+        },
+        "impostor": {
+            "midnight-habits-counts-after-midnight-snack": "This week, how many times did you eat something after midnight?",
+            "midnight-habits-counts-extra-game-round-after-midnight": "This week, how many times did you play one more round of a game after midnight?",
+            "midnight-habits-counts-chore-after-midnight": "This week, how many times did you do a household chore after midnight?",
+            "midnight-habits-counts-shower-after-midnight": "This week, how many times did you shower after midnight?",
+            "midnight-habits-counts-step-out-after-midnight": "This week, how many times did you go outside after midnight?"
+        }
+    },
+    "travel-packing-quirks": {
+        "citizen": {
+            "travel-packing-quirks-often-forget-two-night": "What's the one item you almost always forget to pack for a two-night trip?",
+            "travel-packing-quirks-first-missing-morning": "What's the first missing item you notice the morning after you arrive?",
+            "travel-packing-quirks-tech-accessory-forgot": "Which tech accessory do you forget most on quick trips?",
+            "travel-packing-quirks-winter-weekend-forget": "On winter weekends away, what's the single thing you forget most?",
+            "travel-packing-quirks-beach-weekend-forget": "For beach or lake weekends, what's the item you usually forget?",
+            "travel-packing-quirks-cheap-re-buy-forget": "What's the cheap item you routinely forget and end up re-buying?"
+        },
+        "impostor": {
+            "travel-packing-quirks-over-pack-two-night": "What's the one item you almost always over pack for a two-night trip?",
+            "travel-packing-quirks-duplicates-just-in-case": "What item do you bring duplicates of 'just in case'?",
+            "travel-packing-quirks-clothing-extra-packed": "Which clothing item do you habitually pack extra of?",
+            "travel-packing-quirks-snack-overbuy-roadtrip": "What snack or drink do you overbuy for short road trips?",
+            "travel-packing-quirks-hobby-gear-unused": "What hobby or leisure gear do you toss in but almost never touch?"
+        }
+    },
+    "coffee-order-identity": {
+        "citizen": {
+            "coffee-order-identity-grim-monday-morning": "What coffee do you order first thing on a grim Monday?",
+            "coffee-order-identity-scorching-day-iced": "What coffee do you order on a scorching day?",
+            "coffee-order-identity-tight-budget": "What coffee do you order when you're low on cash?",
+            "coffee-order-identity-small-but-strong": "What coffee do you order when you want something small but strong?"
+        },
+        "impostor": {
+            "coffee-order-identity-look-like-expert": "What would you order to look like you really know coffee?",
+            "coffee-order-identity-sound-italian-at-counter": "What coffee would you order to sound extra Italian at the counter?",
+            "coffee-order-identity-photo-ready-trendy": "What coffee would you order because it looks the most photogenic right now?"
+        }
+    }
+}
