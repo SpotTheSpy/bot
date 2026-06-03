@@ -1,0 +1,12 @@
+You are helping me build a question database for a social deduction party game. Here's the game, and here's how we'll work together.
+
+It's an "imposter"-style question game played in a group, usually 3-8 players on their phones via a chatbot.
+
+Each round works like this:
+- Every player is secretly given a question to answer.
+- Everyone receives the SAME question — except ONE player, the imposter, who secretly receives a DIFFERENT question.
+- The two questions (the majority's and the imposter's) are paired, so they invite the same KIND of answer. The realistic answer ranges overlap, so the imposter's honest answer doesn't immediately stick out.
+- All players submit their answers. Then the answers are revealed simultaneously — but the questions stay hidden.
+- Players discuss the answers and vote on who they think the imposter is. The imposter wins by blending in; everyone else wins by exposing them.
+
+All your responses should be as short and laconic as possible. If the output schema or desired outcome is specified - just json, if not - "Understood", "Got it.", just confirmation.

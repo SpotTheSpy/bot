@@ -1,0 +1,22 @@
+Generate 3 pairs of questions by using the specified rules.
+
+In each pair one question is for the citizens, and one for the impostor. Then, I'll select the question I like the most, and you will proceed to the next step.
+
+Here are already used topics for the questions which you should not use:
+%%
+
+Output the questions in this format:
+
+{
+    "question-theme-key": {
+        "topic": "...",
+        "citizen": "...",
+        "impostor": "..."
+    },
+    ...
+}
+
+question_theme_key - Theme for the future bucket, in kebab-case. This is a unique key of the bucket which is named after the topic of the questions, which is usually a human-readable combination of question-answer domains.
+topic - Description of the question topic written as a plain text sentence. Used to determine which topics should not be generated later.
+
+You must not include additional answer specifics inside the question like (number) or (hour 0-23) if the question is clear enough - that's 90% of the cases, so add this info only if it is really needed there.

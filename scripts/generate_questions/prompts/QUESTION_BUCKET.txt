@@ -1,0 +1,20 @@
+I've selected this question:
+
+%%
+
+Now, you need to generate a question bucket with 10 questions for citizens and 10 for impostors. Remember the rules for generating buckets.
+Bucket should be generated in this format:
+
+{
+    "citizen": {
+        "question-key": "Question in plain english",
+        "question-key": "Another question for citizens in the same bucket"
+    },
+    "impostor": {
+        "question-key": "...",
+        "..."
+    }
+}
+
+question-key is a unique key for all questions in kebab-case. it must be constructed using form "{question-theme-key}-{unique-key}",
+so that ALL question keys across all the buckets are unique. unique key in the form is a kebab-case small description scoped just on the particular question.

@@ -1,0 +1,54 @@
+Here are the rules for constructing the best questions:
+
+1) QUESTIONS ARE "PERSONALISED".
+
+The most important rule - question should relate to the person to which it is given, anytime.
+Factual questions like "What's the highest mountain on earth?" are strictly forbidden, because each answer should be relative to the player who issued it.
+Questions should not always be "opinion-based", flooding the data with "What pizza do you like the most?" is not the best idea. They might and should appear but don't focus on them.
+Try making more obscure opinion-based questions like "If you were stranded on a desert island, how many companions would be the most optimal number for you to have?" or questions which relate to the person but are prompting for some information and not their opinion.
+Questions like "How much do you bench?" and "What pizza do you usually order if you don't feel like thinking too much?" are not primarily opinion-based but are still focused on the person.
+
+2) QUESTIONS ARE NOT CASUAL.
+
+Basic questions like "What is the best weather?" are too simple - players are not excited about answering or discussing them. Either come up with less common ones, or obscurify simple questions - delve deeper into the topic, ask about an unusual aspect or a funny situation.
+Yet, the best way is to come up with an uncommon question from the beginning. Example: "What's your favorite movie?" -> "What's a movie everyone thinks is boring, but you secretly love it?".
+
+3) QUESTIONS PROMPT FOR A SINGLE OUTPUT, MUST BE CRYSTAL CLEAR AND UNDERSTANDABLE.
+
+Questions should be answered with a single word, a number, a grade, or in really rare exceptions - 2-3 words. This is a rule, and each question should be composed in a way that a complex answer looks unfitting for it.
+But don't overcomplicate if the question is clear enough on its own, which is usually the case. Putting something like "Answer with 1-3 words." or "(number)" after every question is just boilerplate text which gives nothing if the questions is understandable on its own.
+So, if the question by itself is clear and every player will immediately understand in what format should they input their response - !!! don't write any additional specifications !!!.
+
+4) QUESTIONS EVOKE A REACTION.
+
+Every question should provoke players for:
+
+1. Discussion - If a group can debate about the question's topic for minutes, that is a great question.
+For example, instead of building the question around the quality of something, try doing the opposite: "What subject did you excel at in school, but no one knows about it?" is already good, but "What subject did you struggle with the most in school, and no one can believe it?" is even better. But don't overuse it.
+Also, try to create an interesting situation, or even an imaginary one - the question above about the "desert island" is interesting because it raises a very unusual, almost unrealistic topic. Questions like "If you could choose the country to be born in, what would you choose?" or You have the opportunity to produce chips of any flavor. What will you choose? are interesting on its own just because of its silliness and unexpectancy.
+
+2. Confusion - Not in a sense that the question must be incomprehensible. All questions should be understandable, but some of them may ask about unusual, slightly confusing, or even "inappropriate" things.
+And yes, sometimes you can and need to generate inappropriate questions (within the limits) - they evoke a much more vivid response. Examples: "What drug would you try if there were no consequences?", "How many sexual partners is too many?".
+
+3. Laughter and passion - Simple one, questions shouldn't be too "serious" or provoke such a response. It's important to maintain a balance, of course, but a few obviously stupid questions won't hurt anyone.
+
+5) QUESTIONS FOR CITIZENS AND IMPOSTORS SHOULD FALL IN THE SAME OUTPUT RANGE, BUT STILL BE DIFFERENT ENOUGH.
+
+1. In any bucket of questions, both citizen and impostor questions MUST ask for the response in a way that the player will input the answer in the same way.
+If a question anticipates a one-word answer - state that, if the response should be a number or a grade from 1-10 - EXPLICITLY STATE THAT. Questions like "Rate your appearance right now." are fine, but it is better to write "Rate your appearance right now from 1 to 10.".
+
+2. All questions in a bucket, both citizen and impostor ones, should ask for an answer in the same domain. For example, if citizen questions ask for one type of animal - impostor questions MUST also ask for ONE TYPE of animal.
+
+2. Questions in citizen-impostor buckets shouldn't prompt for opposite answers. If a citizen question is "What is the best smell?" and an impostor question is "What smell gives you an ick?" - these are too antonymous.
+Also, the first question is also not applicable by the rules above, it is better to rewrite the first question and replace it with "What smell is generally disgusting, but makes you feel nostalgic?" - this is not that common, and is not a complete opposite of "ick" - something in between.
+
+3. Questions in citizen-impostor buckets shouldn't prompt for TOO SIMILAR answers either. If these questions are different, but the answer will probably be generally the same - that's a strong sign to change one of the questions, and change them in a way that they do not become an ordinary good/bad question.
+Most questions must not prompt for "what's the best" or "what's the worst" - try to make one of the questions not that black and white. The above example with "smells" is a good illustration of how to rewrite a question to make it less one-sided.
+
+6) QUESTIONS INSIDE A BUCKET MUST NOT BE THE SAME PARAPHRASED ONES.
+
+One of the biggest mistakes is to create a bucket with 10 citizen questions, and they are all basically the same.
+Questions like "What movie you love the most?" and "What movie you can watch again and again?" are basically asking for the same thing, yet being technically different. You must not generate these types of questions when generating a bucket.
+
+Considering all that, you should not move too much away from the original theming. Even if you keep the domain of answers the same, questions which are too different will result in a bucket, where the citizen and impostor questions will become basically indistinguishable.
+THIS IS THE KEY RULE - in a randomly taken pair from citizen and impostor buckets, there must be a clear difference within the domain of the answers. If ANY CITIZEN QUESTION and ANY IMPOSTOR QUESTION from the same bucket produce THE SAME ANSWER 50% of the time - ONE OF THE QUESTIONS MUST BE REWORKED.

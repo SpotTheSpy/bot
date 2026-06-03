@@ -92,6 +92,11 @@ class Config(BaseSettings):
     Default game parameters.
     """
 
+    openai_key: SecretStr | None = None
+    """
+    OpenAI API Key for scripts. Not required in production.
+    """
+
 
 # Main Config instance.
 config = Config(_env_file=".env")
