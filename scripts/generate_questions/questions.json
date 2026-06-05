@@ -208,7 +208,7 @@
     },
     "plate-bite-limits": {
         "citizen": {
-            "plate-bite-limits-friends-entree-max-bites": "What's the maximum number of bites you'll take from a friend's entr\u00e9e before it feels rude?",
+            "plate-bite-limits-friends-entree-max-bites": "What's the maximum number of bites you'll take from a friend's appetizer bowl before it feels rude?",
             "plate-bite-limits-uninvited-fries-cap": "How many fries can you snag off someone's plate uninvited before you feel out of line?",
             "plate-bite-limits-table-dessert-hogging-cap": "How many bites of a shared-for-the-table dessert will you take before you feel you're hogging it?",
             "plate-bite-limits-roommate-leftovers-bites-cap": "How many bites of your roommate's leftovers will you take without asking before you feel wrong about it?"
@@ -269,6 +269,210 @@
         "impostor": {
             "household-chore-strategies-volunteer-to-dodge": "Which household chore would you volunteer for to dodge the one you hate most?",
             "household-chore-strategies-max-thanks-min-effort": "Which chore earns maximum gratitude for minimum effort?"
+        }
+    },
+    "game-night-agendas": {
+        "citizen": {
+            "game-night-agendas-almost-guaranteed-win": "Which game do you subtly propose when you need an almost guaranteed win?",
+            "game-night-agendas-tired-but-dominant": "Which game do you choose when you\u2019re tired but can still outplay everyone?"
+        },
+        "impostor": {
+            "game-night-agendas-swap-to-dodge": "Which game do you keep swapping out with alternatives to avoid playing it?",
+            "game-night-agendas-tilt-prone": "Which game makes you tilt so hard you\u2019d rather not start?",
+            "game-night-agendas-trivia-bored-pretend": "Which trivia game do you pretend to be bored by because you\u2019re weak at it?"
+        }
+    },
+    "fictional-self-projections": {
+        "citizen": {
+            "fictional-self-projections-friends-vibe-label": "Which fictional character do your friends say you give off?",
+            "fictional-self-projections-childhood-comparison": "Which fictional character were you compared to most as a kid?",
+            "fictional-self-projections-lookalike-comment": "Which fictional character do people say you look like?",
+            "fictional-self-projections-tired-mode-vibe": "Which fictional character do people say you resemble when you\u2019re exhausted?",
+            "fictional-self-projections-angry-mode-vibe": "Which fictional character do people say you turn into when you\u2019re mad?"
+        },
+        "impostor": {
+            "fictional-self-projections-interview-channel": "Which fictional character do you try to channel in job interviews?",
+            "fictional-self-projections-instagram-vibe": "Which fictional character do you aim to evoke in your photos?",
+            "fictional-self-projections-meeting-parents": "Which fictional character do you perform when meeting someone\u2019s parents?",
+            "fictional-self-projections-argument-stance": "Which fictional character do you slip into when you need to sound tough?"
+        }
+    },
+    "apocalypse-crew-roles": {
+        "citizen": {
+            "apocalypse-crew-roles-under-sleep-deprivation": "On a sleepless week on the move during the apocalypse, which single crew role would you actually perform best?",
+            "apocalypse-crew-roles-low-supplies": "When food and gear run low during the apocalypse, which single crew role would you naturally take on best?",
+            "apocalypse-crew-roles-vehicle-breakdown": "After the truck dies mid-route during the apocalypse, which single crew role would you realistically take?",
+            "apocalypse-crew-roles-map-navigation": "Crossing unknown terrain during the apocalypse, which single crew role would you honestly fill best?"
+        },
+        "impostor": {
+            "apocalypse-crew-roles-heroic-title-claim": "During the apocalypse, which single crew role would you claim to look heroic?",
+            "apocalypse-crew-roles-camera-rolling": "If cameras were rolling, which single crew role would you present yourself as during the apocalypse?",
+            "apocalypse-crew-roles-first-volunteer": "Which single crew role would you volunteer for first to seem competent during the apocalypse?",
+            "apocalypse-crew-roles-impress-strangers": "To impress new survivors during the apocalypse, which single crew role would you introduce yourself with?"
+        }
+    },
+    "punctuation-texting-persona": {
+        "citizen": {
+            "punctuation-texting-persona-end-of-casual-messages": "Which punctuation mark shows up most at the end of your casual messages?",
+            "punctuation-texting-persona-tired-texting-vibe": "Which punctuation mark best fits your vibe when you're tired-texting?",
+            "punctuation-texting-persona-excited-acting-calm": "Which punctuation mark do you send when you're excited but trying to look calm?",
+            "punctuation-texting-persona-group-chat-one-liners": "Which punctuation mark pops up in your group-chat one-liners?",
+            "punctuation-texting-persona-opening-greeting-ender": "Which punctuation mark do you put after a simple 'hi' or 'hey'?"
+        },
+        "impostor": {
+            "punctuation-texting-persona-sound-more-confident": "Which punctuation mark would you pick to make your texts feel more confident?",
+            "punctuation-texting-persona-fake-effortless-chill": "Which punctuation mark would you use to fake being effortlessly chill?",
+            "punctuation-texting-persona-friendlier-in-professional": "Which punctuation mark would you pick to look friendlier in professional chats?",
+            "punctuation-texting-persona-seem-mysterious": "Which punctuation mark would you choose to come off as mysterious?",
+            "punctuation-texting-persona-seem-funnier": "Which punctuation mark would you pick to seem funnier in texts?"
+        }
+    },
+    "contrarian-smell-reactions": {
+        "citizen": {
+            "contrarian-smell-reactions-mildly-gross-comfort": "Which mildly gross smell do you secretly find comforting?",
+            "contrarian-smell-reactions-faint-background-room": "Which faint background smell do you wish your room always had?",
+            "contrarian-smell-reactions-public-place-dont-mind": "Which public-place smell do you weirdly not mind at all?",
+            "contrarian-smell-reactions-childhood-home-miss": "Which childhood-home smell do you still miss?",
+            "contrarian-smell-reactions-kitchen-linger-clothes": "Which kitchen smell would you be happy to have linger on your clothes?"
+        },
+        "impostor": {
+            "contrarian-smell-reactions-food-ads-vs-reality": "Which food smell is better in ads than in real life?",
+            "contrarian-smell-reactions-perfume-note-eye-roll": "Which perfume note makes you roll your eyes?",
+            "contrarian-smell-reactions-luxury-try-hard": "Which \"luxury\" scent reads the most try-hard?",
+            "contrarian-smell-reactions-nostalgic-crowd-fave-dont-get": "Which nostalgic crowd-favorite smell do you just not get?"
+        }
+    },
+    "cheap-day-upgrades": {
+        "citizen": {
+            "cheap-day-upgrades-genuine-daily-upgrade": "Name one under-$15 thing you own that genuinely upgrades your day.",
+            "cheap-day-upgrades-everyday-use": "Name one under-$15 thing you use every single day.",
+            "cheap-day-upgrades-desk-grab": "Name one under-$15 thing on your desk you touch most often.",
+            "cheap-day-upgrades-never-leave-home": "Name one under-$15 thing in your bag you\u2019d hate to leave home without.",
+            "cheap-day-upgrades-kitchen-go-to": "Name one under-$15 kitchen item you reach for the most.",
+            "cheap-day-upgrades-travel-easier": "Name one under-$15 travel item that noticeably makes trips easier.",
+            "cheap-day-upgrades-morning-bathroom": "Name one under-$15 bathroom item that makes your morning better."
+        },
+        "impostor": {
+            "cheap-day-upgrades-performative-hype": "Name one under-$15 thing you hype to others like it upgrades your day.",
+            "cheap-day-upgrades-life-hack-recommend": "Name one under-$15 thing you recommend as a 'life hack' but barely use yourself.",
+            "cheap-day-upgrades-clever-gift": "Name one under-$15 thing you\u2019d buy as a clever gift to seem thoughtful.",
+            "cheap-day-upgrades-forget-but-essential": "Name one under-$15 thing you often forget you own yet still call essential."
+        }
+    },
+    "color-synesthesia-associations": {
+        "citizen": {
+            "color-synesthesia-associations-birthday-month": "What color do you instinctively assign to your birthday month?",
+            "color-synesthesia-associations-todays-weekday": "What color is today\u2019s weekday for you?",
+            "color-synesthesia-associations-usual-wake-up-time": "What color is the time you usually wake up?",
+            "color-synesthesia-associations-usual-bedtime-hour": "What color is your usual bedtime hour?",
+            "color-synesthesia-associations-unread-notifications-count": "What color is your unread notifications count right now?"
+        },
+        "impostor": {
+            "color-synesthesia-associations-first-name": "What color do you instinctively assign to your first name?",
+            "color-synesthesia-associations-first-initial-letter": "What color is the first letter of your first name?",
+            "color-synesthesia-associations-hometown-name": "What color is your hometown\u2019s name?",
+            "color-synesthesia-associations-dream-pet-name": "What color is the name you\u2019d give a pet?"
+        }
+    },
+    "micro-lesson-teach-or-bluff": {
+        "citizen": {
+            "micro-lesson-teach-or-bluff-ted-style-right-now": "You must give a TED-style 10-minute talk right now\u2014what topic could you nail?",
+            "micro-lesson-teach-or-bluff-one-take-tutorial": "You have to record a single-take 5\u201310 minute tutorial\u2014what topic do you choose?",
+            "micro-lesson-teach-or-bluff-teach-a-10-year-old": "You have a 10-year-old audience for 10 minutes\u2014what topic could you make clear?"
+        },
+        "impostor": {
+            "micro-lesson-teach-or-bluff-wing-it-lesson": "You must teach for 10 minutes but plan to wing it\u2014what topic would you bluff?",
+            "micro-lesson-teach-or-bluff-camera-trend-explain": "You're asked on camera to explain a hot trend\u2014what topic would you bluff?"
+        }
+    },
+    "fictional-city-survival-vs-brag": {
+        "citizen": {
+            "fictional-city-survival-vs-brag-actually-live-long-term": "Name a fictional city you could actually live in long-term.",
+            "fictional-city-survival-vs-brag-hire-your-skillset-fast": "Name a fictional city where your current skillset would get you hired fast.",
+            "fictional-city-survival-vs-brag-raise-a-kid-happily": "Name a fictional city where you'd happily raise a kid.",
+            "fictional-city-survival-vs-brag-food-scene-fits-you": "Name a fictional city whose food scene fits you best.",
+            "fictional-city-survival-vs-brag-choose-to-retire-in": "Name a fictional city you'd choose to retire in."
+        },
+        "impostor": {
+            "fictional-city-survival-vs-brag-boast-about-surviving": "Name a fictional city you'd boast about surviving."
+        }
+    },
+    "cutest-animal-honesty": {
+        "citizen": {
+            "cutest-animal-honesty-in-person-aww": "Which animal makes you involuntarily say aww fastest in real life?",
+            "cutest-animal-honesty-palm-sized-desk": "If every animal were harmless and palm-sized, which one would you keep on your desk?",
+            "cutest-animal-honesty-common-secretly-cute": "Which very common animal do you secretly find the cutest?"
+        },
+        "impostor": {
+            "cutest-animal-honesty-avoid-basic-answer": "Which animal would you name to avoid sounding basic in a cute-animal debate?",
+            "cutest-animal-honesty-quirky-first-date": "On a first date, which cute-animal answer would you drop to seem quirky?"
+        }
+    },
+    "keyboard-key-quirks": {
+        "citizen": {
+            "keyboard-key-quirks-panic-reflex": "When you suddenly panic at the computer, which single key do you hit first?",
+            "keyboard-key-quirks-repaint-bright-color": "Which single key would you repaint a bright color so you can find it faster?",
+            "keyboard-key-quirks-typo-culprit": "Looking at your typos, which single key betrays you the most?"
+        },
+        "impostor": {
+            "keyboard-key-quirks-remove-for-chaos": "Which single key would you remove from every keyboard just to cause chaos?",
+            "keyboard-key-quirks-relabel-misleading": "Which single key would you relabel with something misleading to confuse people?",
+            "keyboard-key-quirks-airhorn-prank": "Which single key would you set to blast an airhorn sound when pressed?",
+            "keyboard-key-quirks-open-50-tabs": "Which single key would you booby-trap to open 50 new tabs with one touch?"
+        }
+    },
+    "stealth-microskill-brags": {
+        "citizen": {
+            "stealth-microskill-brags-quietly-best": "What tiny everyday skill are you quietly best at?",
+            "stealth-microskill-brags-bet-fifty": "For $50, which tiny everyday skill would you bet you beat most people at?",
+            "stealth-microskill-brags-autopilot-mastery": "Which tiny everyday skill have you drilled to autopilot?",
+            "stealth-microskill-brags-secretly-judgy": "Which tiny everyday skill do you secretly judge others for doing badly?",
+            "stealth-microskill-brags-five-minute-lesson": "Which tiny everyday skill could you teach perfectly in five minutes?"
+        },
+        "impostor": {
+            "stealth-microskill-brags-pretend-mediocre": "What tiny everyday skill do you pretend you're mediocre at?",
+            "stealth-microskill-brags-downplay-to-avoid": "Which tiny everyday skill do you downplay to avoid being asked to do it?",
+            "stealth-microskill-brags-fake-struggle": "Which tiny everyday skill do you fake struggling with?",
+            "stealth-microskill-brags-dodge-chores": "Which tiny everyday skill do you claim isn't your thing to dodge a chore?"
+        }
+    },
+    "overrated-vs-defend-gadgets": {
+        "citizen": {
+            "kitchen-gadget-stance-regret-buy": "Which kitchen gadget did you buy and quietly regret?",
+            "kitchen-gadget-stance-clean-more-than-use": "Which kitchen gadget do you clean more than you actually use?",
+            "kitchen-gadget-stance-vanish-month-unnoticed": "Which kitchen gadget could disappear for a month and you wouldn\u2019t notice?",
+            "kitchen-gadget-stance-one-specific-task": "Which kitchen gadget do you use only for one oddly specific task?"
+        },
+        "impostor": {
+            "kitchen-gadget-stance-recommend-to-beginner": "Which kitchen gadget do you recommend to every beginner cook?",
+            "kitchen-gadget-stance-silly-but-clutch": "Which kitchen gadget looks silly but is secretly clutch?",
+            "kitchen-gadget-stance-rescue-first-in-flood": "Which kitchen gadget would you rescue first if your kitchen flooded?"
+        }
+    },
+    "first-name-rebrands": {
+        "citizen": {
+            "first-name-rebrands-witness-protection": "If you entered witness protection tomorrow, what first name would you actually live with?",
+            "first-name-rebrands-barista-simple": "At coffee shops, what simple first name would you give so they stop butchering yours?",
+            "first-name-rebrands-moving-abroad-blend": "Moving abroad next month, what local first name would you adopt to blend in?",
+            "first-name-rebrands-custom-keychain": "You\u2019re ordering a custom keychain; what first name would you want on it for the next five years?"
+        },
+        "impostor": {
+            "first-name-rebrands-dating-app-bait": "On a dating app, what first name would you use purely to pull more matches?",
+            "first-name-rebrands-hotel-upgrade": "Hoping for free upgrades, what first name would you give at a fancy hotel desk?",
+            "first-name-rebrands-black-tie-important": "At a black-tie gala, what first name would you introduce to sound important?"
+        }
+    },
+    "forehead-logo-dares": {
+        "citizen": {
+            "forehead-logo-dares-month-temp-tattoo": "Which brand\u2019s logo would you agree to get as a temporary tattoo for a month?",
+            "forehead-logo-dares-week-lock-screen-logo": "For the next week your phone lock screen must be a brand logo; which brand do you pick?",
+            "forehead-logo-dares-public-ambassador-choice": "Which brand would you confidently be a public ambassador for?",
+            "forehead-logo-dares-snack-collab-choice": "You get to co-create a limited-edition snack flavor with one brand; which brand do you choose?"
+        },
+        "impostor": {
+            "forehead-logo-dares-vibe-obsessed-assumption": "Based on your vibe, which brand do people assume you\u2019re obsessed with?",
+            "forehead-logo-dares-parents-keep-buying": "Which brand do your parents keep buying you because they think it\u2019s \u2018so you\u2019?",
+            "forehead-logo-dares-coworkers-assume-screensaver": "Which brand would coworkers assume is your desktop wallpaper?"
         }
     }
 }
