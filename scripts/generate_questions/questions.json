@@ -474,5 +474,73 @@
             "forehead-logo-dares-parents-keep-buying": "Which brand do your parents keep buying you because they think it\u2019s \u2018so you\u2019?",
             "forehead-logo-dares-coworkers-assume-screensaver": "Which brand would coworkers assume is your desktop wallpaper?"
         }
+    },
+    "text-reply-speed-vs-excuse-ratings": {
+        "citizen": {
+            "text-reply-speed-vs-excuse-ratings-10min-reply-likelihood": "Rate your real likelihood of replying within 10 minutes to non-urgent texts from 1 to 10.",
+            "text-reply-speed-vs-excuse-ratings-leave-on-read-accident-rate": "Rate how often you leave someone on read by accident from 1 to 10.",
+            "text-reply-speed-vs-excuse-ratings-missed-call-callback-reliability": "Rate how reliably you call back within an hour after missing a call from 1 to 10.",
+            "text-reply-speed-vs-excuse-ratings-overthink-before-sending": "Rate how much you overthink before sending a simple message from 1 to 10.",
+            "text-reply-speed-vs-excuse-ratings-double-text-when-ignored": "Rate how likely you are to double-text when ignored from 1 to 10."
+        },
+        "impostor": {
+            "text-reply-speed-vs-excuse-ratings-excuse-believability": "Rate how believable your excuses for late replies sound from 1 to 10."
+        }
+    },
+    "five-second-rule-edges": {
+        "citizen": {
+            "five-second-rule-edges-dropped-food-self-likelihood": "Rate how likely you are to eat food you dropped on a basically clean floor from 1 to 10.",
+            "five-second-rule-edges-stranger-bottle-comfort": "Rate how comfortable you are using a stranger\u2019s water bottle in a pinch from 1 to 10.",
+            "five-second-rule-edges-cutting-mold-willingness": "Rate your willingness to eat bread or cheese after cutting a small mold spot off from 1 to 10.",
+            "five-second-rule-edges-pet-face-licking-ok": "Rate how okay you are with your pet licking your face from 1 to 10."
+        },
+        "impostor": {
+            "five-second-rule-edges-dropped-food-others-grossness": "Rate how grossed out you feel watching someone eat food they dropped on a basically clean floor from 1 to 10.",
+            "five-second-rule-edges-raw-batter-licking-risk-feel": "Rate how risky it feels to you when someone licks the spoon after raw-egg batter from 1 to 10.",
+            "five-second-rule-edges-subway-grab-then-eat-grossness": "Rate how gross someone seems to you if they grab a subway pole and then eat with their hands from 1 to 10."
+        }
+    },
+    "city-direction-bluff-ratings": {
+        "citizen": {
+            "city-direction-bluff-ratings-pick-fastest-route-subway-glance": "After a single glance at a subway map, rate your ability to pick the fastest route from 1 to 10.",
+            "city-direction-bluff-ratings-retrace-to-same-spot-week-later": "After visiting a place once, rate your chance of finding it again a week later from 1 to 10.",
+            "city-direction-bluff-ratings-navigate-by-road-signs-no-gps": "Driving without GPS, rate your skill at navigating using only road signs from 1 to 10.",
+            "city-direction-bluff-ratings-backtrack-at-night-unfamiliar": "At night in an unfamiliar area, rate your sense for which way you came from 1 to 10."
+        },
+        "impostor": {
+            "city-direction-bluff-ratings-pretend-know-the-way-with-friends": "When you\u2019re lost with friends, rate how confidently you can pretend you know the way from 1 to 10.",
+            "city-direction-bluff-ratings-convincingly-answer-stranger-when-unsure": "If a stranger asks for directions and you\u2019re unsure, rate how convincingly you\u2019d answer from 1 to 10.",
+            "city-direction-bluff-ratings-frame-wrong-turn-as-intentional": "After a wrong turn, rate how smoothly you can frame it as part of the plan from 1 to 10."
+        }
+    },
+    "mess-tolerance-ratings": {
+        "citizen": {
+            "mess-tolerance-ratings-sink-full-of-dishes-home": "Rate how bothered you are by a sink full of dishes at home from 1 to 10.",
+            "mess-tolerance-ratings-bedroom-chair-clothes-pile": "Rate how bothered you are by a clothes pile on your bedroom chair from 1 to 10.",
+            "mess-tolerance-ratings-bathroom-mirror-toothpaste-splatters": "Rate how bothered you are by toothpaste splatters on your bathroom mirror from 1 to 10.",
+            "mess-tolerance-ratings-overflowing-trash-can-home": "Rate how bothered you are by an overflowing trash can at home from 1 to 10.",
+            "mess-tolerance-ratings-fridge-mystery-leftovers": "Rate how bothered you are by mystery leftovers cluttering your fridge from 1 to 10.",
+            "mess-tolerance-ratings-unmade-bed": "Rate how bothered you are by leaving your bed unmade from 1 to 10."
+        },
+        "impostor": {
+            "mess-tolerance-ratings-friends-cluttered-car": "Rate how bothered you are by a friend's cluttered car interior when you ride along from 1 to 10.",
+            "mess-tolerance-ratings-shared-office-fridge-packed": "Rate how bothered you are by a shared fridge packed with unlabeled leftovers from 1 to 10.",
+            "mess-tolerance-ratings-shared-kitchen-others-dishes": "Rate how bothered you are by a shared kitchen sink loaded with other people's dishes from 1 to 10.",
+            "mess-tolerance-ratings-gym-bench-clutter": "Rate how bothered you are by a gym locker room bench cluttered with others' stuff from 1 to 10."
+        }
+    },
+    "spotlight-performance-confidence-ratings": {
+        "citizen": {
+            "spotlight-performance-confidence-ratings-karaoke-no-prep": "Rate your confidence to take the mic for one karaoke song with no prep, from 1 to 10.",
+            "spotlight-performance-confidence-ratings-freestyle-10-second-rhyme": "Rate your confidence to freestyle a 10-second rhyme to the room, from 1 to 10.",
+            "spotlight-performance-confidence-ratings-10-second-solo-dance": "Rate your confidence to lead a 10-second solo dance in front of everyone, from 1 to 10.",
+            "spotlight-performance-confidence-ratings-whistle-short-tune": "Rate your confidence to whistle a short tune to the room on the spot, from 1 to 10."
+        },
+        "impostor": {
+            "spotlight-performance-confidence-ratings-30-second-toast-no-prep": "Rate your confidence to give a 30-second toast with no prep, from 1 to 10.",
+            "spotlight-performance-confidence-ratings-introduce-friend-20-second": "Rate your confidence to introduce a friend to the room with a 20-second intro, from 1 to 10.",
+            "spotlight-performance-confidence-ratings-lead-call-and-response-clap": "Rate your confidence to lead a quick call-and-response clap to get everyone\u2019s attention, from 1 to 10.",
+            "spotlight-performance-confidence-ratings-persuade-dinner-restaurant-20-seconds": "Rate your confidence to persuade the room in 20 seconds to pick one restaurant, from 1 to 10."
+        }
     }
 }

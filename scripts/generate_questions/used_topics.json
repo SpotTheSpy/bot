@@ -138,5 +138,25 @@
     {
         "key": "forehead-logo-dares",
         "topic": "The brand logo you\u2019d choose to wear on your forehead for a week versus the one friends would pick to roast you."
+    },
+    {
+        "key": "text-reply-speed-vs-excuse-ratings",
+        "topic": "Your actual messaging habits versus your excuse-making charisma for replying late, rated 1\u201310."
+    },
+    {
+        "key": "five-second-rule-edges",
+        "topic": "Your personal germ thresholds and double standards around dropped food."
+    },
+    {
+        "key": "city-direction-bluff-ratings",
+        "topic": "Your real navigation sense versus your confidence when bluffing directions."
+    },
+    {
+        "key": "mess-tolerance-ratings",
+        "topic": "Your tolerance and standards for everyday clutter in personal and shared spaces, rated 1\u201310."
+    },
+    {
+        "key": "spotlight-performance-confidence-ratings",
+        "topic": "Your confidence under sudden, public mini-performances, rated 1\u201310."
     }
 ]

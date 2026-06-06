@@ -22,5 +22,4 @@ topic - Description of the question topic written as a plain text sentence. Used
 You must not include additional answer specifics inside the question like (number) or (hour 0-23) if the question is clear enough - that's 90% of the cases, so add this info only if it is really needed there.
 
 VERY IMPORTANT NOTE !!!:
-Almost all questions you already generated are related to basic life situations, which is good but too ordinary and won't cause as much discussion.
-Try generating questions which prompt the player for OPINION about something, which is the best, which is the words, and variations of these questions. Do it, even though my previous instructions about opinion-based questions are prompting you to do it less.
+GENERATE ONLY RATING QUESTIONS, EACH ONE SHOULD PROMPT THE USER TO RATE SOMETHING 1-10. VARIATIONS ARE ALSO POSSIBLE.
