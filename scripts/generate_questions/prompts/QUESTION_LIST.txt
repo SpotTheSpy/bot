@@ -22,4 +22,4 @@ topic - Description of the question topic written as a plain text sentence. Used
 You must not include additional answer specifics inside the question like (number) or (hour 0-23) if the question is clear enough - that's 90% of the cases, so add this info only if it is really needed there.
 
 VERY IMPORTANT NOTE !!!:
-GENERATE ONLY RATING QUESTIONS, EACH ONE SHOULD PROMPT THE USER TO RATE SOMETHING 1-10. VARIATIONS ARE ALSO POSSIBLE.
+GENERATE QUESTIONS WHICH PROMPT A USER TO INPUT A PHRASE THEY WOULD SAY IN SOME OBSCURE SITUATION, OR A PHRASE WHICH WOULD SUIT THE BEST OR BE THE MOST INAPPROPRIATE IN SOME SITUATION

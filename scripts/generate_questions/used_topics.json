@@ -158,5 +158,53 @@
     {
         "key": "spotlight-performance-confidence-ratings",
         "topic": "Your confidence under sudden, public mini-performances, rated 1\u201310."
+    },
+    {
+        "key": "food-taboo-acceptability-ratings",
+        "topic": "How acceptable you find specific food-and-drink taboos, rated 1\u201310."
+    },
+    {
+        "key": "petty-rulebreak-guilt-ratings",
+        "topic": "Your guilt level for specific low-stakes rule-bending scenarios, rated 1\u201310."
+    },
+    {
+        "key": "odd-superpower-usefulness-ratings",
+        "topic": "How useful you'd personally find oddly specific, semi-useless superpowers in real life, rated 1\u201310."
+    },
+    {
+        "key": "absurd-roommate-compatibility-ratings",
+        "topic": "How livable you'd find bizarre hypothetical roommates, rated 1\u201310."
+    },
+    {
+        "key": "identity-glitch-encounter-ratings",
+        "topic": "How unsettling oddly precise personal coincidences from strangers would feel, rated 1\u201310."
+    },
+    {
+        "key": "haunted-sleep-comfort-ratings",
+        "topic": "How comfortable you'd feel sleeping in uncanny spaces, rated 1\u201310."
+    },
+    {
+        "key": "contextless-digital-suspiciousness-ratings",
+        "topic": "How guilty your personal data trails would look to a stranger with no context, rated 1\u201310."
+    },
+    {
+        "key": "cursed-potion-tradeoff-ratings",
+        "topic": "Your willingness to accept odd magical side effects in exchange for tempting perks, rated 1\u201310."
+    },
+    {
+        "key": "snoop-impulse-temptation-ratings",
+        "topic": "Your private temptation to peek at off-limits personal stuff in edgy situations, rated 1\u201310."
+    },
+    {
+        "key": "temporary-body-mod-functionality-ratings",
+        "topic": "Your day-to-day functionality with absurd 24-hour body modifications."
+    },
+    {
+        "key": "tricky-compliment-openers",
+        "topic": "Short compliments you'd genuinely use in delicate situations where honesty would sting."
+    },
+    {
+        "key": "accidental-like-dm-excuses",
+        "topic": "The exact DM you\u2019d send to cover an embarrassing accidental like on an old photo, in different relationships."
     }
 ]

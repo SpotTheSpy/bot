@@ -542,5 +542,170 @@
             "spotlight-performance-confidence-ratings-lead-call-and-response-clap": "Rate your confidence to lead a quick call-and-response clap to get everyone\u2019s attention, from 1 to 10.",
             "spotlight-performance-confidence-ratings-persuade-dinner-restaurant-20-seconds": "Rate your confidence to persuade the room in 20 seconds to pick one restaurant, from 1 to 10."
         }
+    },
+    "food-taboo-acceptability-ratings": {
+        "citizen": {
+            "food-taboo-acceptability-ratings-ice-in-red-wine": "Rate how acceptable it is to put ice cubes in red wine from 1 to 10.",
+            "food-taboo-acceptability-ratings-cereal-with-water": "Rate how acceptable it is to eat cereal with water instead of milk from 1 to 10.",
+            "food-taboo-acceptability-ratings-fries-in-milkshake": "Rate how acceptable it is to dip fries into a milkshake from 1 to 10.",
+            "food-taboo-acceptability-ratings-drinking-from-milk-carton": "Rate how acceptable it is to drink straight from the milk carton from 1 to 10.",
+            "food-taboo-acceptability-ratings-pizza-with-fork-and-knife": "Rate how acceptable it is to eat pizza with a fork and knife from 1 to 10."
+        },
+        "impostor": {
+            "food-taboo-acceptability-ratings-ketchup-on-steak": "Rate how acceptable it is to put ketchup on a steak from 1 to 10.",
+            "food-taboo-acceptability-ratings-ice-in-beer": "Rate how acceptable it is to put ice cubes in beer from 1 to 10.",
+            "food-taboo-acceptability-ratings-outside-food-in-theater": "Rate how acceptable it is to bring outside food into a movie theater from 1 to 10.",
+            "food-taboo-acceptability-ratings-finger-licking-at-table": "Rate how acceptable it is to lick your fingers at the table from 1 to 10.",
+            "food-taboo-acceptability-ratings-pineapple-in-fried-rice": "Rate how acceptable it is to add pineapple to fried rice from 1 to 10."
+        }
+    },
+    "petty-rulebreak-guilt-ratings": {
+        "citizen": {
+            "petty-rulebreak-guilt-ratings-pirating-a-movie-tonight": "How guilty would you feel downloading a movie from a pirate site to watch tonight, from 1 to 10?",
+            "petty-rulebreak-guilt-ratings-speeding-ten-over-empty-road": "How guilty would you feel going 10 over the speed limit on an empty road, from 1 to 10?",
+            "petty-rulebreak-guilt-ratings-second-free-trial-new-email": "How guilty would you feel signing up for a second free trial with a new email, from 1 to 10?",
+            "petty-rulebreak-guilt-ratings-using-neighbors-unsecured-wifi": "How guilty would you feel briefly using a neighbor\u2019s unsecured wifi, from 1 to 10?"
+        },
+        "impostor": {
+            "petty-rulebreak-guilt-ratings-keeping-extra-change-noticed-later": "How guilty would you feel keeping a cashier\u2019s extra change you noticed later, from 1 to 10?",
+            "petty-rulebreak-guilt-ratings-barista-forgot-extra-shot-charge": "How guilty would you feel not telling a barista they forgot to charge for an extra shot, from 1 to 10?",
+            "petty-rulebreak-guilt-ratings-sliding-near-front-of-line": "How guilty would you feel cutting ahead by sliding into a line near the front, from 1 to 10?",
+            "petty-rulebreak-guilt-ratings-skipping-tip-counter-service": "How guilty would you feel skipping the tip on a counter-service order, from 1 to 10?",
+            "petty-rulebreak-guilt-ratings-not-picking-up-dog-poop": "How guilty would you feel not picking up your dog\u2019s poop and walking away, from 1 to 10?"
+        }
+    },
+    "odd-superpower-usefulness-ratings": {
+        "citizen": {
+            "odd-superpower-usefulness-ratings-leftover-heat-perfect-touch": "Rate the personal usefulness of being able to instantly heat any leftovers to the perfect eating temperature by touch from 1 to 10.",
+            "odd-superpower-usefulness-ratings-nearest-trash-bin-spot-50m": "Rate the personal usefulness of being able to always spot the nearest trash bin within 50 meters from 1 to 10.",
+            "odd-superpower-usefulness-ratings-auto-catch-own-phone-drop": "Rate the personal usefulness of being able to reflexively catch your own phone before it hits the ground from 1 to 10.",
+            "odd-superpower-usefulness-ratings-stop-hiccups-instantly": "Rate the personal usefulness of being able to stop your hiccups instantly with a snap from 1 to 10.",
+            "odd-superpower-usefulness-ratings-snap-add-five-percent-battery": "Rate the personal usefulness of being able to add 5% battery to your phone once per hour by snapping your fingers from 1 to 10."
+        },
+        "impostor": {
+            "odd-superpower-usefulness-ratings-slow-ice-melt-in-drink": "Rate the personal usefulness of being able to make the ice in your drink melt about 50% slower from 1 to 10.",
+            "odd-superpower-usefulness-ratings-fold-fitted-sheet-perfectly": "Rate the personal usefulness of being able to instantly fold a fitted sheet perfectly flat from 1 to 10.",
+            "odd-superpower-usefulness-ratings-defog-glasses-instantly": "Rate the personal usefulness of being able to instantly clear fog or mist from your glasses from 1 to 10.",
+            "odd-superpower-usefulness-ratings-fall-asleep-on-command-4-min": "Rate the personal usefulness of being able to fall asleep on command in about four minutes from 1 to 10.",
+            "odd-superpower-usefulness-ratings-peel-boiled-egg-perfectly": "Rate the personal usefulness of being able to peel a boiled egg perfectly clean in one try from 1 to 10."
+        }
+    },
+    "absurd-roommate-compatibility-ratings": {
+        "citizen": {
+            "absurd-roommate-compatibility-ratings-blender-at-dawn-smoothie": "Rate how tolerable it would be to live with a roommate who runs a blender at dawn for a five-minute smoothie from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-weekend-free-roaming-snake": "Rate how tolerable it would be to live with a roommate who lets their pet snake free-roam the apartment on weekends from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-all-red-lights-after-sunset": "Rate how tolerable it would be to live with a roommate who replaces all bulbs with dim red lights after sunset from 1 to 10."
+        },
+        "impostor": {
+            "absurd-roommate-compatibility-ratings-only-voice-memos-no-texts": "Rate how tolerable it would be to live with a roommate who only communicates via 30-second voice memos and never texts from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-living-room-247-security-livestream": "Rate how tolerable it would be to live with a roommate who runs a 24/7 security livestream of the living room on the internet from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-guest-house-oath-at-door": "Rate how tolerable it would be to live with a roommate who requires every guest to remove shoes and recite a short house oath at the door from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-pantry-alphabetization-with-fines": "Rate how tolerable it would be to live with a roommate who alphabetizes the pantry and issues playful fines for misplacement from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-tarot-deck-assigns-chores": "Rate how tolerable it would be to live with a roommate who lets a tarot deck decide the weekly chore assignments from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-fridge-padlocked-10pm-7am": "Rate how tolerable it would be to live with a roommate who padlocks the fridge from 10 p.m. to 7 a.m. from 1 to 10.",
+            "absurd-roommate-compatibility-ratings-medieval-titles-in-conversation": "Rate how tolerable it would be to live with a roommate who insists you address each other with medieval titles during conversations from 1 to 10."
+        }
+    },
+    "identity-glitch-encounter-ratings": {
+        "citizen": {
+            "identity-glitch-encounter-ratings-new-neighbor-knows-your-pets-name": "Rate from 1 to 10 how unsettling it would be if a neighbor you\u2019ve never met called your pet by its exact name.",
+            "identity-glitch-encounter-ratings-bouncer-states-your-birth-year-before-id": "Rate from 1 to 10 how unsettling it would be if a bar bouncer said your exact birth year before seeing your ID.",
+            "identity-glitch-encounter-ratings-rideshare-ends-trip-at-childhood-home": "Rate from 1 to 10 how unsettling it would be if a rideshare driver ended the trip at your exact childhood home without you entering the address.",
+            "identity-glitch-encounter-ratings-flight-attendant-hands-your-usual-drink": "Rate from 1 to 10 how unsettling it would be if a flight attendant handed you your exact \u2018usual\u2019 drink without asking."
+        },
+        "impostor": {
+            "identity-glitch-encounter-ratings-barista-perfectly-pronounces-rare-surname": "Rate from 1 to 10 how unsettling it would be if a barista perfectly pronounced and spelled your rare surname without asking.",
+            "identity-glitch-encounter-ratings-realtor-names-your-childhood-bedroom-color": "Rate from 1 to 10 how unsettling it would be if a realtor you just met named the exact color of your childhood bedroom walls.",
+            "identity-glitch-encounter-ratings-wedding-dj-announces-your-secret-hype-song": "Rate from 1 to 10 how unsettling it would be if a wedding DJ you don\u2019t know announced and played your secret hype song \u2018for you\u2019."
+        }
+    },
+    "haunted-sleep-comfort-ratings": {
+        "citizen": {
+            "haunted-sleep-comfort-ratings-empty-theater-stage": "Rate how comfortable you\u2019d feel sleeping on the stage of an empty theater with the seats in darkness from 1 to 10.",
+            "haunted-sleep-comfort-ratings-closed-shopping-mall": "Rate how comfortable you\u2019d feel sleeping on a bench in a closed shopping mall from 1 to 10.",
+            "haunted-sleep-comfort-ratings-quiet-forest-treehouse": "Rate how comfortable you\u2019d feel sleeping in a treehouse alone in a quiet forest from 1 to 10."
+        },
+        "impostor": {
+            "haunted-sleep-comfort-ratings-wax-museum-gallery": "Rate how comfortable you\u2019d feel sleeping in a wax museum gallery after closing from 1 to 10.",
+            "haunted-sleep-comfort-ratings-abandoned-hospital-ward": "Rate how comfortable you\u2019d feel sleeping in an abandoned hospital ward with empty beds from 1 to 10.",
+            "haunted-sleep-comfort-ratings-creaking-rocking-chair-attic": "Rate how comfortable you\u2019d feel sleeping in an attic where a rocking chair keeps gently creaking from 1 to 10."
+        }
+    },
+    "contextless-digital-suspiciousness-ratings": {
+        "citizen": {
+            "contextless-digital-suspiciousness-ratings-browser-history-30d": "Rate how suspicious your last 30 days of browser history would look to a stranger from 1 to 10.",
+            "contextless-digital-suspiciousness-ratings-camera-roll-thumbs-60d": "Rate how suspicious your camera roll thumbnails from the last 60 days would look to a stranger from 1 to 10.",
+            "contextless-digital-suspiciousness-ratings-youtube-watch-titles-30d": "Rate how suspicious your last 30 days of YouTube watch titles would look to a stranger from 1 to 10.",
+            "contextless-digital-suspiciousness-ratings-recent-screenshots": "Rate how suspicious your recent screenshots folder would look to a stranger from 1 to 10.",
+            "contextless-digital-suspiciousness-ratings-downloads-filenames": "Rate how suspicious the filenames in your Downloads folder would look to a stranger from 1 to 10.",
+            "contextless-digital-suspiciousness-ratings-top-emojis-30d": "Rate how suspicious your top-used emojis over the last 30 days would look to a stranger from 1 to 10."
+        },
+        "impostor": {
+            "contextless-digital-suspiciousness-ratings-bank-transactions-30d": "Rate how suspicious your last 30 days of bank transactions would look to a stranger from 1 to 10.",
+            "contextless-digital-suspiciousness-ratings-gps-heatmap-30d": "Rate how suspicious your last 30 days of GPS location history heatmap would look to a stranger from 1 to 10."
+        }
+    },
+    "cursed-potion-tradeoff-ratings": {
+        "citizen": {
+            "cursed-potion-tradeoff-ratings-autotuned-voice-for-flawless-skin": "Rate how willing you'd be to drink a potion that makes your voice faintly autotuned for a year in exchange for flawless skin, from 1 to 10.",
+            "cursed-potion-tradeoff-ratings-glitter-sneeze-for-white-teeth": "Rate how willing you'd be to drink a potion that makes you sneeze a pinch of glitter for a year in exchange for teeth that stay perfectly white, from 1 to 10.",
+            "cursed-potion-tradeoff-ratings-goose-honk-laugh-for-pleasant-scent": "Rate how willing you'd be to drink a potion that makes your laugh sound like a goose honk for a year in exchange for a natural pleasant scent that lasts forever, from 1 to 10."
+        },
+        "impostor": {
+            "cursed-potion-tradeoff-ratings-bookstore-sneeze-for-name-memory": "Rate how willing you'd be to drink a potion that makes you sneeze whenever you enter a bookstore for a year in exchange for remembering names after one introduction, from 1 to 10.",
+            "cursed-potion-tradeoff-ratings-daily-3pm-hum-for-natural-wake": "Rate how willing you'd be to drink a potion that forces you to hum for ten seconds at 3 p.m. daily for a year in exchange for waking naturally at your desired time, from 1 to 10.",
+            "cursed-potion-tradeoff-ratings-daily-stomach-gurgle-for-parallel-park": "Rate how willing you'd be to drink a potion that makes your stomach audibly gurgle five times a day for a year in exchange for parallel parking flawlessly on the first try, from 1 to 10."
+        }
+    },
+    "snoop-impulse-temptation-ratings": {
+        "citizen": {
+            "snoop-impulse-temptation-ratings-partners-unlocked-phone": "Rate how tempted you'd be to open a partner's unlocked phone left on the table from 1 to 10.",
+            "snoop-impulse-temptation-ratings-roommates-bank-app-left-logged-in": "Rate how tempted you'd be to glance at your roommate's bank app left logged in on their laptop from 1 to 10.",
+            "snoop-impulse-temptation-ratings-parents-browser-history-on-family-pc": "Rate how tempted you'd be to check your parent's browser history on the family computer from 1 to 10.",
+            "snoop-impulse-temptation-ratings-neighbors-misdelivered-package-at-door": "Rate how tempted you'd be to open a neighbor's misdelivered package left at your door from 1 to 10."
+        },
+        "impostor": {
+            "snoop-impulse-temptation-ratings-coworkers-ajar-desk-drawer-at-house-party": "Rate how tempted you'd be to slide open a coworker's barely ajar desk drawer at a house party from 1 to 10.",
+            "snoop-impulse-temptation-ratings-found-usb-drive-plugging-into-your-computer": "Rate how tempted you'd be to plug in a found USB drive to see what's on it from 1 to 10."
+        }
+    },
+    "temporary-body-mod-functionality-ratings": {
+        "citizen": {
+            "temporary-body-mod-functionality-ratings-lobster-claw-dominant-hand": "Rate from 1 to 10 how functional you'd be today if your dominant hand were a lobster claw for 24 hours.",
+            "temporary-body-mod-functionality-ratings-pogo-spring-legs": "Rate from 1 to 10 how functional you'd be today if your legs acted like pogo springs for 24 hours.",
+            "temporary-body-mod-functionality-ratings-magnet-nose": "Rate from 1 to 10 how functional you'd be today if your nose were a strong magnet for 24 hours."
+        },
+        "impostor": {
+            "temporary-body-mod-functionality-ratings-clown-shoe-feet": "Rate from 1 to 10 how functional you'd be today if both your feet were oversized clown shoes for 24 hours.",
+            "temporary-body-mod-functionality-ratings-backward-bending-knees": "Rate from 1 to 10 how functional you'd be today if your knees bent the opposite way for 24 hours.",
+            "temporary-body-mod-functionality-ratings-prehensile-tail": "Rate from 1 to 10 how functional you'd be today if you grew a strong prehensile tail you could control for 24 hours."
+        }
+    },
+    "tricky-compliment-openers": {
+        "citizen": {
+            "tricky-compliment-openers-buzzcut-reveal": "Your friend debuts a drastic buzz cut that doesn\u2019t really flatter them. What\u2019s the exact compliment you give?",
+            "tricky-compliment-openers-hand-knit-sweater": "A sibling gifts you a lumpy hand-knit sweater in odd colors. What\u2019s the exact compliment you give?",
+            "tricky-compliment-openers-karaoke-offkey": "Your date belts an off-key karaoke song with gusto. What\u2019s the exact compliment you give?",
+            "tricky-compliment-openers-neon-outfit": "A friend arrives at dinner in a loud neon outfit you\u2019re not into. What\u2019s the exact compliment you give?"
+        },
+        "impostor": {
+            "tricky-compliment-openers-bland-casserole": "A coworker serves a painfully bland casserole at the potluck. What\u2019s the exact compliment you give?",
+            "tricky-compliment-openers-clunky-app-demo": "A junior colleague demos a clunky, laggy app prototype. What\u2019s the exact compliment you give?",
+            "tricky-compliment-openers-unusual-baby-name": "A friend announces a very unusual baby name choice. What\u2019s the exact compliment you give?"
+        }
+    },
+    "accidental-like-dm-excuses": {
+        "citizen": {
+            "accidental-like-dm-excuses-crush-2016-road-trip-selfie": "You accidentally like a crush's 2016 road-trip selfie \u2014 what DM do you send immediately after?",
+            "accidental-like-dm-excuses-roommate-2014-halloween-costume": "You accidentally like your roommate's 2014 Halloween costume pic \u2014 what DM do you send immediately after?",
+            "accidental-like-dm-excuses-ex-2017-anniversary-post": "You accidentally like your ex's 2017 anniversary post \u2014 what DM do you send immediately after?",
+            "accidental-like-dm-excuses-gym-buddy-2012-mirror-selfie": "You accidentally like your gym buddy's 2012 mirror selfie \u2014 what DM do you send immediately after?"
+        },
+        "impostor": {
+            "accidental-like-dm-excuses-manager-2016-offsite": "You accidentally like your manager's 2016 team offsite snap \u2014 what DM do you send immediately after?",
+            "accidental-like-dm-excuses-professor-2011-lecture-selfie": "You accidentally like your professor's 2011 lecture selfie \u2014 what DM do you send immediately after?",
+            "accidental-like-dm-excuses-dentist-2010-before-after": "You accidentally like your dentist's 2010 before-and-after collage \u2014 what DM do you send immediately after?",
+            "accidental-like-dm-excuses-yoga-instructor-2014-retreat": "You accidentally like your yoga instructor's 2014 retreat pic \u2014 what DM do you send immediately after?"
+        }
     }
 }
